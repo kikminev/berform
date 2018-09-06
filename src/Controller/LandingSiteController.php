@@ -6,17 +6,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-class SiteController extends AbstractController
+class LandingSiteController extends AbstractController
 {
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
     }
 
-    public function list()
+    public function home()
     {
         return new Response(
-            '<html><body>list</body></html>'
+            '<html><body>Welcome</body></html>'
         );
     }
 }
