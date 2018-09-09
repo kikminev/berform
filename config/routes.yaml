@@ -1,3 +1,19 @@
 index:
     path: /
     controller: App\Controller\LandingSiteController::home
+admin:
+    path: /admin
+    controller: App\Controller\Admin\SiteController::list
+
+admin_site_list:
+    path: /admin/site/list
+    controller: App\Controller\Admin\SiteController::list
+admin_site_create:
+    path: /admin/site/create
+    controller: App\Controller\Admin\SiteController::create
+admin_site_edit:
+    path: /admin/site/edit/{id}
+    controller: App\Controller\Admin\SiteController::edit
+admin_site_delete:
+    path: /admin/site/delete/{id}
+    controller: App\Controller\Admin\SiteController::delete

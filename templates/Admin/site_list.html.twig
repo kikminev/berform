@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Sites</h1>
+    <p>
+        <a href="{{ path('admin_site_create') }}">create</a>
+    </p>
+    {% for site in sites %}
+        <p>
+            {{ site.name }}
+            <a href="{{ path('admin_site_edit', {id : site.id}) }}">edit</a> |
+            <a onclick="return confirm('Are you sure?');" href="{{ path('admin_site_delete', {id : site.id}) }}">delete</a>
+        </p>
+    {% endfor %}
+{% endblock %}
