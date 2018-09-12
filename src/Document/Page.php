@@ -31,6 +31,9 @@ class Page
      */
     protected $content;
 
+    /** MongoDB@EmbedMany(targetDocument="File") */
+    private $files = array();
+
     /**
      * @MongoDB\Field(type="string")
      */
@@ -246,5 +249,21 @@ class Page
     public function setCreatedAt(date $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param mixed $files
+     */
+    public function setFiles($files): void
+    {
+        $this->files = $files;
     }
 }
