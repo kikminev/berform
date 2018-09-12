@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Form\Admin\SiteType;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SiteController extends AbstractController
 {
@@ -73,7 +74,6 @@ class SiteController extends AbstractController
 
     public function delete(Request $request, Site $site): ?Response
     {
-        $this->documentManager->refresh($site);
         $site->setActive(false);
         $site->setDeleted(true);
         $this->documentManager->flush();

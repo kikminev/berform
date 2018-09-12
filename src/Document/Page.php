@@ -27,7 +27,22 @@ class Page
     /**
      * @MongoDB\Field(type="string")
      */
+    protected $content;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $keywords;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
     protected $slug;
+
+    /**
+     * @MongoDB\Field(type="int")
+     */
+    protected $order;
 
     /**
      * @MongoDB\Field(type="string")
@@ -133,5 +148,53 @@ class Page
     public function setActive($active): void
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     */
+    public function setOrder(int $order): void
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     */
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKeywords(): ?string
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * @param mixed $keywords
+     */
+    public function setKeywords(string $keywords): void
+    {
+        $this->keywords = $keywords;
     }
 }

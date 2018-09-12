@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    Builder
+    <div class="allPages">
+        {% for page in pages %}
+            <a href="{{ path('admin_page_edit', {id:page.id}) }}">{{ page.name }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}

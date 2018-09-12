@@ -7,7 +7,7 @@
     {% for site in sites %}
         <p>
             {{ site.name }}
-            <a href="{{ path('admin_site_edit', {id : site.id}) }}">edit</a> |
+            <a href="{{ path('admin_site_build', {id : site.id}) }}">preview</a> |
             <a onclick="return confirm('Are you sure?');" href="{{ path('admin_site_delete', {id : site.id}) }}">delete</a>
         </p>
     {% endfor %}
