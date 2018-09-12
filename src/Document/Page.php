@@ -3,6 +3,8 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Timestampable;
 
 /**
  * @MongoDB\Document
@@ -53,6 +55,22 @@ class Page
      * @MongoDB\Field(type="boolean")
      */
     protected $active;
+
+    /**
+     * @var date $updatedAt
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var date $createdAt
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
 
     /**
      * @return mixed
@@ -196,5 +214,37 @@ class Page
     public function setKeywords(string $keywords): void
     {
         $this->keywords = $keywords;
+    }
+
+    /**
+     * @return date
+     */
+    public function getUpdatedAt(): date
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param date $updatedAt
+     */
+    public function setUpdatedAt(date $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return date
+     */
+    public function getCreatedAt(): date
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param date $createdAt
+     */
+    public function setCreatedAt(date $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }

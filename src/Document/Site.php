@@ -4,6 +4,8 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Timestampable;
 
 /**
  * @MongoDB\Document
@@ -50,6 +52,22 @@ class Site
      * @MongoDB\Field(type="bool")
      */
     protected $deleted;
+
+    /**
+     * @var date $updatedAt
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var date $createdAt
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
 
     /**
      * @return mixed
@@ -169,5 +187,37 @@ class Site
     public function setDeleted(bool $deleted): void
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return date
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param date $updatedAt
+     */
+    public function setUpdatedAt($updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return date
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param date $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }
