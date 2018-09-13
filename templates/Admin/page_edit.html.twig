@@ -1,5 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout.html.twig' %}
 {% block body %}
+
+    <input id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler') }}" multiple />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src="{{ asset('js/file-uploader/js/jquery.ui.widget.js') }}"></script>
+    <script src="{{ asset('js/file-uploader/js/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ asset('js/file-uploader/js/jquery.fileupload.js') }}"></script>
+    <script>
+        $(function () {
+            $('#fileUpload').fileupload({
+                dataType: 'json',
+                done: function (e, data) {
+                    $.each(data.result.files, function (index, file) {
+                        $('<p/>').text(file.name).appendTo(document.body);
+                    });
+                }
+            });
+        });
+    </script>
+
+
+
+
+
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}

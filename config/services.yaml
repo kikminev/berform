@@ -34,3 +34,10 @@ services:
         arguments: ['@doctrine_mongodb']
         tags:
             - { name: 'request.param_converter', converter: 'doctrine.odm' }
+    s3_uploader:
+        class: 'Aws\S3\S3Client'
+        arguments:
+            $args: {'profile':'default', 'version':'latest', 'region':'eu-west-1', 'debug':false}
+    App\Service\FileUploader\FileUploader:
+        arguments:
+            $s3: '@s3_uploader'
