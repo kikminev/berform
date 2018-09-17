@@ -41,3 +41,4 @@ services:
     App\Service\FileUploader\FileUploader:
         arguments:
             $s3: '@s3_uploader'
+            $s3BudcketName: '%env(S3_BUCKET_NAME)%'

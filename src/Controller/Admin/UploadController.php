@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use App\Service\FileUploader\FileUploader;
+use App\Service\FileUploader\S3FileUploader;
 
 class UploadController extends AbstractController
 {
@@ -19,10 +19,9 @@ class UploadController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    public function upload(Request $request, FileUploader $fileUploader)
+    public function upload(Request $request, S3FileUploader $fileUploader)
     {
         $filesBag = $request->files->get('files');
-
 
         $file = $filesBag[0];
 
