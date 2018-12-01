@@ -1,10 +1,13 @@
 <?php
 
-namespace ABLE\UploadBundle\Document;
+namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+/**
+ * @MongoDB\Document
+ */
 class File
 {
     /**
@@ -23,6 +26,11 @@ class File
      * @MongoDB\Field(type="string")
      */
     protected $fileUrl;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Page")
+     */
+    protected $page;
 
     /**
      * @var \DateTime $updatedAt
@@ -106,4 +114,21 @@ class File
     {
         $this->createdAt = $createdAt;
     }
+
+    /**
+     * @return Page
+     */
+    public function getPage(): Page
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param Page $page
+     */
+    public function setPage(Page $page): void
+    {
+        $this->page = $page;
+    }
+
 }

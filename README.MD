@@ -8,3 +8,5 @@ some image additions:
 apt-get install git-core
 apt-get install --yes zip unzip
 apt-get install vim
+
+publi x

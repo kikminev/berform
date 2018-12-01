@@ -1,30 +1,10 @@
 {% extends 'admin/layout.html.twig' %}
 {% block body %}
-
-    <input id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler') }}" multiple />
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-    <script src="{{ asset('js/file-uploader/js/jquery.ui.widget.js') }}"></script>
-    <script src="{{ asset('js/file-uploader/js/jquery.iframe-transport.js') }}"></script>
-    <script src="{{ asset('js/file-uploader/js/jquery.fileupload.js') }}"></script>
-    <script>
-        $(function () {
-            $('#fileUpload').fileupload({
-                dataType: 'json',
-                done: function (e, data) {
-                    $.each(data.result, function (index, file) {
-                        $('#imagesWrap').append('<img src="'+file+'" />');
-                    });
-                }
-            });
-        });
-    </script>
-
+    {% include('Admin/Upload/upload_form.html.twig') %}
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    <div id="imagesWrap"></div>
+    {% include('Admin/Upload/file_list.html.twig') %}
 {% endblock %}

@@ -28,5 +28,5 @@ admin_page_edit:
 
 # uploads
 admin_site_upload_handler:
-    path: /admin/site/upload
+    path: /admin/site/{page}/upload
     controller: App\Controller\Admin\UploadController::upload
