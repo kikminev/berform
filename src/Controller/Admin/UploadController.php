@@ -3,10 +3,11 @@
 namespace App\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Service\FileUploader\S3FileUploader;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UploadController extends AbstractController
 {
@@ -23,20 +24,21 @@ class UploadController extends AbstractController
     {
         $filesBag = $request->files->get('files');
 
+        /** @var File $file */
         $file = $filesBag[0];
+        //if (self::MAX_ALLOWED_SIZE < $file->getSize()) {
+        //    // todo: throw error
+        //}
+        // todo: create thumbnail
 
-        if(self::MAX_ALLOWED_SIZE < $file->getSize()) {
-            // do something
-        }
+        $newFileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+        $url = $fileUploader->upload($newFileName, $file);
 
-        $fileUploader->upload();
+        return new JsonResponse(['url' => $url]);
+    }
 
-        // todo:
-        //  verify that it's an image
-        //  create thumb
-        //  upload to s3
-        //
-
-        \Doctrine\Common\Util\Debug::dump($file); exit;
+    private function generateUniqueFileName()
+    {
+        return md5(uniqid(false, true));
     }
 }

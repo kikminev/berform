@@ -38,7 +38,7 @@ services:
         class: 'Aws\S3\S3Client'
         arguments:
             $args: {'profile':'default', 'version':'latest', 'region':'eu-west-1', 'debug':false}
-    App\Service\FileUploader\FileUploader:
+    App\Service\FileUploader\S3FileUploader:
         arguments:
-            $s3: '@s3_uploader'
-            $s3BudcketName: '%env(S3_BUCKET_NAME)%'
+            $s3Client: '@s3_uploader'
+            $bucketName: '%env(S3_BUCKET_NAME)%'

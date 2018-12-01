@@ -6,18 +6,18 @@ use Aws\S3\S3Client;
 
 class S3FileUploader
 {
-    private $s3;
+    private $s3Client;
     private $bucketName;
 
-    public function __construct($s3, $bucketName)
+    public function __construct(S3Client $s3Client, $bucketName)
     {
-        $this->s3 = $s3;
+        $this->s3Client = $s3Client;
         $this->bucketName = $bucketName;
     }
 
     public function upload(string $fileName, string $fileSource): string
     {
-        $this->s3->putObject(
+        $awsResult = $this->s3Client->putObject(
             [
                 'Bucket' => $this->bucketName,
                 'Key' => $fileName,
@@ -25,5 +25,7 @@ class S3FileUploader
                 'ACL' => 'public-read',
             ]
         );
+
+        return $awsResult->get('ObjectURL');
     }
 }

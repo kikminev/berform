@@ -13,20 +13,18 @@
             $('#fileUpload').fileupload({
                 dataType: 'json',
                 done: function (e, data) {
-                    $.each(data.result.files, function (index, file) {
-                        $('<p/>').text(file.name).appendTo(document.body);
+                    $.each(data.result, function (index, file) {
+                        $('#imagesWrap').append('<img src="'+file+'" />');
                     });
                 }
             });
         });
     </script>
 
-
-
-
-
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <div id="imagesWrap"></div>
 {% endblock %}
