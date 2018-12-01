@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Document;
+namespace ABLE\UploadBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Timestampable;
 
-/**
- * @MongoDB\Document
- */
 class File
 {
     /**
@@ -17,102 +13,97 @@ class File
     protected $id;
 
     /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $name;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $url;
-
-    /**
-     * @MongoDB\Field(type="boolean")
+     * @var boolean $active
+     * @MongoDB\Field(type="bool")
      */
     protected $active;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @var string $fileUrl
+     * @MongoDB\Field(type="string")
      */
-    protected $deleted;
+    protected $fileUrl;
 
     /**
-     * @return mixed
+     * @var \DateTime $updatedAt
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="update")
      */
+    protected $updatedAt;
+
+    /**
+     * @var \DateTime $createdAt
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
+
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
+     * @return bool
      */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param mixed $url
-     */
-    public function setUrl($url): void
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActive()
+    public function isActive(): bool
     {
         return $this->active;
     }
 
     /**
-     * @param mixed $active
+     * @param bool $active
      */
-    public function setActive($active): void
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDeleted()
+    public function getFileUrl(): string
     {
-        return $this->deleted;
+        return $this->fileUrl;
     }
 
     /**
-     * @param mixed $deleted
+     * @param string $fileUrl
      */
-    public function setDeleted($deleted): void
+    public function setFileUrl(string $fileUrl): void
     {
-        $this->deleted = $deleted;
+        $this->fileUrl = $fileUrl;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }
