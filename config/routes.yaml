@@ -6,7 +6,7 @@ admin:
     controller: App\Controller\Admin\SiteController::list
 
 admin_site_build:
-    path: /admin/site/buid/{id}
+    path: /admin/site/build/{id}
     controller: App\Controller\Admin\BuilderController::buildSite
 admin_site_list:
     path: /admin/site/list

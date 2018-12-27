@@ -31,9 +31,6 @@ class Page
      */
     protected $content;
 
-    /** MongoDB@EmbedMany(targetDocument="File") */
-    private $files = array();
-
     /**
      * @MongoDB\Field(type="string")
      */
@@ -60,7 +57,7 @@ class Page
     protected $active;
 
     /**
-     * @var date $updatedAt
+     * @var \DateTime $updatedAt
      *
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="update")
@@ -68,7 +65,7 @@ class Page
     protected $updatedAt;
 
     /**
-     * @var date $createdAt
+     * @var \DateTime $createdAt
      *
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="create")
@@ -196,9 +193,9 @@ class Page
     }
 
     /**
-     * @param string $content
+     * @param null|string $content
      */
-    public function setContent(string $content): void
+    public function setContent(?string $content): void
     {
         $this->content = $content;
     }
@@ -214,56 +211,40 @@ class Page
     /**
      * @param mixed $keywords
      */
-    public function setKeywords(string $keywords): void
+    public function setKeywords(?string $keywords): void
     {
         $this->keywords = $keywords;
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
-    public function getUpdatedAt(): date
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param date $updatedAt
+     * @param \DateTime $updatedAt
      */
-    public function setUpdatedAt(date $updatedAt): void
+    public function setUpdatedAt(\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
-    public function getCreatedAt(): date
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param date $createdAt
+     * @param \DateTime $createdAt
      */
-    public function setCreatedAt(date $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFiles()
-    {
-        return $this->files;
-    }
-
-    /**
-     * @param mixed $files
-     */
-    public function setFiles($files): void
-    {
-        $this->files = $files;
     }
 }

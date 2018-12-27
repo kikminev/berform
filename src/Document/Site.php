@@ -5,7 +5,6 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Timestampable;
 
 /**
  * @MongoDB\Document
@@ -44,9 +43,33 @@ class Site
     protected $twitter;
 
     /**
+     * @var string $address
+     * @MongoDB\Field(type="string")
+     */
+    protected $address;
+
+    /**
+     * @var string $phone
+     * @MongoDB\Field(type="string")
+     */
+    protected $phone;
+
+    /**
      * @MongoDB\Field(type="bool")
      */
     protected $active;
+
+    /**
+     * @var bool $isTemplate
+     * @MongoDB\Field(type="bool")
+     */
+    protected $isTemplate;
+
+    /**
+     * @var bool $published
+     * @MongoDB\Field(type="bool")
+     */
+    protected $published;
 
     /**
      * @MongoDB\Field(type="bool")
@@ -54,7 +77,7 @@ class Site
     protected $deleted;
 
     /**
-     * @var date $updatedAt
+     * @var \DateTime $updatedAt
      *
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="update")
@@ -62,7 +85,7 @@ class Site
     protected $updatedAt;
 
     /**
-     * @var date $createdAt
+     * @var \DateTime $createdAt
      *
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="create")
@@ -176,7 +199,7 @@ class Site
     /**
      * @return bool
      */
-    public function getDeleted(): bool
+    public function getDeleted():? bool
     {
         return $this->deleted;
     }
@@ -190,7 +213,7 @@ class Site
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -198,7 +221,7 @@ class Site
     }
 
     /**
-     * @param date $updatedAt
+     * @param \DateTime $updatedAt
      */
     public function setUpdatedAt($updatedAt): void
     {
@@ -206,7 +229,7 @@ class Site
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -214,10 +237,74 @@ class Site
     }
 
     /**
-     * @param date $createdAt
+     * @param \DateTime $createdAt
      */
     public function setCreatedAt($createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param bool $published
+     */
+    public function setPublished(bool $published): void
+    {
+        $this->published = $published;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTemplate(): bool
+    {
+        return $this->isTemplate;
+    }
+
+    /**
+     * @param bool $isTemplate
+     */
+    public function setIsTemplate(bool $isTemplate): void
+    {
+        $this->isTemplate = $isTemplate;
     }
 }

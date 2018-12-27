@@ -8,8 +8,10 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Document\Page;
 
-class SiteController extends AbstractController
+class UserSiteController extends AbstractController
 {
+
+    // render the user site
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
