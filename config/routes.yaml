@@ -2,31 +2,31 @@ index:
     path: /
     controller: App\Controller\LandingSiteController::home
 admin:
-    path: /admin
+    path: /u
     controller: App\Controller\Admin\SiteController::list
 
-admin_site_build:
-    path: /admin/site/build/{id}
+user_admin_site_build:
+    path: /u/site/build/{id}
     controller: App\Controller\Admin\BuilderController::buildSite
-admin_site_list:
-    path: /admin/site/list
+user_admin_site_list:
+    path: /u/site/list
     controller: App\Controller\Admin\SiteController::list
-admin_site_create:
-    path: /admin/site/create
+user_admin_site_create:
+    path: /u/site/create
     controller: App\Controller\Admin\SiteController::create
-admin_site_edit:
-    path: /admin/site/edit/{id}
+user_admin_site_edit:
+    path: /u/site/edit/{id}
     controller: App\Controller\Admin\SiteController::edit
-admin_site_delete:
-    path: /admin/site/delete/{id}
+user_admin_site_delete:
+    path: /u/site/delete/{id}
     controller: App\Controller\Admin\SiteController::delete
 
 # pages
 admin_page_edit:
-    path: /admin/page/{id}
+    path: /u/page/{id}
     controller: App\Controller\Admin\PageController::edit
 
 # uploads
-admin_site_upload_handler:
-    path: /admin/site/{page}/upload
+user_admin_site_upload_handler:
+    path: /u/site/{page}/upload
     controller: App\Controller\Admin\UploadController::upload

@@ -74,7 +74,7 @@ class SiteController extends AbstractController
 
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('admin_site_list');
+            return $this->redirectToRoute('user_admin_site_list');
         }
 
         return $this->render(
@@ -94,7 +94,7 @@ class SiteController extends AbstractController
             $this->documentManager->persist($site);
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('admin_site_list');
+            return $this->redirectToRoute('user_admin_site_list');
         }
 
         return $this->render(
@@ -111,6 +111,6 @@ class SiteController extends AbstractController
         $site->setDeleted(true);
         $this->documentManager->flush();
 
-        return $this->redirectToRoute('admin_site_list');
+        return $this->redirectToRoute('user_admin_site_list');
     }
 }

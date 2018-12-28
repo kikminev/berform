@@ -2,16 +2,16 @@
 {% block body %}
     <h1>Sites</h1>
     <p>
-        <a href="{{ path('admin_site_create') }}">create</a>
+        <a href="{{ path('user_admin_site_create') }}">create</a>
     </p>
     {% for site in sites %}
         <p>
             {{ site.name }}
-            <a href="{{ path('admin_site_build', {id : site.id}) }}">preview</a>
+            <a href="{{ path('user_admin_site_build', {id : site.id}) }}">preview</a>
 
             {% if site.isTemplate != true %}
                 |
-                <a onclick="return confirm('Are you sure?');" href="{{ path('admin_site_delete', {id : site.id}) }}">delete</a>
+                <a onclick="return confirm('Are you sure?');" href="{{ path('user_admin_site_delete', {id : site.id}) }}">delete</a>
             {% endif %}
         </p>
     {% endfor %}

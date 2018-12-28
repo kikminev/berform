@@ -3,7 +3,7 @@
     Builder
     <div class="allPages">
         {% for page in pages %}
-            <a href="{{ path('admin_page_edit', {id:page.id}) }}">{{ page.name }}</a>
+            <a href="{{ path('user_admin_page_edit', {id:page.id}) }}">{{ page.name }}</a>
         {% endfor %}
     </div>
 {% endblock %}
