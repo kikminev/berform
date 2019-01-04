@@ -18,6 +18,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\Authenticator
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
 
@@ -31,4 +33,3 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/u, roles: ROLE_USER }
-         - { path: ^/profile, roles: ROLE_USER }

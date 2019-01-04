@@ -31,7 +31,7 @@ class LandingSiteController extends AbstractController
 //        $this->dm->flush();
 
         return new Response(
-            '<html><body>Welcome</body></html>'
+            '<html><body>s i t e m a x</body></html>'
         );
     }
 }

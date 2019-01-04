@@ -77,6 +77,12 @@ class Site
     protected $deleted;
 
     /**
+     * @var string $host
+     * @MongoDB\Field(type="string")
+     */
+    protected $host;
+
+    /**
      * @var \DateTime $updatedAt
      *
      * @MongoDB\Date
@@ -293,9 +299,9 @@ class Site
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isTemplate(): bool
+    public function isTemplate(): ?bool
     {
         return $this->isTemplate;
     }
@@ -306,5 +312,21 @@ class Site
     public function setIsTemplate(bool $isTemplate): void
     {
         $this->isTemplate = $isTemplate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost(): string
+    {
+        return $this->host;
+    }
+
+    /**
+     * @param string $host
+     */
+    public function setHost(string $host): void
+    {
+        $this->host = $host;
     }
 }

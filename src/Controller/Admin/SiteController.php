@@ -24,8 +24,6 @@ class SiteController extends AbstractController
 
     public function list()
     {
-        // todo: find pages for specifix user
-        $sites = $this->documentManager->getRepository(Site::class)->findAll();
         $qb = $this->documentManager->createQueryBuilder(Site::class);
         $qb->addOr($qb->expr()->field('deleted')->notEqual(true));
         $sites = $qb->getQuery()->execute();

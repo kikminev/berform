@@ -2,38 +2,36 @@
 
 namespace App\Controller;
 
+use App\Document\ContactMessage;
+use App\Form\ContactType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Document\Page;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserSiteController extends AbstractController
 {
-
-    // render the user site
-    public function __construct(DocumentManager $dm)
+    public function renderPage(Request $request, string $pageSlug, DocumentManager $documentManager)
     {
-        $this->dm = $dm;
-    }
+        // todo: when creating the site choose domain or subdomain
+        $site = $documentManager->getRepository(Site::class)->findOneBy(['host' => $request->getHost()]);
+        $page = $documentManager->getRepository(Page::class)->findOneBy(['site' => $site, 'slug' => $pageSlug]);
 
-    //
-    public function home()
-    {
-        //        $site = new Site();
-        //        $site->setName('A Foo Bar');
-        //
-        //        $this->dm->persist($site);
-        //
-        //        $page = new Page();
-        //        $page->setName('A Foo Bar');
-        //        $page->setSite($site);
-        //        $this->dm->persist($page);
-        //
-        //        $this->dm->flush();
+        if(null === $page) {
+            throw new NotFoundHttpException();
+        }
 
-        return new Response(
-            '<html><body>Welcome</body></html>'
+        $form = $this->createForm(ContactType::class, new ContactMessage());
+
+        return $this->render(
+            'UserSite/page.html.twig',
+            array(
+                'page' => $page,
+                'form' => $form->createView(),
+            )
         );
     }
 }

@@ -22,11 +22,19 @@ user_admin_site_delete:
     controller: App\Controller\Admin\SiteController::delete
 
 # pages
-admin_page_edit:
+user_admin_page_edit:
     path: /u/page/{id}
     controller: App\Controller\Admin\PageController::edit
 
 # uploads
-user_admin_site_upload_handler:
+admin_site_upload_handler:
     path: /u/site/{page}/upload
     controller: App\Controller\Admin\UploadController::upload
+
+app_logout:
+    path: /logout
+
+# user site render
+user_site_render_page:
+    path: /{pageSlug}
+    controller: App\Controller\UserSiteController::renderPage
