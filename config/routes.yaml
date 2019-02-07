@@ -1,6 +1,6 @@
-index:
-    path: /
-    controller: App\Controller\LandingSiteController::home
+#index:
+#    path: /
+#    controller: App\Controller\LandingSiteController::home
 admin:
     path: /u
     controller: App\Controller\Admin\SiteController::list
@@ -34,7 +34,8 @@ admin_site_upload_handler:
 app_logout:
     path: /logout
 
-# user site render
 user_site_render_page:
     path: /{pageSlug}
     controller: App\Controller\UserSiteController::renderPage
+    defaults:
+        pageSlug: home

@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <h1>{{ page.name }}</h1>
+    <p>
+    {{ page.content }}
+    </p>
+
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}

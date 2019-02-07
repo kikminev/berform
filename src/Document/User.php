@@ -15,25 +15,48 @@ class User implements UserInterface
     /**
      * @MongoDB\Id
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string $email
      * @MongoDB\Field(type="string")
      */
-    protected $email;
+    private $email;
 
     /**
      * @var string $password
      * @MongoDB\Field(type="string")
      */
-    protected $password;
+    private $password;
+
+    private $plainPassword;
 
     /**
      * @var bool $active
      * @MongoDB\Field(type="boolean")
      */
-    protected $active;
+    private $active;
+
+    /**
+     * @var array $sites
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Site", mappedBy="user")
+     */
+    protected $sites = array();
+
+    /**
+     * @var array $pages
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Page", mappedBy="user")
+     */
+    protected $pages = array();
+
+    /**
+     * @var array $files
+     *
+     * @MongoDB\ReferenceMany(targetDocument="File", mappedBy="user")
+     */
+    protected $files = array();
 
     /**
      * @var \DateTime $updatedAt
@@ -41,7 +64,7 @@ class User implements UserInterface
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="update")
      */
-    protected $updatedAt;
+    private $updatedAt;
 
     /**
      * @var \DateTime $createdAt
@@ -49,7 +72,7 @@ class User implements UserInterface
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="create")
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @return mixed
@@ -163,9 +186,67 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function getPlainPassword()
+    /**
+     * @return string
+     */
+    public function getPlainPassword(): ?string
     {
-        // TODO: Implement getPlainPassword() method.
-        return 'dadada';
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSites(): array
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param array $sites
+     */
+    public function setSites(array $sites): void
+    {
+        $this->sites = $sites;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPages(): array
+    {
+        return $this->pages;
+    }
+
+    /**
+     * @param array $pages
+     */
+    public function setPages(array $pages): void
+    {
+        $this->pages = $pages;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param array $files
+     */
+    public function setFiles(array $files): void
+    {
+        $this->files = $files;
     }
 }

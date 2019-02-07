@@ -14,47 +14,53 @@ class Page
     /**
      * @MongoDB\Id
      */
-    protected $id;
+    private $id;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Site")
      */
-    protected $site;
+    private $site;
+
+    /**
+     * @var User $user
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="pages")
+     */
+    private $user;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $name;
+    private $name;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $content;
+    private $content;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $keywords;
+    private $keywords;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $slug;
+    private $slug;
 
     /**
      * @MongoDB\Field(type="int")
      */
-    protected $order;
+    private $order;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $locale;
+    private $locale;
 
     /**
      * @MongoDB\Field(type="boolean")
      */
-    protected $active;
+    private $active;
 
     /**
      * @var \DateTime $updatedAt
@@ -62,7 +68,7 @@ class Page
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="update")
      */
-    protected $updatedAt;
+    private $updatedAt;
 
     /**
      * @var \DateTime $createdAt
@@ -70,7 +76,7 @@ class Page
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="create")
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @return mixed
@@ -246,5 +252,21 @@ class Page
     public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }

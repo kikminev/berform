@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Document\Page;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,16 +26,15 @@ class SiteController extends AbstractController
     public function list()
     {
         $qb = $this->documentManager->createQueryBuilder(Site::class);
-        $qb->addOr($qb->expr()->field('deleted')->notEqual(true));
+        $qb->addAnd($qb->expr()->field('user')->equals($this->getUser()));
+        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
         $sites = $qb->getQuery()->execute();
-
-        //$sites = $this->documentManager->getRepository(Site::class)->field
 
         return $this->render(
             'Admin/site_list.html.twig',
-            array(
+            [
                 'sites' => $sites,
-            )
+            ]
         );
     }
 
@@ -47,6 +47,8 @@ class SiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $site->setUser($this->getUser());
+
             $templateSite = $this->documentManager->getRepository(Site::class)->findOneBy(['isTemplate' => true]);
             $templatePages = $this->documentManager->getRepository(Page::class)->findBy(['site' => $templateSite]);
 
@@ -58,6 +60,7 @@ class SiteController extends AbstractController
                 $pageCopy = new Page();
                 $pageCopy->setName($page->getName());
                 $pageCopy->setSite($site);
+                $pageCopy->setUser($this->getUser());
                 $pageCopy->setActive(true);
                 $pageCopy->setOrder($page->getOrder());
                 $pageCopy->setContent($page->getContent());
@@ -77,9 +80,9 @@ class SiteController extends AbstractController
 
         return $this->render(
             'Admin/site_edit.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -97,9 +100,9 @@ class SiteController extends AbstractController
 
         return $this->render(
             'Admin/site_edit.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 

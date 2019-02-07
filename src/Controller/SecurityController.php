@@ -29,7 +29,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
+    }   
 
     /**
      * @Route("/register", name="app_registration")
@@ -53,7 +53,7 @@ class SecurityController extends AbstractController
             $documentManager->flush();
 
             // todo: login and redirect
-            return $this->redirectToRoute('replace_with_some_route');
+            return $this->redirectToRoute('admin');
         }
 
         return $this->render(

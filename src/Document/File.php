@@ -28,6 +28,12 @@ class File
     protected $fileUrl;
 
     /**
+     * @var User $user
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="files")
+     */
+    private $user;
+
+    /**
      * @MongoDB\ReferenceOne(targetDocument="Page")
      */
     protected $page;
@@ -131,4 +137,19 @@ class File
         $this->page = $page;
     }
 
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
 }

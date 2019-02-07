@@ -17,6 +17,12 @@ class Site
     protected $id;
 
     /**
+     * @var User $user
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="sites")
+     */
+    protected $user;
+
+    /**
      * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      */
@@ -205,7 +211,7 @@ class Site
     /**
      * @return bool
      */
-    public function getDeleted():? bool
+    public function getDeleted(): ?bool
     {
         return $this->deleted;
     }
@@ -328,5 +334,21 @@ class Site
     public function setHost(string $host): void
     {
         $this->host = $host;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
