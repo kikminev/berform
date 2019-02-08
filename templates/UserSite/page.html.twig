@@ -5,6 +5,13 @@
     {{ page.content }}
     </p>
 
+    <div id="imagesWrap">
+        {% for file in files %}
+            <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt="" /></div>
+        {% endfor %}
+    </div>
+
+
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}

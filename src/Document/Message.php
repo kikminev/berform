@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @MongoDB\Document
  */
-class ContactMessage
+class Message
 {
     /**
      * @MongoDB\Id
@@ -55,6 +55,12 @@ class ContactMessage
      * @MongoDB\ReferenceOne(targetDocument="Site")
      */
     protected $site;
+
+    /**
+     * @var User $user
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="sites")
+     */
+    protected $user;
 
     /**
      * @return mixed
@@ -158,5 +164,21 @@ class ContactMessage
     public function setSite($site): void
     {
         $this->site = $site;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }

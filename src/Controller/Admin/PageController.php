@@ -23,7 +23,7 @@ class PageController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    public function edit(Request $request, Page $page): ?Response
+    public function edit(Request $request, Page $page, FileRepository $fileRepository): ?Response
     {
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
@@ -33,13 +33,13 @@ class PageController extends AbstractController
             $this->documentManager->flush();
         }
 
-        $uploadedFiles = $this->documentManager->getRepository(File::class)->findBy(['page' => $page], ['order' => 'DESC ']);
+        $files = $fileRepository->findBy(['page' => $page], ['order' => 'DESC ']);
 
         return $this->render(
             'Admin/page_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'uploadedFiles' => $uploadedFiles,
+                'files' => $files,
                 'page' => $page,
             ]
         );

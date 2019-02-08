@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Document\ContactMessage;
+use App\Document\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,7 +27,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ContactMessage::class,
+            'data_class' => Message::class,
         ]);
     }
 }

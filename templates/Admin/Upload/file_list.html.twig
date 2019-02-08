@@ -1,5 +1,5 @@
 <div id="imagesWrap">
-    {% for file in uploadedFiles %}
+    {% for file in files %}
     <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt="" /></div>
     {% endfor %}
 </div>

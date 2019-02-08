@@ -34,8 +34,13 @@ admin_site_upload_handler:
 app_logout:
     path: /logout
 
+# user site
+user_site_contact:
+    path: /contact/send_message
+    controller: App\Controller\ContactController::sendMessage
+
 user_site_render_page:
-    path: /{pageSlug}
+    path: /{slug}
     controller: App\Controller\UserSiteController::renderPage
     defaults:
-        pageSlug: home
+        slug: home
