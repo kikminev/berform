@@ -1,5 +1,8 @@
 <div id="imagesWrap">
     {% for file in files %}
-    <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt="" /></div>
+    <div class="imgWrap" id="object_{{ file.id }}">
+        <img src="{{ file.fileUrl }}" alt="" />
+        <a class="deleteFile" onclick="a.deleteObject('{{ path('admin_site_upload_delete', {id : file.id}) }}', 'object_{{ file.id }}')">x</a>
+    </div>
     {% endfor %}
 </div>

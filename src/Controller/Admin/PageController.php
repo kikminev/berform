@@ -23,6 +23,13 @@ class PageController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
+    /**
+     * @param Request $request
+     * @param Page $page
+     * @param FileRepository $fileRepository
+     * @return null|Response
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
     public function edit(Request $request, Page $page, FileRepository $fileRepository): ?Response
     {
         $form = $this->createForm(PageType::class, $page);
@@ -33,7 +40,7 @@ class PageController extends AbstractController
             $this->documentManager->flush();
         }
 
-        $files = $fileRepository->findBy(['page' => $page], ['order' => 'DESC ']);
+        $files = $fileRepository->getPageFiles($page);
 
         return $this->render(
             'Admin/page_edit.html.twig',

@@ -14,6 +14,9 @@ class SiteType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('address', null, array('required' => false))
+            ->add('workingFrom', null, array('required' => false))
+            ->add('workingTo', null, array('required' => false))
             ->add('facebook', null, array('required' => false))
             ->add('instagram', null, array('required' => false))
             ->add('twitter', null, array('required' => false))

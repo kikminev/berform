@@ -22,6 +22,12 @@ class File
     protected $active;
 
     /**
+     * @var boolean $deleted
+     * @MongoDB\Field(type="bool")
+     */
+    protected $deleted;
+
+    /**
      * @var string $fileUrl
      * @MongoDB\Field(type="string")
      */
@@ -76,7 +82,7 @@ class File
     /**
      * @return string
      */
-    public function getFileUrl(): string
+    public function getFileUrl(): ?string
     {
         return $this->fileUrl;
     }
@@ -151,5 +157,21 @@ class File
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
     }
 }

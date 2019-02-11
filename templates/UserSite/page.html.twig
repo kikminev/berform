@@ -2,18 +2,37 @@
 {% block body %}
     <h1>{{ page.name }}</h1>
     <p>
-    {{ page.content }}
+        {{ page.content }}
     </p>
 
     <div id="imagesWrap">
         {% for file in files %}
-            <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt="" /></div>
+            <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt=""/></div>
         {% endfor %}
     </div>
 
-
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div id="contactForm">
+        <div id="contactFormStatus"></div>
+        {{ form_start(form, {'attr': {'id': 'inPageContactForm'}}) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <script>
+        $("#inPageContactForm").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            $.ajax({
+                type: "POST",
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function (response) {
+                    $('#contactFormStatus').html(response.message);
+                    setTimeout(2000, function () {
+                        $('#contactFormStatus').html('');
+                    })
+                }
+            });
+        });
+    </script>
 {% endblock %}

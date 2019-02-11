@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\FileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -31,6 +32,7 @@ class UploadController extends AbstractController
 
         if (self::MAX_ALLOWED_SIZE < $file->getSize()) {
             // todo: throw error
+            throw new \Exception('error');
         }
          //todo: create thumbnail
 
@@ -39,6 +41,15 @@ class UploadController extends AbstractController
         $id = $this->attachFileToPage($page, $url);
 
         return new JsonResponse(['url' => $url, 'id' => $id]);
+    }
+
+    public function deleteFile(File $file, DocumentManager $documentManager)
+    {
+        // todo: add security voter
+        $file->setDeleted(true);
+        $documentManager->flush();
+
+        return new JsonResponse(['message' => 'ok']);
     }
 
     private function attachFileToPage($page, $url)
@@ -57,6 +68,4 @@ class UploadController extends AbstractController
     {
         return md5(uniqid(false, true));
     }
-
-    // todo: delete file
 }

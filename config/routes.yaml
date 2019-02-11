@@ -31,6 +31,10 @@ admin_site_upload_handler:
     path: /u/site/{page}/upload
     controller: App\Controller\Admin\UploadController::upload
 
+admin_site_upload_delete:
+    path: /u/site/upload/{id}
+    controller: App\Controller\Admin\UploadController::deleteFile
+
 app_logout:
     path: /logout
 

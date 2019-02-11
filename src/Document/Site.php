@@ -49,10 +49,22 @@ class Site
     protected $twitter;
 
     /**
-     * @var string $address
+     * @var null|string $address
      * @MongoDB\Field(type="string")
      */
     protected $address;
+
+    /**
+     * @var null|string $workingFrom
+     * @MongoDB\Field(type="string")
+     */
+    protected $workingFrom;
+
+    /**
+     * @var null|string $workingTo
+     * @MongoDB\Field(type="string")
+     */
+    protected $workingTo;
 
     /**
      * @var string $phone
@@ -275,22 +287,6 @@ class Site
     /**
      * @return string
      */
-    public function getAddress(): string
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param string $address
-     */
-    public function setAddress(string $address): void
-    {
-        $this->address = $address;
-    }
-
-    /**
-     * @return string
-     */
     public function getPhone(): string
     {
         return $this->phone;
@@ -351,4 +347,54 @@ class Site
     {
         $this->user = $user;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param null|string $address
+     */
+    public function setAddress(?string $address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWorkingFrom(): ?string
+    {
+        return $this->workingFrom;
+    }
+
+    /**
+     * @param null|string $workingFrom
+     */
+    public function setWorkingFrom(?string $workingFrom): void
+    {
+        $this->workingFrom = $workingFrom;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWorkingTo(): ?string
+    {
+        return $this->workingTo;
+    }
+
+    /**
+     * @param null|string $workingTo
+     */
+    public function setWorkingTo(?string $workingTo): void
+    {
+        $this->workingTo = $workingTo;
+    }
+
+
 }

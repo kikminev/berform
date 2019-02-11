@@ -12,4 +12,19 @@ class FileRepository extends DocumentRepository
     {
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(File::class));
     }
+
+    /**
+     * @param $page
+     * @return mixed
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function getPageFiles($page)
+    {
+
+        return $this->dm->createQueryBuilder(File::class)
+            ->field('page')->equals($page)
+            ->field('deleted')->notEqual(true)
+            ->sort('order', 'DESC')
+            ->getQuery()->execute();
+    }
 }
