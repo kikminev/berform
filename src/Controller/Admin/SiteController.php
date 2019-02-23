@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Document\Page;
 use phpDocumentor\Reflection\Types\This;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,9 +87,9 @@ class SiteController extends AbstractController
         );
     }
 
-    public function edit(Request $request, Site $site): ?Response
+    public function edit(Request $request, Site $site, ParameterBagInterface $param): ?Response
     {
-        $form = $this->createForm(SiteType::class, $site);
+        $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $param->get('supported_languages')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

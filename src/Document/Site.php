@@ -23,6 +23,12 @@ class Site
     protected $user;
 
     /**
+     * @var Domain|null $domain
+     * @MongoDB\ReferenceOne(targetDocument="Domain", inversedBy="site")
+     */
+    protected $domain;
+
+    /**
      * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      */
@@ -49,10 +55,10 @@ class Site
     protected $twitter;
 
     /**
-     * @var null|string $address
-     * @MongoDB\Field(type="string")
+     * @var array $translatedAddress
+     * @MongoDB\Field(type="hash")
      */
-    protected $address;
+    private $translatedAddress = array();
 
     /**
      * @var null|string $workingFrom
@@ -99,6 +105,18 @@ class Site
      * @MongoDB\Field(type="string")
      */
     protected $host;
+
+    /**
+     * @var string $defaultLanguage
+     * @MongoDB\Field(type="string")
+     */
+    protected $defaultLanguage;
+
+    /**
+     * @var array $supportedLanguages
+     * @MongoDB\Field(type="hash")
+     */
+    protected $supportedLanguages = array();
 
     /**
      * @var \DateTime $updatedAt
@@ -349,19 +367,19 @@ class Site
     }
 
     /**
-     * @return null|string
+     * @return array
      */
-    public function getAddress(): ?string
+    public function getTranslatedAddress(): array
     {
-        return $this->address;
+        return $this->translatedAddress;
     }
 
     /**
-     * @param null|string $address
+     * @param array $translatedAddress
      */
-    public function setAddress(?string $address): void
+    public function setTranslatedAddress(array $translatedAddress): void
     {
-        $this->address = $address;
+        $this->translatedAddress = $translatedAddress;
     }
 
     /**
@@ -396,5 +414,56 @@ class Site
         $this->workingTo = $workingTo;
     }
 
+    /**
+     * @return Domain|null
+     */
+    public function getDomain(): ?Domain
+    {
+        return $this->domain;
+    }
 
+    /**
+     * @param Domain|null $domain
+     */
+    public function setDomain(?Domain $domain): void
+    {
+        $this->domain = $domain;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLanguage(): string
+    {
+        return $this->defaultLanguage;
+    }
+
+    /**
+     * @param string $defaultLanguage
+     */
+    public function setDefaultLanguage(string $defaultLanguage): void
+    {
+        $this->defaultLanguage = $defaultLanguage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSupportedLanguages(): array
+    {
+        return $this->supportedLanguages;
+    }
+
+    /**
+     * @param array $supportedLanguages
+     */
+    public function setSupportedLanguages(array $supportedLanguages): void
+    {
+        $this->supportedLanguages = $supportedLanguages;
+    }
 }

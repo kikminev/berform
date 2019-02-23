@@ -3,11 +3,13 @@
 #    controller: App\Controller\LandingSiteController::home
 admin:
     path: /u
-    controller: App\Controller\Admin\SiteController::list
+    controller: App\Controller\Admin\DashboardController::dashboard
 
 user_admin_site_build:
     path: /u/site/build/{id}
     controller: App\Controller\Admin\BuilderController::buildSite
+
+# sites
 user_admin_site_list:
     path: /u/site/list
     controller: App\Controller\Admin\SiteController::list
@@ -20,6 +22,11 @@ user_admin_site_edit:
 user_admin_site_delete:
     path: /u/site/delete/{id}
     controller: App\Controller\Admin\SiteController::delete
+
+# domains
+user_admin_domain_create:
+    path: /u/domain/create
+    controller: App\Controller\Admin\DomainController::create
 
 # pages
 user_admin_page_edit:

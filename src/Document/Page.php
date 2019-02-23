@@ -4,7 +4,6 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Timestampable;
 
 /**
  * @MongoDB\Document
@@ -35,16 +34,6 @@ class Page
     /**
      * @MongoDB\Field(type="string")
      */
-    private $content;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    private $keywords;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
     private $slug;
 
     /**
@@ -61,6 +50,30 @@ class Page
      * @MongoDB\Field(type="boolean")
      */
     private $active;
+
+    /**
+     * @var array $translatedTitle
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedTitle = array();
+
+    /**
+     * @var array $translatedContent
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedContent = array();
+
+    /**
+     * @var array $translatedKeywords
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedKeywords = array();
+
+    /**
+     * @var array $translatedMetaDescription
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedMetaDescription = array();
 
     /**
      * @var \DateTime $updatedAt
@@ -191,38 +204,6 @@ class Page
     }
 
     /**
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param null|string $content
-     */
-    public function setContent(?string $content): void
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * @return string
-     */
-    public function getKeywords(): ?string
-    {
-        return $this->keywords;
-    }
-
-    /**
-     * @param mixed $keywords
-     */
-    public function setKeywords(?string $keywords): void
-    {
-        $this->keywords = $keywords;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getUpdatedAt(): \DateTime
@@ -268,5 +249,69 @@ class Page
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedTitle(): array
+    {
+        return $this->translatedTitle;
+    }
+
+    /**
+     * @param array $translatedTitle
+     */
+    public function setTranslatedTitle(array $translatedTitle): void
+    {
+        $this->translatedTitle = $translatedTitle;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedContent(): array
+    {
+        return $this->translatedContent;
+    }
+
+    /**
+     * @param array $translatedContent
+     */
+    public function setTranslatedContent(array $translatedContent): void
+    {
+        $this->translatedContent = $translatedContent;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedKeywords(): array
+    {
+        return $this->translatedKeywords;
+    }
+
+    /**
+     * @param array $translatedKeywords
+     */
+    public function setTranslatedKeywords(array $translatedKeywords): void
+    {
+        $this->translatedKeywords = $translatedKeywords;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedMetaDescription(): array
+    {
+        return $this->translatedMetaDescription;
+    }
+
+    /**
+     * @param array $translatedMetaDescription
+     */
+    public function setTranslatedMetaDescription(array $translatedMetaDescription): void
+    {
+        $this->translatedMetaDescription = $translatedMetaDescription;
     }
 }

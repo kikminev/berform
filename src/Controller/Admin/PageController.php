@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Repository\FileRepository;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,9 +31,9 @@ class PageController extends AbstractController
      * @return null|Response
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function edit(Request $request, Page $page, FileRepository $fileRepository): ?Response
+    public function edit(Request $request, Page $page, FileRepository $fileRepository, ParameterBagInterface $param): ?Response
     {
-        $form = $this->createForm(PageType::class, $page);
+        $form = $this->createForm(PageType::class, $page, ['supported_languages' => $param->get('supported_languages')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
