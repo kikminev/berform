@@ -22,6 +22,7 @@ class PageType extends AbstractType
             $builder->add('keywords_'.$language, TextareaType::class, ['mapped' => false]);
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false]);
         }
+        $builder->add('active', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }
 

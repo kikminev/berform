@@ -28,15 +28,54 @@ class PageController extends AbstractController
      * @param Request $request
      * @param Page $page
      * @param FileRepository $fileRepository
-     * @return null|Response
+     * @return Response
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function edit(Request $request, Page $page, FileRepository $fileRepository, ParameterBagInterface $param): ?Response
-    {
-        $form = $this->createForm(PageType::class, $page, ['supported_languages' => $param->get('supported_languages')]);
+    public function edit(
+        Request $request,
+        Page $page,
+        FileRepository $fileRepository,
+        ParameterBagInterface $param
+    ): Response {
+        $supportedLanguages = $param->get('supported_languages');
+        $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
+        if (!$form->isSubmitted()) {
+            $currentTranslatedTitles = $page->getTranslatedTitle();
+            $currentTranslatedContent = $page->getTranslatedContent();
+            $currentTranslatedKeywords = $page->getTranslatedKeywords();
+            $currentTranslatedMetaDescription = $page->getTranslatedMetaDescription();
+            foreach ($supportedLanguages as $language) {
+                $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
+                $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
+                $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
+                $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
+                $form->get('title_' . $language)->setData($translatedTitle);
+                $form->get('content_' . $language)->setData($translatedContent);
+                $form->get('keywords_' . $language)->setData($translatedKeywords);
+                $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
+            }
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $updatedTranslatedTitle = [];
+            $updatedTranslatedContent = [];
+            $updatedTranslatedKeywords = [];
+            $updatedTranslatedMetaDescription = [];
+            foreach ($supportedLanguages as $language) {
+                $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
+                $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
+                $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
+                $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
+            }
+
+            $page->setTranslatedTitle($updatedTranslatedTitle);
+            $page->setTranslatedContent($updatedTranslatedContent);
+            $page->setTranslatedKeywords($updatedTranslatedKeywords);
+            $page->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
+
             $this->documentManager->persist($page);
             $this->documentManager->flush();
         }
