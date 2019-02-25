@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+</head>
+<body>
+<div class="allPages">
+    {% for page in pages %}
+        <a href="{{ path('user_site_render_page', {slug:page.slug}) }}">{{ page.name }}</a>
+    {% endfor %}
+</div>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

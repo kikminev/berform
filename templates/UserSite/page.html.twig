@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>{{ page.name }}</h1>
+    <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
     <p>
-        {{ page.content }}
+        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale] }}{% endif %}
     </p>
 
     <div id="imagesWrap">
