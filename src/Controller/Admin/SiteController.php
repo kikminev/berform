@@ -39,11 +39,13 @@ class SiteController extends AbstractController
         );
     }
 
-    public function create(Request $request): Response
+    public function create(Request $request, ParameterBagInterface $param): Response
     {
         // todo: copy pages from template
+
+        $supportedLanguages = $param->get('supported_languages');
         $site = new Site();
-        $form = $this->createForm(SiteType::class, $site);
+        $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,9 +66,7 @@ class SiteController extends AbstractController
                 $pageCopy->setUser($this->getUser());
                 $pageCopy->setActive(true);
                 $pageCopy->setOrder($page->getOrder());
-                $pageCopy->setContent($page->getContent());
                 $pageCopy->setSlug($page->getSlug());
-                $pageCopy->setKeywords($page->getKeywords());
                 $pageCopy->setLocale($page->getLocale());
                 $pageCopy->setUpdatedAt(new \DateTime());
                 $pageCopy->setCreatedAt(new \DateTime());
@@ -76,7 +76,7 @@ class SiteController extends AbstractController
 
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_site_list');
+            return $this->redirectToRoute('admin');
         }
 
         return $this->render(
@@ -89,14 +89,15 @@ class SiteController extends AbstractController
 
     public function edit(Request $request, Site $site, ParameterBagInterface $param): ?Response
     {
-        $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $param->get('supported_languages')]);
+        $form = $this->createForm(SiteType::class,
+            $site);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->documentManager->persist($site);
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_site_list');
+            return $this->redirectToRoute('admin');
         }
 
         return $this->render(
@@ -113,6 +114,6 @@ class SiteController extends AbstractController
         $site->setDeleted(true);
         $this->documentManager->flush();
 
-        return $this->redirectToRoute('user_admin_site_list');
+        return $this->redirectToRoute('admin');
     }
 }

@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Document\Page;
-use App\Form\Admin\SiteType;
-use Symfony\Component\Routing\Annotation\Route;
 
 class BuilderController extends AbstractController
 {

@@ -7,11 +7,6 @@ use App\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use App\Document\Site;
-use App\Document\Page;
-use App\Form\Admin\SiteType;
-use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
