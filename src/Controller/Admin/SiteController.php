@@ -89,11 +89,26 @@ class SiteController extends AbstractController
 
     public function edit(Request $request, Site $site, ParameterBagInterface $param): ?Response
     {
-        $form = $this->createForm(SiteType::class,
-            $site);
+        $supportedLanguages = $param->get('supported_languages');
+        $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
 
+        // todo: move this to transformer
+        if (!$form->isSubmitted()) {
+            $currentTranslatedAddress = $site->getTranslatedAddress();
+            foreach ($supportedLanguages as $language) {
+                $translatedAddress = isset($currentTranslatedAddress[$language]) ? $currentTranslatedAddress[$language] : '';
+                $form->get('address_' . $language)->setData($translatedAddress);
+            }
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $translatedSiteAddress = [];
+            foreach ($supportedLanguages as $language) {
+                $translatedSiteAddress[$language] = $form['address_' . $language]->getData();
+            }
+
+            $site->setTranslatedAddress($translatedSiteAddress);
             $this->documentManager->persist($site);
             $this->documentManager->flush();
 

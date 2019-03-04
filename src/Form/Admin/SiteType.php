@@ -39,7 +39,7 @@ class SiteType extends AbstractType
 
         $translatedLanguages = [];
         foreach ($supportedLanguages as $key => $language) {
-            $translatedLanguages[$this->translator->trans('language_label_'.$language)] = $key;
+            $translatedLanguages[$this->translator->trans('language_label_' . $language)] = $key;
         }
 
         $builder
@@ -65,9 +65,9 @@ class SiteType extends AbstractType
 
         $builder->get('supportedLanguages')->addModelTransformer($this->supportedLanguageToStringTransformer);
 
-        //foreach ($options['supported_languages'] as $language) {
-        //    $builder->add('address_'.$language, TextType::class, ['mapped' => false]);
-        //}
+        foreach ($supportedLanguages as $language) {
+            $builder->add('address_' . $language, TextType::class, ['mapped' => false]);
+        }
 
         $builder->add('workingFrom', null, ['required' => false])
             ->add('workingTo', null, ['required' => false])
