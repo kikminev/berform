@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @MongoDB\Document
  */
-class Page
+class Post
 {
     /**
      * @MongoDB\Id
@@ -16,15 +16,10 @@ class Page
     private $id;
 
     /**
+     * @var Site $site
      * @MongoDB\ReferenceOne(targetDocument="Site")
      */
     private $site;
-
-    /**
-     * @var null|Page $parent
-     * @MongoDB\ReferenceOne(targetDocument="Page")
-     */
-    private $parent;
 
     /**
      * @var User $user
@@ -33,26 +28,19 @@ class Page
     private $user;
 
     /**
+     * @var null|string $name
      * @MongoDB\Field(type="string")
      */
     private $name;
 
     /**
+     * @var null|string $slug
      * @MongoDB\Field(type="string")
      */
     private $slug;
 
     /**
-     * @MongoDB\Field(type="int")
-     */
-    private $order;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    private $locale;
-
-    /**
+     * @var null|bool $active
      * @MongoDB\Field(type="boolean")
      */
     private $active;
@@ -82,18 +70,19 @@ class Page
     private $translatedMetaDescription = array();
 
     /**
-     * @var null|array $files
-     * @MongoDB\EmbedMany(targetDocument="File")
-     */
-    private $files = array();
-
-    /**
      * @var \DateTime $updatedAt
      *
      * @MongoDB\Date
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
+
+    /**
+     * @var \DateTime $publishedAt
+     *
+     * @MongoDB\Date
+     */
+    private $publishedAt;
 
     /**
      * @var \DateTime $createdAt
@@ -112,139 +101,19 @@ class Page
     }
 
     /**
-     * @param mixed $id
+     * @return Site
      */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSite()
+    public function getSite(): Site
     {
         return $this->site;
     }
 
     /**
-     * @param mixed $site
+     * @param Site $site
      */
-    public function setSite($site): void
+    public function setSite(Site $site): void
     {
         $this->site = $site;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * @param mixed $locale
-     */
-    public function setLocale($locale): void
-    {
-        $this->locale = $locale;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param mixed $active
-     */
-    public function setActive($active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder(): int
-    {
-        return $this->order;
-    }
-
-    /**
-     * @param int $order
-     */
-    public function setOrder(int $order): void
-    {
-        $this->order = $order;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**
@@ -261,6 +130,54 @@ class Page
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param null|string $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param null|string $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
     }
 
     /**
@@ -328,39 +245,50 @@ class Page
     }
 
     /**
-     * @return Page|null
+     * @return \DateTime
      */
-    public function getParent(): ?Page
+    public function getUpdatedAt(): \DateTime
     {
-        return $this->parent;
+        return $this->updatedAt;
     }
 
     /**
-     * @param Page|null $parent
+     * @param \DateTime $updatedAt
      */
-    public function setParent(?Page $parent): void
+    public function setUpdatedAt(\DateTime $updatedAt): void
     {
-        $this->parent = $parent;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @return array|null
+     * @return \DateTime
      */
-    public function getFiles(): ?array
+    public function getCreatedAt(): \DateTime
     {
-        return $this->files;
+        return $this->createdAt;
     }
 
     /**
-     * @param array|null $files
+     * @param \DateTime $createdAt
      */
-    public function setFiles(?array $files): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
-        $this->files = $files;
+        $this->createdAt = $createdAt;
     }
 
-    public function __toString()
+    /**
+     * @return \DateTime
+     */
+    public function getPublishedAt(): \DateTime
     {
-        return $this->getName();
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param \DateTime $publishedAt
+     */
+    public function setPublishedAt(\DateTime $publishedAt): void
+    {
+        $this->publishedAt = $publishedAt;
     }
 }

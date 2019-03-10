@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Document\Page;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,22 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Form\Admin\SiteType;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\SiteRepository;
-use Symfony\Component\Validator\Constraints\Date;
 
 class SiteController extends AbstractController
 {
-    private $documentManager;
-
-    public function __construct(DocumentManager $documentManager)
+    /**
+     * @return Response
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function list(DocumentManager $documentManager)
     {
-        $this->documentManager = $documentManager;
-    }
-
-    public function list()
-    {
-        $qb = $this->documentManager->createQueryBuilder(Site::class);
+        $qb = $documentManager->createQueryBuilder(Site::class);
         $qb->addAnd($qb->expr()->field('user')->equals($this->getUser()));
         $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
         $sites = $qb->getQuery()->execute();
@@ -39,12 +32,12 @@ class SiteController extends AbstractController
         );
     }
 
-    public function create(Request $request, ParameterBagInterface $param): Response
+    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager): Response
     {
         // todo: copy pages from template
 
-        $supportedLanguages = $param->get('supported_languages');
         $site = new Site();
+        $supportedLanguages = $param->get('supported_languages');
         $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
@@ -52,11 +45,11 @@ class SiteController extends AbstractController
 
             $site->setUser($this->getUser());
 
-            $templateSite = $this->documentManager->getRepository(Site::class)->findOneBy(['isTemplate' => true]);
-            $templatePages = $this->documentManager->getRepository(Page::class)->findBy(['site' => $templateSite]);
+            $templateSite = $documentManager->getRepository(Site::class)->findOneBy(['isTemplate' => true]);
+            $templatePages = $documentManager->getRepository(Page::class)->findBy(['site' => $templateSite]);
 
-            $this->documentManager->persist($site);
-            $this->documentManager->flush();
+            $documentManager->persist($site);
+            $documentManager->flush();
 
             /** @var Page $page */
             foreach ($templatePages as $page) {
@@ -71,10 +64,10 @@ class SiteController extends AbstractController
                 $pageCopy->setUpdatedAt(new \DateTime());
                 $pageCopy->setCreatedAt(new \DateTime());
 
-                $this->documentManager->persist($pageCopy);
+                $documentManager->persist($pageCopy);
             }
 
-            $this->documentManager->flush();
+            $documentManager->flush();
 
             return $this->redirectToRoute('admin');
         }
@@ -87,8 +80,10 @@ class SiteController extends AbstractController
         );
     }
 
-    public function edit(Request $request, Site $site, ParameterBagInterface $param): ?Response
+    public function edit(Request $request, Site $site, ParameterBagInterface $param, DocumentManager $documentManager): ?Response
     {
+        $this->denyAccessUnlessGranted('edit', $site);
+
         $supportedLanguages = $param->get('supported_languages');
         $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
@@ -109,8 +104,8 @@ class SiteController extends AbstractController
             }
 
             $site->setTranslatedAddress($translatedSiteAddress);
-            $this->documentManager->persist($site);
-            $this->documentManager->flush();
+            $documentManager->persist($site);
+            $documentManager->flush();
 
             return $this->redirectToRoute('admin');
         }
@@ -123,11 +118,13 @@ class SiteController extends AbstractController
         );
     }
 
-    public function delete(Request $request, Site $site): ?Response
+    public function delete(Site $site, DocumentManager $documentManager): ?Response
     {
+        $this->denyAccessUnlessGranted('edit', $site);
+
         $site->setActive(false);
         $site->setDeleted(true);
-        $this->documentManager->flush();
+        $documentManager->flush();
 
         return $this->redirectToRoute('admin');
     }

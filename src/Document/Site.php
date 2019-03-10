@@ -107,7 +107,7 @@ class Site
     protected $host;
 
     /**
-     * @var string $defaultLanguage
+     * @var null|string $defaultLanguage
      * @MongoDB\Field(type="string")
      */
     protected $defaultLanguage;
@@ -436,17 +436,17 @@ class Site
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDefaultLanguage(): string
+    public function getDefaultLanguage(): ?string
     {
         return $this->defaultLanguage;
     }
 
     /**
-     * @param string $defaultLanguage
+     * @param null|string $defaultLanguage
      */
-    public function setDefaultLanguage(string $defaultLanguage): void
+    public function setDefaultLanguage(?string $defaultLanguage): void
     {
         $this->defaultLanguage = $defaultLanguage;
     }

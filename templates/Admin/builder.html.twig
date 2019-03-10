@@ -5,5 +5,8 @@
         {% for page in pages %}
             <a href="{{ path('user_admin_page_edit', {id:page.id}) }}">{{ page.name }}</a>
         {% endfor %}
+        <a href="{{ path('user_admin_page_create', {site:site.id}) }}">+ page</a>
+
+        <a href="{{ path('user_admin_post_create', {site:site.id}) }}">+ post</a>
     </div>
 {% endblock %}

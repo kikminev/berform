@@ -66,7 +66,7 @@ class SiteType extends AbstractType
         $builder->get('supportedLanguages')->addModelTransformer($this->supportedLanguageToStringTransformer);
 
         foreach ($supportedLanguages as $language) {
-            $builder->add('address_' . $language, TextType::class, ['mapped' => false]);
+            $builder->add('address_' . $language, TextType::class, ['mapped' => false, 'required' => false]);
         }
 
         $builder->add('workingFrom', null, ['required' => false])

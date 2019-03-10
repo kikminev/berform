@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Repository\FileRepository;
+use App\Document\Site;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -10,7 +10,6 @@ use App\Service\FileUploader\S3FileUploader;
 use Symfony\Component\HttpFoundation\File\File as FileUpload;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Document\File;
-use App\Document\Page;
 
 class UploadController extends AbstractController
 {
@@ -23,7 +22,14 @@ class UploadController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    public function upload(Page $page, Request $request, S3FileUploader $fileUploader)
+    /**
+     * @param Site $site
+     * @param Request $request
+     * @param S3FileUploader $fileUploader
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function upload(Site $site, Request $request, S3FileUploader $fileUploader)
     {
         $filesBag = $request->files->get('files');
 
@@ -38,25 +44,29 @@ class UploadController extends AbstractController
 
         $newFileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
         $url = $fileUploader->upload($newFileName, $file);
-        $id = $this->attachFileToPage($page, $url);
+        $id = $this->attachFileToSite($site, $url);
 
         return new JsonResponse(['url' => $url, 'id' => $id]);
     }
 
     public function deleteFile(File $file, DocumentManager $documentManager)
     {
-        // todo: add security voter
+        $this->denyAccessUnlessGranted('edit', $file);
+
         $file->setDeleted(true);
         $documentManager->flush();
 
         return new JsonResponse(['message' => 'ok']);
     }
 
-    private function attachFileToPage($page, $url)
+    private function attachFileToSite(Site $site, $url)
     {
+        $this->denyAccessUnlessGranted('edit', $site);
+
         $file = new File();
-        $file->setPage($page);
+        $file->setSite($site);
         $file->setFileUrl($url);
+        $file->setUser($this->getUser());
 
         $this->documentManager->persist($file);
         $this->documentManager->flush($file);

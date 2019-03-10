@@ -40,9 +40,16 @@ class File
     private $user;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Page")
+     * @var null|Site $site
+     * @MongoDB\ReferenceOne(targetDocument="Site")
      */
-    protected $page;
+    private $site;
+
+    /**
+     * @var null|Post $post
+     * @MongoDB\ReferenceOne(targetDocument="Post")
+     */
+    protected $post;
 
     /**
      * @var \DateTime $updatedAt
@@ -128,22 +135,6 @@ class File
     }
 
     /**
-     * @return Page
-     */
-    public function getPage(): Page
-    {
-        return $this->page;
-    }
-
-    /**
-     * @param Page $page
-     */
-    public function setPage(Page $page): void
-    {
-        $this->page = $page;
-    }
-
-    /**
      * @return User
      */
     public function getUser(): User
@@ -173,5 +164,37 @@ class File
     public function setDeleted(bool $deleted): void
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return Site|null
+     */
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param Site|null $site
+     */
+    public function setSite(?Site $site): void
+    {
+        $this->site = $site;
+    }
+
+    /**
+     * @return Post|null
+     */
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param Post|null $post
+     */
+    public function setPost(?Post $post): void
+    {
+        $this->post = $post;
     }
 }

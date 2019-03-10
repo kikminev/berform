@@ -15,7 +15,7 @@ class DomainType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('active', CheckboxType::class)
+            ->add('active', CheckboxType::class, ['required' => false])
             ->add('save', SubmitType::class);
     }
 

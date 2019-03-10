@@ -27,15 +27,32 @@ user_admin_site_delete:
 user_admin_domain_create:
     path: /u/domain/create
     controller: App\Controller\Admin\DomainController::create
+user_admin_domain_edit:
+    path: /u/domain/edit/{id}
+    controller: App\Controller\Admin\DomainController::edit
+user_admin_domain_delete:
+    path: /u/domain/delete/{id}
+    controller: App\Controller\Admin\DomainController::delete
 
 # pages
+user_admin_page_create:
+    path: /u/page/create/{site}
+    controller: App\Controller\Admin\PageController::create
 user_admin_page_edit:
     path: /u/page/{id}
     controller: App\Controller\Admin\PageController::edit
 
+# posts
+user_admin_post_create:
+    path: /u/post/create/{site}
+    controller: App\Controller\Admin\PostController::create
+user_admin_post_edit:
+    path: /u/post/{id}
+    controller: App\Controller\Admin\PostController::edit
+
 # uploads
 admin_site_upload_handler:
-    path: /u/site/{page}/upload
+    path: /u/site/{site}/upload
     controller: App\Controller\Admin\UploadController::upload
 
 admin_site_upload_delete:

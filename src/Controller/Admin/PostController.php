@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Document\Post;
+use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,11 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
-use App\Document\Page;
-use App\Document\File;
-use App\Form\Admin\PageType;
 
-class PageController extends AbstractController
+class PostController extends AbstractController
 {
     private $documentManager;
 
@@ -25,7 +24,7 @@ class PageController extends AbstractController
 
     /**
      * @param Request $request
-     * @param Page $page
+     * @param Post $post
      * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
      * @return Response
@@ -33,22 +32,22 @@ class PageController extends AbstractController
      */
     public function edit(
         Request $request,
-        Page $page,
+        Post $post,
         FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
 
-        $this->denyAccessUnlessGranted('edit', $page);
+        $this->denyAccessUnlessGranted('edit', $post);
 
         $supportedLanguages = $param->get('supported_languages');
-        $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
+        $form = $this->createForm(PostType::class, $post, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            $currentTranslatedTitles = $page->getTranslatedTitle();
-            $currentTranslatedContent = $page->getTranslatedContent();
-            $currentTranslatedKeywords = $page->getTranslatedKeywords();
-            $currentTranslatedMetaDescription = $page->getTranslatedMetaDescription();
+            $currentTranslatedTitles = $post->getTranslatedTitle();
+            $currentTranslatedContent = $post->getTranslatedContent();
+            $currentTranslatedKeywords = $post->getTranslatedKeywords();
+            $currentTranslatedMetaDescription = $post->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
@@ -74,38 +73,25 @@ class PageController extends AbstractController
                 $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
-            $page->setTranslatedTitle($updatedTranslatedTitle);
-            $page->setTranslatedContent($updatedTranslatedContent);
-            $page->setTranslatedKeywords($updatedTranslatedKeywords);
-            $page->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
+            $post->setTranslatedTitle($updatedTranslatedTitle);
+            $post->setTranslatedContent($updatedTranslatedContent);
+            $post->setTranslatedKeywords($updatedTranslatedKeywords);
+            $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
 
-            $this->documentManager->persist($page);
-
-            $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
-            if ($attachedFiles) {
-                $attachedFilesIds = explode(';', $attachedFiles);
-                $files = $this->documentManager->createQueryBuilder(File::class)->field('_id')->in($attachedFilesIds);
-                foreach ($files as $file) {
-                    echo $file->getId();
-                }
-            }
-exit;
-
-
+            $this->documentManager->persist($post);
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
+            return $this->redirectToRoute('user_admin_site_build', ['id' => $post->getSite()->getId()]);
         }
 
-        $files = $fileRepository->getPageFiles($page);
+        $files = $fileRepository->getPostFiles($post);
 
         return $this->render(
-            'Admin/page_edit.html.twig',
+            'Admin/post_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'files' => $files,
-                'page' => $page,
-                'site' => $page->getSite(),
+                'post' => $post,
             ]
         );
     }
@@ -124,16 +110,16 @@ exit;
 
         $this->denyAccessUnlessGranted('edit', $site);
 
-        $page = new Page();
+        $post = new Post();
         $supportedLanguages = $param->get('supported_languages');
-        $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
+        $form = $this->createForm(PostType::class, $post, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            $currentTranslatedTitles = $page->getTranslatedTitle();
-            $currentTranslatedContent = $page->getTranslatedContent();
-            $currentTranslatedKeywords = $page->getTranslatedKeywords();
-            $currentTranslatedMetaDescription = $page->getTranslatedMetaDescription();
+            $currentTranslatedTitles = $post->getTranslatedTitle();
+            $currentTranslatedContent = $post->getTranslatedContent();
+            $currentTranslatedKeywords = $post->getTranslatedKeywords();
+            $currentTranslatedMetaDescription = $post->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
@@ -159,29 +145,24 @@ exit;
                 $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
-            $page->setTranslatedTitle($updatedTranslatedTitle);
-            $page->setTranslatedContent($updatedTranslatedContent);
-            $page->setTranslatedKeywords($updatedTranslatedKeywords);
-            $page->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
-            $page->setSite($site);
-            $page->setUser($this->getUser());
+            $post->setTranslatedTitle($updatedTranslatedTitle);
+            $post->setTranslatedContent($updatedTranslatedContent);
+            $post->setTranslatedKeywords($updatedTranslatedKeywords);
+            $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
+            $post->setSite($site);
+            $post->setUser($this->getUser());
 
-            $this->documentManager->persist($page);
-
-            $uploadedFiles = $request->request->get('attachedFiles');
-            print_r($uploadedFiles); exit;
-
+            $this->documentManager->persist($post);
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $site->getId()]);
         }
 
         return $this->render(
-            'Admin/page_edit.html.twig',
+            'Admin/post_edit.html.twig',
             [
-                'site' => $site,
                 'form' => $form->createView(),
-                'page' => $page,
+                'post' => $post,
             ]
         );
     }

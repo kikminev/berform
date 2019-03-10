@@ -1,3 +1,4 @@
+{% if files is defined %}
 <div id="imagesWrap">
     {% for file in files %}
     <div class="imgWrap" id="object_{{ file.id }}">
@@ -6,3 +7,4 @@
     </div>
     {% endfor %}
 </div>
+{% endif %}

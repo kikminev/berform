@@ -4,5 +4,8 @@
 {% for domain in domains %}
     <div>
         {{ domain.name }}
+        <a href="{{ path('user_admin_domain_edit', {id : domain.id}) }}">edit</a>
+        <a href="{{ path('user_admin_domain_edit', {id : domain.id}) }}">edit</a>
+        <a onclick="return confirm('Are you sure?');" href="{{ path('user_admin_domain_delete', {id : domain.id}) }}">delete</a>
     </div>
 {% endfor %}

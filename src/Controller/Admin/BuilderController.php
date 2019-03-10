@@ -30,6 +30,7 @@ class BuilderController extends AbstractController
             'Admin/builder.html.twig',
             array(
                 'pages' => $pages,
+                'site' => $site,
             )
         );
     }

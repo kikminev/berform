@@ -1,4 +1,8 @@
-<input id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler', {'page' : page.id}) }}" multiple />
+{# todo: make a form class #}
+<form method="post">
+    <input id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler', {'site' : site.id}) }}" multiple />
+</form>
+
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -12,6 +16,7 @@
             done: function (e, data) {
                 const result = data.result;
                 $('#imagesWrap').append('<div class="imgWrap" id="upload_'+result.id+'"><img src="'+result.url+'" /></div>');
+                $('.attachedFiles').val($('.attachedFiles').val() + result.id + ';');
             }
         });
     });
