@@ -84,7 +84,13 @@ class PageController extends AbstractController
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $files = $this->documentManager->createQueryBuilder(File::class)->field('_id')->in($attachedFilesIds);
+                $mongoIds = [];
+                foreach ($attachedFilesIds as $id) {
+                    if (!empty($id)) {
+                        $mongoIds[] = new \MongoId($id);
+                    }
+                }
+                $files = $this->documentManager->createQueryBuilder(File::class)->field('_id')->in($mongoIds);
                 foreach ($files as $file) {
                     echo $file->getId();
                 }
