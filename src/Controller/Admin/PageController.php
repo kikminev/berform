@@ -81,35 +81,24 @@ class PageController extends AbstractController
 
             $this->documentManager->persist($page);
 
+            $pageFiles = [];
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $mongoIds = [];
-                foreach ($attachedFilesIds as $id) {
-                    if (!empty($id)) {
-                        $mongoIds[] = new \MongoId($id);
-                    }
-                }
-                $files = $this->documentManager->createQueryBuilder(File::class)->field('_id')->in($mongoIds);
-                foreach ($files as $file) {
-                    echo $file->getId();
-                }
+                $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
             }
-exit;
-
+            $page->setFiles($pageFiles);
 
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
         }
 
-        $files = $fileRepository->getPageFiles($page);
-
         return $this->render(
             'Admin/page_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => $files,
+                'files' => $page->getFiles(),
                 'page' => $page,
                 'site' => $page->getSite(),
             ]

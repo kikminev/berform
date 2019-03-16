@@ -2,6 +2,7 @@
 
 namespace App\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -10,6 +11,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Page
 {
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
+
     /**
      * @MongoDB\Id
      */
@@ -83,7 +89,7 @@ class Page
 
     /**
      * @var null|array $files
-     * @MongoDB\EmbedMany(targetDocument="File")
+     * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
      */
     private $files = array();
 
@@ -343,18 +349,17 @@ class Page
         $this->parent = $parent;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getFiles(): ?array
+    public function getFiles()
     {
         return $this->files;
     }
 
-    /**
-     * @param array|null $files
-     */
-    public function setFiles(?array $files): void
+    public function addFile(File $file): void
+    {
+        $this->files[] = $file;
+    }
+
+    public function setFiles($files): void
     {
         $this->files = $files;
     }

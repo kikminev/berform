@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Document\File;
 use App\Document\Page;
 use App\Document\Post;
+use App\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
@@ -16,33 +17,55 @@ class FileRepository extends DocumentRepository
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(File::class));
     }
 
+
     /**
-     * @param $page
+     * @param $fileId
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getPageFiles(Page $page)
+    public function getActiveFiles($fileIds, User $user)
     {
-
         return $this->dm->createQueryBuilder(File::class)
-            ->field('page')->equals($page)
+            ->field('user')->equals($user)
             ->field('deleted')->notEqual(true)
-            ->sort('order', 'DESC')
+            ->field('id')->in($fileIds)
             ->getQuery()->execute();
     }
-
     /**
-     * @param $page
+     * @param $fileId
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getPostFiles(Post $post)
+    public function getActiveFile($fileId)
     {
-
         return $this->dm->createQueryBuilder(File::class)
-            ->field('post')->equals($post)
             ->field('deleted')->notEqual(true)
-            ->sort('order', 'DESC')
-            ->getQuery()->execute();
+            ->field('id')->equals($fileId)
+            ->getQuery()->getSingleResult();
     }
+
+
+    //public function getPageFiles($files)
+    //{
+    //    return $this->dm->createQueryBuilder(File::class)
+    //        ->field('id')->in($files)
+    //        ->field('deleted')->notEqual(true)
+    //        ->sort('order', 'DESC')
+    //        ->getQuery()->execute();
+    //}
+    //
+    ///**
+    // * @param $page
+    // * @return mixed
+    // * @throws \Doctrine\ODM\MongoDB\MongoDBException
+    // */
+    //public function getPostFiles(Post $post)
+    //{
+    //
+    //    return $this->dm->createQueryBuilder(File::class)
+    //        ->field('post')->equals($post)
+    //        ->field('deleted')->notEqual(true)
+    //        ->sort('order', 'DESC')
+    //        ->getQuery()->execute();
+    //}
 }

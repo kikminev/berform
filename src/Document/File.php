@@ -155,7 +155,7 @@ class File
      */
     public function isDeleted(): bool
     {
-        return $this->deleted;
+        return (boolean) $this->deleted;
     }
 
     /**

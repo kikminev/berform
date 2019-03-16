@@ -32,6 +32,7 @@ class PostController extends AbstractController
      */
     public function edit(
         Request $request,
+        Site $site,
         Post $post,
         FileRepository $fileRepository,
         ParameterBagInterface $param
@@ -79,19 +80,27 @@ class PostController extends AbstractController
             $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
 
             $this->documentManager->persist($post);
+
+            $pageFiles = [];
+            $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
+            if ($attachedFiles) {
+                $attachedFilesIds = explode(';', $attachedFiles);
+                $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+            }
+            $post->setFiles($pageFiles);
+
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $post->getSite()->getId()]);
         }
 
-        $files = $fileRepository->getPostFiles($post);
-
         return $this->render(
             'Admin/post_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => $files,
+                'files' => $post->getFiles(),
                 'post' => $post,
+                'site' => $post->getSite()
             ]
         );
     }
@@ -163,6 +172,7 @@ class PostController extends AbstractController
             [
                 'form' => $form->createView(),
                 'post' => $post,
+                'site' => $site,
             ]
         );
     }

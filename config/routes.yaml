@@ -47,7 +47,7 @@ user_admin_post_create:
     path: /u/post/create/{site}
     controller: App\Controller\Admin\PostController::create
 user_admin_post_edit:
-    path: /u/post/{id}
+    path: /u/post/{site}/{id}
     controller: App\Controller\Admin\PostController::edit
 
 # uploads

@@ -4,12 +4,18 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @MongoDB\Document
  */
 class Post
 {
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
+
     /**
      * @MongoDB\Id
      */
@@ -68,6 +74,12 @@ class Post
      * @MongoDB\Field(type="hash")
      */
     private $translatedMetaDescription = array();
+
+    /**
+     * @var null|array $files
+     * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
+     */
+    private $files = array();
 
     /**
      * @var \DateTime $updatedAt
@@ -290,5 +302,21 @@ class Post
     public function setPublishedAt(\DateTime $publishedAt): void
     {
         $this->publishedAt = $publishedAt;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getFiles(): ?array
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param array|null $files
+     */
+    public function setFiles(?array $files): void
+    {
+        $this->files = $files;
     }
 }
