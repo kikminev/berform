@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use App\Form\UserType;
 use App\Document\User;
@@ -16,8 +17,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
-     *
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
@@ -32,8 +31,6 @@ class SecurityController extends AbstractController
     }   
 
     /**
-     * @Route("/register", name="app_registration")
-     *
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param DocumentManager $documentManager
@@ -52,7 +49,10 @@ class SecurityController extends AbstractController
             $documentManager->persist($user);
             $documentManager->flush();
 
-            // todo: login and redirect
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->container->get('security.token_storage')->setToken($token);
+            $this->container->get('session')->set('_security_main', serialize($token));
+
             return $this->redirectToRoute('admin');
         }
 

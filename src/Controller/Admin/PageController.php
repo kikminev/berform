@@ -108,12 +108,15 @@ class PageController extends AbstractController
     /**
      * @param Request $request
      * @param Site $site
+     * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
      * @return Response
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function create(
         Request $request,
         Site $site,
+        FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
 
@@ -163,8 +166,13 @@ class PageController extends AbstractController
 
             $this->documentManager->persist($page);
 
-            $uploadedFiles = $request->request->get('attachedFiles');
-            print_r($uploadedFiles); exit;
+            $pageFiles = [];
+            $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
+            if ($attachedFiles) {
+                $attachedFilesIds = explode(';', $attachedFiles);
+                $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+            }
+            $page->setFiles($pageFiles);
 
             $this->documentManager->flush();
 

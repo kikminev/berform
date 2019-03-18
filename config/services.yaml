@@ -6,7 +6,7 @@
 parameters:
     supported_languages: [bg, en]
     locale: 'bg'
-
+    system_domains: ['sitemax.kik', 'sitemax.bg']
 services:
     # default configuration for services in *this* file
     _defaults:

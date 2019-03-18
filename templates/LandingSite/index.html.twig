@@ -1,0 +1,14 @@
+{% extends 'LandingSite/layout.html.twig' %}
+{% block body %}
+    s i t e m a x
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>
+    <a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>
+{% endblock %}

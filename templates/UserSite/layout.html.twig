@@ -7,6 +7,7 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 </head>
 <body>
+<a href="/" class="logo">{{ site.name|capitalize }}</a>
 <div class="allPages">
     {% for page in pages %}
         <a href="{{ path('user_site_render_page', {slug:page.slug}) }}">{{ page.name }}</a>

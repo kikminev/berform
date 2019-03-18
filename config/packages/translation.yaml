@@ -6,5 +6,5 @@ framework:
             - '%locale%'
 jms_i18n_routing:
     default_locale: bg
-    locales: [en, bg]
+    locales: [bg, en]
     strategy: prefix_except_default

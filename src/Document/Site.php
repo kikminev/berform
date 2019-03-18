@@ -24,7 +24,7 @@ class Site
 
     /**
      * @var Domain|null $domain
-     * @MongoDB\ReferenceOne(targetDocument="Domain", inversedBy="site")
+     * @MongoDB\ReferenceOne(targetDocument="Domain", inversedBy="site", storeAs="id")
      */
     protected $domain;
 

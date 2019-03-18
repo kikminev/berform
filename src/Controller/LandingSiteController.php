@@ -15,23 +15,10 @@ class LandingSiteController extends AbstractController
         $this->dm = $dm;
     }
 
-    //
     public function home()
     {
-//        $site = new Site();
-//        $site->setName('A Foo Bar');
-//
-//        $this->dm->persist($site);
-//
-//        $page = new Page();
-//        $page->setName('A Foo Bar');
-//        $page->setSite($site);
-//        $this->dm->persist($page);
-//
-//        $this->dm->flush();
-
-        return new Response(
-            '<html><body>s i t e m a x</body></html>'
+        return $this->render(
+            'LandingSite/index.html.twig'
         );
     }
 }

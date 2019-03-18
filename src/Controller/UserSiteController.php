@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Document\Message;
+use App\Document\Page;
 use App\Form\ContactType;
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
@@ -30,11 +31,10 @@ class UserSiteController extends AbstractController
         PageRepository $pageRepository,
         FileRepository $fileRepository
     ) {
-        // todo: when creating the site choose domain or subdomain
         $site = $siteRepository->findOneBy(['host' => $request->getHost()]);
+        /** @var Page $page */
         $page = $pageRepository->findOneBy(['site' => $site, 'slug' => $slug]);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
-        $files = $fileRepository->getPageFiles($page);
 
         if (null === $page) {
             throw new NotFoundHttpException();
@@ -47,7 +47,8 @@ class UserSiteController extends AbstractController
         return $this->render(
             'UserSite/page.html.twig',
             [
-                'files' => $files,
+                'site' => $site,
+                'files' => $page->getFiles(),
                 'pages' => $pages,
                 'page' => $page,
                 'form' => $form->createView(),

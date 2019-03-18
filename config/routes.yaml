@@ -1,6 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\LandingSiteController::home
+index:
+    path: /
+    host: sitemax.kik
+    controller: App\Controller\LandingSiteController::home
+
 admin:
     path: /u
     controller: App\Controller\Admin\DashboardController::dashboard
@@ -8,6 +10,16 @@ admin:
 user_admin_site_build:
     path: /u/site/build/{id}
     controller: App\Controller\Admin\BuilderController::buildSite
+# security
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_registration:
+    path: /register
+    controller: App\Controller\SecurityController::register
+
+
 
 # sites
 user_admin_site_list:
