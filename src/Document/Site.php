@@ -29,6 +29,12 @@ class Site
     protected $domain;
 
     /**
+     * @var string|null
+     * @MongoDB\Field(type="string")
+     */
+    protected $slug;
+
+    /**
      * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      */
@@ -88,6 +94,12 @@ class Site
      * @MongoDB\Field(type="bool")
      */
     protected $isTemplate;
+
+    /**
+     * @var string|null $defaultImage
+     * @MongoDB\Field(type="string")
+     */
+    protected $defaultImage;
 
     /**
      * @var bool $published
@@ -465,5 +477,37 @@ class Site
     public function setSupportedLanguages(array $supportedLanguages): void
     {
         $this->supportedLanguages = $supportedLanguages;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param null|string $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDefaultImage(): ?string
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * @param null|string $defaultImage
+     */
+    public function setDefaultImage(?string $defaultImage): void
+    {
+        $this->defaultImage = $defaultImage;
     }
 }

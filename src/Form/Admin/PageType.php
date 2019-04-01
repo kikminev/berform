@@ -15,8 +15,8 @@ class PageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('slug');
+        $builder->add('name', TextType::class, ['attr' => ['class' => 'slug_source']]);
+        $builder->add('slug', TextType::class, ['attr' => ['class' => 'slug_input']]);
         foreach ($options['supported_languages'] as $language) {
             $builder->add('title_'.$language, TextType::class, ['mapped' => false]);
             $builder->add('content_'.$language, TextareaType::class, ['mapped' => false]);

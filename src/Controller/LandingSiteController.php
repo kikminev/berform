@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -15,10 +16,11 @@ class LandingSiteController extends AbstractController
         $this->dm = $dm;
     }
 
-    public function home()
+    public function home(SiteRepository $siteRepository)
     {
         return $this->render(
-            'LandingSite/index.html.twig'
+            'LandingSite/index.html.twig',
+            ['templates' => $siteRepository->getTemplates()]
         );
     }
 }

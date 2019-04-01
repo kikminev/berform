@@ -15,12 +15,12 @@ a = {
         });
     },
     generateSlug: function () {
-        var name = $("#page_name").val();
-        var slug = $("#page_slug").val();
+        var name = $(".slug_source").val();
+        var slug = $(".slug_input").val();
         if ('' !== slug) {
             return false;
         }
 
-        $("#page_slug").val(url_slug(name));
+        $(".slug_input").val(url_slug(name));
     }
 }

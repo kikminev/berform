@@ -9,6 +9,17 @@
     <br />
     <br />
 
+    {% for template in templates %}
+        <div id="siteTemplates">
+            <div class="templatePreview">
+                <a href="">
+                    <img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />
+                    <div id="templateName">{{ template.name }}</div>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+
     <a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>
     <a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>
 {% endblock %}
