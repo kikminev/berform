@@ -10,16 +10,22 @@ admin:
 user_admin_site_build:
     path: /u/site/build/{id}
     controller: App\Controller\Admin\BuilderController::buildSite
-# security
+# sign up
 app_login:
     path: /login
-    controller: App\Controller\SecurityController::login
+    controller: App\Controller\SignupController::login
 
 app_registration:
     path: /register
-    controller: App\Controller\SecurityController::register
+    controller: App\Controller\SignupController::register
 
+app_signup_choose_template:
+    path: /sign-up/choose-template/{id}
+    controller: App\Controller\SignupController::chooseTemplate
 
+app_signup_setup_account:
+    path: /sign-up/setup-account
+    controller: App\Controller\SignupController::setupAccount
 
 # sites
 user_admin_site_list:
@@ -84,3 +90,4 @@ user_site_render_page:
     controller: App\Controller\UserSiteController::renderPage
     defaults:
         slug: home
+

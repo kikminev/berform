@@ -16,6 +16,9 @@ class Site
      */
     protected $id;
 
+    /** @MongoDB\ReferenceMany(targetDocument="Page", mappedBy="site") */
+    private $pages;
+
     /**
      * @var User $user
      * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="sites")
@@ -509,5 +512,25 @@ class Site
     public function setDefaultImage(?string $defaultImage): void
     {
         $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * @param mixed $pages
+     */
+    public function setPages($pages): void
+    {
+        $this->pages = $pages;
+    }
+
+    public function __clone() {
+        $this->id = null;
     }
 }

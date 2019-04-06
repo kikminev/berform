@@ -12,13 +12,15 @@
     {% for template in templates %}
         <div id="siteTemplates">
             <div class="templatePreview">
-                <a href="">
+                <a onclick="a.openRegistration(this); return false;" href="{{ path('app_signup_choose_template', {id:template.id}) }}">
                     <img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />
                     <div id="templateName">{{ template.name }}</div>
                 </a>
             </div>
         </div>
     {% endfor %}
+
+    {% include('signup/register.html.twig') %}
 
     <a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>
     <a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>

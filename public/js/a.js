@@ -22,5 +22,20 @@ a = {
         }
 
         $(".slug_input").val(url_slug(name));
+    },
+    selectSite: function (id) {
+
+    },
+    agLink: function (url) {
+        $.get(url);
+    },
+    openRegistration: function (obj) {
+        $.ajax({
+            type: "GET",
+            url: $(obj).attr('href'),
+            success: function (response) {
+                alert('register now');
+            }
+        });
     }
 }
