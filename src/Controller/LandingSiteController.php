@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Document\Page;
+use Mailgun\Mailgun;
 
 class LandingSiteController extends AbstractController
 {
@@ -17,6 +18,8 @@ class LandingSiteController extends AbstractController
 
     public function home()
     {
+        $mg = Mailgun::create('key-example');
+
         return $this->render(
             'LandingSite/index.html.twig'
         );
