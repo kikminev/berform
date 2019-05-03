@@ -20,6 +20,7 @@ class BuilderController extends AbstractController
 
     public function buildSite(Request $request, Site $site): ?Response
     {
+        // todo: user not accounted for
         $pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site), array('order' => 'DESC '));
         // get all pages
         // generate ajax link to all pages

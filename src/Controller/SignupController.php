@@ -95,6 +95,7 @@ class SignupController extends AbstractController
             $newSite = clone $selectedTemplate;
 
             $newSite->setUser($this->getUser());
+            $newSite->setIsTemplate(false);
             $documentManager->persist($newSite);
 
             $pages = $newSite->getPages();

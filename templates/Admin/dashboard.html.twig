@@ -4,4 +4,7 @@
     {{ include('Admin/site_list.html.twig') }}
     <h2>Domains</h2>
     {{ include('Admin/domain_list.html.twig') }}
+
+    <h2>Profile</h2>
+    <a href="{{ path('admin_profile_edit') }}">Profile</a>
 {% endblock %}

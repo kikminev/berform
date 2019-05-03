@@ -22,7 +22,8 @@ class LandingSiteController extends AbstractController
         $this->dm = $dm;
     }
 
-    public function home(SiteRepository $siteRepository, DocumentManager $documentManager, CustomerRepository $customerRepository)
+    //public function home(SiteRepository $siteRepository, DocumentManager $documentManager, CustomerRepository $customerRepository)
+    public function home(SiteRepository $siteRepository)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['action' => $this->generateUrl('app_registration')]);

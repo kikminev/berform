@@ -77,6 +77,16 @@ admin_site_upload_delete:
     path: /u/site/upload/{id}
     controller: App\Controller\Admin\UploadController::deleteFile
 
+# profile
+admin_profile_edit:
+    path: /u/profile/edit
+    controller: App\Controller\Admin\ProfileController::edit
+
+admin_profile_change_password:
+    path: /u/profile/change_password
+    controller: App\Controller\Admin\ProfileController::changePassword
+
+
 app_logout:
     path: /logout
 
