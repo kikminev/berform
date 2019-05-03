@@ -5,7 +5,8 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
     image: symfony-docker
+    tty: true
     ports:
       - 8080:80
     volumes:      
-      - .:/var/www    
+      - .:/var/www
