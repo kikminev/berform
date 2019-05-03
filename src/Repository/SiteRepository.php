@@ -27,4 +27,9 @@ class SiteRepository extends DocumentRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function getTemplates(): array
+    {
+        return $this->findBy(['isTemplate' => true]);
+    }
 }

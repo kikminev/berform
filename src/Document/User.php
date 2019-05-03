@@ -45,13 +45,6 @@ class User implements UserInterface
     protected $sites = array();
 
     /**
-     * @var array $pages
-     *
-     * @MongoDB\ReferenceMany(targetDocument="Page", mappedBy="user")
-     */
-    protected $pages = array();
-
-    /**
      * @var array $files
      *
      * @MongoDB\ReferenceMany(targetDocument="File", mappedBy="user")
@@ -216,22 +209,6 @@ class User implements UserInterface
     public function setSites(array $sites): void
     {
         $this->sites = $sites;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPages(): array
-    {
-        return $this->pages;
-    }
-
-    /**
-     * @param array $pages
-     */
-    public function setPages(array $pages): void
-    {
-        $this->pages = $pages;
     }
 
     /**

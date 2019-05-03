@@ -21,9 +21,7 @@ class Page
      */
     private $id;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument="Site")
-     */
+    /** @MongoDB\ReferenceOne(targetDocument="Site", inversedBy="pages") */
     private $site;
 
     /**
@@ -34,7 +32,7 @@ class Page
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="pages")
+     * @MongoDB\ReferenceOne(targetDocument="User")
      */
     private $user;
 
@@ -123,22 +121,6 @@ class Page
     public function setId($id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSite()
-    {
-        return $this->site;
-    }
-
-    /**
-     * @param mixed $site
-     */
-    public function setSite($site): void
-    {
-        $this->site = $site;
     }
 
     /**
@@ -364,8 +346,28 @@ class Page
         $this->files = $files;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site): void
+    {
+        $this->site = $site;
+    }
+
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone() {
+        $this->id = null;
     }
 }

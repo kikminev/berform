@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#page_name").blur(function () {
+    $(".slug_source").blur(function () {
         a.generateSlug();
     });
 });

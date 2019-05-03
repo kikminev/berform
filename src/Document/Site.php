@@ -16,6 +16,9 @@ class Site
      */
     protected $id;
 
+    /** @MongoDB\ReferenceMany(targetDocument="Page", mappedBy="site") */
+    private $pages;
+
     /**
      * @var User $user
      * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="sites")
@@ -27,6 +30,12 @@ class Site
      * @MongoDB\ReferenceOne(targetDocument="Domain", inversedBy="site", storeAs="id")
      */
     protected $domain;
+
+    /**
+     * @var string|null
+     * @MongoDB\Field(type="string")
+     */
+    protected $slug;
 
     /**
      * @MongoDB\Field(type="string")
@@ -88,6 +97,12 @@ class Site
      * @MongoDB\Field(type="bool")
      */
     protected $isTemplate;
+
+    /**
+     * @var string|null $defaultImage
+     * @MongoDB\Field(type="string")
+     */
+    protected $defaultImage;
 
     /**
      * @var bool $published
@@ -465,5 +480,57 @@ class Site
     public function setSupportedLanguages(array $supportedLanguages): void
     {
         $this->supportedLanguages = $supportedLanguages;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param null|string $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDefaultImage(): ?string
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * @param null|string $defaultImage
+     */
+    public function setDefaultImage(?string $defaultImage): void
+    {
+        $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * @param mixed $pages
+     */
+    public function setPages($pages): void
+    {
+        $this->pages = $pages;
+    }
+
+    public function __clone() {
+        $this->id = null;
     }
 }
