@@ -2,3 +2,20 @@ language_label_en: English
 language_label_bg: Bulgarian
 landing_site_login: Login
 landing_site_register: Registration
+landing_site_welcome_text: Creating web sites is hard...<br /> Here you can create a pro site in 5 minutes!
+
+# home features
+main_site_features_header: Building web presense is hard. We are committed to make it easier.
+main_site_features_content: By using our services you will not need to pay thousands for programmers or web designers. <br />You can create your online site in a matter of minutes.
+user_site_features_hosting_header: Hosting
+user_site_features_hosting_content: With our service you get a world-class cloud hosting. You will not need to pay extra for hosting services.
+user_site_features_features_easy_administration: Easy Administration
+user_site_features_features_easy_administration_content: To launch your ecommerce you will not need coding skills. You can manage your store from easy-to-use admin area and save thousands from custom  web development.
+user_site_features_beautiful_templates_header: Beautiful Templates
+user_site_features_beautiful_templates_content: You can choose from free ready-made designs and customize them in accordance with your needs.
+user_site_features_free_ssl_header: Free SSL
+user_site_features_free_ssl_content: In order for your website to be secure and to be ranked better in search engines you will need a SSL certificate. With our service you get this for free.
+user_site_features_multilanguage_support_header: Multi-language support
+user_site_features_multilanguage_support_content: Support for your website in different languages is out-of-the-box feature.
+user_site_features_seo_tools_header: SEO Tools
+user_site_features_seo_tools_content: We have provided tools that allow you to optimize your content for search engines.

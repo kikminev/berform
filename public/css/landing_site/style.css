@@ -1,0 +1,34 @@
+html, body {
+    height: 100%;
+}
+h1 { font-family: 'Playfair Display', serif; }
+h3, .stepNumber { font-family: 'Montserrat', sans-serif; }
+
+#logo { position: absolute; top: 15px; left: 20px; z-index: 2; }
+#welcome-home { background: yellow; }
+.container-fluid { height: 100%; padding: 0px; }
+.centered-text { text-align: center; }
+.full-height {
+    height: 100%;
+    position: relative;
+}
+.full-height-background {
+    background-image: url('../../img/background_lines.svg');
+    background-position: center 0;
+    background-repeat: no-repeat;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index: 2;
+}
+
+.full-width-bottom-text { position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 2; }
+
+/* home */
+.home-centered-section { padding: 70px 0px; }
+.home-centered-section h2 { text-align: center; font-family: 'Playfair Display',serif; }
+.features-cells h3 { margin-bottom: 30px; }
+.features-wrap .features-cells { margin-top: 60px; }

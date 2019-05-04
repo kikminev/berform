@@ -1,27 +1,91 @@
 {% extends 'LandingSite/layout.html.twig' %}
 {% block body %}
-    s i t e m a x
+    <div id="logo">s i t e m a x</div>
+    <div class="full-height" id="welcome-home">
+        <div class="full-width-bottom-text">
+            <h1>{% trans %}landing_site_welcome_text{% endtrans %}</h1>
+        </div>
+        <div class="full-height-background"></div>
+    </div>
 
+    <div class="container full-height">
+        <div class="full-height-background"></div>
+        {# FEATURES #}
+        {# FEATURES #}
+        {# FEATURES #}
+        <div class="features-wrap home-centered-section" name="features" id="features">
+            <div class="container">
+                <h2>{% trans %}main_site_features_header{% endtrans %}</h2>
 
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+                <div class="subTitle centered-text">
+                    {% trans %}main_site_features_content{% endtrans %}
+                </div>
 
-    {% for template in templates %}
-        <div id="siteTemplates">
-            <div class="templatePreview">
-                <a onclick="a.openRegistration(this); return false;" href="{{ path('app_signup_choose_template', {id:template.id}) }}">
-                    <img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />
-                    <div id="templateName">{{ template.name }}</div>
-                </a>
+                <div class="row features-cells">
+                    <div class="col-md-4 features-cells-content">
+                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/cloud.png" alt="" />
+                        <h3>{% trans %}user_site_features_hosting_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_hosting_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/control-panel.png" alt="" />
+                        <h3>{% trans %}user_site_features_features_easy_administration{% endtrans %}</h3>
+                        {% trans %}user_site_features_features_easy_administration_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/templates.png" alt="" />
+                        <h3>{% trans %}user_site_features_beautiful_templates_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_beautiful_templates_content{% endtrans %}
+                    </div>
+                </div>
+                <div class="row features-cells">
+                    <div class="col-md-4 features-cells-content">
+                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/ssl.png" alt="" />
+                        <h3>{% trans %}user_site_features_free_ssl_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_free_ssl_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/seo.png" alt="" />
+                        <h3>{% trans %}user_site_features_seo_tools_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_seo_tools_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/languages.png" alt="" />
+                        <h3>{% trans %}user_site_features_multilanguage_support_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_multilanguage_support_content{% endtrans %}
+                    </div>
+                </div>
             </div>
         </div>
-    {% endfor %}
+        {# END FEATURES #}
+        {# END FEATURES #}
+        {# END FEATURES #}
 
-    {% include('signup/register.html.twig') %}
+    </div>
 
-    <a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>
-    <a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>
+    {#<br />#}
+    {#<br />#}
+    {#<br />#}
+    {#<br />#}
+    {#<br />#}
+
+    {#{% for template in templates %}#}
+        {#<div id="siteTemplates">#}
+            {#<div class="templatePreview">#}
+                {#<a onclick="a.openRegistration(this); return false;" href="{{ path('app_signup_choose_template', {id:template.id}) }}">#}
+                    {#<img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />#}
+                    {#<div id="templateName">{{ template.name }}</div>#}
+                {#</a>#}
+            {#</div>#}
+        {#</div>#}
+    {#{% endfor %}#}
+
+    {#{% include('signup/register.html.twig') %}#}
+
+    {#<a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>#}
+    {#<a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>#}
 {% endblock %}

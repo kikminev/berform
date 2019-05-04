@@ -21,12 +21,6 @@ class ProfileController extends AbstractController
 
     public function edit(Request $request): ?Response
     {
-        //$pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site), array('order' => 'DESC '));
-        //// get all pages
-        //// generate ajax link to all pages
-        //// return a form that edits pages
-        //// create a
-        //
         return $this->render(
             'Admin/profile/edit.html.twig',
             []

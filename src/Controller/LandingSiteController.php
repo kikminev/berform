@@ -21,8 +21,6 @@ class LandingSiteController extends AbstractController
 
     public function home(SiteRepository $siteRepository)
     {
-        $mg = Mailgun::create('key-example');
-
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['action' => $this->generateUrl('app_registration')]);
 
