@@ -12,11 +12,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{ asset('css/landing_site/style.css') }}" />
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -26,10 +21,98 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300&amp;subset=cyrillic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700i,900&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" />
+
+    <link rel="stylesheet" href="{{ asset('css/landing_site/style.css') }}" />
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid content-wrap">
         {% block body %}{% endblock %}
     </div>
+
+    <footer id="footerWrap" class="gradientBackground">
+        <div class="container home-centered-section" style="padding: 0px;">
+            <div class="col-md-6" style="margin-top: -6px;">
+                <a class="logo logoFooter" href="/">S I T E M A X</a>
+
+                <div class="mt10">
+                    {% trans %}main_site_footer_company_description{% endtrans %}
+                </div>
+
+                <div class="socialIcons mt10">
+                    {% if app.request.getHttpHost() == 'www.perform.bg' or app.request.getHttpHost() == 'co.com' %}
+                        {{ include('AbleCommunityBundle:MainSite/SitesSocialIcons:performbg.html.twig') }}
+                    {% elseif app.request.getHttpHost() == 'www.berform.com' %}
+                        {{ include('AbleCommunityBundle:MainSite/SitesSocialIcons:berformcom.html.twig') }}
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-md-2 col-md-offset-1">
+
+                <span class="footerLabel">{% trans %}main_site_footer_links_product_header{% endtrans %}</span>
+
+                <ul>
+
+                    <li class="first">
+                        <a class="scrollToLink" href="" rel="features">{% trans %}main_site_top_menu_features{% endtrans %}</a>
+                    </li>
+
+                    <li>
+                        <a class="scrollToLink" href="" rel="howItWorks">{% trans %}main_site_top_menu_how_it_works{% endtrans %}</a>
+                    </li>
+
+                    <li>
+                        <a class="scrollToLink" href="" rel="templates">{% trans %}main_site_top_menu_templates{% endtrans %}</a>
+                    </li>
+
+                    <li>
+                        <a class="scrollToLink" href="" rel="pricing">{% trans %}main_site_top_menu_pricing{% endtrans %}</a>
+                    </li>
+
+                    <li class="loginLink">
+                        <a href="">{% trans %}main_site_top_menu_login{% endtrans %}</a>
+                    </li>
+
+                    <li class="loggedUserLink" style="display: none;">
+                        <a href="">{% trans %}main_site_user_logged_in_text{% endtrans %}</a>
+                    </li>
+
+
+                    <li class="signUpLink">
+                        <a href="">{% trans %}main_site_top_menu_sign_up{% endtrans %}</a>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+
+                <span class="footerLabel">{% trans %}main_site_footer_links_contact_us_header{% endtrans %}</span>
+                <ul>
+                    <li>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        <a href="mailTo:support@perform.bg">S I T E M A X</a>
+                    </li>
+
+                    <li>
+                        +359 98 893 0017
+                    </li>
+
+                    <li>
+                        <a onclick="$zopim.livechat.window.show()" class="liveChatTrigger">
+                            CHAT <<<
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

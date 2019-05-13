@@ -3,3 +3,13 @@ language_label_bg: Bulgarian
 landing_site_login: Вход
 landing_site_register: Регистрация
 landing_site_welcome_text: Създаването на интернет сайт е трудно...<br /> Тук може сами да си направите професионален сайт за по-малко от 5 минути!
+
+
+
+#how it works
+main_site_how_it_works_step1_header: Изберете дизайн
+main_site_how_it_works_step1_content: Изберете професионален дизайн за вашия нов уебсайт.
+main_site_how_it_works_step2_header: Изберете домейн
+main_site_how_it_works_step2_content: Изберете си домейн, който ще използвате за вашия онлайн магазин.
+main_site_how_it_works_step3_header: Добавете продукти
+main_site_how_it_works_step3_content: Добавете продукти и започнете да продавате.
