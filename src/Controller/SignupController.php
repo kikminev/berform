@@ -6,11 +6,16 @@ use App\Document\Page;
 use App\Document\Site;
 use App\Repository\SiteRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\LockException as LockExceptionAlias;
+use Doctrine\ODM\MongoDB\Mapping\MappingException;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use \Symfony\Component\HttpFoundation\RedirectResponse;
+use \Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Form\UserType;
 use App\Document\User;
@@ -37,13 +42,17 @@ class SignupController extends AbstractController
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param DocumentManager $documentManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      */
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
         DocumentManager $documentManager
     ) {
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('app_signup_setup_account');
+        }
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
@@ -63,13 +72,18 @@ class SignupController extends AbstractController
         }
 
         return $this->render(
-            'signup/register.html.twig',
+            'signup/registration.html.twig',
             ['form' => $form->createView()]
         );
     }
 
 
-    public function chooseTemplate(Site $site, SessionInterface $session)
+    /**
+     * @param Site $site
+     * @param SessionInterface $session
+     * @return JsonResponse;
+     */
+    public function chooseTemplate(Site $site, SessionInterface $session): JsonResponse
     {
         $session->set('selectedTemplate', $site->getId());
 
@@ -81,20 +95,35 @@ class SignupController extends AbstractController
      * @param SessionInterface $session
      * @param SiteRepository $siteRepository
      * @param DocumentManager $documentManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     * @return RedirectResponse
+     * @throws LockExceptionAlias
+     * @throws MappingException
+     * @throws Exception
      */
-    public function setupAccount(SessionInterface $session, SiteRepository $siteRepository, DocumentManager $documentManager)
-    {
+    public function setupAccount(
+        SessionInterface $session,
+        SiteRepository $siteRepository,
+        DocumentManager $documentManager
+    ): RedirectResponse {
         if ($selectedTemplate = $session->get('selectedTemplate')) {
 
             /** @var Site $selectedTemplate */
             /** @var Site newte */
             $selectedTemplate = $siteRepository->find($selectedTemplate);
+            if (null === $selectedTemplate) {
+                return $this->redirectToRoute('home');
+            }
+
             $newSite = clone $selectedTemplate;
 
-            $newSite->setUser($this->getUser());
+            // todo: this needs a service method
+            $user = $this->getUser();
+            $userEmail = $user->getUsername();
+            $emailName = explode('@', $userEmail);
+            $host = $emailName[0] . random_int(1, 10000000) . time();
+
+            $newSite->setHost($host);
+            $newSite->setUser($user);
             $newSite->setIsTemplate(false);
             $documentManager->persist($newSite);
 

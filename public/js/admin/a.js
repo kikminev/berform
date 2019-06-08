@@ -29,12 +29,12 @@ a = {
     agLink: function (url) {
         $.get(url);
     },
-    openRegistration: function (obj) {
+    openRegistration: function (addTemplateUrl, redirectUrl) {
         $.ajax({
             type: "GET",
-            url: $(obj).attr('href'),
+            url: addTemplateUrl,
             success: function (response) {
-                alert('register now');
+                window.location = redirectUrl;
             }
         });
     }

@@ -1,18 +1,20 @@
 {% extends 'LandingSite/layout.html.twig' %}
 {% block body %}
     <div id="logo">s i t e m a x</div>
+    <ul class="top-menu">
+        <li><a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a></li>
+        <li><a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a></li>
+    </ul>
     <div class="full-height" id="welcome-screen">
         <div class="full-width-bottom-text">
             <h1>{% trans %}landing_site_welcome_text{% endtrans %}</h1>
         </div>
-        <div class="full-height-background"></div>
     </div>
 
     {# FEATURES #}
     {# FEATURES #}
     {# FEATURES #}
     <div class="container full-height">
-        <div class="full-height-background"></div>
         <div class="features-wrap home-centered-section" name="features" id="features">
             <div class="container">
                 <h2>{% trans %}main_site_features_header{% endtrans %}</h2>
@@ -70,7 +72,6 @@
     {# HOW IT WORKS #}
     {# HOW IT WORKS #}
     <div class="home-centered-section gray-bg-wrap container-fluid">
-        <div class="full-height-background"></div>
         <h2>{% trans %}main_site_how_it_works_header{% endtrans %}</h2>
         <div class="row features-wrap container">
             <div class="col-md-4">
@@ -117,7 +118,6 @@
         <div class="mt70 container">
             <a href="" class="action-button dark">{% trans %}main_site_start_now{% endtrans %}</a>
         </div>
-        <div class="full-height-background"></div>
     </div>
     {# END SIGN UP #}
     {# END SIGN UP #}
@@ -125,6 +125,16 @@
 
 
 
+    {% for template in templates %}
+        <div id="siteTemplates">
+            <div class="templatePreview">
+                <a onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_registration') }}'); return false;">
+                    <img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />
+                    <div id="templateName">{{ template.name }}</div>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
 
 
 
@@ -311,26 +321,6 @@
 
 
 
-
-
-
-
-    {#<br />#}
-    {#<br />#}
-    {#<br />#}
-    {#<br />#}
-    {#<br />#}
-
-    {#{% for template in templates %}#}
-        {#<div id="siteTemplates">#}
-            {#<div class="templatePreview">#}
-                {#<a onclick="a.openRegistration(this); return false;" href="{{ path('app_signup_choose_template', {id:template.id}) }}">#}
-                    {#<img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />#}
-                    {#<div id="templateName">{{ template.name }}</div>#}
-                {#</a>#}
-            {#</div>#}
-        {#</div>#}
-    {#{% endfor %}#}
 
     {#{% include('signup/register.html.twig') %}#}
 

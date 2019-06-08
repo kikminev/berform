@@ -3,17 +3,15 @@
 namespace App\Controller;
 
 use App\Repository\SiteRepository;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use App\Document\Site;
-use App\Document\Page;
 use App\Document\User;
 use App\Form\UserType;
-use Mailgun\Mailgun;
 
 class LandingSiteController extends AbstractController
 {
+    private $dm;
+
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
@@ -28,7 +26,7 @@ class LandingSiteController extends AbstractController
             'LandingSite/index.html.twig',
             [
                 'templates' => $siteRepository->getTemplates(),
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }

@@ -82,6 +82,11 @@ admin_profile_edit:
     path: /u/profile/edit
     controller: App\Controller\Admin\ProfileController::edit
 
+# billing
+admin_billing:
+    path: /u/billing/payment/list
+    controller: App\Controller\Admin\BillingController::listPayments
+
 admin_profile_change_password:
     path: /u/profile/change_password
     controller: App\Controller\Admin\ProfileController::changePassword

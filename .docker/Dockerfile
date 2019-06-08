@@ -1,4 +1,5 @@
 FROM php:7.2.17-apache
+WORKDIR /var/www
 
 COPY . /var/www
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
@@ -20,7 +21,7 @@ RUN sudo apt-get install apt-transport-https
 RUN apt-get install vim -y
 RUN sudo apt install wget -y
 RUN sudo apt-get install nano
-
+RUN cp -rp .aws/ /
 #FROM ubuntu:16.04
 #RUN apt-get update -y && apt-get install -y apt-transport-https -y
 #RUN su -
