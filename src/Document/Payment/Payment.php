@@ -16,13 +16,13 @@ class Payment
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="domains")
+     * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     protected $user;
 
     /**
      * @var Payment $product
-     * @MongoDB\ReferenceOne(targetDocument="Product")
+     * @MongoDB\ReferenceOne(targetDocument="Product", storeAs="id")
      */
     protected $product;
 

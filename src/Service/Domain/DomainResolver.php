@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\DomainResolver;
+namespace App\Service\Domain;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 

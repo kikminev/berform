@@ -21,12 +21,12 @@ class Page
      */
     private $id;
 
-    /** @MongoDB\ReferenceOne(targetDocument="Site", inversedBy="pages") */
+    /** @MongoDB\ReferenceOne(targetDocument="Site", storeAs="id") */
     private $site;
 
     /**
      * @var null|Page $parent
-     * @MongoDB\ReferenceOne(targetDocument="Page")
+     * @MongoDB\ReferenceOne(targetDocument="Page", storeAs="id")
      */
     private $parent;
 
@@ -90,22 +90,6 @@ class Page
      * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
      */
     private $files = array();
-
-    /**
-     * @var \DateTime $updatedAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="update")
-     */
-    private $updatedAt;
-
-    /**
-     * @var \DateTime $createdAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $createdAt;
 
     /**
      * @return mixed
@@ -201,38 +185,6 @@ class Page
     public function setOrder(int $order): void
     {
         $this->order = $order;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**

@@ -2,15 +2,19 @@
 
 namespace App\Document;
 
+use App\Document\Traits\TimestampableDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
+use \DateTime;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @MongoDB\Document
  */
 class Post
 {
+    use TimestampableEntity;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -29,7 +33,7 @@ class Post
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="pages")
+     * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     private $user;
 
@@ -73,36 +77,20 @@ class Post
      * @var array $translatedMetaDescription
      * @MongoDB\Field(type="hash")
      */
-    private $translatedMetaDescription = array();
+    private $translatedMetaDescription;
 
     /**
      * @var null|array $files
      * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
      */
-    private $files = array();
+    private $files;
 
     /**
-     * @var \DateTime $updatedAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="update")
-     */
-    private $updatedAt;
-
-    /**
-     * @var \DateTime $publishedAt
+     * @var DateTime $publishedAt
      *
      * @MongoDB\Date
      */
     private $publishedAt;
-
-    /**
-     * @var \DateTime $createdAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $createdAt;
 
     /**
      * @return mixed
@@ -257,49 +245,17 @@ class Post
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getPublishedAt(): \DateTime
+    public function getPublishedAt(): DateTime
     {
         return $this->publishedAt;
     }
 
     /**
-     * @param \DateTime $publishedAt
+     * @param DateTime $publishedAt
      */
-    public function setPublishedAt(\DateTime $publishedAt): void
+    public function setPublishedAt(DateTime $publishedAt): void
     {
         $this->publishedAt = $publishedAt;
     }

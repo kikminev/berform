@@ -3,8 +3,7 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -12,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    use TimestampableEntity;
+
     /**
      * @MongoDB\Id
      */
@@ -29,6 +30,11 @@ class User implements UserInterface
      */
     private $password;
 
+
+    /**
+     * @var string $password
+     * @MongoDB\Field(type="string")
+     */
     private $plainPassword;
 
     /**
@@ -40,32 +46,16 @@ class User implements UserInterface
     /**
      * @var array $sites
      *
-     * @MongoDB\ReferenceMany(targetDocument="Site", mappedBy="user")
+     * @MongoDB\ReferenceMany(targetDocument="Site", mappedBy="user", storeAs="id")
      */
-    protected $sites = array();
+    protected $sites = [];
 
     /**
      * @var array $files
      *
-     * @MongoDB\ReferenceMany(targetDocument="File", mappedBy="user")
+     * @MongoDB\ReferenceMany(targetDocument="File", mappedBy="user", storeAs="id")
      */
-    protected $files = array();
-
-    /**
-     * @var \DateTime $updatedAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="update")
-     */
-    private $updatedAt;
-
-    /**
-     * @var \DateTime $createdAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $createdAt;
+    protected $files = [];
 
     /**
      * @return mixed
@@ -123,39 +113,7 @@ class User implements UserInterface
         $this->active = $active;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getRoles()
+    public function getRoles(): array
     {
         //$roles = $this->roles;
         // guarantee every user at least has ROLE_USER
@@ -169,12 +127,12 @@ class User implements UserInterface
         // TODO: Implement getSalt() method.
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
     }

@@ -3,14 +3,16 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @MongoDB\Document
  */
 class Message
 {
+    use TimestampableEntity;
+
     /**
      * @MongoDB\Id
      */
@@ -52,13 +54,13 @@ class Message
     protected $email;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Site")
+     * @MongoDB\ReferenceOne(targetDocument="Site", storeAs="id")
      */
     protected $site;
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="sites")
+     * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     protected $user;
 

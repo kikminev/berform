@@ -1,4 +1,6 @@
 {% extends 'admin/layout.html.twig' %}
 {% block body %}
-    ok payments
+    {% for subscription in subscriptions %}
+        {{ subscription.product.type }}
+    {% endfor %}
 {% endblock %}

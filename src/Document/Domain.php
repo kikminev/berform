@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Document;
+
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -9,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Domain
 {
+    use TimestampableEntity;
+
     /**
      * @MongoDB\Id
      */
@@ -16,13 +20,13 @@ class Domain
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="domains")
+     * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     protected $user;
 
     /**
      * @var Site $site
-     * @MongoDB\ReferenceOne(targetDocument="Site", mappedBy="domain")
+     * @MongoDB\ReferenceOne(targetDocument="Site", storeAs="id")
      */
     protected $site;
 

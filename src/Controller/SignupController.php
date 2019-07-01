@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Document\Page;
+use App\Document\Payment\Product;
 use App\Document\Site;
+use App\Document\Payment\Subscription;
+use App\Repository\Payment\ProductRepository;
 use App\Repository\SiteRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException as LockExceptionAlias;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Exception;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -16,7 +20,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use \Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\HttpFoundation\JsonResponse;
-
 use App\Form\UserType;
 use App\Document\User;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,7 +80,6 @@ class SignupController extends AbstractController
         );
     }
 
-
     /**
      * @param Site $site
      * @param SessionInterface $session
@@ -89,7 +91,6 @@ class SignupController extends AbstractController
 
         return $this->json(['message' => 'ok']);
     }
-
 
     /**
      * @param SessionInterface $session
@@ -103,6 +104,7 @@ class SignupController extends AbstractController
     public function setupAccount(
         SessionInterface $session,
         SiteRepository $siteRepository,
+        ProductRepository $productRepository,
         DocumentManager $documentManager
     ): RedirectResponse {
         if ($selectedTemplate = $session->get('selectedTemplate')) {
@@ -136,6 +138,13 @@ class SignupController extends AbstractController
 
                 $documentManager->persist($newPage);
             }
+
+            $subscription = new Subscription();
+            $subscription->setProduct($productRepository->findOneBySystemCode(Product::PRODUCT_TYPE_FREE_HOSTING));
+            $subscription->setUser($this->getUser());
+            $subscription->setCreatedAt(new \DateTime());
+            $subscription->setUpdatedAt(new \DateTime());
+            $documentManager->persist($subscription);
 
             $documentManager->flush();
 

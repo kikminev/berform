@@ -10,7 +10,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Product
 {
     public const PRODUCT_TYPE_DOMAIN = 'domain',
-        PRODUCT_TYPE_HOSTING = 'hosting';
+        PRODUCT_TYPE_HOSTING = 'hosting',
+        PRODUCT_TYPE_FREE_HOSTING = 'free_hosting';
 
     public const PRODUCT_DOMAIN_BG = 'bg',
         PRODUCT_DOMAIN_COM = 'com',
@@ -44,6 +45,12 @@ class Product
     protected $systemCode;
 
     /**
+     * @var int $period
+     * @MongoDB\Field(type="int")
+     */
+    protected $period;
+
+    /**
      * @var float $price
      * @MongoDB\Field(type="string")
      */
@@ -51,7 +58,7 @@ class Product
 
     /**
      * @var Currency $currency
-     * @MongoDB\ReferenceOne(targetDocument="Currency")
+     * @MongoDB\ReferenceOne(targetDocument="Currency", storeAs="id")
      */
     private $currency;
 
@@ -141,5 +148,21 @@ class Product
     public function setCurrency(Currency $currency): void
     {
         $this->currency = $currency;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPeriod(): int
+    {
+        return $this->period;
+    }
+
+    /**
+     * @param int $period
+     */
+    public function setPeriod(int $period): void
+    {
+        $this->period = $period;
     }
 }

@@ -12,4 +12,9 @@ class ProductRepository extends DocumentRepository
     {
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Product::class));
     }
+
+    public function findOneBySystemCode(string $systemCode): ?Product
+    {
+        return parent::findOneBy(['systemCode' => $systemCode]);
+    }
 }

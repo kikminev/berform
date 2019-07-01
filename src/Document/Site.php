@@ -4,30 +4,32 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @MongoDB\Document
  */
 class Site
 {
+    use TimestampableEntity;
+
     /**
      * @MongoDB\Id
      */
     protected $id;
 
-    /** @MongoDB\ReferenceMany(targetDocument="Page", mappedBy="site") */
+    /** @MongoDB\ReferenceMany(targetDocument="Page", storeAs="id") */
     private $pages;
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="sites")
+     * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     protected $user;
 
     /**
      * @var Domain|null $domain
-     * @MongoDB\ReferenceOne(targetDocument="Domain", inversedBy="site", storeAs="id")
+     * @MongoDB\ReferenceOne(targetDocument="Domain", storeAs="id")
      */
     protected $domain;
 
@@ -132,22 +134,6 @@ class Site
      * @MongoDB\Field(type="hash")
      */
     protected $supportedLanguages = array();
-
-    /**
-     * @var \DateTime $updatedAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="update")
-     */
-    protected $updatedAt;
-
-    /**
-     * @var \DateTime $createdAt
-     *
-     * @MongoDB\Date
-     * @Gedmo\Timestampable(on="create")
-     */
-    protected $createdAt;
 
     /**
      * @return mixed
@@ -267,38 +253,6 @@ class Site
     public function setDeleted(bool $deleted): void
     {
         $this->deleted = $deleted;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**
@@ -447,7 +401,7 @@ class Site
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     /**

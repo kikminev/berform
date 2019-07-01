@@ -8,7 +8,7 @@ use App\Document\Site;
 use App\Form\ContactType;
 use App\Repository\PageRepository;
 use App\Repository\SiteRepository;
-use App\Service\DomainResolver\DomainResolver;
+use App\Service\Domain\DomainResolver;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
