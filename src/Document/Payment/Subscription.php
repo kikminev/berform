@@ -32,7 +32,7 @@ class Subscription
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @MongoDB\Date
      */
     protected $expiresAt;
 
