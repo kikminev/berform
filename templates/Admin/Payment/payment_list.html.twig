@@ -1,6 +1,14 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'Admin/layout.html.twig' %}
 {% block body %}
     {% for subscription in subscriptions %}
-        {{ subscription.product.type }}
+        <div>
+            <div>{{ subscription.subscription.product.type }}</div>
+
+
+            {% if subscription.upgradeable == true %}
+                <a href="{{ path('admin_billing_cart_add', {'product' : subscription.upgradeTo.id, 'subscription' : subscription.subscription.id}) }}">{% trans %}landing_site_billing_upgrade_plan{% endtrans %}</a>
+            {% endif %}
+
+        </div>
     {% endfor %}
 {% endblock %}

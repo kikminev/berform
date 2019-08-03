@@ -85,7 +85,15 @@ admin_profile_edit:
 # billing
 admin_billing:
     path: /u/billing/payment/list
-    controller: App\Controller\Admin\BillingController::listPayments
+    controller: App\Controller\Admin\Billing\BillingController::listPayments
+
+admin_billing_cart_add:
+    path: /u/billing/cart/add/{product}/{subscription}
+    controller: App\Controller\Admin\Billing\CartController::addProduct
+
+admin_billing_cart_view:
+    path: /u/billing/cart/view/{product}/{subscription}
+    controller: App\Controller\Admin\Billing\CartController::view
 
 admin_profile_change_password:
     path: /u/profile/change_password
