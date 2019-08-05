@@ -92,7 +92,7 @@ admin_billing_cart_add:
     controller: App\Controller\Admin\Billing\CartController::addProduct
 
 admin_billing_cart_view:
-    path: /u/billing/cart/view/{product}/{subscription}
+    path: /u/billing/cart/view
     controller: App\Controller\Admin\Billing\CartController::view
 
 admin_profile_change_password:

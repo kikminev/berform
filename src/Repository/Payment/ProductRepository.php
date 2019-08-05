@@ -15,6 +15,19 @@ class ProductRepository extends DocumentRepository
 
     public function findOneBySystemCode(string $systemCode): ?Product
     {
-        return parent::findOneBy(['systemCode' => $systemCode]);
+        /** @var Product $product */
+        $product = $this->findOneBy(['systemCode' => $systemCode]);
+
+        return $product;
+    }
+
+    /**
+     * @param array $productIds
+     * @return mixed
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function findAllByIds(array $productIds)
+    {
+        return $this->createQueryBuilder()->field('id')->in($productIds)->getQuery()->execute();
     }
 }

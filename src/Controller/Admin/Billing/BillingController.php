@@ -18,11 +18,10 @@ class BillingController extends AbstractController
         SubscriptionHandler $subscriptionHandler,
         SubscriptionRepository $subscriptionRepository
     ): Response {
-die('dada');
         $subscriptions = $subscriptionRepository->findBy(['user' => $this->getUser()]);
 
         return $this->render(
-            'Admin/Payment/payment_list.html.twig',
+            'Admin/Billing/payment_list.html.twig',
             ['subscriptions' => $subscriptionHandler->markUpgradeable($subscriptions)]
         );
     }
