@@ -6,13 +6,10 @@
                 {{ product.systemCode }}
             </div>
             <div>
-                {{ showPriceWithTaxes(product.price) }}
-
-                {{ product.currency.systemCode }}
+                {{ showPriceWithTaxes(product.price, product.currency.systemCode) }}
             </div>
+            
         {% endfor %}
-
-
     {% else %}
         {% trans %}landing_site_billing_no_products{% endtrans %}
     {% endif %}

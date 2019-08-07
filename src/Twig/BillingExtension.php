@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Twig;
 
 use App\Service\Billing\TaxesCalculator;
@@ -29,8 +30,8 @@ class BillingExtension extends AbstractExtension
 
     public function showPriceWithTaxes(float $price, string $currency)
     {
-        $calculatedPrice = $this->taxesCalculator->calculatePriceWithTaxes($price);
+        $price = $this->taxesCalculator->calculatePriceWithTaxes($price);
 
-        return 
+        return $price . $currency;
     }
 }
