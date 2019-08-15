@@ -5,7 +5,7 @@
 !app/logs/.gitkeep
 .env
 .aws/*
-
+.idea 
 # Email spool folder
 /app/spool/*
 
