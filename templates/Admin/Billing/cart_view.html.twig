@@ -1,0 +1,16 @@
+{% extends 'Admin/layout.html.twig' %}
+{% block body %}
+    {% if products|length > 0 %}
+        {% for product in products %}
+            <div>
+                {{ product.systemCode }}
+            </div>
+            <div>
+                {{ showPriceWithTaxes(product.price, product.currency.systemCode) }}
+            </div>
+            
+        {% endfor %}
+    {% else %}
+        {% trans %}landing_site_billing_no_products{% endtrans %}
+    {% endif %}
+{% endblock %}

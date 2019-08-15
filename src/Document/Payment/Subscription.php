@@ -38,6 +38,14 @@ class Subscription
     protected $expiresAt;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return Product
      */
     public function getProduct(): Product

@@ -2,7 +2,6 @@
 
 namespace App\Document;
 
-use App\Document\Traits\TimestampableDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
@@ -59,19 +58,19 @@ class Post
      * @var array $translatedTitle
      * @MongoDB\Field(type="hash")
      */
-    private $translatedTitle = array();
+    private $translatedTitle = [];
 
     /**
      * @var array $translatedContent
      * @MongoDB\Field(type="hash")
      */
-    private $translatedContent = array();
+    private $translatedContent = [];
 
     /**
      * @var array $translatedKeywords
      * @MongoDB\Field(type="hash")
      */
-    private $translatedKeywords = array();
+    private $translatedKeywords = [];
 
     /**
      * @var array $translatedMetaDescription

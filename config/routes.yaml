@@ -86,6 +86,13 @@ admin_profile_edit:
 #admin_billing:
 #    path: /u/billing/payment/list
 #    controller: App\Controller\admin\BillingController::listPayments
+admin_billing_cart_add:
+    path: /u/billing/cart/add/{product}/{subscription}
+    controller: App\Controller\Admin\Billing\CartController::addProduct
+
+admin_billing_cart_view:
+    path: /u/billing/cart/view
+    controller: App\Controller\Admin\Billing\CartController::view
 
 admin_profile_change_password:
     path: /u/profile/change_password
@@ -99,6 +106,13 @@ app_logout:
 user_site_contact:
     path: /contact/send_message
     controller: App\Controller\ContactController::sendMessage
+
+# user site
+user_site_blog:
+    path: /blog
+    controller: App\Controller\BlogController::list
+
+
 
 user_site_render_page:
     path: /{slug}
