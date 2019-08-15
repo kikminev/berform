@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7a28cf60-f8c8-47f0-bbdf-139dd95c7c9a" name="52.212.169.82" url="http://52.51.147.188">
+        <fileTransfer host="52.51.147.188" port="22" privateKey="$USER_HOME$/Dropbox/kik/important_access/webage.ppk" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

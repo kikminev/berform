@@ -108,6 +108,13 @@ user_site_contact:
     path: /contact/send_message
     controller: App\Controller\ContactController::sendMessage
 
+# user site
+user_site_blog:
+    path: /blog
+    controller: App\Controller\BlogController::list
+
+
+
 user_site_render_page:
     path: /{slug}
     controller: App\Controller\UserSiteController::renderPage
