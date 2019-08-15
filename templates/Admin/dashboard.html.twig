@@ -1,13 +1,10 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'Admin/layout.html.twig' %}
 {% block body %}
     <h2>Sites</h2>
     {{ include('Admin/site_list.html.twig') }}
-    <h2>Domains</h2>
-    {{ include('Admin/domain_list.html.twig') }}
+{#    <h2>Domains</h2>#}
+{#    {{ include('Admin/domain_list.html.twig') }}#}
 
-    <h2>Profile</h2>
-    <a href="{{ path('admin_profile_edit') }}">Profile</a>
-
-    <h2>Billing</h2>
-    <a href="{{ path('admin_billing') }}">payments</a>
+{#    <h2>Billing</h2>#}
+{#    <a href="{{ path('admin_billing') }}">payments</a>#}
 {% endblock %}

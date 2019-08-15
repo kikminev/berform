@@ -3,6 +3,7 @@
 namespace App\Document\Payment;
 
 use App\Document\User;
+use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -32,7 +33,7 @@ class Subscription
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @MongoDB\Date
      */
     protected $expiresAt;
 
@@ -71,7 +72,7 @@ class Subscription
     /**
      * @return \DateTime
      */
-    public function getExpiresAt(): \DateTime
+    public function getExpiresAt(): ?DateTime
     {
         return $this->expiresAt;
     }
@@ -79,7 +80,7 @@ class Subscription
     /**
      * @param \DateTime $expiresAt
      */
-    public function setExpiresAt(\DateTime $expiresAt): void
+    public function setExpiresAt(? DateTime $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
     }

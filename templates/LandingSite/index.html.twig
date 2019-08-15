@@ -71,7 +71,7 @@
     {# HOW IT WORKS #}
     {# HOW IT WORKS #}
     {# HOW IT WORKS #}
-    <div class="home-centered-section gray-bg-wrap container-fluid">
+    <div class="home-centered-section gray-bg-wrap container-fluid" id="howItWorks">
         <h2>{% trans %}main_site_how_it_works_header{% endtrans %}</h2>
         <div class="row features-wrap container">
             <div class="col-md-4">
@@ -115,9 +115,6 @@
     <div class="home-centered-section container-fluid" name="signUp" id="signUp">
         <h2>{% trans %}main_site_sign_up_header{% endtrans %}</h2>
         <div class="subTitle centered-text">{% trans %}main_site_sign_up_header_content{% endtrans %}</div>
-        <div class="mt70 container">
-            <a href="" class="action-button dark">{% trans %}main_site_start_now{% endtrans %}</a>
-        </div>
     </div>
     {# END SIGN UP #}
     {# END SIGN UP #}
@@ -157,14 +154,8 @@
 
                     <th class="col-xs-12 col-md-4" style="padding-bottom: 25px;">
                         <div class="priceWrap">
-
-                            {% if app.request.getHttpHost() == 'www.berform.com' %}
-                                <div class="currencyWrap" style="margin-left: 30px;">{{ baseHostPrice[app.request.getHttpHost()]|trans|raw }}</div>
-                            {% endif %}
-
-
                             <div class="priceTextWrap">
-                                <div class="mainNumber">9</div>
+                                <div class="mainNumber">7</div>
                                 <div class="smallNumber">.99</div>
                             </div>
 
@@ -178,15 +169,6 @@
                     </th>
                 </tr>
                 </thead>
-
-                <tr>
-                    <td class="col-md-8">
-                        {% trans %}main_site_pricing_products{% endtrans %}
-                        {#<span data-toggle="tooltip" data-placement="right" title="Tooltip on left" class="glyphicon fa-question-sign" aria-hidden="true"></span>#}
-                    </td>
-                    <td class="col-md-4 centered-text">{% trans %}main_site_pricing_unlimited{% endtrans %}</td>
-                </tr>
-
                 <tr>
                     <td class="col-md-8">
                         {% trans %}main_site_pricing_storage{% endtrans %}
@@ -196,7 +178,7 @@
 
                 <tr>
                     <td class="col-md-8">{% trans %}main_site_pricing_bandwidth{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></span>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
                 </tr>
 
                 <tr>
@@ -216,21 +198,6 @@
                 </tr>
 
                 <tr>
-                    <td class="col-md-8">{% trans %}main_site_pricing_credit_card{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-
-                <tr>
-                    <td class="col-md-8">{% trans %}main_site_pricing_accept_epaybg{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-
-                <tr>
-                    <td class="col-md-8">{% trans %}main_site_pricing_accept_paypal{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-
-                <tr>
                     <td class="col-md-8">{% trans %}main_site_pricing_templates{% endtrans %}</td>
                     <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
                 </tr>
@@ -242,10 +209,6 @@
 
                 <tr>
                     <td class="col-md-8">{% trans %}main_site_pricing_multylanguage_support{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-                <tr>
-                    <td class="col-md-8">{% trans %}main_site_pricing_currencies{% endtrans %}</td>
                     <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
                 </tr>
 
@@ -261,21 +224,18 @@
                 </tr>
 
                 <tr>
-                    <td class="col-md-8">{% trans %}main_site_categories{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-                <tr>
-                    <td class="col-md-8">{% trans %}main_site_product_options{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-                <tr>
-                    <td class="col-md-8">{% trans %}main_site_product_discounts{% endtrans %}</td>
-                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
-                </tr>
-                <tr>
                     <td class="col-md-8">{% trans %}main_site_product_cdn{% endtrans %}</td>
                     <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
                 </tr>
+
+                <tr>
+                    <td style="border: 0" colspan="2">
+                        <div class="mt70 container">
+                            <a rel="signUp" class="action-button dark scrollToLink">{% trans %}main_site_start_now{% endtrans %}</a>
+                        </div>
+                    </td>
+                </tr>
+
                 </tbody>
 
             </table>

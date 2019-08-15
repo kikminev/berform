@@ -1,0 +1,5 @@
+html { margin: 0px; }
+body { padding: 0px; margin: 0px; }
+.clear { clear: both; }
+.topMenu { padding: 20px 50px; margin: 0px; background: aliceblue; list-style-type: none; }
+.topMenu li { float: left; margin-right: 20px; display: block; }

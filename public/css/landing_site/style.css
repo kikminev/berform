@@ -24,7 +24,7 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
 .clear { clear: both; }
 
 #logo { position: absolute; top: 15px; left: 20px; z-index: 2; }
-#welcome-screen { background: yellow; }
+#welcome-screen { background: #8DCF8C; }
 .container-fluid { padding: 0px; }
 .centered-text { text-align: center; }
 .full-height {

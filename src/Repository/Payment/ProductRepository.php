@@ -15,6 +15,9 @@ class ProductRepository extends DocumentRepository
 
     public function findOneBySystemCode(string $systemCode): ?Product
     {
-        return parent::findOneBy(['systemCode' => $systemCode]);
+        /** @var Product $product */
+        $product = parent::findOneBy(['systemCode' => $systemCode]);
+
+        return $product;
     }
 }

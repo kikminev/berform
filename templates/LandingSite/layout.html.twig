@@ -33,85 +33,68 @@
 
 
     <footer id="footerWrap" class="gradientBackground">
-        <div class="container home-centered-section" style="padding: 0px;">
-            <div class="col-md-6" style="margin-top: -6px;">
-                <a class="logo logoFooter" href="/">S I T E M A X</a>
+        <div class="container home-centered-section">
+            <div class="row">
+                <div class="col">
+                    <a class="logo logoFooter" href="/" style="margin-top: -6px;">S I T E M A X</a>
 
-                <div class="mt10">
-                    {% trans %}main_site_footer_company_description{% endtrans %}
+                    <div class="mt10">
+                        {% trans %}main_site_footer_company_description{% endtrans %}
+                    </div>
+
+                    <div class="socialIcons mt10"></div>
                 </div>
 
-                <div class="socialIcons mt10">
-                    {% if app.request.getHttpHost() == 'www.perform.bg' or app.request.getHttpHost() == 'co.com' %}
-                        {{ include('AbleCommunityBundle:MainSite/SitesSocialIcons:performbg.html.twig') }}
-                    {% elseif app.request.getHttpHost() == 'www.berform.com' %}
-                        {{ include('AbleCommunityBundle:MainSite/SitesSocialIcons:berformcom.html.twig') }}
-                    {% endif %}
+                <div class="col">
 
+                    <span class="footerLabel">{% trans %}main_site_footer_links_product_header{% endtrans %}</span>
+
+                    <ul>
+
+                        <li class="first">
+                            <a class="scrollToLink" href="" rel="features">{% trans %}main_site_top_menu_features{% endtrans %}</a>
+                        </li>
+
+                        <li>
+                            <a class="scrollToLink" href="" rel="howItWorks">{% trans %}main_site_top_menu_how_it_works{% endtrans %}</a>
+                        </li>
+
+                        <li>
+                            <a class="scrollToLink" href="" rel="siteTemplates">{% trans %}main_site_top_menu_templates{% endtrans %}</a>
+                        </li>
+
+                        <li>
+                            <a class="scrollToLink" href="" rel="pricing">{% trans %}main_site_top_menu_pricing{% endtrans %}</a>
+                        </li>
+
+                        <li class="loginLink">
+                            <a href="">{% trans %}main_site_top_menu_login{% endtrans %}</a>
+                        </li>
+
+                        <li class="loggedUserLink" style="display: none;">
+                            <a href="">{% trans %}main_site_user_logged_in_text{% endtrans %}</a>
+                        </li>
+
+                        <li class="signUpLink">
+                            <a href="">{% trans %}main_site_top_menu_sign_up{% endtrans %}</a>
+                        </li>
+
+
+
+                        <script type="text/javascript">
+                            $(".scrollToLink").click(function(e) {
+                                e.preventDefault();
+
+                                var scrollToElement = $(this).attr('rel');
+                                $('html, body').animate({scrollTop: $("#"+scrollToElement).offset().top}, 500, function () {
+                                    window.location.hash = scrollToElement;
+                                });
+                            });
+                        </script>
+                    </ul>
                 </div>
             </div>
 
-            <div class="col-xs-6 col-md-2 col-md-offset-1">
-
-                <span class="footerLabel">{% trans %}main_site_footer_links_product_header{% endtrans %}</span>
-
-                <ul>
-
-                    <li class="first">
-                        <a class="scrollToLink" href="" rel="features">{% trans %}main_site_top_menu_features{% endtrans %}</a>
-                    </li>
-
-                    <li>
-                        <a class="scrollToLink" href="" rel="howItWorks">{% trans %}main_site_top_menu_how_it_works{% endtrans %}</a>
-                    </li>
-
-                    <li>
-                        <a class="scrollToLink" href="" rel="templates">{% trans %}main_site_top_menu_templates{% endtrans %}</a>
-                    </li>
-
-                    <li>
-                        <a class="scrollToLink" href="" rel="pricing">{% trans %}main_site_top_menu_pricing{% endtrans %}</a>
-                    </li>
-
-                    <li class="loginLink">
-                        <a href="">{% trans %}main_site_top_menu_login{% endtrans %}</a>
-                    </li>
-
-                    <li class="loggedUserLink" style="display: none;">
-                        <a href="">{% trans %}main_site_user_logged_in_text{% endtrans %}</a>
-                    </li>
-
-                    <li class="signUpLink">
-                        <a href="">{% trans %}main_site_top_menu_sign_up{% endtrans %}</a>
-                    </li>
-
-
-                </ul>
-
-
-            </div>
-
-            <div class="col-xs-6 col-md-3">
-
-                <span class="footerLabel">{% trans %}main_site_footer_links_contact_us_header{% endtrans %}</span>
-                <ul>
-                    <li>
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        <a href="mailTo:support@perform.bg">S I T E M A X</a>
-                    </li>
-
-                    <li>
-                        +359 98 893 0017
-                    </li>
-
-                    <li>
-                        <a onclick="$zopim.livechat.window.show()" class="liveChatTrigger">
-                            CHAT
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
         </div>
     </footer>
 </body>

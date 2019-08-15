@@ -24,7 +24,7 @@ class DomainController extends AbstractController
         $domains = $domainRepository->getByUser($this->getUser());
 
         return $this->render(
-            'Admin/domain_list.html.twig',
+            'admin/domain_list.html.twig',
             [
                 'domains' => $domains,
             ]
@@ -48,7 +48,7 @@ class DomainController extends AbstractController
         }
 
         return $this->render(
-            'Admin/domain_edit.html.twig',
+            'admin/domain_edit.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -73,7 +73,7 @@ class DomainController extends AbstractController
         }
 
         return $this->render(
-            'Admin/domain_edit.html.twig',
+            'admin/domain_edit.html.twig',
             [
                 'form' => $form->createView(),
             ]

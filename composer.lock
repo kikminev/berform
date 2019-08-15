@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fab2481b344a3ece00f9e8831e196e9a",
+    "content-hash": "d3724461cdee9abe201bd3eec874761c",
     "packages": [
         {
             "name": "alcaeus/mongo-php-adapter",
@@ -305,6 +305,42 @@
                 "tls"
             ],
             "time": "2019-01-28T09:30:10+00:00"
+        },
+        {
+            "name": "developermypos/mypos-checkout-sdk",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/developermypos/myPOS-Checkout-SDK-PHP.git",
+                "reference": "a94ed97096670a735f49ce306cc1ce395314124a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/developermypos/myPOS-Checkout-SDK-PHP/zipball/a94ed97096670a735f49ce306cc1ce395314124a",
+                "reference": "a94ed97096670a735f49ce306cc1ce395314124a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mypos\\IPC\\": "IPC/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "myPOS Checkout SDK PHP",
+            "homepage": "https://developers.mypos.eu",
+            "keywords": [
+                "myPOS",
+                "myPOS Checkout",
+                "sdk"
+            ],
+            "time": "2018-11-01T07:48:16+00:00"
         },
         {
             "name": "doctrine/annotations",

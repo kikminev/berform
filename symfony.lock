@@ -14,6 +14,9 @@
     "composer/ca-bundle": {
         "version": "1.1.2"
     },
+    "developermypos/mypos-checkout-sdk": {
+        "version": "1.0.2"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

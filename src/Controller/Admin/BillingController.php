@@ -23,8 +23,13 @@ class BillingController extends AbstractController
         $subscriptions = $subscriptionRepository->findBy(['user' => $this->getUser()]);
 
         return $this->render(
-            'Admin/payment/payment_list.html.twig',
+            'admin/Payment/payment_list.html.twig',
             ['subscriptions' => $subscriptions]
         );
+    }
+
+    public function upgrade()
+    {
+
     }
 }

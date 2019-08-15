@@ -40,7 +40,7 @@ class UserSiteController extends AbstractController
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
 
         /** @var Page $page */
-        $page = $pageRepository->findOneBy(['site' => $site, 'slug' => !empty($slug) ? $slug : 'home']);
+        $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
 
         if (null === $page) {

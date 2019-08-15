@@ -32,7 +32,7 @@ class Page
 
     /**
      * @var User $user
-     * @MongoDB\ReferenceOne(targetDocument="User")
+     * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     private $user;
 

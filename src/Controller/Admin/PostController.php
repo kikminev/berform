@@ -95,7 +95,7 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'Admin/post_edit.html.twig',
+            'admin/post_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'files' => $post->getFiles(),
@@ -168,7 +168,7 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'Admin/post_edit.html.twig',
+            'admin/post_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'post' => $post,

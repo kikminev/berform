@@ -22,7 +22,7 @@ class ProfileController extends AbstractController
     public function edit(Request $request): ?Response
     {
         return $this->render(
-            'Admin/profile/edit.html.twig',
+            'Admin/Profile/edit.html.twig',
             []
         );
     }
@@ -63,7 +63,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render(
-            'Admin/profile/change_password.html.twig',
+            'Admin/Profile/change_password.html.twig',
             ['form' => $form->createView()]
         );
     }

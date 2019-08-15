@@ -8,11 +8,11 @@ use App\Document\Site;
 use App\Document\Payment\Subscription;
 use App\Repository\Payment\ProductRepository;
 use App\Repository\SiteRepository;
+use DateTime;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException as LockExceptionAlias;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Exception;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -25,6 +25,10 @@ use App\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class SignupController
+ * @package App\Controller
+ */
 class SignupController extends AbstractController
 {
     /**
@@ -95,6 +99,7 @@ class SignupController extends AbstractController
     /**
      * @param SessionInterface $session
      * @param SiteRepository $siteRepository
+     * @param ProductRepository $productRepository
      * @param DocumentManager $documentManager
      * @return RedirectResponse
      * @throws LockExceptionAlias
@@ -142,8 +147,8 @@ class SignupController extends AbstractController
             $subscription = new Subscription();
             $subscription->setProduct($productRepository->findOneBySystemCode(Product::PRODUCT_TYPE_FREE_HOSTING));
             $subscription->setUser($this->getUser());
-            $subscription->setCreatedAt(new \DateTime());
-            $subscription->setUpdatedAt(new \DateTime());
+            $subscription->setCreatedAt(new DateTime());
+            $subscription->setUpdatedAt(new DateTime());
             $documentManager->persist($subscription);
 
             $documentManager->flush();

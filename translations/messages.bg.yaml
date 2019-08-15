@@ -4,12 +4,76 @@ landing_site_login: Вход
 landing_site_register: Регистрация
 landing_site_welcome_text: Създаването на интернет сайт е трудно...<br /> Тук може сами да си направите професионален сайт за по-малко от 5 минути!
 
-
+# home
+main_site_start_now: Започнете сега
 
 #how it works
+main_site_how_it_works_header: Как да си направим сайт?
 main_site_how_it_works_step1_header: Изберете дизайн
 main_site_how_it_works_step1_content: Изберете професионален дизайн за вашия нов уебсайт.
 main_site_how_it_works_step2_header: Изберете домейн
 main_site_how_it_works_step2_content: Изберете си домейн, който ще използвате за вашия онлайн магазин.
-main_site_how_it_works_step3_header: Добавете продукти
-main_site_how_it_works_step3_content: Добавете продукти и започнете да продавате.
+main_site_how_it_works_step3_header: Добавете съдържание
+main_site_how_it_works_step3_content: Добавете информация за вас и вашия бизнес.
+
+# home features
+main_site_features_header: Създаването на сайт е трудно. Ние го правим по-лесно.
+main_site_features_content: С използването на нашата услуга вие може да създадете сайт в рамките на минути. <br />Без да плащате хиляди за уеб дизайн.
+user_site_features_hosting_header: Хостинг
+user_site_features_hosting_content: С нашия пакет Вие получавате хостинг пространство без да плащате допълнително.
+user_site_features_features_easy_administration: Администрация
+user_site_features_features_easy_administration_content: За да стартирате вашия сайт няма нужда да имате програмистки умения. Получавате лесна администрация, с която сами управлявате съдържанието си.
+user_site_features_beautiful_templates_header: Красиви дизайни
+user_site_features_beautiful_templates_content: Просто изберете дизайн и добавете съдържание. Бъдете професионалисти с професионално направени дизайни, които ще представят вашия бизнес.
+user_site_features_free_ssl_header: Безплатен SSL
+user_site_features_free_ssl_content: Използването на SSL е важно за сигурността на вашия сайт, доверието на клиентите ви към вашата услуга и за по-доброто индексиране в интернет търсачките. С нашата услуга получавате SSL безплатно.
+user_site_features_multilanguage_support_header: Многоезичено съдържание
+user_site_features_multilanguage_support_content: Създаването на многоезичен сайт с нас е безплатно. Просто въведете съдържанието на желания от вас език.
+user_site_features_seo_tools_header: SEO оптимизация
+user_site_features_seo_tools_content: Ние предоставяме всички необходими инструменти за да оптимизирате вашия сайт за интернет търсачките.
+
+# pricing
+main_site_pricing_header: Цена
+main_site_pricing_content: Започнете с нашия безплатен пакет и преминете към платената ни версия, само когато искате собствен домейн.
+main_site_sign_up_header: Създайте ваш сайт сега
+main_site_sign_up_header_content: Регистрирайте се в Sitemax и създайте вашия безплатен сайт. <br />Когато сте готови да имате собствен домейн, може да преминете към нашата платена версия.
+main_site_pricing_billed_annually: месечно
+main_site_pricing_bgn_currency: ЛВ
+main_site_title: - най-лесният начин да създадете сайт
+main_site_base_host_price_bgn: ЛВ
+main_site_base_host_price_eur: '&euro;'
+main_site_pricing_products: Продукти
+main_site_pricing_unlimited: Неограничено
+main_site_pricing_storage: Пространство
+main_site_pricing_bandwidth: Неограничен трафик
+main_site_pricing_ssl: Безплатен SSL
+main_site_pricing_domain: Използвайте собствен домейн
+main_site_pricing_email: Безплатна пощенска кутия
+main_site_pricing_templates: Безплатни дизайни
+main_site_pricing_templates_customization: Стилизация на дизайни
+main_site_pricing_multylanguage_support: Многоезично съдържание
+main_site_pricing_mobile_first: Мобилна версия
+main_show_more: Още
+main_site_seo_tools: SEO инструменти
+main_site_product_cdn: Бърз и надежден CDN
+
+# footer
+main_site_footer_company_description: Ние правим създаването на собствен сайт лесно и достъпно. <br />Използвайте нашите инструменти за да стартирате <br />професионално присъствие в интернет.
+main_site_footer_links_product_header: За нас
+main_site_top_menu_features: Функционалности
+main_site_top_menu_how_it_works: Процес
+main_site_top_menu_templates: Дизайни
+main_site_top_menu_pricing: Цени
+main_site_top_menu_login: Вход
+main_site_user_logged_in_text: Вход
+main_site_top_menu_sign_up: Регистрация
+
+
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+
+# top menu
+admin_links_dashboard: Начало
+admin_links_profile: Профил
+admin_links_logout: Изход
+admin_profile_change_password: Смяна на парола

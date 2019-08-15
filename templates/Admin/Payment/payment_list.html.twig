@@ -1,6 +1,18 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'Admin/layout.html.twig' %}
 {% block body %}
+    - click on upgrade <br />
+    - select address <br />
+    - add address <br />
+    - go to payment form <br />
+    - integrate epay <br />
+    - on success upgrade hosting subscription by replacing the free one? Or maybe creating a paid one and leaving the free one<br />
+    - on success create domain success <br />
+
     {% for subscription in subscriptions %}
-        {{ subscription.product.type }}
+        <div>
+            <div class="productName">{{ subscription.product.type }}</div>
+            <div class="productExpiryDate">{% if subscription.expiresAt != null %}{{ subscription.expiresAt }}{% endif %}</div>
+            <div class="productExpiryDate"><a href="">upgrade</a></div>
+        </div>
     {% endfor %}
 {% endblock %}

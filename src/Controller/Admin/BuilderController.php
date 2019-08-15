@@ -22,10 +22,6 @@ class BuilderController extends AbstractController
     {
         // todo: user not accounted for
         $pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site), array('order' => 'DESC '));
-        // get all pages
-        // generate ajax link to all pages
-        // return a form that edits pages
-        // create a
 
         return $this->render(
             'Admin/builder.html.twig',
