@@ -64,6 +64,9 @@ user_admin_page_edit:
 user_admin_post_create:
     path: /u/post/create/{site}
     controller: App\Controller\Admin\PostController::create
+user_admin_post_list:
+    path: /u/blog/post/list/{site}
+    controller: App\Controller\Admin\PostController::list
 user_admin_post_edit:
     path: /u/post/{site}/{id}
     controller: App\Controller\Admin\PostController::edit
@@ -112,7 +115,9 @@ user_site_blog:
     path: /blog
     controller: App\Controller\BlogController::list
 
-
+user_site_blog_view_post:
+    path: /blog/{slug}
+    controller: App\Controller\BlogController::view
 
 user_site_render_page:
     path: /{slug}

@@ -9,6 +9,7 @@ use App\Form\ContactType;
 use App\Repository\PageRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,8 +35,10 @@ class UserSiteController extends AbstractController
         Request $request,
         string $slug,
         SiteRepository $siteRepository,
-        PageRepository $pageRepository
+        PageRepository $pageRepository,
+        ParameterBagInterface $params
     ):Response {
+        print_r($params->get('S3_BUCKET_NAME')); exit;
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
 
@@ -44,7 +47,7 @@ class UserSiteController extends AbstractController
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
 
         if (null === $page) {
-            throw new NotFoundHttpException();
+            //throw new NotFoundHttpException();
         }
 
         $form = $this->createForm(ContactType::class,
@@ -55,6 +58,7 @@ class UserSiteController extends AbstractController
             'UserSite/page.html.twig',
             [
                 'site' => $site,
+                'slug' => $slug,
                 'files' => $page->getFiles(),
                 'pages' => $pages,
                 'page' => $page,

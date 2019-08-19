@@ -77,3 +77,9 @@ admin_links_dashboard: Начало
 admin_links_profile: Профил
 admin_links_logout: Изход
 admin_profile_change_password: Смяна на парола
+
+# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
+# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
+user_site_blog_header: Блог
+user_site_supported_languages_bg: бг
+user_site_supported_languages_en: en

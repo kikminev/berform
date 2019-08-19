@@ -19,6 +19,7 @@ class PostType extends AbstractType
         foreach ($options['supported_languages'] as $language) {
             $builder->add('title_'.$language, TextType::class, ['mapped' => false]);
             $builder->add('content_'.$language, TextareaType::class, ['mapped' => false]);
+            $builder->add('excerpt_'.$language, TextareaType::class, ['mapped' => false]);
             $builder->add('keywords_'.$language, TextareaType::class, ['mapped' => false]);
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false]);
         }

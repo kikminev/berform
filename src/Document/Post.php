@@ -55,25 +55,31 @@ class Post
     private $active;
 
     /**
-     * @var array $translatedTitle
+     * @var null|array $translatedTitle
      * @MongoDB\Field(type="hash")
      */
     private $translatedTitle = [];
 
     /**
-     * @var array $translatedContent
+     * @var null|array $translatedTitle
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedExcerpt = [];
+
+    /**
+     * @var null|array $translatedContent
      * @MongoDB\Field(type="hash")
      */
     private $translatedContent = [];
 
     /**
-     * @var array $translatedKeywords
+     * @var null|array $translatedKeywords
      * @MongoDB\Field(type="hash")
      */
     private $translatedKeywords = [];
 
     /**
-     * @var array $translatedMetaDescription
+     * @var null|array $translatedMetaDescription
      * @MongoDB\Field(type="hash")
      */
     private $translatedMetaDescription;
@@ -82,7 +88,7 @@ class Post
      * @var null|array $files
      * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
      */
-    private $files;
+    private $files = array();
 
     /**
      * @var DateTime $publishedAt
@@ -180,65 +186,65 @@ class Post
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getTranslatedTitle(): array
+    public function getTranslatedTitle(): ?array
     {
         return $this->translatedTitle;
     }
 
     /**
-     * @param array $translatedTitle
+     * @param array|null $translatedTitle
      */
-    public function setTranslatedTitle(array $translatedTitle): void
+    public function setTranslatedTitle(?array $translatedTitle): void
     {
         $this->translatedTitle = $translatedTitle;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getTranslatedContent(): array
+    public function getTranslatedContent(): ?array
     {
         return $this->translatedContent;
     }
 
     /**
-     * @param array $translatedContent
+     * @param array|null $translatedContent
      */
-    public function setTranslatedContent(array $translatedContent): void
+    public function setTranslatedContent(?array $translatedContent): void
     {
         $this->translatedContent = $translatedContent;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getTranslatedKeywords(): array
+    public function getTranslatedKeywords(): ?array
     {
         return $this->translatedKeywords;
     }
 
     /**
-     * @param array $translatedKeywords
+     * @param array|null $translatedKeywords
      */
-    public function setTranslatedKeywords(array $translatedKeywords): void
+    public function setTranslatedKeywords(?array $translatedKeywords): void
     {
         $this->translatedKeywords = $translatedKeywords;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getTranslatedMetaDescription(): array
+    public function getTranslatedMetaDescription(): ?array
     {
         return $this->translatedMetaDescription;
     }
 
     /**
-     * @param array $translatedMetaDescription
+     * @param array|null $translatedMetaDescription
      */
-    public function setTranslatedMetaDescription(array $translatedMetaDescription): void
+    public function setTranslatedMetaDescription(?array $translatedMetaDescription): void
     {
         $this->translatedMetaDescription = $translatedMetaDescription;
     }
@@ -262,7 +268,7 @@ class Post
     /**
      * @return array|null
      */
-    public function getFiles(): ?array
+    public function getFiles()
     {
         return $this->files;
     }
@@ -273,5 +279,21 @@ class Post
     public function setFiles(?array $files): void
     {
         $this->files = $files;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getTranslatedExcerpt(): ?array
+    {
+        return $this->translatedExcerpt;
+    }
+
+    /**
+     * @param array|null $translatedExcerpt
+     */
+    public function setTranslatedExcerpt(?array $translatedExcerpt): void
+    {
+        $this->translatedExcerpt = $translatedExcerpt;
     }
 }

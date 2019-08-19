@@ -65,31 +65,31 @@ class Page
      * @var array $translatedTitle
      * @MongoDB\Field(type="hash")
      */
-    private $translatedTitle = array();
+    private $translatedTitle = [];
 
     /**
      * @var array $translatedContent
      * @MongoDB\Field(type="hash")
      */
-    private $translatedContent = array();
+    private $translatedContent = [];
 
     /**
      * @var array $translatedKeywords
      * @MongoDB\Field(type="hash")
      */
-    private $translatedKeywords = array();
+    private $translatedKeywords = [];
 
     /**
      * @var array $translatedMetaDescription
      * @MongoDB\Field(type="hash")
      */
-    private $translatedMetaDescription = array();
+    private $translatedMetaDescription = [];
 
     /**
      * @var null|array $files
      * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
      */
-    private $files = array();
+    private $files;
 
     /**
      * @return mixed
@@ -319,7 +319,8 @@ class Page
         return $this->getName();
     }
 
-    public function __clone() {
+    public function __clone()
+    {
         $this->id = null;
     }
 }

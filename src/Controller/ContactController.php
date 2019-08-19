@@ -29,6 +29,9 @@ class ContactController extends AbstractController
             $documentManager->persist($message);
             $documentManager->flush();
 
+            //echo '>>>'.$params->get('MAILGUN_API_KEY'); exit;
+            //print_r($params); exit;
+
             $mg = Mailgun::create($params->get('MAILGUN_API_KEY'));
             $mg->messages()->send($params->get('MAILGUN_DOMAIN'), [
                 'from'    => $message->getEmail(),

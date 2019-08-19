@@ -1,15 +1,17 @@
 {% extends 'UserSite/layout.html.twig' %}
 {% block body %}
-    <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+    <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
     <p>
-        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale] }}{% endif %}
+        {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale] }}{% endif %}
     </p>
 
+    {% if files|length > 0 %}
     <div id="imagesWrap">
         {% for file in files %}
             <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt=""/></div>
         {% endfor %}
     </div>
+    {% endif %}
 
     <div id="contactForm">
         <div id="contactFormStatus"></div>
@@ -18,7 +20,7 @@
         {{ form_widget(form) }}
         {{ form_end(form) }}
     </div>
-    <script type="text/javascript">
+    <script>
         $("#inPageContactForm").submit(function (e) {
             e.preventDefault();
             var form = $(this);

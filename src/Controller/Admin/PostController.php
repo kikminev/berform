@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Document\Post;
 use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
+use App\Repository\PageRepository;
+use App\Repository\PostRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +58,7 @@ class PostController extends AbstractController
                 $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
                 $form->get('title_' . $language)->setData($translatedTitle);
                 $form->get('content_' . $language)->setData($translatedContent);
+                $form->get('excerpt_' . $language)->setData($translatedContent);
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
             }
@@ -65,17 +68,20 @@ class PostController extends AbstractController
 
             $updatedTranslatedTitle = [];
             $updatedTranslatedContent = [];
+            $updatedTranslatedExcerpt = [];
             $updatedTranslatedKeywords = [];
             $updatedTranslatedMetaDescription = [];
             foreach ($supportedLanguages as $language) {
                 $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
                 $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
+                $updatedTranslatedExcerpt[$language] = $form['excerpt_' . $language]->getData();
                 $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
                 $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
             $post->setTranslatedTitle($updatedTranslatedTitle);
             $post->setTranslatedContent($updatedTranslatedContent);
+            $post->setTranslatedExcerpt($updatedTranslatedExcerpt);
             $post->setTranslatedKeywords($updatedTranslatedKeywords);
             $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
 
@@ -95,7 +101,7 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'admin/post_edit.html.twig',
+            'Admin/Post/post_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'files' => $post->getFiles(),
@@ -127,15 +133,18 @@ class PostController extends AbstractController
         if (!$form->isSubmitted()) {
             $currentTranslatedTitles = $post->getTranslatedTitle();
             $currentTranslatedContent = $post->getTranslatedContent();
+            $currentTranslatedExcerpt = $post->getTranslatedExcerpt();
             $currentTranslatedKeywords = $post->getTranslatedKeywords();
             $currentTranslatedMetaDescription = $post->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
+                $currentTranslatedExcerpt = isset($currentTranslatedExcerpt[$language]) ? $currentTranslatedExcerpt[$language] : '';
                 $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
                 $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
                 $form->get('title_' . $language)->setData($translatedTitle);
                 $form->get('content_' . $language)->setData($translatedContent);
+                $form->get('excerpt_' . $language)->setData($currentTranslatedExcerpt);
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
             }
@@ -145,17 +154,20 @@ class PostController extends AbstractController
 
             $updatedTranslatedTitle = [];
             $updatedTranslatedContent = [];
+            $updatedTranslatedExcerpt = [];
             $updatedTranslatedKeywords = [];
             $updatedTranslatedMetaDescription = [];
             foreach ($supportedLanguages as $language) {
                 $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
                 $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
+                $updatedTranslatedExcerpt[$language] = $form['excerpt_' . $language]->getData();
                 $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
                 $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
             $post->setTranslatedTitle($updatedTranslatedTitle);
             $post->setTranslatedContent($updatedTranslatedContent);
+            $post->setTranslatedExcerpt($updatedTranslatedExcerpt);
             $post->setTranslatedKeywords($updatedTranslatedKeywords);
             $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
             $post->setSite($site);
@@ -168,10 +180,25 @@ class PostController extends AbstractController
         }
 
         return $this->render(
-            'admin/post_edit.html.twig',
+            'Admin/Post/post_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'post' => $post,
+                'site' => $site,
+            ]
+        );
+    }
+
+    public function list(Request $request, Site $site, PostRepository $postRepository, PageRepository $pageRepository)
+    {
+        $posts = $postRepository->findBy(['site' => $site]);
+        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+
+        return $this->render(
+            'Admin/Post/post_list.html.twig',
+            [
+                'posts' => $posts,
+                'pages' => $pages,
                 'site' => $site,
             ]
         );

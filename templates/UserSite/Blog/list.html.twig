@@ -1,7 +1,9 @@
 {% extends 'UserSite/layout.html.twig' %}
 {% block body %}
-    <h1>{% trans %}{% endtrans %}</h1>
-    <p>
-        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale] }}{% endif %}
+    <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>
+        {% for post in posts %}
+            <h2><a href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</a></h2>
+            {% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale] }}{% endif %}
+        {% endfor %}
     </p>
 {% endblock %}

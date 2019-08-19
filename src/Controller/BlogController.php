@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Document\Message;
 use App\Document\Page;
+use App\Document\Post;
 use App\Form\ContactType;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
+use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,14 +26,14 @@ class BlogController extends AbstractController
         $this->domainResolver = $domainResolver;
     }
 
-
     public function list(
         Request $request,
         PageRepository $pageRepository,
+        SiteRepository $siteRepository,
         PostRepository $postRepository
     ) {
         /** @var Site $site */
-        $site = $postRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
 
         $posts = $postRepository->findBy(['site' => $site]);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
@@ -39,11 +41,40 @@ class BlogController extends AbstractController
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         return $this->render(
-            'UserSite/page.html.twig',
+            'UserSite/Blog/list.html.twig',
             [
                 'site' => $site,
                 'pages' => $pages,
                 'posts' => $posts,
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @param $id
+     * @param $slug
+     * @param SiteRepository $siteRepository
+     * @param PageRepository $pageRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function view(Request $request, $slug, PostRepository $postRepository, SiteRepository $siteRepository, PageRepository $pageRepository) {
+        /** @var Site $site */
+        $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+
+        /** @var Post $post */
+        $post = $postRepository->findOneBy(['site' => $site, 'slug' => $slug]);
+        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+        $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
+
+        return $this->render(
+            'UserSite/Blog/post.html.twig',
+            [
+                'site' => $site,
+                'post' => $post,
+                'slug' => $slug,
+                'pages' => $pages,
+                'files' => $post->getFiles(),
                 'form' => $form->createView(),
             ]
         );

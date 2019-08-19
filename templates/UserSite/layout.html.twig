@@ -6,14 +6,20 @@
     {% block stylesheets %}{% endblock %}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <a href="/" class="logo">{{ site.name|capitalize }}</a>
+
+{% for language in site.supportedLanguages %}
+    {% set languageCode = 'user_site_supported_languages_' ~ language %}
+    <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
+{% endfor %}
+
 <div class="allPages">
     {% for page in pages %}
-        <a href="{{ path('user_site_render_page', {slug:page.slug}) }}">{{ page.name }}</a>
+        <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
     {% endfor %}
 </div>
 {% block body %}{% endblock %}
