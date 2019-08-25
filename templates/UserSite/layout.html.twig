@@ -10,7 +10,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-{# tmporary fix for jms_i18n_routing not working with subdomain #}
+{# temporary fix for jms_i18n_routing not working with subdomain #}
 <a href="{{ path('user_site_render_page', {slug : 'home'}) }}" class="logo">{{ site.name|capitalize }}</a>
 
 {% for language in site.supportedLanguages %}
@@ -18,8 +18,6 @@
 
     {% if post is defined %}
         <a href="/{{ language }}/blog/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
-    {% elseif slug is empty %}
-        >>>
     {% else %}
         <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
     {% endif %}
@@ -29,7 +27,7 @@
 <div class="allPages">
     {% for page in pages %}
         {% if page.slug == 'home' %}
-            {# tmporary fix for jms_i18n_routing not working with subdomain #}
+            {# temporary fix for jms_i18n_routing not working with subdomain #}
             <a href="{{ path('user_site_render_page', {slug : 'home'}) }}">{{ page.name }}</a>
         {% else %}
             <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
