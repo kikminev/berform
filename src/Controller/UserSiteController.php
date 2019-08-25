@@ -38,7 +38,6 @@ class UserSiteController extends AbstractController
         PageRepository $pageRepository,
         ParameterBagInterface $params
     ):Response {
-        print_r($params->get('S3_BUCKET_NAME')); exit;
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
 

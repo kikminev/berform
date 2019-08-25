@@ -122,6 +122,3 @@ user_site_blog_view_post:
 user_site_render_page:
     path: /{slug}
     controller: App\Controller\UserSiteController::renderPage
-    defaults:
-        slug: home
-

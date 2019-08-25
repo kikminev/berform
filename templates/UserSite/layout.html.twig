@@ -10,16 +10,31 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<a href="/" class="logo">{{ site.name|capitalize }}</a>
+{# tmporary fix for jms_i18n_routing not working with subdomain #}
+<a href="{{ path('user_site_render_page', {slug : 'home'}) }}" class="logo">{{ site.name|capitalize }}</a>
 
 {% for language in site.supportedLanguages %}
     {% set languageCode = 'user_site_supported_languages_' ~ language %}
-    <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
+
+    {% if post is defined %}
+        <a href="/{{ language }}/blog/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
+    {% elseif slug is empty %}
+        >>>
+    {% else %}
+        <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
+    {% endif %}
+
 {% endfor %}
 
 <div class="allPages">
     {% for page in pages %}
-        <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
+        {% if page.slug == 'home' %}
+            {# tmporary fix for jms_i18n_routing not working with subdomain #}
+            <a href="{{ path('user_site_render_page', {slug : 'home'}) }}">{{ page.name }}</a>
+        {% else %}
+            <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
+        {% endif %}
+
     {% endfor %}
 </div>
 {% block body %}{% endblock %}

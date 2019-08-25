@@ -37,6 +37,7 @@ class BlogController extends AbstractController
 
         $posts = $postRepository->findBy(['site' => $site]);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+        $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
 
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
@@ -45,6 +46,8 @@ class BlogController extends AbstractController
             [
                 'site' => $site,
                 'pages' => $pages,
+                'page' => $page,
+                'slug' => 'blog',
                 'posts' => $posts,
                 'form' => $form->createView(),
             ]
@@ -64,6 +67,7 @@ class BlogController extends AbstractController
 
         /** @var Post $post */
         $post = $postRepository->findOneBy(['site' => $site, 'slug' => $slug]);
+        $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
@@ -73,6 +77,7 @@ class BlogController extends AbstractController
                 'site' => $site,
                 'post' => $post,
                 'slug' => $slug,
+                'page' => $page,
                 'pages' => $pages,
                 'files' => $post->getFiles(),
                 'form' => $form->createView(),
