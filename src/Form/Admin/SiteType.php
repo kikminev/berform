@@ -74,6 +74,7 @@ class SiteType extends AbstractType
             ->add('facebook', null, ['required' => false])
             ->add('instagram', null, ['required' => false])
             ->add('twitter', null, ['required' => false])
+            ->add('customCss', null, ['required' => false])
             ->add('save', SubmitType::class);
     }
 

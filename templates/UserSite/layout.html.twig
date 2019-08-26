@@ -8,34 +8,106 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
+    <style type="text/css">
+
+        .navigation {
+            padding-top: 80px;
+        }
+
+        .logo {
+            font-family: 'Abel', sans-serif;
+            text-transform: uppercase;
+            color: #333;
+            display: block;
+            float: left;
+        }
+
+        .logo:hover {
+            text-decoration: none;
+        }
+
+        .allPages {
+            float: left;
+            margin-top: 200px;
+            width: 100%;
+            padding-left: 20px;
+            font-size: smaller;
+        }
+
+        .allPages a {
+            float: left;
+            width: 100%;
+            color: #333;
+            text-transform: uppercase;
+            font-family: 'Abel', sans-serif;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .allPages a:hover {
+            text-decoration: none;
+            color: #5eb5e0;
+        }
+
+        .backgroundRight {
+            background: #000000;
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        #contactForm {
+            display: none;
+        }
+
+        .content {
+            padding-top: 400px;
+        }
+    </style>
 </head>
 <body>
-{# temporary fix for jms_i18n_routing not working with subdomain #}
-<a href="{{ path('user_site_render_page', {slug : 'home'}) }}" class="logo">{{ site.name|capitalize }}</a>
 
-{% for language in site.supportedLanguages %}
-    {% set languageCode = 'user_site_supported_languages_' ~ language %}
-
-    {% if post is defined %}
-        <a href="/{{ language }}/blog/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
-    {% else %}
-        <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
-    {% endif %}
-
-{% endfor %}
-
-<div class="allPages">
-    {% for page in pages %}
-        {% if page.slug == 'home' %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="navigation col-md-3">
             {# temporary fix for jms_i18n_routing not working with subdomain #}
-            <a href="{{ path('user_site_render_page', {slug : 'home'}) }}">{{ page.name }}</a>
-        {% else %}
-            <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
-        {% endif %}
+            <a href="{{ path('user_site_render_page', {slug : 'home'}) }}" class="logo">{{ site.name|capitalize }}</a>
 
-    {% endfor %}
+            <div class="allPages">
+                {% for page in pages %}
+                    {% if page.slug == 'home' %}
+                        {# temporary fix for jms_i18n_routing not working with subdomain #}
+                        <a href="{{ path('user_site_render_page', {slug : 'home'}) }}">{{ page.name }}</a>
+                    {% else %}
+                        <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-7 content">
+            {% block body %}{% endblock %}
+        </div>
+        <div class="col-md-1 backgroundRight"></div>
+    </div>
 </div>
-{% block body %}{% endblock %}
+
+{#{% for language in site.supportedLanguages %}#}
+{#    {% set languageCode = 'user_site_supported_languages_' ~ language %}#}
+
+{#    {% if post is defined %}#}
+{#        <a href="/{{ language }}/blog/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>#}
+{#    {% else %}#}
+{#        <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>#}
+{#    {% endif %}#}
+
+{#{% endfor %}#}
+
 {% block javascripts %}{% endblock %}
 </body>
 </html>

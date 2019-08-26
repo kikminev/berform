@@ -135,6 +135,13 @@ class Site
      */
     protected $supportedLanguages = array();
 
+
+    /**
+     * @var null|string $customCss
+     * @MongoDB\Field(type="string")
+     */
+    protected $customCss;
+
     /**
      * @return mixed
      */
@@ -486,5 +493,21 @@ class Site
 
     public function __clone() {
         $this->id = null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomCss(): ?string
+    {
+        return $this->customCss;
+    }
+
+    /**
+     * @param string|null $customCss
+     */
+    public function setCustomCss(?string $customCss): void
+    {
+        $this->customCss = $customCss;
     }
 }
