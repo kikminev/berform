@@ -44,7 +44,7 @@ class UploadController extends AbstractController
 
         $newFileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
         $url = $fileUploader->upload($newFileName, $file);
-        $id = $this->attachFileToSite($site, $url);
+        $id = $this->attachFileToSite($site, $url, $newFileName);
 
         return new JsonResponse(['url' => $url, 'id' => $id]);
     }
@@ -59,13 +59,14 @@ class UploadController extends AbstractController
         return new JsonResponse(['message' => 'ok']);
     }
 
-    private function attachFileToSite(Site $site, $url)
+    private function attachFileToSite(Site $site, $url, $baseName)
     {
         $this->denyAccessUnlessGranted('edit', $site);
 
         $file = new File();
         $file->setSite($site);
         $file->setFileUrl($url);
+        $file->setBaseName($baseName);
         $file->setUser($this->getUser());
 
         $this->documentManager->persist($file);

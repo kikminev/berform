@@ -36,6 +36,12 @@ class File
     protected $fileUrl;
 
     /**
+     * @var string $baseName
+     * @MongoDB\Field(type="string")
+     */
+    protected $baseName;
+
+    /**
      * @var User $user
      * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
@@ -152,5 +158,21 @@ class File
     public function setPost(?Post $post): void
     {
         $this->post = $post;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseName(): string
+    {
+        return $this->baseName;
+    }
+
+    /**
+     * @param string $baseName
+     */
+    public function setBaseName(string $baseName): void
+    {
+        $this->baseName = $baseName;
     }
 }

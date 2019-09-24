@@ -2,7 +2,7 @@
 {% block body %}
     <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
     <p>
-        {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale] }}{% endif %}
+        {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
     </p>
 
     {% if files|length > 0 %}

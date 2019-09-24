@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use Mailgun\Mailgun;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BlogController extends AbstractController
 {
@@ -35,7 +36,7 @@ class BlogController extends AbstractController
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
 
-        $posts = $postRepository->findBy(['site' => $site]);
+        $posts = $postRepository->findBy(['site' => $site, 'active' => true]);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
 
@@ -70,6 +71,10 @@ class BlogController extends AbstractController
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
+
+        if (null === $post) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->render(
             'UserSite/Blog/post.html.twig',

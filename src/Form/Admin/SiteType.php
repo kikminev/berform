@@ -71,6 +71,7 @@ class SiteType extends AbstractType
 
         $builder->add('workingFrom', null, ['required' => false])
             ->add('workingTo', null, ['required' => false])
+            ->add('email', null, ['required' => false])
             ->add('facebook', null, ['required' => false])
             ->add('instagram', null, ['required' => false])
             ->add('twitter', null, ['required' => false])

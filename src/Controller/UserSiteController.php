@@ -46,7 +46,7 @@ class UserSiteController extends AbstractController
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
 
         if (null === $page) {
-            //throw new NotFoundHttpException();
+            throw new NotFoundHttpException();
         }
 
         $form = $this->createForm(ContactType::class,

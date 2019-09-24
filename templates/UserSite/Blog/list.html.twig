@@ -3,7 +3,8 @@
     <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>
         {% for post in posts %}
             <h2><a href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</a></h2>
-            {% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale] }}{% endif %}
+            {% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw }}{% endif %}
+            <a href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">{% trans %}user_site_blog_read_more{% endtrans %}</a>
         {% endfor %}
     </p>
 {% endblock %}

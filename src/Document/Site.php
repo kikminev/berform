@@ -58,6 +58,11 @@ class Site
     /**
      * @MongoDB\Field(type="string")
      */
+    protected $email;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
     protected $instagram;
 
     /**
@@ -509,5 +514,21 @@ class Site
     public function setCustomCss(?string $customCss): void
     {
         $this->customCss = $customCss;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
     }
 }

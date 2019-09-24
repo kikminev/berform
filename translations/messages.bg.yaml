@@ -81,5 +81,9 @@ admin_profile_change_password: Смяна на парола
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 user_site_blog_header: Блог
+user_site_blog_read_more: още
 user_site_supported_languages_bg: бг
 user_site_supported_languages_en: en
+
+user_site_contact_us_address: Адрес:
+user_site_contact_us_email: Електронна поща:

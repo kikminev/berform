@@ -4,6 +4,8 @@
     {% for post in posts %}
         <h2>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h2>
         <a href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">edit</a>
+    {% else %}
+        {% trans %}user_site_no_posts{% endtrans %}
     {% endfor %}
     </p>
 {% endblock %}

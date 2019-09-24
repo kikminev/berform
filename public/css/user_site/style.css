@@ -1,0 +1,73 @@
+body { color: #333; }
+h1 { margin-bottom: 40px; }
+h2 { margin-bottom: 20px; }
+.navigation {
+    padding-top: 80px;
+}
+a { color: #000; }
+a:hover { color: #000; text-decoration: underline; }
+.logo {
+    font-family: 'Abel', sans-serif;
+    text-transform: uppercase;
+    display: block;
+    float: left;
+}
+
+.logo:hover {
+    text-decoration: none;
+}
+
+.allPages {
+    float: left;
+    margin-top: 200px;
+    width: 100%;
+    padding-left: 20px;
+    font-size: smaller;
+}
+
+.allPages a {
+    float: left;
+    width: 100%;
+    text-transform: uppercase;
+    font-family: 'Abel', sans-serif;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.allPages a:hover {}
+
+.backgroundRight {
+    background: #000000;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.contactUsWrap { margin-top: 50px; }
+#contactForm { display: none }
+.page-contact-us #contactForm {
+    display: block;
+    float: right;
+}
+
+#contactForm label { width: 100%; margin: 10px 0px 0px; }
+#contactForm input, #contactForm textarea { border: 1px solid #ccc; width: 100%; }
+#contactForm .contactFormRowCell { padding-left: 0px; }
+#contactForm #contact_submit { height: 35px; line-height: 35px; width: 100px; background: #000; border: 0px; color: #fff; border-radius: 40px; float: right; margin-top: 10px; text-transform: lowercase; }
+
+.content {
+    padding-top: 400px;
+}
+.languageSwitcher { margin-top: 80px; }
+.languageSwitcher a { font-size: small; }
+
+
+.lines-bg-wrap {
+    background-image: url('../../img/background_lines.svg');
+    background-position: center 0;
+    background-repeat: no-repeat;
+}
+
+#imagesWrap { width: 100%; display: block; }
+#imagesWrap .imgWrap { float: left; margin-right: 5px; }
