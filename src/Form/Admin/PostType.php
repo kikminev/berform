@@ -24,6 +24,7 @@ class PostType extends AbstractType
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false]);
         }
 
+        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
         $builder->add('active', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }

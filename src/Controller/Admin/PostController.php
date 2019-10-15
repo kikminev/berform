@@ -88,7 +88,8 @@ class PostController extends AbstractController
             $this->documentManager->persist($post);
 
             $pageFiles = [];
-            $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
+            $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
+
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
                 $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();

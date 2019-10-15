@@ -1,40 +1,16 @@
 {% extends 'UserSite/layout.html.twig' %}
 {% block body %}
     <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
+
+    {% if files|length > 0 %}
+        <div id="imagesWrap">
+            {% for file in files %}
+                <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=50&w=50&fit=crop&border=1,fff&border-radius=50" alt=""/></a>
+            {% endfor %}
+        </div>
+    {% endif %}
+<div class="clear"></div>
     <p>
         {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
     </p>
-
-    {% if files|length > 0 %}
-    <div id="imagesWrap">
-        {% for file in files %}
-            <div class="imgWrap" id="upload_{{ file.id }}"><img src="{{ file.fileUrl }}" alt=""/></div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <div id="contactForm">
-        <div id="contactFormStatus"></div>
-        {{ form_start(form, {'attr': {'id': 'inPageContactForm'}}) }}
-        {{ form_errors(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </div>
-    <script>
-        $("#inPageContactForm").submit(function (e) {
-            e.preventDefault();
-            var form = $(this);
-            $.ajax({
-                type: "POST",
-                url: form.attr('action'),
-                data: form.serialize(),
-                success: function (response) {
-                    $('#contactFormStatus').html(response.message);
-                    setTimeout(2000, function () {
-                        $('#contactFormStatus').html('');
-                    })
-                }
-            });
-        });
-    </script>
 {% endblock %}

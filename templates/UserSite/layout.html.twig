@@ -5,6 +5,9 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/ajax_loading.js') }}"></script>
+    <script src="{{ asset('js/velocity.min.js') }}"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
@@ -18,29 +21,42 @@
 </head>
 <body>
 
-<div class="container-fluid {% if slug is defined %}page-{{ slug  }}{% endif %}">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="navigation col-md-2">
-            {# temporary fix for jms_i18n_routing not working with subdomain #}
-            <a href="{{ path('user_site_render_page', {slug : 'home'}) }}" class="logo">{{ site.name|capitalize }}</a>
 
-            <div class="allPages">
-                {% for page in pages %}
-                    {% if page.slug == 'home' %}
-                        {# temporary fix for jms_i18n_routing not working with subdomain #}
-                        <a href="{{ path('user_site_render_page', {slug : 'home'}) }}">{{ page.name }}</a>
-                    {% else %}
-                        <a href="{{ path('user_site_render_page', {slug : page.slug}) }}">{{ page.name }}</a>
-                    {% endif %}
+        <div class="navigation col-md-2 offset-md-1">
+            <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
 
-                {% endfor %}
-            </div>
+            <div class="clear"></div>
+
+            <nav class="cd-side-navigation navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#pagesMenu" aria-controls="pagesMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <ul class="navbar-nav collapse navbar-collapse" id="pagesMenu">
+                    {% for page in pages %}
+                        {% if page.slug == 'home' %}
+                            {# temporary fix for jms_i18n_routing not working with subdomain#}
+                            <li class="nav-item"><a href="home" data-section-id="home" data-menu="home">{{ page.name }}</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="{{ path('user_site_view_page', {slug: page.slug}) }}" class="ajaxLink" data-menu="{{ path('user_site_view_page', {slug: page.slug}) }}" data-section-id="{{ page.slug }}">{{ page.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+            <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" class="logo centeredText logoBottom d-md-none">{{ site.name|capitalize }}</a>
         </div>
 
-        <div class="col-md-7 content">
-            {% block body %}{% endblock %}
-        </div>
+        <main class="cd-main col-md-7">
+            <section class="cd-section visible {% if slug is defined %}{{ slug  }}{% endif %}">
+                <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
+                    {% block body %}{% endblock %}
+                </div>
+            </section>
+        </main>
+
         <div class="col-md-1">
             <div class="languageSwitcher">
                 {% for language in site.supportedLanguages %}
@@ -55,10 +71,23 @@
             </div>
         </div>
         <div class="col-md-1 backgroundRight"></div>
+
+
     </div>
 </div>
+<div id="cd-loading-bar" data-scale="1" class="index"></div>
 
+    <script type="text/javascript">
+        {% if slug is defined %}
+        $(document).ready(function() {
+            uSite.centerContentVertically('.{{ slug }}');
+        });
 
-{% block javascripts %}{% endblock %}
+        $(window).on('resize', function(){
+            uSite.centerContentVertically('.{{ slug }}');
+        });
+        {% endif %}
+    </script>
+
 </body>
 </html>

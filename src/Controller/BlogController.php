@@ -3,19 +3,16 @@
 namespace App\Controller;
 
 use App\Document\Message;
-use App\Document\Page;
 use App\Document\Post;
 use App\Form\ContactType;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
-use Mailgun\Mailgun;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BlogController extends AbstractController
@@ -42,6 +39,7 @@ class BlogController extends AbstractController
 
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
+        // todo: pagination
         return $this->render(
             'UserSite/Blog/list.html.twig',
             [
@@ -56,13 +54,14 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @param $id
+     * @param Request $request
      * @param $slug
+     * @param PostRepository $postRepository
      * @param SiteRepository $siteRepository
      * @param PageRepository $pageRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function view(Request $request, $slug, PostRepository $postRepository, SiteRepository $siteRepository, PageRepository $pageRepository) {
+    public function view(Request $request, $slug, PostRepository $postRepository, SiteRepository $siteRepository, PageRepository $pageRepository):Response {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
 
