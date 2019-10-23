@@ -9,7 +9,6 @@ html, body {
 .verticalColumn { float: left; display: block }
 /*.contentContainer { opacity: 0; }*/
 
-
 .contentRow { height: 100% }
 .container-fluid { height: 100%; }
 h1 { margin-bottom: 40px; }
@@ -18,8 +17,12 @@ h2 { margin-bottom: 20px; }
 #pagesMenu.navbar-nav { flex-direction: column; }
 #pagesMenu.navbar-nav .nav-item { width: 100%; float: left; }
 
+.navigation { flex-direction: column; justify-content: space-between; display: flex; height: 100vh; }
+.cd-side-navigation { margin-bottom: 200px; }
 .navigation .navbar-toggler { margin: 20px 0px; }
 a { color: #000; }
+a.selected { color: #666666; }
+.contentContainer a { color: forestgreen; }
 a:hover { color: #000; text-decoration: underline; }
 .logo {
     font-family: 'Abel', sans-serif;
@@ -61,7 +64,7 @@ a:hover { color: #000; text-decoration: underline; }
     justify-content: center;
     min-height: 100vh;
 }
-.languageSwitcher { margin-top: 80px; width: 100%; text-align: center; }
+.languageSwitcher { margin-top: 30px; width: 100%; text-align: center; }
 .languageSwitcher a { font-size: small; }
 
 
@@ -193,3 +196,11 @@ a:hover { color: #000; text-decoration: underline; }
     background: #ffffff;
 }
 /* animations and ajax loading */
+
+/* mobile */
+@media (max-width: 767.98px) {
+    .navigation { display: block; height: auto; }
+    .cd-side-navigation { margin-bottom: 0px; }
+    .cd-section { margin-top: 50px !important; }
+    #contactForm .contactFormRowCell { padding-left: 15px; }
+}

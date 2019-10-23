@@ -25,7 +25,7 @@ class SiteController extends AbstractController
         $sites = $qb->getQuery()->execute();
 
         return $this->render(
-            'Admin/site_list.html.twig',
+            'Admin/Site/list.html.twig',
             [
                 'sites' => $sites,
             ]

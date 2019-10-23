@@ -77,6 +77,11 @@ admin_links_dashboard: Начало
 admin_links_profile: Профил
 admin_links_logout: Изход
 admin_profile_change_password: Смяна на парола
+admin_links_sites: Сайтове
+admin_links_pages: Страници
+admin_links_create: Създай нов
+admin_links_create_page: Създай нова
+admin_links_site_settings: Настройки на сайта
 
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site

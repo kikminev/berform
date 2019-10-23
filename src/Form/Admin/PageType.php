@@ -3,6 +3,7 @@
 namespace App\Form\Admin;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,8 +24,8 @@ class PageType extends AbstractType
             $builder->add('keywords_'.$language, TextareaType::class, ['mapped' => false]);
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false]);
         }
-        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
-        $builder->add('parent', null, ['required' => false]);
+        $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+//        $builder->add('parent', null, ['required' => false]);
         $builder->add('active', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }

@@ -39,7 +39,7 @@
                     {% for page in pages %}
                         {% if page.slug == 'home' %}
                             {# temporary fix for jms_i18n_routing not working with subdomain#}
-                            <li class="nav-item"><a href="home" data-section-id="home" data-menu="home">{{ page.name }}</a></li>
+                            <li class="nav-item"><a href="home" data-section-id="home" data-menu="home" class="ajaxLink">{{ page.name }}</a></li>
                         {% else %}
                             <li class="nav-item"><a href="{{ path('user_site_view_page', {slug: page.slug}) }}" class="ajaxLink" data-menu="{{ path('user_site_view_page', {slug: page.slug}) }}" data-section-id="{{ page.slug }}">{{ page.name }}</a></li>
                         {% endif %}
@@ -78,6 +78,7 @@
 <div id="cd-loading-bar" data-scale="1" class="index"></div>
 
     <script type="text/javascript">
+        $.fancybox.defaults.hash = false;
         {% if slug is defined %}
         $(document).ready(function() {
             uSite.centerContentVertically('.{{ slug }}');

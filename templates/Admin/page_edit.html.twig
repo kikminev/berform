@@ -1,10 +1,31 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-    {% include('Admin/Upload/upload_form.html.twig') %}
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
 
-    {% include('Admin/Upload/file_list.html.twig') %}
+    <div class="container">
+        <div class="contentEditForm row">
+            <div class="col-sm-1 col-md-2"></div>
+            <div class="col-sm-10 col-md-8">
+
+                {{ form_start(form) }}
+                    <div class="errors">
+                        {{ form_errors(form) }}
+                    </div>
+
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.slug) }}
+
+
+                    <div style="display: none">{{ form_row(form.save) }}</div>
+
+                    <a href="" class="btn btn-primary btn-sm formButton">save</a>
+                {{ form_end(form) }}
+
+
+
+                {% include('Admin/Upload/file_list.html.twig') %}
+            </div>
+            <div class="col-sm-1 col-md-2"></div>
+{#            {% include('Admin/Upload/upload_form.html.twig') %}#}
+        </div>
+    </div>
 {% endblock %}

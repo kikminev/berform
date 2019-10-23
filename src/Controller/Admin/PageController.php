@@ -100,6 +100,7 @@ class PageController extends AbstractController
                 'form' => $form->createView(),
                 'files' => $page->getFiles(),
                 'page' => $page,
+                'supportedLanguages' => $supportedLanguages,
                 'site' => $page->getSite(),
             ]
         );

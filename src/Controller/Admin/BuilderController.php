@@ -24,7 +24,7 @@ class BuilderController extends AbstractController
         $pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site), array('order' => 'DESC '));
 
         return $this->render(
-            'Admin/builder.html.twig',
+            'Admin/Site/page_list.html.twig',
             array(
                 'pages' => $pages,
                 'site' => $site,

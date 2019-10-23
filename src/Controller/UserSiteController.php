@@ -43,7 +43,7 @@ class UserSiteController extends AbstractController
 
         /** @var Page $page */
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
-        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+        $pages = $pageRepository->findBy(['site' => $site, 'active' => true], ['order' => 'DESC ']);
 
         if (null === $page) {
             throw new NotFoundHttpException();
