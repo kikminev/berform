@@ -3,8 +3,10 @@
     {% for file in files %}
         {% if file.deleted != true %}
             <div class="imgWrap" id="object_{{ file.id }}">
-                <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=50&w=50&fit=crop&border=1,fff&border-radius=10" alt="" />
-                <a class="deleteFile" onclick="a.deleteObject('{{ path('admin_site_upload_delete', {id : file.id}) }}', 'object_{{ file.id }}')">x</a>
+                <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=200&w=200&fit=crop&border=1,fff&border-radius=10" alt="" />
+                <a class="deleteFile" onclick="a.deleteObject('{{ path('admin_site_upload_delete', {id : file.id}) }}', 'object_{{ file.id }}')">
+                    <i class="fas fa-times"></i>
+                </a>
             </div>
         {% endif %}
     {% endfor %}

@@ -7,7 +7,7 @@ body {
     margin: 0px;
 }
 
-a { text-decoration: none; }
+a { text-decoration: none; cursor: pointer; }
 a:hover { text-decoration: none; }
 
 .clear {
@@ -70,8 +70,19 @@ a:hover { text-decoration: none; }
 .list .heading { float: left; width: 100%; }
 
 .topActionsBar a.btn { float: right; color: #fff; }
-.contentEditForm label { margin-top: 20px; }
+.contentEditForm .nav-tabs, .contentEditForm label { margin-top: 20px; }
 .contentEditForm label, .contentEditForm input, .contentEditForm textarea { width: 100%; }
+.contentEditForm .checkbox { margin-top: 20px; }
+.contentEditForm .checkbox label, .contentEditForm .checkbox input { width: auto; }
 
 /* edit page */
-.formButton { float: right; margin-top: 20px; }
+.formButton { float: right; margin-top: 20px; color: #fff !important; }
+.tox-statusbar__branding { display: none }
+.breadcrumbs a { color: #d9ebff; }
+
+
+/* uploaded images */
+.imgWrap { position: relative; overflow: hidden; width: 200px; height: 200px; }
+.deleteFile { display: none; position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; background: white; border-radius: 30px; line-height: 30px; text-align: center; font-size: small; color: #666666 !important; }
+.imgWrap:hover .deleteFile { display: block; }
+#imagesWrap { margin: 20px 0px; }

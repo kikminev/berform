@@ -71,6 +71,13 @@ main_site_top_menu_sign_up: Регистрация
 
 # admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
 # admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# page edit form
+form_page_name: Име
+form_page_slug: Системно име
+form_page_title: Заглавие
+form_page_content: Съдържание
+form_page_keywords: Ключови думи
+form_page_meta_description: Подробно описание
 
 # top menu
 admin_links_dashboard: Начало
@@ -92,3 +99,10 @@ user_site_supported_languages_en: en
 
 user_site_contact_us_address: Адрес:
 user_site_contact_us_email: Електронна поща:
+
+# admin
+admin_language_label_en: Английски
+admin_language_label_bg: Български
+admin_button_save: Запази
+admin_content: Съдържание
+admin_images: Снимки
