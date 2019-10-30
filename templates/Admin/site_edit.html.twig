@@ -1,7 +1,46 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+
+
+
+    <div class="breadcrumbs container-fluid contextBar">
+        <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_pages{% endtrans %}
+    </div>
+
+    <div class="container">
+        <div class="contentEditForm row">
+            <div class="col-sm-1 col-md-2"></div>
+
+            <div class="col-sm-10 col-md-8 contentEditForm">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {% for language in form.supportedLanguages %}
+                    <div class="pretty p-switch p-fill checkbox">
+                        {{ form_errors(language) }}
+                        {{ form_widget(language) }}
+                        <div class="state p-success">{{ form_label(language) }}</div>
+                    </div>
+                    <div class="clear"></div>
+                {% endfor %}
+
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+
+            <div class="col-sm-1 col-md-2"></div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _site_supportedLanguages_widget %}
+    <div class="text_widget">
+
+
+
+
+    </div>
 {% endblock %}

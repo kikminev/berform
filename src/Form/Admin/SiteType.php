@@ -34,7 +34,6 @@ class SiteType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $supportedLanguages = $this->param->get('supported_languages');
 
         $translatedLanguages = [];
@@ -51,17 +50,17 @@ class SiteType extends AbstractType
                     'expanded' => true,
                     'multiple' => true,
                     'choices' => $translatedLanguages,
-                ])
-            ->add('domain',
-                DocumentType::class,
-                [
-                    'class' => Domain::class,
-                    'choice_label' => function ($domain) {
-                        /** @var Domain $domain */
-                        return $domain->getName();
-                    },
-                    'required' => false,
                 ]);
+//            ->add('domain',
+//                DocumentType::class,
+//                [
+//                    'class' => Domain::class,
+//                    'choice_label' => function ($domain) {
+//                        /** @var Domain $domain */
+//                        return $domain->getName();
+//                    },
+//                    'required' => false,
+//                ]);
 
         $builder->get('supportedLanguages')->addModelTransformer($this->supportedLanguageToStringTransformer);
 
@@ -75,7 +74,7 @@ class SiteType extends AbstractType
             ->add('facebook', null, ['required' => false])
             ->add('instagram', null, ['required' => false])
             ->add('twitter', null, ['required' => false])
-            ->add('customCss', null, ['required' => false])
+//            ->add('customCss', null, ['required' => false])
             ->add('save', SubmitType::class);
     }
 

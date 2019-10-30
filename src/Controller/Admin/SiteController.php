@@ -113,6 +113,7 @@ class SiteController extends AbstractController
         return $this->render(
             'Admin/site_edit.html.twig',
             [
+                'site' => $site,
                 'form' => $form->createView(),
             ]
         );
