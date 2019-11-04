@@ -15,17 +15,31 @@
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
 
+                {{ form_row(form.name) }}
+                {{ form_row(form.slug) }}
+                {{ form_row(form.workingFrom) }}
+                {{ form_row(form.workingTo) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.facebook) }}
+                {{ form_row(form.instagram) }}
+                {{ form_row(form.twitter) }}
+                {{ form_row(form.defaultLanguage) }}
+
+                {{ form_label(form.supportedLanguages) }}
                 {% for language in form.supportedLanguages %}
                     <div class="pretty p-switch p-fill checkbox">
                         {{ form_errors(language) }}
                         {{ form_widget(language) }}
                         <div class="state p-success">{{ form_label(language) }}</div>
                     </div>
-                    <div class="clear"></div>
                 {% endfor %}
 
-                {{ form_widget(form) }}
+
+                <div style="display: none">{{ form_row(form.save) }}</div>
+
+
                 {{ form_end(form) }}
+                <a onclick="$('#mainContentTab').find('form').submit()" class="btn btn-primary btn-sm formButton">{% trans %}admin_button_save{% endtrans %}</a>
             </div>
 
             <div class="col-sm-1 col-md-2"></div>
@@ -35,12 +49,3 @@
 {% endblock %}
 
 {% form_theme form _self %}
-
-{% block _site_supportedLanguages_widget %}
-    <div class="text_widget">
-
-
-
-
-    </div>
-{% endblock %}
