@@ -1,6 +1,7 @@
 {# todo: make a form class #}
 <form method="post">
-    <input id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler', {'site' : site.id}) }}" multiple />
+    <input style="display: none;" id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler', {'site' : site.id}) }}" multiple />
+    <a class="uploadButton imgWrap" onclick="$('#fileUpload').click()">+</a>
 </form>
 
 

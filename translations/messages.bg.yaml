@@ -117,3 +117,5 @@ password_validation_length_error: Паролата трябва да бъде п
 password_form_old_password: Сегашна парола
 password_form_new_password: Нова парола
 password_form_new_password_repeat: Потвърди новата парола
+
+admin_links_upload_image: Добави

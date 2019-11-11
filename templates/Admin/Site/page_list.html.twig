@@ -14,16 +14,16 @@
                 <h2>{% trans %}admin_links_pages{% endtrans %} <a href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a></h2>
             </div>
 
+            <div class="itemWrap addNewTile col-md-3">
+                <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>
+            </div>
+
             {% for page in pages %}
                 <div class="itemWrap col-md-3">
                     <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">{{ page.name }}</a>
                 </div>
 
             {% endfor %}
-
-            <div class="itemWrap col-md-3">
-                <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">{% trans %}admin_links_create_page{% endtrans %}</a>
-            </div>
         </div>
     </div>
 {% endblock %}
