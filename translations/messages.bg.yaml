@@ -110,6 +110,9 @@ admin_content: Съдържание
 admin_images: Снимки
 admin_domains_header_label: Домейн
 
+# page edit
+admin_page_edit_domain: Домейн
+
 # password
 password_validation_general_not_valid: Грешна парола
 password_validation_confirm: Моля потвърдете вашата парола

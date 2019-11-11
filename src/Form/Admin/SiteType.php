@@ -50,17 +50,18 @@ class SiteType extends AbstractType
                     'expanded' => true,
                     'multiple' => true,
                     'choices' => $translatedLanguages,
+                ])
+            ->add('domain',
+                DocumentType::class,
+                [
+                    'label' => $this->translator->trans('admin_page_edit_domain'),
+                    'class' => Domain::class,
+                    'choice_label' => function ($domain) {
+                        /** @var Domain $domain */
+                        return $domain->getName();
+                    },
+                    'required' => false,
                 ]);
-//            ->add('domain',
-//                DocumentType::class,
-//                [
-//                    'class' => Domain::class,
-//                    'choice_label' => function ($domain) {
-//                        /** @var Domain $domain */
-//                        return $domain->getName();
-//                    },
-//                    'required' => false,
-//                ]);
 
         $builder->get('supportedLanguages')->addModelTransformer($this->supportedLanguageToStringTransformer);
 
