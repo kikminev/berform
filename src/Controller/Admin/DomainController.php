@@ -21,10 +21,11 @@ class DomainController extends AbstractController
      */
     public function list(DomainRepository $domainRepository)
     {
+        // todo: no user check
         $domains = $domainRepository->getByUser($this->getUser());
 
         return $this->render(
-            'admin/domain_list.html.twig',
+            'Admin/Domain/domain_list.html.twig',
             [
                 'domains' => $domains,
             ]
@@ -44,11 +45,11 @@ class DomainController extends AbstractController
             $documentManager->persist($domain);
             $documentManager->flush();
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('user_admin_domain_list');
         }
 
         return $this->render(
-            'admin/domain_edit.html.twig',
+            'Admin/Domain/domain_edit.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -69,11 +70,11 @@ class DomainController extends AbstractController
             $documentManager->persist($domain);
             $documentManager->flush();
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('user_admin_domain_list');
         }
 
         return $this->render(
-            'admin/domain_edit.html.twig',
+            'Admin/Domain/domain_edit.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -91,12 +92,12 @@ class DomainController extends AbstractController
                 'The domain can not be deleted as it is attached to a website!'
             );
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('user_admin_domain_list');
         }
 
         $documentManager->remove($domain);
         $documentManager->flush();
 
-        return $this->redirectToRoute('admin');
+        return $this->redirectToRoute('user_admin_domain_list');
     }
 }

@@ -22,7 +22,7 @@ h2 { margin-bottom: 20px; }
 .navigation .navbar-toggler { margin: 20px 0px; }
 a { color: #000; }
 a.selected { color: #666666; }
-.contentContainer a { color: forestgreen; }
+.contentContainer a { color: #002fa7; }
 a:hover { color: #000; text-decoration: underline; }
 .logo {
     font-family: 'Abel', sans-serif;
@@ -182,13 +182,12 @@ a:hover { color: #000; text-decoration: underline; }
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
-    background-color: forestgreen;
+    background-color: #002fa7;
 }
 #cd-loading-bar.loading {
     visibility: visible;
 }
 .cd-section.visible {
-    /* this is the visible/selected section */
     position: relative;
     z-index: 2;
     transform: translateX(0);
@@ -204,3 +203,9 @@ a:hover { color: #000; text-decoration: underline; }
     .cd-section { margin-top: 50px !important; }
     #contactForm .contactFormRowCell { padding-left: 15px; }
 }
+
+/* social icons */
+#contactInformation .socialIcons a { margin-right: 10px; }
+.sidebar .socialIcons { width: 25px; position: absolute; top: 50%; margin-top: -50%; left: 20px; }
+.sidebar .socialIcons a { color: #d7d7d7; margin-bottom: 15px; }
+.socialIcons a:hover { text-decoration: none; color: red; }

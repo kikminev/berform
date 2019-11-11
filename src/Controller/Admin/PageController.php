@@ -95,7 +95,7 @@ class PageController extends AbstractController
         }
 
         return $this->render(
-            'Admin/page_edit.html.twig',
+            'Admin/Page/page_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'files' => $page->getFiles(),
@@ -181,7 +181,7 @@ class PageController extends AbstractController
         }
 
         return $this->render(
-            'Admin/page_edit.html.twig',
+            'Admin/Page/page_edit.html.twig',
             [
                 'site' => $site,
                 'form' => $form->createView(),

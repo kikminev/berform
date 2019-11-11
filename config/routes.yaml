@@ -52,6 +52,10 @@ user_admin_domain_delete:
     path: /u/domain/delete/{id}
     controller: App\Controller\Admin\DomainController::delete
 
+user_admin_domain_list:
+    path: /u/domain/list
+    controller: App\Controller\Admin\DomainController::list
+
 # pages
 user_admin_page_create:
     path: /u/page/create/{site}

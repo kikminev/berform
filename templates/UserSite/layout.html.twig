@@ -9,6 +9,7 @@
     <script src="{{ asset('js/ajax_loading.js') }}"></script>
     <script src="{{ asset('js/velocity.min.js') }}"></script>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
@@ -70,7 +71,9 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-md-1 backgroundRight"></div>
+        <div class="col-md-1 backgroundRight sidebar">
+            {% include('UserSite/Components/social_icons.html.twig') %}
+        </div>
 
 
     </div>

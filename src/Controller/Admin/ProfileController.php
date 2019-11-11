@@ -9,14 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProfileController extends AbstractController
 {
     private $documentManager;
+    private $translator;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator)
     {
         $this->documentManager = $documentManager;
+        $this->translator = $translator;
     }
 
     public function edit(Request $request): ?Response
@@ -44,15 +47,15 @@ class ProfileController extends AbstractController
             $newPasswordRepeat = $form['new_password_repeat']->getData();
 
             if (!$userPasswordEncoder->isPasswordValid($user, $oldPassword)) {
-                $this->addFlash('notice', 'Your password is not valid!');
+                $this->addFlash('notice', $this->translator->trans('password_validation_general_not_valid'));
             }
 
             if ($newPassword != $newPasswordRepeat) {
-                $this->addFlash('notice', 'Please confirm your new password!');
+                $this->addFlash('notice', $this->translator->trans('password_validation_confirm'));
             }
 
             if (6 > strlen($newPassword)) {
-                $this->addFlash('notice', 'Your new password should at least 6 characters long.');
+                $this->addFlash('notice', $this->translator->trans('password_validation_length_error'));
             }
 
             if ($userPasswordEncoder->isPasswordValid($user, $oldPassword) && $newPassword === $newPasswordRepeat) {

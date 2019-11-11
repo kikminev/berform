@@ -10,6 +10,8 @@
                 {% trans %}user_site_contact_us_email{% endtrans %} <a href="mailto:{{ site.email }}">{{ site.email }}</a>
             </p>
         {% endif %}
+
+        {% include('UserSite/Components/social_icons.html.twig') %}
     </div>
 
     <div id="contactForm" class="col-md-6">
