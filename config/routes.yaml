@@ -123,6 +123,10 @@ user_site_blog_view_post:
     path: /blog/{slug}
     controller: App\Controller\BlogController::view
 
+user_site_view_page_home:
+    path: /
+    controller: App\Controller\UserSiteController::renderPage
+
 user_site_view_page:
     path: /{slug}
     controller: App\Controller\UserSiteController::renderPage

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Document\File;
 use App\Document\Post;
 use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
@@ -87,18 +88,26 @@ class PostController extends AbstractController
 
             $this->documentManager->persist($post);
 
-            $pageFiles = [];
-            $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
 
+            $postFiles = [];
+            $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+                $postFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
             }
-            $post->setFiles($pageFiles);
+            $post->setFiles($postFiles);
 
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_site_build', ['id' => $post->getSite()->getId()]);
+            return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
+        } else {
+            $fileConcatenated = '';
+            /** @var File $file */
+            foreach ($post->getFiles() as $file) {
+                $fileConcatenated .= $file->getId().';';
+            }
+            // todo: remove this thing
+            $form->get('attachedFiles')->setData($fileConcatenated);
         }
 
         return $this->render(
@@ -107,6 +116,7 @@ class PostController extends AbstractController
                 'form' => $form->createView(),
                 'files' => $post->getFiles(),
                 'post' => $post,
+                'supportedLanguages' => $param->get('supported_languages'),
                 'site' => $post->getSite()
             ]
         );

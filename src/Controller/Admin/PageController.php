@@ -44,10 +44,7 @@ class PageController extends AbstractController
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
-        $fileConcatenated = '';
-        foreach ($page->getFiles() as $file) {
-            $fileConcatenated .= $file->getId().';';
-        }
+
 
         if (!$form->isSubmitted()) {
             $currentTranslatedTitles = $page->getTranslatedTitle();
@@ -98,6 +95,10 @@ class PageController extends AbstractController
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
         } else {
+            $fileConcatenated = '';
+            foreach ($page->getFiles() as $file) {
+                $fileConcatenated .= $file->getId().';';
+            }
             // todo: remove this thing
             $form->get('attachedFiles')->setData($fileConcatenated);
         }

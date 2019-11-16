@@ -1,11 +1,35 @@
-{% extends 'UserSite/layout.html.twig' %}
+{% extends 'Admin/layout.html.twig' %}
 {% block body %}
-    <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>
-    {% for post in posts %}
-        <h2>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h2>
-        <a href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">edit</a>
-    {% else %}
-        {% trans %}user_site_no_posts{% endtrans %}
-    {% endfor %}
-    </p>
+{#    <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>#}
+
+<div class="container-fluid contextBar"><h1>{{ site.name }}</h1></div>
+<div class="container">
+
+    <div class="topActionsBar">
+        <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
+        <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-primary btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="list boxList row">
+        <div class="heading">
+            <h2>{% trans %}admin_links_pages{% endtrans %} <a href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a></h2>
+        </div>
+
+{#        <div class="itemWrap addNewTile col-md-3">#}
+{#            <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>#}
+{#        </div>#}
+{#        #}
+        {% for post in posts %}
+            <div class="itemWrap col-md-3">
+                <a class="item" href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</a>
+            </div>
+        {% else %}
+            {% trans %}user_site_no_posts{% endtrans %}
+        {% endfor %}
+
+
+    </div>
+</div>
 {% endblock %}

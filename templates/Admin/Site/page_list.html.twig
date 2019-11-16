@@ -5,6 +5,7 @@
 
         <div class="topActionsBar">
             <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
+            <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-primary btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
         </div>
 
         <div class="clear"></div>
@@ -22,7 +23,6 @@
                 <div class="itemWrap col-md-3">
                     <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">{{ page.name }}</a>
                 </div>
-
             {% endfor %}
         </div>
     </div>

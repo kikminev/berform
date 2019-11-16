@@ -6,6 +6,7 @@ use App\Document\Message;
 use App\Document\Page;
 use App\Document\Site;
 use App\Form\ContactType;
+use App\Repository\DomainRepository;
 use App\Repository\PageRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
@@ -26,20 +27,33 @@ class UserSiteController extends AbstractController
 
     /**
      * @param Request $request
-     * @param string $slug
      * @param SiteRepository $siteRepository
      * @param PageRepository $pageRepository
+     * @param ParameterBagInterface $params
+     * @param string $slug
      * @return Response
      */
     public function renderPage(
         Request $request,
-        string $slug,
         SiteRepository $siteRepository,
+        DomainRepository $domainRepository,
         PageRepository $pageRepository,
-        ParameterBagInterface $params
+        ParameterBagInterface $params,
+        string $slug = 'home'
     ):Response {
+
+        // todo: fix this if and extract to a normal logic
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+
+        $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        if (null === $site && null !== $domain) {
+            $site = $siteRepository->findOneBy(['domain' => $domain]);
+        }
+
+        if (null === $site) {
+            throw new NotFoundHttpException();
+        }
 
         /** @var Page $page */
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
