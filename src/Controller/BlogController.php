@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\File;
 use App\Document\Message;
 use App\Document\Post;
 use App\Form\ContactType;
@@ -35,8 +36,6 @@ class BlogController extends AbstractController
 
         $posts = $postRepository->findBy(['site' => $site, 'active' => true]);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
-        $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
-
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         // todo: pagination
@@ -45,7 +44,6 @@ class BlogController extends AbstractController
             [
                 'site' => $site,
                 'pages' => $pages,
-                'page' => $page,
                 'slug' => 'blog',
                 'posts' => $posts,
                 'form' => $form->createView(),
