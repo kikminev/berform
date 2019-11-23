@@ -87,10 +87,13 @@
         {% if slug is defined %}
         $(document).ready(function() {
             uSite.centerContentVertically('.{{ slug }}');
+            uSite.centerElementVertically('.socialIcons');
         });
 
         $(window).on('resize', function(){
-            uSite.centerContentVertically('.{{ slug }}');
+            uSite.centerContentVertically('.{{ slug }} .contentContainer');
+            uSite.centerElementVertically('.socialIcons');
+            $('.socialIcons').css('left', '#backgroundRight')
         });
         {% endif %}
     </script>

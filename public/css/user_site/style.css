@@ -206,9 +206,9 @@ a:hover { color: #000; text-decoration: underline; }
 
 /* social icons */
 #contactInformation .socialIcons a { margin-right: 10px; }
-.sidebar .socialIcons { width: 25px; position: absolute; top: 50%; margin-top: -50%; left: 20px; }
+.sidebar .socialIcons { width: 25px; position: fixed; right: 40px; }
 .sidebar .socialIcons a { color: #d7d7d7; margin-bottom: 15px; }
-.socialIcons a:hover { text-decoration: none; color: red; }
+.socialIcons a:hover { text-decoration: none; color: deepskyblue; }
 
 /* blog */
 .blogListWrap { padding-left: 20px; }
