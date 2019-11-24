@@ -52,14 +52,16 @@ class PostController extends AbstractController
             $currentTranslatedContent = $post->getTranslatedContent();
             $currentTranslatedKeywords = $post->getTranslatedKeywords();
             $currentTranslatedMetaDescription = $post->getTranslatedMetaDescription();
+            $currentUpdatedTranslatedExcerpt = $post->getTranslatedExcerpt();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
                 $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
                 $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
+                $translatedExcerpt = isset($currentUpdatedTranslatedExcerpt[$language]) ? $currentUpdatedTranslatedExcerpt[$language] : '';
                 $form->get('title_' . $language)->setData($translatedTitle);
                 $form->get('content_' . $language)->setData($translatedContent);
-                $form->get('excerpt_' . $language)->setData($translatedContent);
+                $form->get('excerpt_' . $language)->setData($translatedExcerpt);
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
             }

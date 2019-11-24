@@ -1,16 +1,26 @@
 {% extends 'UserSite/layout.html.twig' %}
 {% block body %}
+    <div class="blogPost">
     <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
 
-    {% if files|length > 0 %}
-        <div id="imagesWrap">
-            {% for file in files %}
-                <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=50&w=50&fit=crop&border=1,fff&border-radius=50" alt=""/></a>
-            {% endfor %}
-        </div>
-    {% endif %}
 <div class="clear"></div>
-    <p>
+
+        {% if post.files|length > 0 %}
+            {% set mainImage = post.files[0] %}
+                {% if files|length > 0 %}
+                    <div id="imagesWrap">
+                        <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ mainImage.baseName }}"><img src="https://sitemax.imgix.net/{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
+
+                        <div class="blogIconImgWrap">
+                            {% for file in files %}
+                                {% if loop.first != true %}
+                                    <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=70&w=110&fit=crop&border=1,fff" alt=""/></a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+        {% endif %}
         {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
-    </p>
+    </div>
 {% endblock %}

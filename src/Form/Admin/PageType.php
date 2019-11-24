@@ -34,7 +34,7 @@ class PageType extends AbstractType
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('form_page_meta_description')]);
         }
 
-        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+        $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
         $builder->add('active', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }
