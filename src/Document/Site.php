@@ -106,6 +106,28 @@ class Site
     protected $isTemplate;
 
     /**
+     * @var string $theme
+     * @MongoDB\Field(type="string")
+     */
+    protected $theme;
+
+    /**
+     * @return string
+     */
+    public function getTheme(): string
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param string $theme
+     */
+    public function setTheme(string $theme): void
+    {
+        $this->theme = $theme;
+    }
+
+    /**
      * @var string|null $defaultImage
      * @MongoDB\Field(type="string")
      */
