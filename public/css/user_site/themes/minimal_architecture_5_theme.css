@@ -1,0 +1,4 @@
+body { background: url('https://images.unsplash.com/photo-1574722127046-4401b3a2a004?ixlib=rb-1.2.1&auto=format&fit=crop&w=1612&q=80') no-repeat; }
+.backgroundRight { background: none; }
+.cd-section.visible { background: none; }
+.sidebar .socialIcons a { color: #666; }

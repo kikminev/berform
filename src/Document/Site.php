@@ -112,6 +112,12 @@ class Site
     protected $theme;
 
     /**
+     * @var string $template
+     * @MongoDB\Field(type="string")
+     */
+    protected $template;
+
+    /**
      * @return string
      */
     public function getTheme(): string
@@ -552,5 +558,21 @@ class Site
     public function setEmail($email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate(string $template): void
+    {
+        $this->template = $template;
     }
 }
