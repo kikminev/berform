@@ -1,4 +1,17 @@
-body { background: url('https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat; }
 .backgroundRight { background: none; }
 .cd-section.visible { background: none; }
 .sidebar .socialIcons a { color: #666; }
+
+
+/* fixed background */
+.fixedBackground {
+    display: block;
+    background: #fff;
+}
+
+.fixedBackground:before {
+    display: block;
+    opacity: 0.2;
+    background-image: url("https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80");
+}
+

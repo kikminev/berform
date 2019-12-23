@@ -1,4 +1,21 @@
-body { background: url('https://images.unsplash.com/photo-1574722127046-4401b3a2a004?ixlib=rb-1.2.1&auto=format&fit=crop&w=1612&q=80') no-repeat; }
+body { background: #222; color: #fff; }
 .backgroundRight { background: none; }
 .cd-section.visible { background: none; }
 .sidebar .socialIcons a { color: #666; }
+
+#cd-loading-bar { background-color: #333; }
+
+/* fixed background */
+.fixedBackground {
+    display: block;
+    background: #333;
+}
+
+.fixedBackground:before {
+    display: block;
+    opacity: 0.3;
+    background-image: url("https://images.unsplash.com/photo-1574722127046-4401b3a2a004?ixlib=rb-1.2.1&auto=format&fit=crop&w=1612&q=80");
+}
+body { color: #fff; }
+a, .contentContainer a, .sidebar .socialIcons a { color: #fff; }
+a:hover, a.selected { color: #C9C9C9; }

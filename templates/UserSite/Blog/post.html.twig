@@ -14,7 +14,7 @@
                         <div class="blogIconImgWrap">
                             {% for file in files %}
                                 {% if loop.first != true %}
-                                    <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=70&w=110&fit=crop&border=1,fff" alt=""/></a>
+                                    <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
                                 {% endif %}
                             {% endfor %}
                         </div>

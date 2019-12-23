@@ -112,6 +112,11 @@ jQuery(document).ready(function($){
 
 				    }
 					uSite.centerContentVertically('.'+sectionId);
+					$('#fixedBackground').fadeIn();
+
+					var body = $("html, body");
+					body.stop().animate({scrollTop:0}, 500, 'swing', function() {});
+
 				});
 			});
 
