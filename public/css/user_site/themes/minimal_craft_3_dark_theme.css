@@ -1,0 +1,22 @@
+body { background: #222; color: #fff; }
+.backgroundRight { background: none; }
+.cd-section.visible { background: none; }
+.sidebar .socialIcons a { color: #333; }
+
+#cd-loading-bar { background-color: #fff; }
+
+/* fixed background */
+.fixedBackground {
+    display: block;
+    background: #000;
+}
+
+.fixedBackground:before {
+    display: block;
+    opacity: 0.4;
+    background-image: url("https://sitemax.s3-eu-west-1.amazonaws.com/templates/craft_3.jpg");
+}
+
+body { color: #fff; }
+a, .contentContainer a, .sidebar .socialIcons a { color: #fff; }
+a:hover, a.selected { color: #C9C9C9; }
