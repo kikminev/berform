@@ -87,6 +87,8 @@ admin_profile_change_password: Смяна на парола
 admin_links_sites: Сайтове
 admin_links_domains: Домейни
 admin_links_pages: Страници
+admin_links_posts: Публикации
+admin_no_posts: Нямате създадено съдържание
 admin_links_create: Създай нов
 admin_links_create_page: Създай нова
 admin_links_create_domain: Добави нов
@@ -110,6 +112,7 @@ admin_button_save: Запази
 admin_content: Съдържание
 admin_images: Снимки
 admin_domains_header_label: Домейн
+
 
 # page edit
 admin_page_edit_domain: Домейн

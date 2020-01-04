@@ -1,0 +1,13 @@
+{% if site.supportedLanguages|length > 1 %}
+    <div class="languageSwitcher">
+        {% for language in site.supportedLanguages %}
+            {% set languageCode = 'user_site_supported_languages_' ~ language %}
+            {% if post is defined %}
+                <a href="/{{ language }}/blog/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
+            {% else %}
+                <a href="/{{ language }}/{% if slug is defined %}{{ slug }}{% endif %}">{{ languageCode|trans }}</a>
+            {% endif %}
+            {% if not loop.last %}/{% endif  %}
+        {% endfor %}
+    </div>
+{% endif %}

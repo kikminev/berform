@@ -27,6 +27,7 @@ class PostController extends AbstractController
 
     /**
      * @param Request $request
+     * @param Site $site
      * @param Post $post
      * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
@@ -43,7 +44,10 @@ class PostController extends AbstractController
 
         $this->denyAccessUnlessGranted('edit', $post);
 
-        $supportedLanguages = $param->get('supported_languages');
+        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+            return in_array($language, $site->getSupportedLanguages(), false);
+        });
+
         $form = $this->createForm(PostType::class, $post, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
@@ -118,7 +122,7 @@ class PostController extends AbstractController
                 'form' => $form->createView(),
                 'files' => $post->getFiles(),
                 'post' => $post,
-                'supportedLanguages' => $param->get('supported_languages'),
+                'supportedLanguages' => $supportedLanguages,
                 'site' => $post->getSite()
             ]
         );
@@ -139,7 +143,10 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $site);
 
         $post = new Post();
-        $supportedLanguages = $param->get('supported_languages');
+        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+            return in_array($language, $site->getSupportedLanguages(), false);
+        });
+
         $form = $this->createForm(PostType::class, $post, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
@@ -189,13 +196,14 @@ class PostController extends AbstractController
             $this->documentManager->persist($post);
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_site_build', ['id' => $site->getId()]);
+            return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
         }
 
         return $this->render(
             'Admin/Post/post_edit.html.twig',
             [
                 'form' => $form->createView(),
+                'supportedLanguages' => $supportedLanguages,
                 'post' => $post,
                 'site' => $site,
             ]

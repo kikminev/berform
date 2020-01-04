@@ -49,8 +49,8 @@ h2 { margin-bottom: 20px; }
 #pagesMenu.navbar-nav { flex-direction: column; }
 #pagesMenu.navbar-nav .nav-item { width: 100%; float: left; line-height: 27px; }
 
-.navigation { flex-direction: column; justify-content: space-between; display: flex; height: 100vh; z-index: 2; }
-.cd-side-navigation { margin-bottom: 200px; }
+.navigation { flex-direction: column; justify-content: end; display: flex; height: 100vh; z-index: 2; }
+.cd-side-navigation { margin-bottom: 100px; }
 .navigation .navbar-toggler { margin: 20px 0px; }
 a { color: #000; }
 a.selected { color: #666666; }
@@ -227,6 +227,7 @@ a:hover { color: #000; text-decoration: underline; }
     transition: transform 0.5s 0s;
     background: #ffffff;
 }
+/* animations and ajax loading */
 /* animations and ajax loading */
 
 /* mobile */

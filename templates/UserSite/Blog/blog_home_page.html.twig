@@ -1,0 +1,121 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+
+    {% if slug is defined and slug == 'home' %}
+        <div class="container">
+            <div class="row blogHeader">
+                <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                <div>{% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}</div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row" style="margin-bottom: 200px;">
+
+                <div class="col-md-1"></div>
+                <div class="col-md-10 featuredPost">
+                    {% set post = posts|first %}
+                    {% set file = post.files|first %}
+                    <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                        <img src="https://sitemax.imgix.net/{{ file.baseName }}" alt=""/>
+                    </a>
+
+                    <div class="featuredPostExcerpt row">
+                        <div class="col-md-6">
+                            <h2>
+                                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="col-md-6">
+                            <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+
+
+        {% if posts|length > 3 %}
+            <div class="container blogList">
+                <div class="row">
+                    {% set postsPriorFeaturedOne = posts|slice(0,2) %}
+                    {% for post in postsPriorFeaturedOne %}
+                        <div class="col-md-6 blogPostListWrap">
+                            {% if post.files|length > 0 %}
+                                {% set file = post.files|first %}
+                                <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                                    <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=510&w=1000&fit=crop" alt=""/>
+                                </a>
+                            {% endif %}
+
+                            <a class="ajaxLink blogExcerptWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                                <h3 class="title">
+                                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                                </h3>
+
+                                <p>
+                                    <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+                                </p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if featuredPostInParallax is not null %}
+            {% if featuredPostInParallax.files %}
+                {% set file = featuredPostInParallax.files|first %}
+            {% endif %}
+
+            <div class="featuredParallaxPost" style="background-image: url('https://sitemax.imgix.net/{{ file.baseName }}?w=1900&fit=crop');">
+                <h3 class="title">
+                    <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                        {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                    </a>
+                </h3>
+            </div>
+        {% endif %}
+
+        <div class="container blogList">
+            <div class="row">
+                {% set postsAfterFeaturedOne = posts|slice(2,4) %}
+                {% for post in postsAfterFeaturedOne %}
+                    <div class="col-md-6 blogPostListWrap">
+                        {% if post.files|length > 0 %}
+                            {% set file = post.files|first %}
+                            <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                                <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                            </a>
+                        {% endif %}
+
+                        <a class="ajaxLink blogExcerptWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                            <h3 class="title">
+                                {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                            </h3>
+
+                            <p>
+                                <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+                            </p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <script type="text/javascript">
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: [
+                "close"
+            ],
+        });
+    </script>
+{% endblock %}

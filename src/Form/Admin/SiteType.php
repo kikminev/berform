@@ -7,6 +7,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -72,10 +73,12 @@ class SiteType extends AbstractType
         $builder->add('workingFrom', null, ['required' => false])
             ->add('workingTo', null, ['required' => false])
             ->add('email', null, ['required' => false])
+            ->add('twitter', null, ['required' => false])
+            ->add('linkedIn', null, ['required' => false])
             ->add('facebook', null, ['required' => false])
             ->add('instagram', null, ['required' => false])
-            ->add('twitter', null, ['required' => false])
-//            ->add('customCss', null, ['required' => false])
+            ->add('customCss', TextareaType::class, ['required' => false])
+            ->add('customHtml', TextareaType::class, ['required' => false])
             ->add('save', SubmitType::class);
     }
 

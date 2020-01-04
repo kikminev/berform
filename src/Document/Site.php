@@ -71,6 +71,12 @@ class Site
     protected $twitter;
 
     /**
+     * @var string|null
+     * @MongoDB\Field(type="string")
+     */
+    protected $linkedIn;
+
+    /**
      * @var array $translatedAddress
      * @MongoDB\Field(type="hash")
      */
@@ -116,6 +122,12 @@ class Site
      * @MongoDB\Field(type="string")
      */
     protected $template;
+
+    /**
+     * @var null|string $customHtml
+     * @MongoDB\Field(type="string")
+     */
+    protected $customHtml;
 
     /**
      * @return string
@@ -574,5 +586,37 @@ class Site
     public function setTemplate(string $template): void
     {
         $this->template = $template;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomHtml(): ?string
+    {
+        return $this->customHtml;
+    }
+
+    /**
+     * @param string|null $customHtml
+     */
+    public function setCustomHtml(?string $customHtml): void
+    {
+        $this->customHtml = $customHtml;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLinkedIn(): ?string
+    {
+        return $this->linkedIn;
+    }
+
+    /**
+     * @param string|null $linkedIn
+     */
+    public function setLinkedIn(?string $linkedIn): void
+    {
+        $this->linkedIn = $linkedIn;
     }
 }

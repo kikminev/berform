@@ -26,6 +26,7 @@ class PostType extends AbstractType
         }
 
         $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+        $builder->add('featuredParallax', null, ['required' => false]);
         $builder->add('active', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }

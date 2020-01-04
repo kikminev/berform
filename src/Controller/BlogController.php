@@ -10,6 +10,7 @@ use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
+use App\Service\Site\LayoutResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Document\Site;
@@ -19,10 +20,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class BlogController extends AbstractController
 {
     private $domainResolver;
+    private $layoutResolver;
 
-    public function __construct(DomainResolver $domainResolver)
+    public function __construct(DomainResolver $domainResolver, LayoutResolver $layoutResolver)
     {
         $this->domainResolver = $domainResolver;
+        $this->layoutResolver = $layoutResolver;
     }
 
     public function list(
@@ -58,6 +61,7 @@ class BlogController extends AbstractController
      * @param SiteRepository $siteRepository
      * @param PageRepository $pageRepository
      * @return Response
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function view(Request $request, $slug, PostRepository $postRepository, SiteRepository $siteRepository, PageRepository $pageRepository):Response {
         /** @var Site $site */
@@ -68,6 +72,7 @@ class BlogController extends AbstractController
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
+        $morePosts = $postRepository->findActivePosts($site, 2);
 
         if (null === $post) {
             throw new NotFoundHttpException();
@@ -81,8 +86,11 @@ class BlogController extends AbstractController
                 'slug' => $slug,
                 'page' => $page,
                 'pages' => $pages,
+                'morePosts' => $morePosts,
                 'files' => $post->getFiles(),
                 'form' => $form->createView(),
+                'layout' => $this->layoutResolver->getLayout($site->getTemplate()),
+                'isBlogTemplate' => $this->layoutResolver->isBlogTemplate($site->getTemplate()),
             ]
         );
     }

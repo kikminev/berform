@@ -1,9 +1,19 @@
-{% extends 'UserSite/layout.html.twig' %}
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
 {% block body %}
+
+    {% if isBlogTemplate %}
+        <div class="container-fluid">
+        <div class="row">
+
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+    {% endif %}
+
     <div class="blogPost">
     <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
 
-<div class="clear"></div>
+    <div class="clear"></div>
 
         {% if post.files|length > 0 %}
             {% set mainImage = post.files[0] %}
@@ -23,4 +33,46 @@
         {% endif %}
         {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
     </div>
+
+    {% if isBlogTemplate %}
+        </div>
+        <div class="col-md-2"></div>
+        </div>
+        </div>
+    {% endif %}
+
+    <div class="morePosts" style="width: 100%; background: #FAFAFA;">
+            <div class="container">
+                <div class="row">
+{#                <div class="col-md-12"><h3 style="text-align: center">Read more</h3></div>#}
+                {% for post in morePosts %}
+                    <div class="col-md-6">
+                        {% if post.files|length > 0 %}
+                            {% set file = post.files|first %}
+                            <h3 class="title">
+                                {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                            </h3>
+                            <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                                <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=410&w=800&fit=crop" alt="" />
+                            </a>
+                        {% endif %}
+
+                        <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                            <p>
+                                <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+                            </p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+    </div>
+    <script type="text/javascript">
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: [
+                "close"
+            ],
+        });
+    </script>
+
 {% endblock %}

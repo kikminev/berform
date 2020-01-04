@@ -8,7 +8,6 @@
 
 {#    {% include('Admin/Upload/file_list.html.twig') %}#}
 
-
     <div class="breadcrumbs container-fluid contextBar">
         <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_blog{% endtrans %}
     </div>
@@ -82,6 +81,13 @@
                             {{ form_widget(form.active) }}
                             <div class="state p-success">
                                 {{ form_label(form.active) }}
+                            </div>
+                        </div>
+
+                        <div class="pretty p-switch p-fill checkbox">
+                            {{ form_widget(form.featuredParallax) }}
+                            <div class="state p-success">
+                                {{ form_label(form.featuredParallax) }}
                             </div>
                         </div>
 

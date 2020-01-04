@@ -33,6 +33,14 @@
             selector: ".htmlEditor textarea",
             height: 500,
             menubar: false,
+            external_plugins: {
+                'imagemanager': '/tinymce/plugins/imagemanager/plugin.js',
+            },
+            plugins: [
+                'link image'
+            ],
+            toolbar: 'image link imagemanager',
+            contextmenu: "link imagemanager",
         });
     </script>
 

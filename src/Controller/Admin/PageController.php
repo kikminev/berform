@@ -40,7 +40,11 @@ class PageController extends AbstractController
 
         $this->denyAccessUnlessGranted('edit', $page);
 
-        $supportedLanguages = $param->get('supported_languages');
+        $site = $page->getSite();
+        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+            return in_array($language, $site->getSupportedLanguages(), false);
+        });
+
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 
@@ -133,7 +137,11 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $site);
 
         $page = new Page();
-        $supportedLanguages = $param->get('supported_languages');
+        $site = $page->getSite();
+        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+            return in_array($language, $site->getSupportedLanguages(), false);
+        });
+
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
 

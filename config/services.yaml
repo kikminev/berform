@@ -45,3 +45,7 @@ services:
         arguments:
             $s3Client: '@s3_uploader'
             $bucketName: '%env(S3_BUCKET_NAME)%'
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }

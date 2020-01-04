@@ -6,8 +6,10 @@
     {% block stylesheets %}{% endblock %}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/ajax_loading.js') }}"></script>
+    <script src="{{ asset('js/blog_ajax_loading.js') }}"></script>
     <script src="{{ asset('js/velocity.min.js') }}"></script>
+
+
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
@@ -17,43 +19,40 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('css/user_site/themes/blog_universal.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/user_site/themes/'~site.template~'.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/user_site/themes/'~site.theme~'_theme.css') }}" />
 </head>
 <body>
+    <style type="text/css">
+        {{ site.customCss }}
+    </style>
 
-<div id="fixedBackground" class="fixedBackground"></div>
+    {{ site.customHtml|raw }}
 
 <div class="container-fluid">
     <div class="row">
-
-        <div class="navigation col-md-2 offset-md-1">
+        <div class="navigation col-md-12">
+            <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
+            {% include('UserSite/Components/social_icons.html.twig') %}
             {% include('UserSite/Components/navigation_menu.html.twig') %}
         </div>
-
-        <main class="cd-main col-md-7">
-            <section class="cd-section visible {% if slug is defined %}{{ slug  }}{% endif %}">
-                <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
-                    {% block body %}{% endblock %}
-                </div>
-            </section>
-        </main>
-
-        <div class="col-md-1">
-            {% include('UserSite/Components/language_switcher.html.twig') %}
-        </div>
-        <div class="col-md-1 backgroundRight sidebar">
-            {% include('UserSite/Components/social_icons.html.twig') %}
-        </div>
-
-
     </div>
 </div>
 
-{% include('UserSite/Components/loading_bar.html.twig') %}
-{% include('UserSite/Components/miscellaneous_scripts_minimal.html.twig') %}
+    <main class="cd-main">
+        <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">
+            <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+    </main>
 
+    {% include('UserSite/Components/loading_bar.html.twig') %}
+
+    <script type="text/javascript">
+        $.fancybox.defaults.hash = false;
+    </script>
+    <footer class="footer" {% if page and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('https://sitemax.imgix.net/{{ mainImage.baseName }}'); background-position: center center;"{% endif %}></footer>
 </body>
 </html>

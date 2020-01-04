@@ -14,19 +14,17 @@
 
     <div class="list boxList row">
         <div class="heading">
-            <h2>{% trans %}admin_links_pages{% endtrans %} <a href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a></h2>
+            <h2>{% trans %}admin_links_posts{% endtrans %} <a href="{{ path('user_admin_post_create', {site:site.id}) }}">+</a></h2>
         </div>
 
-{#        <div class="itemWrap addNewTile col-md-3">#}
-{#            <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>#}
-{#        </div>#}
-{#        #}
+        <div class="itemWrap addNewTile col-md-3">
+            <a class="item" href="{{ path('user_admin_post_create', {site:site.id}) }}">+</a>
+        </div>
+
         {% for post in posts %}
             <div class="itemWrap col-md-3">
                 <a class="item" href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</a>
             </div>
-        {% else %}
-            {% trans %}user_site_no_posts{% endtrans %}
         {% endfor %}
 
 

@@ -55,6 +55,12 @@ class Post
     private $active;
 
     /**
+     * @var null|bool $featuredParallax
+     * @MongoDB\Field(type="boolean")
+     */
+    private $featuredParallax;
+
+    /**
      * @var null|array $translatedTitle
      * @MongoDB\Field(type="hash")
      */
@@ -295,5 +301,21 @@ class Post
     public function setTranslatedExcerpt(?array $translatedExcerpt): void
     {
         $this->translatedExcerpt = $translatedExcerpt;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getFeaturedParallax(): ?bool
+    {
+        return $this->featuredParallax;
+    }
+
+    /**
+     * @param bool|null $featuredParallax
+     */
+    public function setFeaturedParallax(?bool $featuredParallax): void
+    {
+        $this->featuredParallax = $featuredParallax;
     }
 }

@@ -1,9 +1,23 @@
-{% extends 'UserSite/layout.html.twig' %}
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
 {% block body %}
-    <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
-    <div>
-        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
-    </div>
+
+    {% if isBlogTemplate == true %}
+        <div class="row blogHeader">
+            <div class="col-md-2"></div>
+    {% endif %}
+
+            <div class="{% if isBlogTemplate == true %}blogTemplate col-md-8{% endif %}">
+                <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                <div>
+                    {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+                </div>
+            </div>
+
+    {% if isBlogTemplate == true %}
+            <div class="col-md-2"></div>
+        </div>
+    {% endif %}
 
     {% if files|length > 0 %}
         <div id="imagesWrap" class="pageImages">
@@ -13,12 +27,7 @@
         </div>
     {% endif %}
 
-
     <script type="text/javascript">
-        $(document).ready(function() {
-
-        });
-
         $('[data-fancybox="gallery"]').fancybox({
             buttons: [
                 "close"

@@ -1,0 +1,60 @@
+<div class="row">
+
+    <div class="col-md-1"></div>
+    <div class="col-md-7 featuredPost">
+    {% set post = posts[0] %}
+    {% set file = post.files[0] %}
+            <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                <img src="https://sitemax.imgix.net/{{ file.baseName }}" alt=""/>
+            </a>
+
+            <h2>
+                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                </a>
+            </h2>
+
+            <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+    </div>
+
+    <div class="col-md-3 sideBlogPosts">
+        {% set latestPostList = posts|slice(1,3) %}
+        {% for post in latestPostList %}
+            <p>
+                {% if post.files|length > 0 %}
+                    {% set file = post.files[0] %}
+                    <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                        <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=100&w=150&fit=crop" alt=""/>
+                    </a>
+                {% endif %}
+
+                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                </a>
+                <div class="clear"></div>
+            </p>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-1"></div>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+        {% for post in posts %}
+            <p>
+                {% if post.files|length > 0 %}
+                    {% set file = post.files[0] %}
+                    <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                        <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=100&w=150&fit=crop" alt=""/>
+                    </a>
+                {% endif %}
+
+                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                </a>
+            <div class="clear"></div>
+            </p>
+        {% endfor %}
+    </div>
+</div>
