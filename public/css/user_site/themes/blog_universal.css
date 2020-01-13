@@ -1,5 +1,6 @@
 /* blog */
 .blogPost #imagesWrap { position: relative; width: 350px; float: left; }
+.blogPost #imagesWrap .imgWrap { margin-right: 5px; }
 .blogPost .blogIconImgWrap { float: left; margin-left: -40px; }
 .blogPost, .blogListWrap { padding-left: 40px; }
 .blogListWrap h2, .blogPost h1 { margin-bottom: 60px; }

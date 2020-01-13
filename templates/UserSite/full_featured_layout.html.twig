@@ -18,43 +18,30 @@
 
     <link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/user_site/themes/blog_universal.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/user_site/themes/'~site.template~'.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/user_site/themes/'~site.theme~'_theme.css') }}" />
 </head>
 <body>
 
-<div id="fixedBackground" class="fixedBackground"></div>
-
 <div class="container-fluid">
     <div class="row">
-
-        <div class="navigation col-md-2 offset-md-1">
+        <div class="navigation col-md-12">
+            <a href="">+359 98 8930017</a>
             <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
-            {% include('UserSite/Components/navigation_menu.html.twig') %}
         </div>
+        {% include('UserSite/Components/navigation_menu.html.twig') %}
 
-        <main class="cd-main col-md-7">
+        <main class="cd-main col-md-12">
             <section class="cd-section visible {% if slug is defined %}{{ slug  }}{% endif %}">
                 <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
                     {% block body %}{% endblock %}
                 </div>
             </section>
         </main>
-
-        <div class="col-md-1">
-            {% include('UserSite/Components/language_switcher.html.twig') %}
-        </div>
-        <div class="col-md-1 backgroundRight sidebar">
-            {% include('UserSite/Components/social_icons.html.twig') %}
-        </div>
-
-
     </div>
 </div>
 
 {% include('UserSite/Components/loading_bar.html.twig') %}
-{% include('UserSite/Components/miscellaneous_scripts_minimal.html.twig') %}
 
 </body>
 </html>

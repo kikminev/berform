@@ -7,7 +7,9 @@
 {#    {{ form_end(form) }}#}
 
 {#    {% include('Admin/Upload/file_list.html.twig') %}#}
+<div class="imageLibrary" style="display: none; position: fixed; z-index: 10; top: 20px; right: 20px; bottom: 20px; left: 20px; background: red;">
 
+</div>
     <div class="breadcrumbs container-fluid contextBar">
         <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_blog{% endtrans %}
     </div>
