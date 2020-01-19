@@ -87,6 +87,7 @@ jQuery(document).ready(function ($) {
                 });
 
                 isAnimating = false;
+                userSite.init();
 
                 var body = $("html, body");
             });

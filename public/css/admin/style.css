@@ -90,3 +90,4 @@ a:hover { text-decoration: none; }
 
 .flash-notice { color: #FF7C5C; }
 .uploadButton { background: #333; color: #fff !important; display: flex; align-items: flex-end; padding: 0px 15px; font-size: 50px; }
+.htmlEditor .singleImageWrap { width: 100%; background: #333; overflow: hidden; }
