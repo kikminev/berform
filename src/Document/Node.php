@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @MongoDB\Document
  */
-class Page
+class Node
 {
     public function __construct()
     {
@@ -25,16 +25,15 @@ class Page
     private $site;
 
     /**
-     * @var null|Page $parent
-     * @MongoDB\ReferenceOne(targetDocument="Page", storeAs="id")
-     */
-    private $parent;
-
-    /**
      * @var User $user
      * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
     private $user;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $type;
 
     /**
      * @MongoDB\Field(type="string")
@@ -110,7 +109,7 @@ class Page
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName():? string
     {
         return $this->name;
     }
@@ -301,7 +300,7 @@ class Page
     /**
      * @return mixed
      */
-    public function getSite()
+    public function getSite(): Site
     {
         return $this->site;
     }
@@ -309,15 +308,37 @@ class Page
     /**
      * @param mixed $site
      */
-    public function setSite($site): void
+    public function setSite(Site $site): void
     {
         $this->site = $site;
     }
 
-    public function __toString()
+    public function __toString():string
     {
-        return $this->getName();
+        $name = '';
+        if(null === $this->getName()) {
+            return $name;
+        }
+
+        return $name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type): void
+    {
+        $this->type = $type;
+    }
+
 
     public function __clone()
     {

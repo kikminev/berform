@@ -1,5 +1,5 @@
-{% if files is defined %}
 <div id="imagesWrap">
+{% if files is defined %}
     {% for file in files %}
         {% if file.deleted != true %}
             <div class="imgWrap" id="object_{{ file.id }}">
@@ -10,5 +10,5 @@
             </div>
         {% endif %}
     {% endfor %}
-</div>
 {% endif %}
+</div>

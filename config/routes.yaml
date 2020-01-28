@@ -64,6 +64,17 @@ user_admin_page_edit:
     path: /u/page/{id}
     controller: App\Controller\Admin\PageController::edit
 
+# nodes
+user_admin_node_list:
+    path: /u/node/list/{type}/{site}
+    controller: App\Controller\Admin\NodeController::list
+user_admin_node_create:
+    path: /u/node/create/{type}/{site}
+    controller: App\Controller\Admin\NodeController::create
+user_admin_node_edit:
+    path: /u/node/edit/{type}/{id}
+    controller: App\Controller\Admin\NodeController::edit
+
 # posts
 user_admin_post_create:
     path: /u/post/create/{site}
