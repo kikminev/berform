@@ -3,7 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Repository\FileRepository;
+use App\Repository\PageRepository;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +32,7 @@ class PageController extends AbstractController
      * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
      * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function edit(
         Request $request,
@@ -47,8 +50,6 @@ class PageController extends AbstractController
 
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
-
-
 
         if (!$form->isSubmitted()) {
             $currentTranslatedTitles = $page->getTranslatedTitle();
@@ -91,27 +92,36 @@ class PageController extends AbstractController
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+                $pageFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
+            }
+
+            if(!empty($pageFiles)) {
+                $fileOrder = 0;
+                foreach ($pageFiles as $file) {
+                    $file->setOrder($fileOrder);
+                    $fileOrder++;
+                }
             }
             $page->setFiles($pageFiles);
+
 
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
-        } else {
-            $fileConcatenated = '';
-            foreach ($page->getFiles() as $file) {
-                $fileConcatenated .= $file->getId().';';
-            }
-            // todo: remove this thing
-            $form->get('attachedFiles')->setData($fileConcatenated);
         }
+
+        $fileConcatenated = '';
+        foreach ($page->getFiles() as $file) {
+            $fileConcatenated .= $file->getId().';';
+        }
+        // todo: remove this thing
+        $form->get('attachedFiles')->setData($fileConcatenated);
 
         return $this->render(
             'Admin/Page/page_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => $page->getFiles(),
+                'files' => UploadController::getOrderedFiles($page->getFiles()->toArray()),
                 'page' => $page,
                 'supportedLanguages' => $supportedLanguages,
                 'site' => $page->getSite(),
@@ -125,7 +135,7 @@ class PageController extends AbstractController
      * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
      * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function create(
         Request $request,
@@ -137,7 +147,6 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $site);
 
         $page = new Page();
-        $site = $page->getSite();
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
@@ -188,7 +197,15 @@ class PageController extends AbstractController
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+                $pageFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
+            }
+
+            if(!empty($pageFiles)) {
+                $fileOrder = 0;
+                foreach ($pageFiles as $file) {
+                    $file->setOrder($fileOrder);
+                    $fileOrder++;
+                }
             }
             $page->setFiles($pageFiles);
 
@@ -208,3 +225,4 @@ class PageController extends AbstractController
         );
     }
 }
+

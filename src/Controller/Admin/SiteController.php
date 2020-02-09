@@ -19,6 +19,7 @@ class SiteController extends AbstractController
      */
     public function list(DocumentManager $documentManager)
     {
+        // todo: this needs to use a repository
         $qb = $documentManager->createQueryBuilder(Site::class);
         $qb->addAnd($qb->expr()->field('user')->equals($this->getUser()));
         $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));

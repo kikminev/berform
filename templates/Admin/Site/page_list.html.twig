@@ -16,15 +16,27 @@
                 <a href="{{ path('user_admin_node_list', { type: 'album', site: site.id }) }}">{% trans %}admin_links_albums{% endtrans %}</a> <a href="{{ path('user_admin_node_create', { type: 'album', site: site.id }) }}">+</a></h3>
             </div>
 
-            <div class="itemWrap addNewTile col-md-3">
-                <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>
-            </div>
-
-            {% for page in pages %}
-                <div class="itemWrap col-md-3">
-                    <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">{{ page.name }}</a>
+            <div class="row sortableNodes" style="width: 100%;">
+                <div class="itemWrap addNewTile col-md-3">
+                    <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>
                 </div>
-            {% endfor %}
+
+                {% for page in pages %}
+                    <div class="itemWrap col-md-3" id="{{ page.id }}">
+                        <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">{{ page.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(".sortableNodes").sortable(
+            {
+                update: function (event, ui) {
+                    a.reorderNodes("{{ path('admin_site_node_reorder', {'type' : 'page'}) }}")
+                }
+            }
+        );
+    </script>
 {% endblock %}

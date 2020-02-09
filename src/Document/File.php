@@ -42,6 +42,12 @@ class File
     protected $baseName;
 
     /**
+     * @var int $order
+     * @MongoDB\Field(type="int")
+     */
+    protected $order;
+
+    /**
      * @var User $user
      * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
@@ -174,5 +180,15 @@ class File
     public function setBaseName(string $baseName): void
     {
         $this->baseName = $baseName;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    public function setOrder(int $order): void
+    {
+        $this->order = $order;
     }
 }

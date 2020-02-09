@@ -6,15 +6,17 @@
         <div class="clear"></div>
 
         <div class="list boxList row">
-            {% for node in nodes %}
-                <div class="itemWrap col-md-3">
-                    <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
-                        {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
-                    </a>
-                </div>
-            {% endfor %}
-
-
+            {% if nodes is not empty %}
+                {% for node in nodes %}
+                    <div class="itemWrap col-md-3">
+                        <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
+                            {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <a href="{{ path('user_admin_node_create', {'type' : type, 'site' : site.id}) }}">{{ ('admin_create_node_' ~ type) | trans }}</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

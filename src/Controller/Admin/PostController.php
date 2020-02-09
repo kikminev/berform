@@ -8,6 +8,7 @@ use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,7 @@ class PostController extends AbstractController
      * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
      * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function edit(
         Request $request,
@@ -99,28 +100,43 @@ class PostController extends AbstractController
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+                $postFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
+            }
+            if(!empty($postFiles)) {
+                $fileOrder = 0;
+                foreach ($postFiles as $file) {
+                    $file->setOrder($fileOrder);
+                    $fileOrder++;
+                }
             }
             $post->setFiles($postFiles);
 
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
-        } else {
-            $fileConcatenated = '';
-            /** @var File $file */
-            foreach ($post->getFiles() as $file) {
-                $fileConcatenated .= $file->getId().';';
-            }
-            // todo: remove this thing
-            $form->get('attachedFiles')->setData($fileConcatenated);
         }
+
+        $fileConcatenated = '';
+        /** @var File $file */
+        foreach ($post->getFiles() as $file) {
+            $fileConcatenated .= $file->getId().';';
+        }
+        // todo: remove this thing
+        $form->get('attachedFiles')->setData($fileConcatenated);
+
+
+        $orderedFiles = [];
+        /** @var File $file */
+        foreach ($post->getFiles() as $file) {
+            $orderedFiles[$file->getOrder()] = $file;
+        }
+        ksort($orderedFiles);
 
         return $this->render(
             'Admin/Post/post_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => $post->getFiles(),
+                'files' => $orderedFiles,
                 'post' => $post,
                 'supportedLanguages' => $supportedLanguages,
                 'site' => $post->getSite()
@@ -131,12 +147,15 @@ class PostController extends AbstractController
     /**
      * @param Request $request
      * @param Site $site
+     * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
      * @return Response
+     * @throws MongoDBException
      */
     public function create(
         Request $request,
         Site $site,
+        FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
 
@@ -194,6 +213,24 @@ class PostController extends AbstractController
             $post->setUser($this->getUser());
 
             $this->documentManager->persist($post);
+
+            // save files
+            $postFiles = [];
+            $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
+            if ($attachedFiles) {
+                $attachedFilesIds = explode(';', $attachedFiles);
+                $postFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
+            }
+            if(!empty($postFiles)) {
+                $fileOrder = 0;
+                foreach ($postFiles as $file) {
+                    $file->setOrder($fileOrder);
+                    $fileOrder++;
+                }
+            }
+            $post->setFiles($postFiles);
+            // end save files
+
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);

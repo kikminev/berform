@@ -92,8 +92,12 @@ admin_site_upload_handler:
     controller: App\Controller\Admin\UploadController::upload
 
 admin_site_upload_delete:
-    path: /u/site/upload/{id}
+    path: /u/site/upload/delete/{id}
     controller: App\Controller\Admin\UploadController::deleteFile
+
+admin_site_node_reorder:
+    path: /u/site/{type}/reorder
+    controller: App\Controller\Admin\NodeController::reorder
 
 # profile
 admin_profile_edit:
@@ -141,3 +145,7 @@ user_site_view_page_home:
 user_site_view_page:
     path: /{slug}
     controller: App\Controller\UserSiteController::renderPage
+
+user_site_view_album:
+    path: /album/{slug}
+    controller: App\Controller\AlbumController::view

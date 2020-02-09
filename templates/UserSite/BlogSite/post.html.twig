@@ -2,13 +2,11 @@
 
 {% block body %}
 
-    {% if isBlogTemplate %}
-        <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid">
+    <div class="row">
 
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-    {% endif %}
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
 
     <div class="blogPost">
     <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
@@ -34,12 +32,10 @@
         {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
     </div>
 
-    {% if isBlogTemplate %}
         </div>
-        <div class="col-md-2"></div>
-        </div>
-        </div>
-    {% endif %}
+    <div class="col-md-2"></div>
+    </div>
+    </div>
 
     <div class="morePosts" style="width: 100%; background: #FAFAFA;">
             <div class="container">

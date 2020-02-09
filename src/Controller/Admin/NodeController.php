@@ -6,9 +6,12 @@ use App\Document\Album;
 use App\Form\Admin\NodeType;
 use App\Repository\AlbumRepository;
 use App\Repository\FileRepository;
+use App\Repository\PageRepository;
+use function Clue\StreamFilter\append;
 use Exception;
 use MongoDB\BSON\ObjectId;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,12 +67,23 @@ class NodeController extends AbstractController
         return $this->render(
             'Admin/Node/node_list.html.twig',
             [
+                'type' => $type,
                 'nodes' => $nodes,
                 'site' => $site,
             ]
         );
     }
 
+    /**
+     * @param Request $request
+     * @param string $type
+     * @param string $id
+     * @param FileRepository $fileRepository
+     * @param DocumentManager $documentManager
+     * @param ParameterBagInterface $param
+     * @return Response
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
     public function edit(
         Request $request,
         string $type,
@@ -82,11 +96,14 @@ class NodeController extends AbstractController
             case 'album':
             default:
                 /** @var Album $node */
-                $node = $documentManager->getRepository(Album::class)->findOneBy(['user' => $this->getUser(), 'id' => $id]);
+                $node = $documentManager->getRepository(Album::class)->findOneBy([
+                    'user' => $this->getUser(),
+                    'id' => $id,
+                ]);
                 break;
         }
 
-        if(null === $node) {
+        if (null === $node) {
             throw new Exception('Error');
         }
 
@@ -94,7 +111,7 @@ class NodeController extends AbstractController
 
         /** @var Node $node */
         $site = $node->getSite();
-        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+        $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
 
@@ -142,20 +159,36 @@ class NodeController extends AbstractController
             $attachedFiles = $request->request->get('node')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $nodeFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+                $nodeFiles = $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
+            }
+            if (!empty($nodeFiles)) {
+                $fileOrder = 0;
+                foreach ($nodeFiles as $file) {
+                    $file->setOrder($fileOrder);
+                    $fileOrder++;
+                }
             }
             $node->setFiles($nodeFiles);
 
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_node_list', ['site' => $node->getSite()->getId(), 'type' => 'album']);
+            return $this->redirectToRoute('user_admin_node_list', [
+                'site' => $node->getSite()->getId(),
+                'type' => 'album',
+            ]);
 
         }
 
         $fileConcatenated = '';
+        $orderedFiles = [];
+        /** @var File $file */
         foreach ($node->getFiles() as $file) {
-            $fileConcatenated .= $file->getId().';';
+            $fileConcatenated .= $file->getId() . ';';
+            //$orderedFiles[$file->getOrder()] = $file->getId();
+            $orderedFiles[$file->getOrder()] = $file;
         }
+        ksort($orderedFiles);
+
         // todo: remove this thing
         $form->get('attachedFiles')->setData($fileConcatenated);
 
@@ -163,7 +196,7 @@ class NodeController extends AbstractController
             'Admin/Node/node_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => $node->getFiles(),
+                'files' => $orderedFiles,
                 'page' => $node,
                 'supportedLanguages' => $supportedLanguages,
                 'site' => $node->getSite(),
@@ -197,7 +230,7 @@ class NodeController extends AbstractController
         }
 
         $node->setType($type);
-        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+        $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
 
@@ -247,7 +280,15 @@ class NodeController extends AbstractController
             $attachedFiles = $request->request->get('node')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $nodeFiles= $fileRepository->getActiveFiles($attachedFilesIds, $this->getUser())->toArray();
+                $nodeFiles = $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
+            }
+
+            if (!empty($nodeFiles)) {
+                $fileOrder = 0;
+                foreach ($nodeFiles as $file) {
+                    $file->setOrder($fileOrder);
+                    $fileOrder++;
+                }
             }
             $node->setFiles($nodeFiles);
 
@@ -265,5 +306,42 @@ class NodeController extends AbstractController
                 'node' => $node,
             ]
         );
+    }
+
+    /**
+     * @param Request $request
+     * @param string $type
+     * @param PageRepository $pageRepository
+     * @param FileRepository $fileRepository
+     * @return JsonResponse
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function reorder(
+        Request $request,
+        string $type,
+        PageRepository $pageRepository,
+        FileRepository $fileRepository
+    ): JsonResponse {
+        $ids = $request->request->get('nodes');
+        $ids = explode(',', $ids);
+
+        switch ($type) {
+            case 'page':
+                $nodes = $pageRepository->getActive($ids, $this->getUser());
+                break;
+            case 'file':
+            default:
+            $nodes = $pageRepository->getActive($ids, $this->getUser());
+                break;
+        }
+
+        /** @var Node $file */
+        foreach ($nodes as $file) {
+            $file->setOrder(array_search($file->getId(), $ids, false));
+        }
+
+        $this->documentManager->flush();
+
+        return new JsonResponse('ok');
     }
 }

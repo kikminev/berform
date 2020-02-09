@@ -1,10 +1,9 @@
-{% extends 'UserSite/layout.html.twig' %}
+{% extends 'UserSite/StandardSite/layout.html.twig' %}
 {% block body %}
     <div class="blogListWrap">
         <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>
 
 
         {% include('UserSite/Blog/post_items_list.html.twig') %}
-
     </div>
 {% endblock %}

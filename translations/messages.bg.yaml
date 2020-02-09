@@ -76,6 +76,7 @@ form_page_name: Име
 form_page_slug: Системно име
 form_page_title: Заглавие
 form_page_content: Съдържание
+form_page_description: Описание
 form_page_keywords: Ключови думи
 form_page_meta_description: Подробно описание
 
@@ -95,6 +96,7 @@ admin_links_create_page: Създай нова
 admin_links_create_domain: Добави нов
 admin_links_site_settings: Настройки на сайта
 admin_links_blog: Блог
+admin_create_node_album: Създай нов албум
 
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site

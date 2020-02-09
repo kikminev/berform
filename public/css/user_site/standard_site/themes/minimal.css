@@ -101,7 +101,7 @@ a:hover { color: #000; text-decoration: underline; }
 
 
 .lines-bg-wrap {
-    background-image: url('../../../img/background_lines.svg');
+    background-image: url('../../../../img/background_lines.svg');
     background-position: center 0;
     background-repeat: no-repeat;
 }

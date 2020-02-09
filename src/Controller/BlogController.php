@@ -6,6 +6,7 @@ use App\Document\File;
 use App\Document\Message;
 use App\Document\Post;
 use App\Form\ContactType;
+use App\Repository\DomainRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
@@ -36,14 +37,13 @@ class BlogController extends AbstractController
     ) {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
-
         $posts = $postRepository->findBy(['site' => $site, 'active' => true]);
         $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         // todo: pagination
         return $this->render(
-            'UserSite/Blog/list.html.twig',
+            'UserSite/BlogSite/list.html.twig',
             [
                 'site' => $site,
                 'pages' => $pages,
@@ -63,9 +63,27 @@ class BlogController extends AbstractController
      * @return Response
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function view(Request $request, $slug, PostRepository $postRepository, SiteRepository $siteRepository, PageRepository $pageRepository):Response {
+    public function view(
+        Request $request,
+        $slug,
+        PostRepository $postRepository,
+        SiteRepository $siteRepository,
+        PageRepository $pageRepository,
+        DomainRepository $domainRepository
+    ): Response {
+
+        // todo: fix this if and extract to a normal logic
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+
+        $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        if (null === $site && null !== $domain) {
+            $site = $siteRepository->findOneBy(['domain' => $domain]);
+        }
+
+        if (null === $site) {
+            throw new NotFoundHttpException();
+        }
 
         /** @var Post $post */
         $post = $postRepository->findOneBy(['site' => $site, 'slug' => $slug]);
@@ -79,7 +97,7 @@ class BlogController extends AbstractController
         }
 
         return $this->render(
-            'UserSite/Blog/post.html.twig',
+            'UserSite/BlogSite/post.html.twig',
             [
                 'site' => $site,
                 'post' => $post,
@@ -89,8 +107,7 @@ class BlogController extends AbstractController
                 'morePosts' => $morePosts,
                 'files' => $post->getFiles(),
                 'form' => $form->createView(),
-                'layout' => $this->layoutResolver->getLayout($site->getTemplate()),
-                'isBlogTemplate' => $this->layoutResolver->isBlogTemplate($site->getTemplate()),
+                'layout' => $this->layoutResolver->getLayout($site),
             ]
         );
     }

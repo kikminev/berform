@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Document\Site;
+use App\Repository\FileRepository;
+use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -40,7 +43,7 @@ class UploadController extends AbstractController
             // todo: throw error
             throw new \Exception('error');
         }
-         //todo: create thumbnail
+        //todo: create thumbnail
 
         $newFileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
         $url = $fileUploader->upload($newFileName, $file);
@@ -57,6 +60,18 @@ class UploadController extends AbstractController
         $documentManager->flush();
 
         return new JsonResponse(['message' => 'ok']);
+    }
+
+
+    public static function getOrderedFiles(array $files): array
+    {
+        $orderedFiles = [];
+        foreach ($files as $file) {
+            $orderedFiles[$file->getOrder()] = $file;
+        }
+        ksort($orderedFiles);
+
+        return $orderedFiles;
     }
 
     private function attachFileToSite(Site $site, $url, $baseName)

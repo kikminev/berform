@@ -23,7 +23,7 @@ class FileRepository extends DocumentRepository
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getActiveFiles($fileIds, User $user)
+    public function getActive($fileIds, User $user)
     {
         return $this->dm->createQueryBuilder(File::class)
             ->field('user')->equals($user)

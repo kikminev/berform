@@ -84,8 +84,10 @@ a:hover { text-decoration: none; }
 /* uploaded images */
 #imagesWrap { }
 .imgWrap { position: relative; overflow: hidden; float: left; margin: 20px 20px 0px 0px; width: 150px; height: 150px; border-radius: 10px; }
-.deleteFile { display: none; position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; background: white; border-radius: 30px; line-height: 30px; text-align: center; font-size: small; color: #666666 !important; }
-.imgWrap:hover .deleteFile { display: block; }
+.imgWrap .galleryImg { cursor: move; }
+.fileActionButton { display: none; position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; background: white; border-radius: 30px; line-height: 30px; text-align: center; font-size: small; color: #666666 !important; }
+.imgWrap:hover .fileActionButton { display: block; }
+.reorderFile { right: 50px; }
 #imagesWrap { margin: 20px 0px; }
 
 .flash-notice { color: #FF7C5C; }

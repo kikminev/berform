@@ -29,7 +29,7 @@ class NodeType extends AbstractType
 
         foreach ($options['supported_languages'] as $language) {
             $builder->add('title_'.$language, TextType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('form_page_title')]);
-            $builder->add('content_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('form_page_content')]);
+            $builder->add('content_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('form_page_description')]);
             $builder->add('keywords_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('form_page_keywords')]);
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('form_page_meta_description')]);
         }

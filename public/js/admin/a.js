@@ -14,6 +14,15 @@ a = {
             }
         });
     },
+    reorderNodes: function (url) {
+        var order = $('.sortableNodes').sortable("toArray");
+        order = order.join(',');
+        $.ajax({
+            type: "POST",
+            data: 'nodes='+order,
+            url: url
+        });
+    },
     generateSlug: function () {
         var name = $(".slug_source").val();
         var slug = $(".slug_input").val();

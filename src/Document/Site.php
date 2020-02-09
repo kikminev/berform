@@ -124,6 +124,12 @@ class Site
     protected $template;
 
     /**
+     * @var string $category
+     * @MongoDB\Field(type="string")
+     */
+    protected $category;
+
+    /**
      * @var null|string $customHtml
      * @MongoDB\Field(type="string")
      */
@@ -618,5 +624,21 @@ class Site
     public function setLinkedIn(?string $linkedIn): void
     {
         $this->linkedIn = $linkedIn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string $category
+     */
+    public function setCategory(string $category): void
+    {
+        $this->category = $category;
     }
 }

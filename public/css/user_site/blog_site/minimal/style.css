@@ -8,7 +8,7 @@ a:hover { text-decoration: none; }
 
 .navigation { padding: 20px 0px; background: #fff; z-index: 2; position: relative; }
 .navigation .socialIcons { padding: .5rem 1rem; float: right; }
-.navigation .socialIcons a { padding: 0 .1rem; }
+.navigation .socialIcons a { padding: 0 .1rem; margin-right: 20px; }
 .blogHeader { padding: 25px 0px; margin-bottom: 40px; text-align: center; width: 100%;}
 .blogHeader h1, .blogHeader div { width: 100%; text-align: center;}
 .blogTemplate { text-align: center; }
@@ -20,7 +20,6 @@ a:hover { text-decoration: none; }
 .blogList .blogImgWrap { width: 100%; height: 510px; display: block; overflow: hidden; }
 .blogList .blogExcerptWrap { position: absolute; height: 150px; width: 80%; padding: 25px 25px 0px 0px; background: #fff; bottom: -80px; }
 .blogList h3.title {  }
-
 
 /* animations and ajax loading */
 /* animations and ajax loading */
@@ -42,7 +41,6 @@ footer {
     bottom: 0;
     width: 100%;
     height: 700px;
-    padding-left: 50px;
     background: #333;
     z-index: 1;
 }
@@ -128,3 +126,24 @@ footer {
 .morePosts { padding-top: 100px; padding-bottom: 100px; margin-top: 150px; }
 .morePosts .blogImgWrap { width: 100%; overflow: hidden; display: block; }
 /*.morePosts h3 { margin-bottom: 30px; }*/
+
+/* blog */
+.blogPost #imagesWrap { position: relative; width: 350px; float: left; }
+.blogPost #imagesWrap .imgWrap { margin-right: 5px; }
+.blogPost .blogIconImgWrap { float: left; margin-left: -40px; }
+.blogPost, .blogListWrap { padding-left: 40px; }
+.blogListWrap h2, .blogPost h1 { margin-bottom: 60px; }
+.blogListWrap .blogImgWrap, .blogPost .blogImgWrap { float: left; margin: -20px 30px 20px -40px; }
+.blogListWrap .moreLink { margin-bottom: 100px; float: left }
+
+
+.parallaxImageWrap {  margin: 20px -50px; }
+.parallaxImageWrap a { height: 600px; width: 100%; display: block; background-attachment: fixed; background-position: center; }
+.singleImageStaticWrap img { width: 100%; overflow: hidden; }
+.singleImageStaticWrap img { width: 100%; }
+
+.blogPage h1 { text-align: center; margin: 100px 0px 100px; }
+.albumWrap { margin: 80px 0px; }
+.albumWrap h3 { margin-top: 20px; }
+.albumWrap p { margin-top: 10px; }
+.albumWrap a:hover { color: inherit;  }

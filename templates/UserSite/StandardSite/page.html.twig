@@ -1,4 +1,4 @@
-{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+{% extends 'UserSite/StandardSite/' ~ layout ~ '.html.twig' %}
 
 {% block body %}
 
@@ -34,7 +34,6 @@
             ],
         });
     </script>
-
     {%  if slug is defined and slug == 'contact-us' %}
         {{ include('UserSite/contact_page.html.twig') }}
     {% endif %}

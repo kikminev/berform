@@ -1,8 +1,6 @@
 {% extends 'UserSite/' ~ layout ~ '.html.twig' %}
 
 {% block body %}
-
-    {% if slug is defined and slug == 'home' %}
         <div class="container">
             <div class="row blogHeader">
                 <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
@@ -109,7 +107,6 @@
                 {% endfor %}
             </div>
         </div>
-    {% endif %}
 
     <script type="text/javascript">
         $('[data-fancybox="gallery"]').fancybox({

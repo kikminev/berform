@@ -2,19 +2,53 @@
 
 namespace App\Service\Site;
 
+use App\Document\Site;
+
 class LayoutResolver
 {
-    private const BLOG_TEMPLATES = [
-        'blog_minimal'
-    ];
+    public const SITE_CATEGORY_PHOTOGRAPHY = 'photography',
+        SITE_CATEGORY_BLOG = 'blog',
+        SITE_CATEGORY_STANDARD = 'standard';
 
-    public function isBlogTemplate(string $template): bool
+    public function getSiteTemplateCss(Site $site): string
     {
-        return in_array($template, static::BLOG_TEMPLATES, true);
+        switch ($site->getCategory()) {
+            case static::SITE_CATEGORY_PHOTOGRAPHY:
+                $nameSpace = 'photography_site';
+                break;
+            case static::SITE_CATEGORY_BLOG:
+                $nameSpace = 'blog_site';
+                break;
+            default:
+                $nameSpace = 'standard_site';
+        }
+
+        return $nameSpace . '/' . $site->getTemplate() . '_template.css';
     }
 
-    public function getLayout(string $template): string
+    public function getPageTemplate(Site $site, string $slug): string
     {
-        return $this->isBlogTemplate($template) ? 'blog_layout' : 'layout';
+
+        switch ($site->getCategory()) {
+            case static::SITE_CATEGORY_BLOG:
+                return ($slug === 'home') ? 'UserSite/BlogSite/home_page.html.twig' : 'UserSite/BlogSite/page.html.twig';
+            case static::SITE_CATEGORY_PHOTOGRAPHY:
+                return ($slug === 'home') ? 'UserSite/PhotographySite/minimal/home_page.html.twig' : 'UserSite/Photography/minimal/page.html.twig';
+            default:
+                return 'UserSite/StandardSite/page.html.twig';
+        }
+    }
+
+    public function getLayout(Site $site): string
+    {
+
+        switch ($site->getCategory()) {
+            case static::SITE_CATEGORY_PHOTOGRAPHY:
+                return 'PhotographySite\minimal\layout';
+            case static::SITE_CATEGORY_BLOG:
+                return 'BlogSite\layout';
+            default:
+                return 'StandardSite/layout';
+        }
     }
 }
