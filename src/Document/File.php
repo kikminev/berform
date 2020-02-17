@@ -42,7 +42,7 @@ class File
     protected $baseName;
 
     /**
-     * @var int $order
+     * @var int|null $order
      * @MongoDB\Field(type="int")
      */
     protected $order;
@@ -182,7 +182,7 @@ class File
         $this->baseName = $baseName;
     }
 
-    public function getOrder(): int
+    public function getOrder(): ?int
     {
         return $this->order;
     }

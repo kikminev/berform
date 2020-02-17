@@ -76,10 +76,11 @@ class AlbumController extends AbstractController
         }
 
         return $this->render(
-            'UserSite/StandardSite/album.html.twig',
+            'UserSite/PhotographySite/minimal/album.html.twig',
             [
                 'site' => $site,
                 'slug' => $slug,
+                'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
                 'pages' => $pages,
                 'album' => $album,
                 'files' => $album->getFiles(),

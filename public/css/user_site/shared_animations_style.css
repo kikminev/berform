@@ -1,0 +1,70 @@
+/* animations and ajax loading */
+/* animations and ajax loading */
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+.cd-section.overflow-hidden {
+    /* this class is used to hide the scrolling bar while a new section is entering the viewport */
+    overflow: hidden;
+}
+
+@-webkit-keyframes cd-scroll-down {
+    0% {
+        -webkit-transform: translateX(-50%) scale(1);
+    }
+    50% {
+        -webkit-transform: translateY(10px) translateX(-50%) scale(1);
+    }
+    100% {
+        -webkit-transform: translateX(-50%) scale(1);
+    }
+}
+@-moz-keyframes cd-scroll-down {
+    0% {
+        -moz-transform: translateX(-50%) scale(1);
+    }
+    50% {
+        -moz-transform: translateY(10px) translateX(-50%) scale(1);
+    }
+    100% {
+        -moz-transform: translateX(-50%) scale(1);
+    }
+}
+@keyframes cd-scroll-down {
+    0% {
+        -webkit-transform: translateX(-50%) scale(1);
+        -moz-transform: translateX(-50%) scale(1);
+        -ms-transform: translateX(-50%) scale(1);
+        -o-transform: translateX(-50%) scale(1);
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        -webkit-transform: translateY(10px) translateX(-50%) scale(1);
+        -moz-transform: translateY(10px) translateX(-50%) scale(1);
+        -ms-transform: translateY(10px) translateX(-50%) scale(1);
+        -o-transform: translateY(10px) translateX(-50%) scale(1);
+        transform: translateY(10px) translateX(-50%) scale(1);
+    }
+    100% {
+        -webkit-transform: translateX(-50%) scale(1);
+        -moz-transform: translateX(-50%) scale(1);
+        -ms-transform: translateX(-50%) scale(1);
+        -o-transform: translateX(-50%) scale(1);
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+#cd-loading-bar {
+    position: fixed;
+    z-index: 2000;
+    height: 1000px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: #333;
+    display: none;
+}
+
+/* end animations and ajax loading */
+/* end animations and ajax loading */

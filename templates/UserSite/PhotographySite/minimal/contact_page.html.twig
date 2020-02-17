@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+            <div>
+                <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                <div>
+                    {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+                </div>
+            </div>
+
+            {% if files|length > 0 %}
+                <div id="imagesWrap" class="pageImages">
+                    {% for file in files %}
+                        <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}">
+                            <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=50&w=50&fit=crop" alt=""/>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="contactUsWrap">
+                <p>
+                    {% trans %}user_site_contact_us_address{% endtrans %}
+                    <br />{% if site.translatedAddress[app.request.locale] is defined %}{{ site.translatedAddress[app.request.locale]|raw }}{% endif %}<br />
+                </p>
+
+                {% if site.email is not empty %}
+                    <p>
+                        {% trans %}user_site_contact_us_email{% endtrans %} <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+                    </p>
+                {% endif %}
+
+                {% include('UserSite/Components/social_icons.html.twig') %}
+            </div>
+
+            {% include('UserSite/Components/contact_form.html.twig') %}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

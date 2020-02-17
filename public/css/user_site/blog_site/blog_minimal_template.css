@@ -21,12 +21,6 @@ a:hover { text-decoration: none; }
 .blogList .blogExcerptWrap { position: absolute; height: 150px; width: 80%; padding: 25px 25px 0px 0px; background: #fff; bottom: -80px; }
 .blogList h3.title {  }
 
-/* animations and ajax loading */
-/* animations and ajax loading */
-*, *::after, *::before {
-    box-sizing: border-box;
-}
-
 main {
     min-height: 100vh;
     overflow: hidden;
@@ -45,70 +39,6 @@ footer {
     z-index: 1;
 }
 
-.cd-section.overflow-hidden {
-    /* this class is used to hide the scrolling bar while a new section is entering the viewport */
-    overflow: hidden;
-}
-
-@-webkit-keyframes cd-scroll-down {
-    0% {
-        -webkit-transform: translateX(-50%) scale(1);
-    }
-    50% {
-        -webkit-transform: translateY(10px) translateX(-50%) scale(1);
-    }
-    100% {
-        -webkit-transform: translateX(-50%) scale(1);
-    }
-}
-@-moz-keyframes cd-scroll-down {
-    0% {
-        -moz-transform: translateX(-50%) scale(1);
-    }
-    50% {
-        -moz-transform: translateY(10px) translateX(-50%) scale(1);
-    }
-    100% {
-        -moz-transform: translateX(-50%) scale(1);
-    }
-}
-@keyframes cd-scroll-down {
-    0% {
-        -webkit-transform: translateX(-50%) scale(1);
-        -moz-transform: translateX(-50%) scale(1);
-        -ms-transform: translateX(-50%) scale(1);
-        -o-transform: translateX(-50%) scale(1);
-        transform: translateX(-50%) scale(1);
-    }
-    50% {
-        -webkit-transform: translateY(10px) translateX(-50%) scale(1);
-        -moz-transform: translateY(10px) translateX(-50%) scale(1);
-        -ms-transform: translateY(10px) translateX(-50%) scale(1);
-        -o-transform: translateY(10px) translateX(-50%) scale(1);
-        transform: translateY(10px) translateX(-50%) scale(1);
-    }
-    100% {
-        -webkit-transform: translateX(-50%) scale(1);
-        -moz-transform: translateX(-50%) scale(1);
-        -ms-transform: translateX(-50%) scale(1);
-        -o-transform: translateX(-50%) scale(1);
-        transform: translateX(-50%) scale(1);
-    }
-}
-
-#cd-loading-bar {
-    position: fixed;
-    z-index: 2000;
-    height: 1000px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background: #333;
-    display: none;
-}
-
-/* animations and ajax loading */
-/* animations and ajax loading */
 
 .featuredParallaxPost {
     height: 600px;
@@ -143,7 +73,3 @@ footer {
 .singleImageStaticWrap img { width: 100%; }
 
 .blogPage h1 { text-align: center; margin: 100px 0px 100px; }
-.albumWrap { margin: 80px 0px; }
-.albumWrap h3 { margin-top: 20px; }
-.albumWrap p { margin-top: 10px; }
-.albumWrap a:hover { color: inherit;  }

@@ -33,7 +33,7 @@ class LayoutResolver
             case static::SITE_CATEGORY_BLOG:
                 return ($slug === 'home') ? 'UserSite/BlogSite/home_page.html.twig' : 'UserSite/BlogSite/page.html.twig';
             case static::SITE_CATEGORY_PHOTOGRAPHY:
-                return ($slug === 'home') ? 'UserSite/PhotographySite/minimal/home_page.html.twig' : 'UserSite/Photography/minimal/page.html.twig';
+                return ($slug === 'home') ? 'UserSite/PhotographySite/minimal/home_page.html.twig' : 'UserSite/PhotographySite/minimal/page.html.twig';
             default:
                 return 'UserSite/StandardSite/page.html.twig';
         }

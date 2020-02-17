@@ -49,6 +49,7 @@ class BlogController extends AbstractController
                 'pages' => $pages,
                 'slug' => 'blog',
                 'posts' => $posts,
+                'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
                 'form' => $form->createView(),
             ]
         );
@@ -105,6 +106,7 @@ class BlogController extends AbstractController
                 'page' => $page,
                 'pages' => $pages,
                 'morePosts' => $morePosts,
+                'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
                 'files' => $post->getFiles(),
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),

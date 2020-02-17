@@ -3,8 +3,6 @@
 {% block body %}
     {% if slug is defined and slug == 'home' %}
         {% include('UserSite/Blog/blog_home_page.html.twig') %}
-    {% elseif slug is defined and slug == 'photography' %}
-        {% include('UserSite/StandardSite/photography.html.twig') %}
     {% endif %}
 
     <script type="text/javascript">

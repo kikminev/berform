@@ -1,23 +1,11 @@
 {% extends 'UserSite/StandardSite/' ~ layout ~ '.html.twig' %}
-
 {% block body %}
-
-    {% if isBlogTemplate == true %}
-        <div class="row blogHeader">
-            <div class="col-md-2"></div>
-    {% endif %}
-
-            <div class="{% if isBlogTemplate == true %}blogTemplate col-md-8{% endif %}">
-                <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
-                <div>
-                    {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
-                </div>
-            </div>
-
-    {% if isBlogTemplate == true %}
-            <div class="col-md-2"></div>
+    <div>
+        <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+        <div>
+            {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
         </div>
-    {% endif %}
+    </div>
 
     {% if files|length > 0 %}
         <div id="imagesWrap" class="pageImages">
