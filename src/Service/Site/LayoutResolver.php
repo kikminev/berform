@@ -29,13 +29,29 @@ class LayoutResolver
     public function getPageTemplate(Site $site, string $slug): string
     {
 
+        $page = '';
+        switch ($slug) {
+            case 'home':
+                $page = 'home_page.html.twig';
+                break;
+            case 'photography':
+                $page = 'photography.html.twig';
+                break;
+            case 'contact':
+                $page = 'contact_page.html.twig';
+                break;
+            default:
+                $page = 'page.html.twig';
+        }
+
+
         switch ($site->getCategory()) {
             case static::SITE_CATEGORY_BLOG:
-                return ($slug === 'home') ? 'UserSite/BlogSite/home_page.html.twig' : 'UserSite/BlogSite/page.html.twig';
+                return 'UserSite/BlogSite/'.$page;
             case static::SITE_CATEGORY_PHOTOGRAPHY:
-                return ($slug === 'home') ? 'UserSite/PhotographySite/minimal/home_page.html.twig' : 'UserSite/PhotographySite/minimal/page.html.twig';
+                return 'UserSite/PhotographySite/minimal/'.$page;
             default:
-                return 'UserSite/StandardSite/page.html.twig';
+                return 'UserSite/StandardSite/'.$page;
         }
     }
 

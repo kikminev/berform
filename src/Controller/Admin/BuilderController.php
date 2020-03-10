@@ -20,13 +20,9 @@ class BuilderController extends AbstractController
 
     public function buildSite(Request $request, Site $site): ?Response
     {
-        // todo: user not accounted for
-        $pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site, 'user' => $this->getUser()), array('order' => 'ASC'));
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        // todo: fix this
-        $pages = array_filter($pages, static function(Page $page) {
-            return $page->getSlug() !== 'blog';
-        });
+        $pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site, 'user' => $this->getUser()), array('order' => 'ASC'));
 
         return $this->render(
             'Admin/Site/page_list.html.twig',

@@ -1,10 +1,14 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-
-
-
     <div class="breadcrumbs container-fluid contextBar">
-        <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_pages{% endtrans %}
+        {% if site is defined %}
+            <h1>
+                <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+                <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a>
+            </h1>
+        {% else %}
+            <h1><a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a> {% trans %}admin_links_create{% endtrans %}</h1>
+        {% endif %}
     </div>
 
     <div class="container">

@@ -2,12 +2,18 @@
 {% block body %}
 {#    <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>#}
 
-<div class="container-fluid contextBar"><h1>{{ site.name }}</h1></div>
-<div class="container">
+    <div class="container-fluid contextBar breadcrumbs">
+        <h1>
+            <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+            <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a>
+            {% trans %}admin_links_blog{% endtrans %}
+        </h1>
+    </div>
+    <div class="container">
 
     <div class="topActionsBar">
         <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
-        <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-primary btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
+        <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-success btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
     </div>
 
     <div class="clear"></div>
@@ -23,7 +29,16 @@
 
         {% for post in posts %}
             <div class="itemWrap col-md-3">
-                <a class="item" href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</a>
+                <a class="item" href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">
+
+                    {% if post.defaultImage is not null %}
+                        <div class="itemDefaultImage">
+                            <img src="https://sitemax.imgix.net/{{ post.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                        </div>
+                    {% endif %}
+
+                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                </a>
             </div>
         {% endfor %}
 

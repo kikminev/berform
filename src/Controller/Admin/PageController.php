@@ -41,6 +41,7 @@ class PageController extends AbstractController
         ParameterBagInterface $param
     ): Response {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $page);
 
         $site = $page->getSite();
@@ -98,6 +99,11 @@ class PageController extends AbstractController
             if(!empty($pageFiles)) {
                 $fileOrder = 0;
                 foreach ($pageFiles as $file) {
+
+                    if(null === $page->getDefaultImage()) {
+                        $page->setDefaultImage($file);
+                    }
+
                     $file->setOrder($fileOrder);
                     $fileOrder++;
                 }
@@ -144,6 +150,7 @@ class PageController extends AbstractController
         ParameterBagInterface $param
     ): Response {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $site);
 
         $page = new Page();
@@ -203,6 +210,11 @@ class PageController extends AbstractController
             if(!empty($pageFiles)) {
                 $fileOrder = 0;
                 foreach ($pageFiles as $file) {
+
+                    if(null === $page->getDefaultImage()) {
+                        $page->setDefaultImage($file);
+                    }
+
                     $file->setOrder($fileOrder);
                     $fileOrder++;
                 }

@@ -100,9 +100,17 @@ admin_site_node_reorder:
     controller: App\Controller\Admin\NodeController::reorder
 
 # profile
-admin_profile_edit:
-    path: /u/profile/edit
-    controller: App\Controller\Admin\ProfileController::edit
+#admin_profile_edit:
+#    path: /u/profile/edit
+#    controller: App\Controller\Admin\ProfileController::edit
+admin_profile_change_password:
+    path: /u/profile/change_password
+    controller: App\Controller\Admin\ProfileController::changePassword
+
+app_logout:
+    path: /logout
+# end profile
+
 
 ## billing
 #admin_billing:
@@ -115,14 +123,6 @@ admin_billing_cart_add:
 admin_billing_cart_view:
     path: /u/billing/cart/view
     controller: App\Controller\Admin\Billing\CartController::view
-
-admin_profile_change_password:
-    path: /u/profile/change_password
-    controller: App\Controller\Admin\ProfileController::changePassword
-
-
-app_logout:
-    path: /logout
 
 # user site
 user_site_contact:

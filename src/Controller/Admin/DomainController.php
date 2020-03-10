@@ -21,7 +21,8 @@ class DomainController extends AbstractController
      */
     public function list(DomainRepository $domainRepository)
     {
-        // todo: no user check
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $domains = $domainRepository->getByUser($this->getUser());
 
         return $this->render(
@@ -34,6 +35,8 @@ class DomainController extends AbstractController
 
     public function create(Request $request, DocumentManager $documentManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $domain = new Domain();
         $form = $this->createForm(DomainType::class, $domain);
         $form->handleRequest($request);

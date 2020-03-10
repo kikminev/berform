@@ -65,7 +65,6 @@ class UserSiteController extends AbstractController
         // todo: fix this if and extract to a normal logic
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
-
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         if (null === $site && null !== $domain) {
             $site = $siteRepository->findOneBy(['domain' => $domain]);

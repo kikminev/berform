@@ -22,19 +22,24 @@ class ProfileController extends AbstractController
         $this->translator = $translator;
     }
 
-    public function edit(Request $request): ?Response
-    {
-        return $this->render(
-            'Admin/Profile/edit.html.twig',
-            []
-        );
-    }
+    //public function edit(): ?Response
+    //{
+    //    $this->denyAccessUnlessGranted('ROLE_USER');
+    //
+    //    return $this->render(
+    //        'Admin/Profile/edit.html.twig',
+    //        []
+    //    );
+    //}
 
     public function changePassword(
         Request $request,
         UserPasswordEncoderInterface $userPasswordEncoder,
         DocumentManager $documentManager
     ): ?Response {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class,
             $user,

@@ -2,7 +2,10 @@
 {% block body %}
 
     <div class="breadcrumbs container-fluid contextBar">
-        <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_pages{% endtrans %}
+        <h1>
+            <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+            <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a> {% trans %}admin_links_pages{% endtrans %}
+        </h1>
     </div>
 
     <div class="container">

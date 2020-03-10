@@ -1,11 +1,16 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-    <div class="container-fluid contextBar"><h1>{{ site.name }}</h1></div>
+    <div class="container-fluid contextBar breadcrumbs">
+        <h1>
+            <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+            {{ site.name }}
+        </h1>
+    </div>
     <div class="container">
 
         <div class="topActionsBar">
             <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
-            <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-primary btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
+            <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-success btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
         </div>
 
         <div class="clear"></div>
@@ -23,7 +28,14 @@
 
                 {% for page in pages %}
                     <div class="itemWrap col-md-3" id="{{ page.id }}">
-                        <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">{{ page.name }}</a>
+                        <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">
+                            {% if page.defaultImage is not null %}
+                                <div class="itemDefaultImage">
+                                    <img src="https://sitemax.imgix.net/{{ page.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                                </div>
+                            {% endif %}
+                            {{ page.name }}
+                        </a>
                     </div>
                 {% endfor %}
             </div>

@@ -2,23 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Repository\DomainRepository;
-use App\Repository\Payment\PaymentRepository;
 use App\Repository\Payment\SubscriptionRepository;
-use App\Repository\SiteRepository;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class BillingController extends AbstractController
 {
-    /**
-     * @param SiteRepository $siteRepository
-     * @param DomainRepository $domainRepository
-     * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function listPayments(PaymentRepository $paymentRepository, SubscriptionRepository $subscriptionRepository)
+    public function listPayments(SubscriptionRepository $subscriptionRepository):Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $subscriptions = $subscriptionRepository->findBy(['user' => $this->getUser()]);
 
@@ -28,8 +20,8 @@ class BillingController extends AbstractController
         );
     }
 
-    public function upgrade()
+    public function upgrade():void
     {
-
+        $this->denyAccessUnlessGranted('ROLE_USER');
     }
 }

@@ -32,7 +32,20 @@
             $.fancybox.defaults.hash = false;
         </script>
 
-        <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('https://sitemax.imgix.net/{{ mainImage.baseName }}'); background-position: center center;"{% endif %}>
+        <footer class="footer container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include('UserSite/Components/social_icons.html.twig') %}
+                    <div class="siteName">
+                         &copy; {{ site.name }}
+                    </div>
+
+                    <div class="builtWithBerform">
+                        Built on <a href="https://www.berform.com" target="_blank">Berform</a>
+                    </div>
+                </div>
+            </div>
         </footer>
+
     </body>
 </html>

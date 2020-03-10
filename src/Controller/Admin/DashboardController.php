@@ -18,6 +18,8 @@ class DashboardController extends AbstractController
      */
     public function dashboard(SiteRepository $siteRepository, DomainRepository $domainRepository)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $user = $this->getUser();
         $sites = $siteRepository->getByUser($user);
         $domains = $domainRepository->getByUser($user);

@@ -43,6 +43,7 @@ class PostController extends AbstractController
         ParameterBagInterface $param
     ): Response {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $post);
 
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
@@ -105,6 +106,11 @@ class PostController extends AbstractController
             if(!empty($postFiles)) {
                 $fileOrder = 0;
                 foreach ($postFiles as $file) {
+
+                    if(null === $post->getDefaultImage()) {
+                        $post->setDefaultImage($file);
+                    }
+
                     $file->setOrder($fileOrder);
                     $fileOrder++;
                 }
@@ -159,6 +165,7 @@ class PostController extends AbstractController
         ParameterBagInterface $param
     ): Response {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $site);
 
         $post = new Post();
@@ -224,6 +231,11 @@ class PostController extends AbstractController
             if(!empty($postFiles)) {
                 $fileOrder = 0;
                 foreach ($postFiles as $file) {
+
+                    if(null === $post->getDefaultImage()) {
+                        $post->setDefaultImage($file);
+                    }
+
                     $file->setOrder($fileOrder);
                     $fileOrder++;
                 }

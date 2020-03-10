@@ -52,6 +52,8 @@ class NodeController extends AbstractController
         ParameterBagInterface $param
     ): Response {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         switch ($type) {
             case 'album':
             default:
@@ -92,6 +94,9 @@ class NodeController extends AbstractController
         DocumentManager $documentManager,
         ParameterBagInterface $param
     ): Response {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         switch ($type) {
             case 'album':
             default:
@@ -220,6 +225,7 @@ class NodeController extends AbstractController
         FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $this->denyAccessUnlessGranted('edit', $site);
 
@@ -322,6 +328,9 @@ class NodeController extends AbstractController
         PageRepository $pageRepository,
         FileRepository $fileRepository
     ): JsonResponse {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $ids = $request->request->get('nodes');
         $ids = explode(',', $ids);
 

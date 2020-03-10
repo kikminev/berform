@@ -104,6 +104,12 @@ class Post
     private $publishedAt;
 
     /**
+     * @var null|File $defaultImage
+     * @MongoDB\ReferenceOne(targetDocument="File", storeAs="id")
+     */
+    private $defaultImage;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -317,5 +323,21 @@ class Post
     public function setFeaturedParallax(?bool $featuredParallax): void
     {
         $this->featuredParallax = $featuredParallax;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getDefaultImage(): ?File
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * @param File|null $defaultImage
+     */
+    public function setDefaultImage(?File $defaultImage): void
+    {
+        $this->defaultImage = $defaultImage;
     }
 }

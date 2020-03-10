@@ -19,6 +19,8 @@ class SiteController extends AbstractController
      */
     public function list(DocumentManager $documentManager)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         // todo: this needs to use a repository
         $qb = $documentManager->createQueryBuilder(Site::class);
         $qb->addAnd($qb->expr()->field('user')->equals($this->getUser()));
@@ -35,6 +37,7 @@ class SiteController extends AbstractController
 
     public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         // todo: copy pages from template
 
         $site = new Site();
@@ -83,6 +86,7 @@ class SiteController extends AbstractController
 
     public function edit(Request $request, Site $site, ParameterBagInterface $param, DocumentManager $documentManager): ?Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $site);
 
         $supportedLanguages = $param->get('supported_languages');
@@ -122,6 +126,7 @@ class SiteController extends AbstractController
 
     public function delete(Site $site, DocumentManager $documentManager): ?Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $site);
 
         $site->setActive(false);

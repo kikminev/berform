@@ -1,51 +1,242 @@
-.header h1 { text-align: center; width: 100%; padding: 40px 0px;  }
+.header h1 {
+    text-align: center;
+    width: 100%;
+    padding: 40px 0px;
+}
+
 main {
     min-height: 100vh;
     overflow: hidden;
     position: relative;
     z-index: 2;
     background: #fff;
-    margin-bottom: 700px;
     padding-bottom: 150px;
 }
 
+/* footer */
 footer {
-    position: fixed;
-    bottom: 0;
     width: 100%;
-    height: 700px;
-    background: #333;
-    z-index: 1;
+    padding: 20px;
+    font-size: small;
 }
 
-.logo { float: left; padding: .5rem 1rem; text-transform: uppercase; color: #333; }
-.navbar { float: right; }
+.footer .socialIcons {
+    float: left;
+}
 
-a { color: #383E41; }
-a:hover { text-decoration: none; }
+.footer .socialIcons a {
+    margin-right: 10px;
+}
+.footer .siteName { margin-left: 50px; float: left; }
+.footer .builtWithBerform { float: right; }
 
-#pagesMenu li { margin-left: 40px; }
+/* end footer */
 
-.navigation { padding: 20px 0px; background: #fff; z-index: 2; position: relative; }
-.navigation .socialIcons { padding: .5rem 1rem; float: right; }
-.navigation .socialIcons a { padding: 0 .1rem; margin-right: 20px; }
+.logo {
+    float: left;
+    padding: .5rem 1rem;
+    text-transform: uppercase;
+    color: #333;
+}
 
-h1 { text-align: center; margin: 100px 0px 100px; }
-#home-content h1 { margin: 0px 0px; }
+.navbar {
+    float: right;
+}
 
-.photosGrid a { margin-bottom: 50px; }
+/*.contentContainer { padding-bottom: 150px; }*/
+.contentContainer a {
+    color: #4d7bae;
+}
 
-/* end albums */
-.albumWrap { margin: 80px 0px; }
-.albumWrap h3 { margin-top: 20px; }
-.albumWrap p { margin-top: 10px; }
-.albumWrap a:hover { color: inherit;  }
+a {
+    color: #383E41;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+#pagesMenu li {
+    margin-left: 40px;
+}
+
+.navigation {
+    padding: 20px 0px;
+    background: #fff;
+    z-index: 2;
+    position: relative;
+}
+
+.navigation .socialIcons {
+    padding: .5rem 1rem;
+    float: right;
+}
+
+.navigation .socialIcons a {
+    padding: 0 .1rem;
+    margin-right: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin: 100px 0px 100px;
+}
+
+#home-content h1 {
+    margin: 0px 0px;
+}
+
+.photosGrid {
+}
+
+.photosGrid a {
+    margin-bottom: 50px;
+}
+
+/* albums */
+.albumWrap {
+    margin: 80px 0px;
+}
+
+.albumWrap h3 {
+    margin-top: 20px;
+}
+
+.albumWrap p {
+    margin-top: 10px;
+}
+
+.albumWrap a:hover {
+    color: inherit;
+}
+
 /* end albums */
 
 /* contact page */
-.contactUsWrap { margin: 30px 0px; text-align: center; }
-#contactForm label { width: 100%; margin: 10px 0px 0px; }
-#contactForm input, #contactForm textarea { border: 1px solid #ccc; width: 100%; }
-#contactForm .contactFormRowCell { padding-left: 0px; }
-#contactForm #contact_submit { height: 35px; line-height: 35px; width: 100px; background: #000; border: 0px; color: #fff; border-radius: 40px; float: right; margin-top: 10px; text-transform: lowercase; }
+.contactUsWrap {
+    margin: 30px 0px;
+    text-align: center;
+}
+
+#contactForm label {
+    width: 100%;
+    margin: 10px 0px 0px;
+}
+
+#contactForm input, #contactForm textarea {
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+#contactForm .contactFormRowCell {
+    padding-left: 0px;
+}
+
+#contactForm #contact_submit {
+    height: 35px;
+    line-height: 35px;
+    width: 100px;
+    background: #000;
+    border: 0px;
+    color: #fff;
+    border-radius: 40px;
+    float: right;
+    margin-top: 10px;
+    text-transform: lowercase;
+}
+
 /* end contact page */
+
+
+/* blog */
+.blogListWrap h2 {
+    margin-bottom: 50px;
+}
+
+.blogListWrap a {
+    color: #383E41;
+}
+
+.blogListWrap .blogImgWrap, .blogPost .blogImgWrap {
+
+    float: left;
+    margin: -20px 30px 20px -40px;
+
+}
+
+.blogPost {
+    margin-bottom: 100px;
+}
+
+.blogPost #imagesWrap {
+    position: relative;
+    width: 350px;
+    float: left;
+}
+
+.blogPost #imagesWrap .imgWrap {
+    margin-right: 5px;
+}
+
+.blogPost .blogIconImgWrap {
+    float: left;
+    margin-left: -40px;
+}
+
+.blogPost, .blogListWrap {
+    padding-left: 40px;
+}
+
+.blogListWrap h2, .blogPost h1 {
+    margin-bottom: 60px;
+}
+
+.blogListWrap .blogImgWrap, .blogPost .blogImgWrap {
+    float: left;
+    margin: -20px 30px 20px -40px;
+}
+
+.blogListWrap .moreLink {
+    margin-bottom: 100px;
+    float: left;
+    color: #4d7bae;
+}
+
+
+.parallaxImageWrap {
+    margin: 20px -50px;
+}
+
+.parallaxImageWrap a {
+    height: 600px;
+    width: 100%;
+    display: block;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.singleImageStaticWrap img {
+    width: 100%;
+    overflow: hidden;
+}
+
+.singleImageStaticWrap img {
+    width: 100%;
+}
+
+.blogPage h1 {
+    text-align: center;
+    margin: 100px 0px 100px;
+}
+
+.morePosts {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    margin-top: 150px;
+}
+
+.morePosts .blogImgWrap {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+}

@@ -85,6 +85,7 @@ admin_links_dashboard: Начало
 admin_links_profile: Профил
 admin_links_logout: Изход
 admin_profile_change_password: Смяна на парола
+admin_profile: Профил
 admin_links_sites: Сайтове
 admin_links_domains: Домейни
 admin_links_pages: Страници
@@ -100,8 +101,7 @@ admin_create_node_album: Създай нов албум
 
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
-user_site_blog_header: Блог
-user_site_blog_read_more: още
+user_site_blog_read_more: прочети повече
 user_site_supported_languages_bg: бг
 user_site_supported_languages_en: en
 

@@ -1,9 +1,32 @@
-{% extends 'UserSite/StandardSite/layout.html.twig' %}
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
 {% block body %}
-    <div class="blogListWrap">
-        <h1>{% trans %}user_site_blog_header{% endtrans %}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <div>
+                    <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                    <div>
+                        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+                    </div>
+                </div>
 
 
-        {% include('UserSite/Blog/post_items_list.html.twig') %}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
     </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 blogListWrap">
+                    {% include('UserSite/BlogSite/post_items_list.html.twig') %}
+            </div>
+            <div class="col-md-1"></div>
+
+        </div>
+    </div>
+
 {% endblock %}

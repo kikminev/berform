@@ -33,6 +33,7 @@
         <script type="text/javascript">
             $.fancybox.defaults.hash = false;
         </script>
-        <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('https://sitemax.imgix.net/{{ mainImage.baseName }}'); background-position: center center;"{% endif %}></footer>
+        <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('https://sitemax.imgix.net/{{ mainImage.baseName }}'); background-position: center center;"{% endif %}>
+        </footer>
     </body>
 </html>

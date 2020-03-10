@@ -33,12 +33,22 @@ class BlogController extends AbstractController
         Request $request,
         PageRepository $pageRepository,
         SiteRepository $siteRepository,
+        DomainRepository $domainRepository,
         PostRepository $postRepository
     ) {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        if (null === $site && null !== $domain) {
+            $site = $siteRepository->findOneBy(['domain' => $domain]);
+        }
+
+        if (null === $site) {
+            throw new NotFoundHttpException();
+        }
+
         $posts = $postRepository->findBy(['site' => $site, 'active' => true]);
-        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'ASC']);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         // todo: pagination
@@ -51,6 +61,7 @@ class BlogController extends AbstractController
                 'posts' => $posts,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
                 'form' => $form->createView(),
+                'layout' => $this->layoutResolver->getLayout($site),
             ]
         );
     }
