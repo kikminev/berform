@@ -12,7 +12,7 @@
                 {% for file in files %}
                     {% if file.deleted != true %}
                         <div class="imgWrap" id="object_{{ file.id }}" data-id="{{ file.id }}" data-url="{{ file.fileUrl }}">
-                            <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=150&w=150&fit=crop&border-radius=10" alt="" />
+                            <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=150&w=150&fit=crop&border-radius=10" alt="" />
                         </div>
                     {% endif %}
                 {% endfor %}

@@ -17,12 +17,12 @@
             {% set mainImage = post.files[0] %}
                 {% if files|length > 0 %}
                     <div id="imagesWrap">
-                        <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ mainImage.baseName }}"><img src="https://sitemax.imgix.net/{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
+                        <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ mainImage.baseName }}"><img src="https://sitemax.imgix.net/{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
 
                         <div class="blogIconImgWrap">
                             {% for file in files %}
                                 {% if loop.first != true %}
-                                    <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="https://sitemax.imgix.net/{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
+                                    <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -49,7 +49,7 @@
                                 {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
                             </h3>
                             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=410&w=800&fit=crop" alt="" />
+                                <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=410&w=800&fit=crop" alt="" />
                             </a>
                         {% endif %}
 

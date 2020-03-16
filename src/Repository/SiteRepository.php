@@ -24,6 +24,7 @@ class SiteRepository extends DocumentRepository
         $qb = $this->createQueryBuilder();
         $qb->addAnd($qb->expr()->field('user')->equals($user));
         $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
+        $qb->addAnd($qb->expr()->field('archived')->notEqual(true));
 
         return $qb->getQuery()->execute();
     }

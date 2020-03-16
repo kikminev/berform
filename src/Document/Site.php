@@ -106,6 +106,11 @@ class Site
     protected $active;
 
     /**
+     * @MongoDB\Field(type="bool")
+     */
+    protected $archived;
+
+    /**
      * @var bool $isTemplate
      * @MongoDB\Field(type="bool")
      */
@@ -640,5 +645,21 @@ class Site
     public function setCategory(string $category): void
     {
         $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * @param mixed $archived
+     */
+    public function setArchived($archived): void
+    {
+        $this->archived = $archived;
     }
 }

@@ -5,7 +5,7 @@
     {% set post = posts[0] %}
     {% set file = post.files[0] %}
             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                <img src="https://sitemax.imgix.net/{{ file.baseName }}" alt=""/>
+                <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>
             </a>
 
             <h2>
@@ -24,7 +24,7 @@
                 {% if post.files|length > 0 %}
                     {% set file = post.files[0] %}
                     <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                        <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=100&w=150&fit=crop" alt=""/>
+                        <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=100&w=150&fit=crop" alt=""/>
                     </a>
                 {% endif %}
 
@@ -46,7 +46,7 @@
                 {% if post.files|length > 0 %}
                     {% set file = post.files[0] %}
                     <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                        <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=100&w=150&fit=crop" alt=""/>
+                        <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=100&w=150&fit=crop" alt=""/>
                     </a>
                 {% endif %}
 

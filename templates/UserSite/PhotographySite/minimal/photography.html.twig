@@ -22,7 +22,7 @@
                     {% set defaultFile = album.files|first  %}
 
                     <a href="{{ path('user_site_view_album', {slug: album.slug}) }}" class="ajaxLink" data-menu="{{ path('user_site_view_album', {slug: album.slug}) }}">
-                        <img src="https://sitemax.imgix.net/{{ defaultFile.baseName }}?h=250&w=1000&fit=crop" alt="" style="width: 100%" />
+                        <img src="{{ resource_provider_domain }}{{ defaultFile.baseName }}?h=250&w=1000&fit=crop" alt="" style="width: 100%" />
                     </a>
                     <a href="{{ path('user_site_view_album', {slug: album.slug}) }}" data-menu="{{ path('user_site_view_album', {slug: album.slug}) }}" class="ajaxLink">
                         <h3>{% if album.translatedTitle[app.request.locale] is defined %}{{ album.translatedTitle[app.request.locale] }}{% endif %}</h3>

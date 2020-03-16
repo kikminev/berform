@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Document\Page;
+use App\Repository\SiteRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,18 +18,15 @@ class SiteController extends AbstractController
      * @return Response
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function list(DocumentManager $documentManager)
+    public function list(SiteRepository $siteRepository)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        // todo: this needs to use a repository
-        $qb = $documentManager->createQueryBuilder(Site::class);
-        $qb->addAnd($qb->expr()->field('user')->equals($this->getUser()));
-        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
-        $sites = $qb->getQuery()->execute();
+        $user = $this->getUser();
+        $sites = $siteRepository->getByUser($user);
 
         return $this->render(
-            'Admin/Site/list.html.twig',
+            'Admin/Site/site_list.html.twig',
             [
                 'sites' => $sites,
             ]

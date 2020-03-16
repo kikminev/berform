@@ -10,7 +10,7 @@
                 {% for node in nodes %}
                     <div class="itemWrap col-md-3">
                         <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
-                            {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                            {% if node.translatedTitle[app.request.locale] is defined %}{{ node.translatedTitle[app.request.locale] }}{% endif %}
                         </a>
                     </div>
                 {% endfor %}

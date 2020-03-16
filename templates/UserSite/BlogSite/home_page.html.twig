@@ -16,7 +16,7 @@
                     {% set post = posts|first %}
                     {% set file = post.files|first %}
                     <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                        <img src="https://sitemax.imgix.net/{{ file.baseName }}" alt=""/>
+                        <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>
                     </a>
 
                     <div class="featuredPostExcerpt row">
@@ -49,7 +49,7 @@
                             {% if post.files|length > 0 %}
                                 {% set file = post.files|first %}
                                 <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                    <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=510&w=1000&fit=crop" alt=""/>
+                                    <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt=""/>
                                 </a>
                             {% endif %}
 
@@ -73,7 +73,7 @@
                 {% set file = featuredPostInParallax.files|first %}
             {% endif %}
 
-            <div class="featuredParallaxPost" style="background-image: url('https://sitemax.imgix.net/{{ file.baseName }}?w=1900&fit=crop');">
+            <div class="featuredParallaxPost" style="background-image: url('{{ resource_provider_domain }}{{ file.baseName }}?w=1900&fit=crop');">
                 <h3 class="title">
                     <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
                         {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
@@ -90,7 +90,7 @@
                         {% if post.files|length > 0 %}
                             {% set file = post.files|first %}
                             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                <img src="https://sitemax.imgix.net/{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                                <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
                             </a>
                         {% endif %}
 

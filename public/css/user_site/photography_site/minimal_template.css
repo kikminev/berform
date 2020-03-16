@@ -89,6 +89,8 @@ h1 {
 .photosGrid {
 }
 
+.albumContent { margin-bottom: 100px; }
+
 .photosGrid a {
     margin-bottom: 50px;
 }

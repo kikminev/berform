@@ -12,6 +12,7 @@ use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use App\Service\Site\LayoutResolver;
+use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Document\Site;
@@ -72,8 +73,9 @@ class BlogController extends AbstractController
      * @param PostRepository $postRepository
      * @param SiteRepository $siteRepository
      * @param PageRepository $pageRepository
+     * @param DomainRepository $domainRepository
      * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws MongoDBException
      */
     public function view(
         Request $request,
@@ -100,7 +102,7 @@ class BlogController extends AbstractController
         /** @var Post $post */
         $post = $postRepository->findOneBy(['site' => $site, 'slug' => $slug]);
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
-        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'ASC']);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
         $morePosts = $postRepository->findActivePosts($site, 2);
 
