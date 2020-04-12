@@ -21,6 +21,7 @@
                 <a href="{{ path('user_admin_node_list', { type: 'album', site: site.id }) }}">{% trans %}admin_links_albums{% endtrans %}</a> <a href="{{ path('user_admin_node_create', { type: 'album', site: site.id }) }}">+</a></h3>
             </div>
 
+
             <div class="row sortableNodes" style="width: 100%;">
                 <div class="itemWrap addNewTile col-md-3">
                     <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>
@@ -36,6 +37,12 @@
                             {% endif %}
                             {{ page.name }}
                         </a>
+
+                        <div class="itemActionControls">
+                            <a href="{{ path('user_admin_page_edit', {id : page.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
+                            <a onclick="a.deleteObject('{{ path('user_admin_page_delete', {id : page.id}) }}', '{{ page.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

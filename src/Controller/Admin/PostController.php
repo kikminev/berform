@@ -10,6 +10,7 @@ use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -94,49 +95,27 @@ class PostController extends AbstractController
             $post->setTranslatedKeywords($updatedTranslatedKeywords);
             $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
 
-            $this->documentManager->persist($post);
-
-
-            $postFiles = [];
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
-            }
-            if(!empty($postFiles)) {
-                $fileOrder = 0;
-                foreach ($postFiles as $file) {
+                $postFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $post->setFiles($postFiles);
 
-                    if(null === $post->getDefaultImage()) {
-                        $post->setDefaultImage($file);
-                    }
-
-                    $file->setOrder($fileOrder);
-                    $fileOrder++;
+                if(!empty($postFiles) && null === $post->getDefaultImage()) {
+                    $defaultImage = array_keys($postFiles)[0];
+                    $post->setDefaultImage($postFiles[$defaultImage]);
                 }
             }
-            $post->setFiles($postFiles);
 
+            $this->documentManager->persist($post);
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
         }
 
-        $fileConcatenated = '';
-        /** @var File $file */
-        foreach ($post->getFiles() as $file) {
-            $fileConcatenated .= $file->getId().';';
-        }
-        // todo: remove this thing
-        $form->get('attachedFiles')->setData($fileConcatenated);
-
-
-        $orderedFiles = [];
-        /** @var File $file */
-        foreach ($post->getFiles() as $file) {
-            $orderedFiles[$file->getOrder()] = $file;
-        }
-        ksort($orderedFiles);
+        // todo: this needs to be refactored - SHOW ORDERED FILES
+        $orderedFiles = UploadController::getOrderedFiles($post->getFiles()->toArray());
+        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
             'Admin/Post/post_edit.html.twig',
@@ -166,7 +145,7 @@ class PostController extends AbstractController
     ): Response {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $this->denyAccessUnlessGranted('edit', $site);
+        $this->denyAccessUnlessGranted('modify', $site);
 
         $post = new Post();
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
@@ -219,30 +198,19 @@ class PostController extends AbstractController
             $post->setSite($site);
             $post->setUser($this->getUser());
 
-            $this->documentManager->persist($post);
-
-            // save files
-            $postFiles = [];
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
-            }
-            if(!empty($postFiles)) {
-                $fileOrder = 0;
-                foreach ($postFiles as $file) {
+                $postFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $post->setFiles($postFiles);
 
-                    if(null === $post->getDefaultImage()) {
-                        $post->setDefaultImage($file);
-                    }
-
-                    $file->setOrder($fileOrder);
-                    $fileOrder++;
+                if(!empty($postFiles) && null === $post->getDefaultImage()) {
+                    $defaultImage = array_keys($postFiles)[0];
+                    $post->setDefaultImage($postFiles[$defaultImage]);
                 }
             }
-            $post->setFiles($postFiles);
-            // end save files
 
+            $this->documentManager->persist($post);
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
@@ -261,16 +229,25 @@ class PostController extends AbstractController
 
     public function list(Request $request, Site $site, PostRepository $postRepository, PageRepository $pageRepository)
     {
-        $posts = $postRepository->findBy(['site' => $site]);
-        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'DESC ']);
+        $posts = $postRepository->findActiveByUserSite($this->getUser(), $site);
 
         return $this->render(
             'Admin/Post/post_list.html.twig',
             [
                 'posts' => $posts,
-                'pages' => $pages,
                 'site' => $site,
             ]
         );
+    }
+
+    public function delete(Post $post)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        $post->setDeleted(true);
+        $this->documentManager->flush();
+
+        return new JsonResponse('deleted');
     }
 }

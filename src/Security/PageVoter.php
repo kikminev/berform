@@ -12,6 +12,7 @@ class PageVoter extends Voter
 {
     const VIEW = 'view';
     const EDIT = 'edit';
+    const DELETE = 'delete';
 
     private $security;
 
@@ -22,7 +23,7 @@ class PageVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::VIEW, self::EDIT], false)) {
+        if (!in_array($attribute, [self::VIEW, self::EDIT, self::DELETE], false)) {
             return false;
         }
 
@@ -52,6 +53,8 @@ class PageVoter extends Voter
                 return $this->canView($subject, $user);
             case self::EDIT:
                 return $this->canEdit($subject, $user);
+            case self::DELETE:
+                return $this->canDelete($subject, $user);
         }
 
         throw new \LogicException('Something went wrong in Page voting!');
@@ -59,6 +62,10 @@ class PageVoter extends Voter
 
     private function canView(Page $page, User $user): bool
     {
+        if($page->isDeleted()) {
+            return false;
+        }
+
         // if they can edit, they can view
         if ($this->canEdit($page, $user)) {
             return true;
@@ -68,6 +75,15 @@ class PageVoter extends Voter
     }
 
     private function canEdit(Page $page, User $user): bool
+    {
+        if($page->isDeleted()) {
+            return false;
+        }
+
+        return $user === $page->getUser();
+    }
+
+    private function canDelete(Page $page, User $user): bool
     {
         return $user === $page->getUser();
     }

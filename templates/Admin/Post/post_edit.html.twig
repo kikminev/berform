@@ -1,12 +1,6 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-{#    {% include('Admin/Upload/upload_form.html.twig') %}#}
-{#    {{ form_start(form) }}#}
-{#    {{ form_errors(form) }}#}
-{#    {{ form_widget(form) }}#}
-{#    {{ form_end(form) }}#}
 
-{#    {% include('Admin/Upload/file_list.html.twig') %}#}
     <div class="imageLibrary modalWindow" style="display: none; position: fixed; z-index: 10; top: 20px; right: 20px; bottom: 20px; left: 20px; background: red;">
         {% if files is defined %}
                 {% for file in files %}
@@ -18,15 +12,12 @@
                 {% endfor %}
         {% endif %}
     </div>
-{#    <div class="imageWidgetLibrary">#}
-{#        <a class="singleWidget">Single</a>#}
-{#        <a class="doubleWidget">Double</a>#}
-{#        <a class="mosaicWidget">Mosaic</a>#}
-{#        <a class="mosaicWidget">Parallax</a>#}
-{#    </div>#}
 
     <div class="breadcrumbs container-fluid contextBar">
-        <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_blog{% endtrans %}
+        <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+        <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a>
+        <a href="{{ path('user_admin_post_list', {site : site.id}) }}">{% trans %}admin_links_blog{% endtrans %}</a>
+        > {% trans %}admin_links_blog_edit_post{% endtrans %}
     </div>
 
     <div class="container">
@@ -75,7 +66,7 @@
                                     {% set string = 'title_' ~ language %}
                                     {{ form_row(form[string]) }}
 
-                                    <div class="htmlEditor">
+                                    <div class="htmlEditorBlog">
                                         {% set string = 'content_' ~ language %}
                                         {{ form_row(form[string]) }}
                                     </div>

@@ -3,5 +3,4 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        resource_provider_domain: https://sitemax.imgix.net/
-
+        resource_provider_domain: '%resource_provider_domain%'

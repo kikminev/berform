@@ -1,14 +1,16 @@
 <?php
 
+
 namespace App\Security;
 
-use App\Document\Site;
+
+use App\Document\Node;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use App\Document\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
-class SiteVoter extends Voter
+class NodeVoter extends Voter
 {
     const MODIFY = 'modify';
 
@@ -21,11 +23,11 @@ class SiteVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::MODIFY], false)) {
+        if ($attribute !== self::MODIFY) {
             return false;
         }
 
-        if (!$subject instanceof Site) {
+        if (!$subject instanceof Node) {
             return false;
         }
 
@@ -40,12 +42,15 @@ class SiteVoter extends Voter
             return true;
         }
 
-        // the user must be logged in; if not, deny access
+        if(null === $user) {
+            return false;
+        }
+
         if (!$user instanceof User) {
             return false;
         }
 
-        /** @var Site $subject */
+        /** @var Node $subject */
         switch ($attribute) {
             case self::MODIFY:
             default:
@@ -53,8 +58,13 @@ class SiteVoter extends Voter
         }
     }
 
-    private function canModify(Site $site, User $user): bool
+    private function canModify(Node $node, User $user): bool
     {
-        return $user === $site->getUser();
+        if($node->isDeleted()) {
+            return false;
+        }
+
+        return $user === $node->getUser();
     }
+
 }

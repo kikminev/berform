@@ -5,6 +5,8 @@
             <h1>
                 <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
                 <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a>
+                >
+                {% trans %}admin_links_site_settings{% endtrans %}
             </h1>
         {% else %}
             <h1><a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a> {% trans %}admin_links_create{% endtrans %}</h1>
@@ -31,6 +33,7 @@
                 {{ form_row(form.customCss) }}
                 {{ form_row(form.customHtml) }}
                 {{ form_row(form.defaultLanguage) }}
+                {{ form_row(form.domain) }}
 
                 {{ form_label(form.supportedLanguages) }}
                 {% for language in form.supportedLanguages %}
@@ -40,10 +43,8 @@
                         <div class="state p-success">{{ form_label(language) }}</div>
                     </div>
                 {% endfor %}
-
-
+                
                 <div style="display: none">{{ form_row(form.save) }}</div>
-
 
                 {{ form_end(form) }}
                 <a onclick="$('.contentEditForm').find('form').submit()" class="btn btn-primary btn-sm formButton">{% trans %}admin_button_save{% endtrans %}</a>

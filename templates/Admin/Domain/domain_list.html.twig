@@ -9,12 +9,12 @@
             </div>
 
             {% for domain in domains %}
-                <div class="itemWrap col-md-3">
+                <div class="itemWrap domainItemWrap col-md-3">
                     <a class="item " href="{{ path('user_admin_domain_edit', {id : domain.id}) }}">{{ domain.name }}</a>
                 </div>
             {% endfor %}
 
-            <div class="itemWrap col-md-3">
+            <div class="itemWrap domainItemWrap col-md-3">
                 <a class="item" href="{{ path('user_admin_domain_create') }}">{% trans %}admin_links_create_domain{% endtrans %}</a>
             </div>
         </div>

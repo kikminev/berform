@@ -10,7 +10,7 @@
     {% if files|length > 0 %}
         <div id="imagesWrap" class="pageImages">
             {% for file in files %}
-                <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}"><img src="https://sitemax.imgix.net/{{ file.baseName }}?h=50&w=50&fit=crop" alt=""/></a>
+                <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}"><img src="{{ resource_provider_domain }}{{ file.baseName }}?h=50&w=50&fit=crop" alt=""/></a>
             {% endfor %}
         </div>
     {% endif %}

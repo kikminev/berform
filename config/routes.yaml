@@ -1,6 +1,6 @@
 index:
     path: /
-    host: sitemax.kik
+    host: berform.kik
     controller: App\Controller\LandingSiteController::home
 
 admin:
@@ -61,8 +61,12 @@ user_admin_page_create:
     path: /u/page/create/{site}
     controller: App\Controller\Admin\PageController::create
 user_admin_page_edit:
-    path: /u/page/{id}
+    path: /u/page/edit/{id}
     controller: App\Controller\Admin\PageController::edit
+user_admin_page_delete:
+    path: /u/page/delete/{id}
+    controller: App\Controller\Admin\PageController::delete
+
 
 # nodes
 user_admin_node_list:
@@ -74,6 +78,9 @@ user_admin_node_create:
 user_admin_node_edit:
     path: /u/node/edit/{type}/{id}
     controller: App\Controller\Admin\NodeController::edit
+user_admin_node_delete:
+    path: /u/node/delete/{type}/{id}
+    controller: App\Controller\Admin\NodeController::delete
 
 # posts
 user_admin_post_create:
@@ -82,6 +89,9 @@ user_admin_post_create:
 user_admin_post_list:
     path: /u/blog/post/list/{site}
     controller: App\Controller\Admin\PostController::list
+user_admin_post_delete:
+    path: /u/post/delete/{id}
+    controller: App\Controller\Admin\PostController::delete
 user_admin_post_edit:
     path: /u/post/{site}/{id}
     controller: App\Controller\Admin\PostController::edit

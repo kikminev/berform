@@ -51,6 +51,12 @@ class Node
     private $order;
 
     /**
+     * @var null|File $defaultImage
+     * @MongoDB\ReferenceOne(targetDocument="File", storeAs="id")
+     */
+    private $defaultImage;
+
+    /**
      * @MongoDB\Field(type="string")
      */
     private $locale;
@@ -59,6 +65,12 @@ class Node
      * @MongoDB\Field(type="boolean")
      */
     private $active;
+
+    /**
+     * @var bool
+     * @MongoDB\Field(type="boolean")
+     */
+    private $deleted;
 
     /**
      * @var array $translatedTitle
@@ -344,4 +356,37 @@ class Node
     {
         $this->id = null;
     }
+
+    /**
+     * @return File|null
+     */
+    public function getDefaultImage(): ?File
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * @param File|null $defaultImage
+     */
+    public function setDefaultImage(?File $defaultImage): void
+    {
+        $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
+    }
+
 }

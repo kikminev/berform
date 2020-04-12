@@ -10,13 +10,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostType extends AbstractType
 {
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('slug');
+        $builder->add('name', TextType::class, ['attr' => ['class' => 'slug_source'], 'label' => $this->translator->trans('form_page_name')]);
+        $builder->add('slug', TextType::class, ['attr' => ['class' => 'slug_input', 'readonly' => true], 'label' => $this->translator->trans('form_page_slug')]);
+
         foreach ($options['supported_languages'] as $language) {
             $builder->add('title_'.$language, TextType::class, ['mapped' => false]);
             $builder->add('content_'.$language, TextareaType::class, ['mapped' => false]);

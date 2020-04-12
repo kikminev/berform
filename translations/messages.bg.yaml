@@ -74,11 +74,13 @@ main_site_top_menu_sign_up: Регистрация
 # page edit form
 form_page_name: Име
 form_page_slug: Системно име
-form_page_title: Заглавие
-form_page_content: Съдържание
-form_page_description: Описание
-form_page_keywords: Ключови думи
-form_page_meta_description: Подробно описание
+admin_form_page_title: Заглавие на страницата
+admin_form_page_content: Съдържание
+admin_form_page_description: Описание
+admin_form_page_keywords: Ключови думи
+admin_form_page_meta_description: Подробно описание
+admin_form_page_menu_link: Име на линка
+admin_site_activated_languages: Поддържани езици
 
 # top menu
 admin_links_dashboard: Начало
@@ -97,6 +99,7 @@ admin_links_create_page: Създай нова
 admin_links_create_domain: Добави нов
 admin_links_site_settings: Настройки на сайта
 admin_links_blog: Блог
+admin_links_blog_edit_post: Редактирай публикация
 admin_create_node_album: Създай нов албум
 
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site

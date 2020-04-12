@@ -24,10 +24,7 @@ class Post
      */
     private $id;
 
-    /**
-     * @var Site $site
-     * @MongoDB\ReferenceOne(targetDocument="Site")
-     */
+    /** @MongoDB\ReferenceOne(targetDocument="Site", storeAs="id") */
     private $site;
 
     /**
@@ -53,6 +50,12 @@ class Post
      * @MongoDB\Field(type="boolean")
      */
     private $active;
+
+    /**
+     * @var null|bool $deleted
+     * @MongoDB\Field(type="boolean")
+     */
+    private $deleted;
 
     /**
      * @var null|bool $featuredParallax
@@ -184,7 +187,7 @@ class Post
     /**
      * @return bool|null
      */
-    public function getActive(): ?bool
+    public function isActive(): ?bool
     {
         return $this->active;
     }
@@ -339,5 +342,21 @@ class Post
     public function setDefaultImage(?File $defaultImage): void
     {
         $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool|null $deleted
+     */
+    public function setDeleted(?bool $deleted): void
+    {
+        $this->deleted = $deleted;
     }
 }

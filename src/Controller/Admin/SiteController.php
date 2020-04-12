@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Document\Page;
+use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,14 +34,16 @@ class SiteController extends AbstractController
         );
     }
 
-    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager): Response
+    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager, DomainRepository $domainRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         // todo: copy pages from template
 
+        $domains = $domainRepository->findActiveByUser($this->getUser());
+
         $site = new Site();
         $supportedLanguages = $param->get('supported_languages');
-        $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $supportedLanguages]);
+        $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $supportedLanguages, 'active_domains' => $domains]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -85,25 +88,33 @@ class SiteController extends AbstractController
     public function edit(Request $request, Site $site, ParameterBagInterface $param, DocumentManager $documentManager): ?Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $this->denyAccessUnlessGranted('edit', $site);
+        $this->denyAccessUnlessGranted('modify', $site);
 
         $supportedLanguages = $param->get('supported_languages');
-        $form = $this->createForm(SiteType::class, $site);
+        $siteActivatedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
+            return in_array($language, $site->getSupportedLanguages(), false);
+        });
+
+        $form = $this->createForm(SiteType::class, $site, ['supported_languages' => $siteActivatedLanguages]);
         $form->handleRequest($request);
 
         // todo: move this to transformer
         if (!$form->isSubmitted()) {
             $currentTranslatedAddress = $site->getTranslatedAddress();
             foreach ($supportedLanguages as $language) {
-                $translatedAddress = isset($currentTranslatedAddress[$language]) ? $currentTranslatedAddress[$language] : '';
-                $form->get('address_' . $language)->setData($translatedAddress);
+                if(in_array($language, $siteActivatedLanguages)) {
+                    $translatedAddress = isset($currentTranslatedAddress[$language]) ? $currentTranslatedAddress[$language] : '';
+                    $form->get('address_' . $language)->setData($translatedAddress);
+                }
             }
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $translatedSiteAddress = [];
             foreach ($supportedLanguages as $language) {
-                $translatedSiteAddress[$language] = $form['address_' . $language]->getData();
+                if(in_array($language, $siteActivatedLanguages)) {
+                    $translatedSiteAddress[$language] = $form['address_' . $language]->getData();
+                }
             }
 
             $site->setTranslatedAddress($translatedSiteAddress);
@@ -125,7 +136,7 @@ class SiteController extends AbstractController
     public function delete(Site $site, DocumentManager $documentManager): ?Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $this->denyAccessUnlessGranted('edit', $site);
+        $this->denyAccessUnlessGranted('modify', $site);
 
         $site->setActive(false);
         $site->setDeleted(true);

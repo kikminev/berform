@@ -54,6 +54,9 @@
                                         {% set string = 'title_' ~ language %}
                                         {{ form_row(form[string]) }}
 
+                                        {% set string = 'menu_link_' ~ language %}
+                                        {{ form_row(form[string]) }}
+
                                         <div class="htmlEditor">
                                             {% set string = 'content_' ~ language %}
                                             {{ form_row(form[string]) }}

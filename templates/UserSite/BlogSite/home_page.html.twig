@@ -15,15 +15,18 @@
                 <div class="col-md-10 featuredPost">
                     {% set post = posts|first %}
                     {% set file = post.files|first %}
+
                     <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                        <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>
+                        {% if file is not empty %}
+                            <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>
+                        {% endif %}
                     </a>
 
                     <div class="featuredPostExcerpt row">
                         <div class="col-md-6">
                             <h2>
                                 <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale]|raw|truncate(60, true) }}{% endif %}
                                 </a>
                             </h2>
                         </div>
@@ -40,18 +43,18 @@
         <div class="clear"></div>
 
 
-        {% if posts|length > 3 %}
+        {% if posts|length >= 1 %}
             <div class="container blogList">
                 <div class="row">
                     {% set postsPriorFeaturedOne = posts|slice(0,2) %}
                     {% for post in postsPriorFeaturedOne %}
                         <div class="col-md-6 blogPostListWrap">
-                            {% if post.files|length > 0 %}
-                                {% set file = post.files|first %}
                                 <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                    <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt=""/>
+                                    {% if post.files|length > 0 %}
+                                        {% set file = post.files|first %}
+                                        <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                                    {% endif %}
                                 </a>
-                            {% endif %}
 
                             <a class="ajaxLink blogExcerptWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
                                 <h3 class="title">
@@ -73,10 +76,10 @@
                 {% set file = featuredPostInParallax.files|first %}
             {% endif %}
 
-            <div class="featuredParallaxPost" style="background-image: url('{{ resource_provider_domain }}{{ file.baseName }}?w=1900&fit=crop');">
+            <div class="featuredParallaxPost" style="{% if file is not empty %}background-image: url('{{ resource_provider_domain }}{{ file.baseName }}?w=1900&fit=crop');{% endif %}">
                 <h3 class="title">
-                    <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                        {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                    <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPostInParallax.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPostInParallax.slug}) }}">
+                        {% if featuredPostInParallax.translatedTitle[app.request.locale] is defined %}{{ featuredPostInParallax.translatedTitle[app.request.locale] }}{% endif %}
                     </a>
                 </h3>
             </div>
@@ -87,12 +90,12 @@
                 {% set postsAfterFeaturedOne = posts|slice(2,4) %}
                 {% for post in postsAfterFeaturedOne %}
                     <div class="col-md-6 blogPostListWrap">
-                        {% if post.files|length > 0 %}
-                            {% set file = post.files|first %}
                             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                            {% if post.files|length > 0 %}
+                                {% set file = post.files|first %}
+                                    <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                            {% endif %}
                             </a>
-                        {% endif %}
 
                         <a class="ajaxLink blogExcerptWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
                             <h3 class="title">

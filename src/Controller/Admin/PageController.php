@@ -54,15 +54,18 @@ class PageController extends AbstractController
 
         if (!$form->isSubmitted()) {
             $currentTranslatedTitles = $page->getTranslatedTitle();
+            $currentTranslatedMenuLink = $page->getTranslatedMenuLink();
             $currentTranslatedContent = $page->getTranslatedContent();
             $currentTranslatedKeywords = $page->getTranslatedKeywords();
             $currentTranslatedMetaDescription = $page->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
+                $translatedMenuLink = isset($currentTranslatedMenuLink[$language]) ? $currentTranslatedMenuLink[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
                 $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
                 $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
                 $form->get('title_' . $language)->setData($translatedTitle);
+                $form->get('menu_link_' . $language)->setData($translatedMenuLink);
                 $form->get('content_' . $language)->setData($translatedContent);
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
@@ -70,64 +73,52 @@ class PageController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $updatedTranslatedTitle = [];
+            $updatedTranslatedMenuLink = [];
             $updatedTranslatedContent = [];
             $updatedTranslatedKeywords = [];
             $updatedTranslatedMetaDescription = [];
             foreach ($supportedLanguages as $language) {
                 $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
+                $updatedTranslatedMenuLink[$language] = $form['menu_link_' . $language]->getData();
                 $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
                 $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
                 $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
             $page->setTranslatedTitle($updatedTranslatedTitle);
+            $page->setTranslatedMenuLink($updatedTranslatedMenuLink);
             $page->setTranslatedContent($updatedTranslatedContent);
             $page->setTranslatedKeywords($updatedTranslatedKeywords);
             $page->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
 
-            $this->documentManager->persist($page);
-
-            $pageFiles = [];
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
-            }
+                $pageFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $page->setFiles($pageFiles);
 
-            if(!empty($pageFiles)) {
-                $fileOrder = 0;
-                foreach ($pageFiles as $file) {
-
-                    if(null === $page->getDefaultImage()) {
-                        $page->setDefaultImage($file);
-                    }
-
-                    $file->setOrder($fileOrder);
-                    $fileOrder++;
+                if(!empty($pageFiles) && null === $page->getDefaultImage()) {
+                    $defaultImage = array_keys($pageFiles)[0];
+                    $page->setDefaultImage($pageFiles[$defaultImage]);
                 }
             }
-            $page->setFiles($pageFiles);
 
-
+            $this->documentManager->persist($page);
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
         }
 
-        $fileConcatenated = '';
-        foreach ($page->getFiles() as $file) {
-            $fileConcatenated .= $file->getId().';';
-        }
-        // todo: remove this thing
-        $form->get('attachedFiles')->setData($fileConcatenated);
+        // todo: this needs to be refactored - SHOW ORDERED FILES
+        $orderedFiles = UploadController::getOrderedFiles($page->getFiles()->toArray());
+        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
             'Admin/Page/page_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => UploadController::getOrderedFiles($page->getFiles()->toArray()),
+                'files' => $orderedFiles,
                 'page' => $page,
                 'supportedLanguages' => $supportedLanguages,
                 'site' => $page->getSite(),
@@ -151,7 +142,7 @@ class PageController extends AbstractController
     ): Response {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $this->denyAccessUnlessGranted('edit', $site);
+        $this->denyAccessUnlessGranted('modify', $site);
 
         $page = new Page();
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
@@ -163,15 +154,18 @@ class PageController extends AbstractController
 
         if (!$form->isSubmitted()) {
             $currentTranslatedTitles = $page->getTranslatedTitle();
+            $currentTranslatedMenuLink = $page->getTranslatedMenuLink();
             $currentTranslatedContent = $page->getTranslatedContent();
             $currentTranslatedKeywords = $page->getTranslatedKeywords();
             $currentTranslatedMetaDescription = $page->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
+                $translatedMenuLink = isset($currentTranslatedMenuLink[$language]) ? $currentTranslatedMenuLink[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
                 $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
                 $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
                 $form->get('title_' . $language)->setData($translatedTitle);
+                $form->get('menu_link_' . $language)->setData($translatedMenuLink);
                 $form->get('content_' . $language)->setData($translatedContent);
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
@@ -181,46 +175,40 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $updatedTranslatedTitle = [];
+            $updatedTranslatedMenuLink = [];
             $updatedTranslatedContent = [];
             $updatedTranslatedKeywords = [];
             $updatedTranslatedMetaDescription = [];
             foreach ($supportedLanguages as $language) {
                 $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
+                $updatedTranslatedMenuLink[$language] = $form['menu_link_' . $language]->getData();
                 $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
                 $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
                 $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
             $page->setTranslatedTitle($updatedTranslatedTitle);
+            $page->setTranslatedMenuLink($updatedTranslatedMenuLink);
             $page->setTranslatedContent($updatedTranslatedContent);
             $page->setTranslatedKeywords($updatedTranslatedKeywords);
             $page->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
             $page->setSite($site);
             $page->setUser($this->getUser());
 
-            $this->documentManager->persist($page);
 
-            $pageFiles = [];
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
-            }
+                $pageFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $page->setFiles($pageFiles);
 
-            if(!empty($pageFiles)) {
-                $fileOrder = 0;
-                foreach ($pageFiles as $file) {
-
-                    if(null === $page->getDefaultImage()) {
-                        $page->setDefaultImage($file);
-                    }
-
-                    $file->setOrder($fileOrder);
-                    $fileOrder++;
+                if(!empty($pageFiles) && null === $page->getDefaultImage()) {
+                    $defaultImage = array_keys($pageFiles)[0];
+                    $page->setDefaultImage($pageFiles[$defaultImage]);
                 }
             }
-            $page->setFiles($pageFiles);
 
+            $this->documentManager->persist($page);
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $site->getId()]);
@@ -236,5 +224,16 @@ class PageController extends AbstractController
             ]
         );
     }
-}
 
+    public function delete(
+        Page $page
+    ) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('edit', $page);
+
+        $page->setDeleted(true);
+        $this->documentManager->flush();
+
+        return new JsonResponse('deleted');
+    }
+}

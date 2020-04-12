@@ -23,7 +23,7 @@ class DomainController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $domains = $domainRepository->getByUser($this->getUser());
+        $domains = $domainRepository->findByUser($this->getUser());
 
         return $this->render(
             'Admin/Domain/domain_list.html.twig',

@@ -109,10 +109,11 @@ class NodeController extends AbstractController
         }
 
         if (null === $node) {
+            /** @noinspection PhpUnhandledExceptionInspection */
             throw new Exception('Error');
         }
 
-        //$this->denyAccessUnlessGranted('edit', $node);
+        $this->denyAccessUnlessGranted('modify', $node);
 
         /** @var Node $node */
         $site = $node->getSite();
@@ -158,44 +159,30 @@ class NodeController extends AbstractController
             $node->setTranslatedKeywords($updatedTranslatedKeywords);
             $node->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
 
-            $this->documentManager->persist($node);
-
-            $nodeFiles = [];
             $attachedFiles = $request->request->get('node')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $nodeFiles = $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
-            }
-            if (!empty($nodeFiles)) {
-                $fileOrder = 0;
-                foreach ($nodeFiles as $file) {
-                    $file->setOrder($fileOrder);
-                    $fileOrder++;
+                $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $node->setFiles($nodeFiles);
+
+                if(!empty($nodeFiles) && null === $node->getDefaultImage()) {
+                    $defaultImage = array_keys($nodeFiles)[0];
+                    $node->setDefaultImage($nodeFiles[$defaultImage]);
                 }
             }
-            $node->setFiles($nodeFiles);
 
+            $this->documentManager->persist($node);
             $this->documentManager->flush();
 
             return $this->redirectToRoute('user_admin_node_list', [
                 'site' => $node->getSite()->getId(),
                 'type' => 'album',
             ]);
-
         }
 
-        $fileConcatenated = '';
-        $orderedFiles = [];
-        /** @var File $file */
-        foreach ($node->getFiles() as $file) {
-            $fileConcatenated .= $file->getId() . ';';
-            //$orderedFiles[$file->getOrder()] = $file->getId();
-            $orderedFiles[$file->getOrder()] = $file;
-        }
-        ksort($orderedFiles);
-
-        // todo: remove this thing
-        $form->get('attachedFiles')->setData($fileConcatenated);
+        // todo: this needs to be refactored - SHOW ORDERED FILES
+        $orderedFiles = UploadController::getOrderedFiles($node->getFiles()->toArray());
+        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
             'Admin/Node/node_edit.html.twig',
@@ -205,6 +192,7 @@ class NodeController extends AbstractController
                 'page' => $node,
                 'supportedLanguages' => $supportedLanguages,
                 'site' => $node->getSite(),
+                'node' => $node,
             ]
         );
     }
@@ -225,9 +213,7 @@ class NodeController extends AbstractController
         FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $this->denyAccessUnlessGranted('edit', $site);
+        $this->denyAccessUnlessGranted('modify', $site);
 
         switch ($type) {
             case 'album':
@@ -280,27 +266,25 @@ class NodeController extends AbstractController
             $node->setSite($site);
             $node->setUser($this->getUser());
 
-            $this->documentManager->persist($node);
-
-            $nodeFiles = [];
             $attachedFiles = $request->request->get('node')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $nodeFiles = $fileRepository->getActive($attachedFilesIds, $this->getUser())->toArray();
-            }
+                $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $node->setFiles($nodeFiles);
 
-            if (!empty($nodeFiles)) {
-                $fileOrder = 0;
-                foreach ($nodeFiles as $file) {
-                    $file->setOrder($fileOrder);
-                    $fileOrder++;
+                if(!empty($nodeFiles) && null === $node->getDefaultImage()) {
+                    $defaultImage = array_keys($nodeFiles)[0];
+                    $node->setDefaultImage($nodeFiles[$defaultImage]);
                 }
             }
-            $node->setFiles($nodeFiles);
 
+            $this->documentManager->persist($node);
             $this->documentManager->flush();
 
-            return $this->redirectToRoute('user_admin_site_build', ['id' => $site->getId()]);
+            return $this->redirectToRoute('user_admin_node_list', [
+                'site' => $node->getSite()->getId(),
+                'type' => 'album',
+            ]);
         }
 
         return $this->render(
@@ -335,12 +319,12 @@ class NodeController extends AbstractController
         $ids = explode(',', $ids);
 
         switch ($type) {
-            case 'page':
-                $nodes = $pageRepository->getActive($ids, $this->getUser());
-                break;
             case 'file':
+                $nodes = $fileRepository->getActiveByIds($ids, $this->getUser());
+                break;
+            case 'page':
             default:
-            $nodes = $pageRepository->getActive($ids, $this->getUser());
+            $nodes = $pageRepository->findActiveByIds($ids, $this->getUser());
                 break;
         }
 
@@ -352,5 +336,33 @@ class NodeController extends AbstractController
         $this->documentManager->flush();
 
         return new JsonResponse('ok');
+    }
+
+    public function delete(DocumentManager $documentManager, string $type, string $id): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        switch ($type) {
+            case 'album':
+            default:
+                /** @var Album $node */
+                $node = $documentManager->getRepository(Album::class)->findOneBy([
+                    'user' => $this->getUser(),
+                    'id' => $id,
+                ]);
+                break;
+        }
+
+        if (null === $node) {
+            /** @noinspection PhpUnhandledExceptionInspection */
+            throw new Exception('Error. The node was not found');
+        }
+
+        $this->denyAccessUnlessGranted('modify', $node);
+
+        $node->setDeleted(true);
+        $documentManager->flush();
+
+        return new JsonResponse('deleted');
     }
 }

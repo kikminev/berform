@@ -13,6 +13,8 @@ main {
     padding-bottom: 150px;
 }
 
+.clear { clear: both; }
+
 /* footer */
 footer {
     width: 100%;
@@ -82,22 +84,17 @@ h1 {
     margin: 100px 0px 100px;
 }
 
-#home-content h1 {
-    margin: 0px 0px;
-}
-
-.photosGrid {
-}
-
+#home-content h1 { margin: 0px 0px; }
 .albumContent { margin-bottom: 100px; }
-
-.photosGrid a {
-    margin-bottom: 50px;
-}
+.photosGrid a { margin-bottom: 50px; }
 
 /* albums */
 .albumWrap {
     margin: 80px 0px;
+}
+
+.albumWrap a {
+    color: #383E41;
 }
 
 .albumWrap h3 {
@@ -111,7 +108,7 @@ h1 {
 .albumWrap a:hover {
     color: inherit;
 }
-
+.albumContentWrap a { padding-bottom: 30px; }
 /* end albums */
 
 /* contact page */
@@ -235,8 +232,10 @@ h1 {
     padding-top: 100px;
     padding-bottom: 100px;
     margin-top: 150px;
+    background-color: #ddd;
 }
 
+.morePosts a { color: #212529 }
 .morePosts .blogImgWrap {
     width: 100%;
     overflow: hidden;

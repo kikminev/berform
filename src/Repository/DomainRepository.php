@@ -14,16 +14,24 @@ class DomainRepository extends DocumentRepository
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Domain::class));
     }
 
-    /**
-     * @param User $user
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function getByUser(User $user)
+    public function findByUser(User $user)
     {
         $qb = $this->createQueryBuilder();
         $qb->addAnd($qb->expr()->field('user')->equals($user));
         $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
 
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $qb->getQuery()->execute();
+    }
+
+    public function findActiveByUser(User $user)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->addAnd($qb->expr()->field('user')->equals($user));
+        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
+        $qb->addAnd($qb->expr()->field('active')->equals(true));
+
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $qb->getQuery()->execute();
     }
 }

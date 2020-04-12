@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\PageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,12 @@ class BuilderController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    public function buildSite(Request $request, Site $site): ?Response
+    public function buildSite(PageRepository $pageRepository, Site $site): ?Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('modify', $site);
 
-        $pages = $this->documentManager->getRepository(Page::class)->findBy(array('site' => $site, 'user' => $this->getUser()), array('order' => 'ASC'));
+        $pages = $pageRepository->findActiveByUserSite($this->getUser(), $site);
 
         return $this->render(
             'Admin/Site/page_list.html.twig',

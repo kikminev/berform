@@ -19,11 +19,12 @@
             {% for album in albums %}
 
                 <div class="albumWrap">
-                    {% set defaultFile = album.files|first  %}
-
+                    {% if album.defaultImage is not empty %}
                     <a href="{{ path('user_site_view_album', {slug: album.slug}) }}" class="ajaxLink" data-menu="{{ path('user_site_view_album', {slug: album.slug}) }}">
-                        <img src="{{ resource_provider_domain }}{{ defaultFile.baseName }}?h=250&w=1000&fit=crop" alt="" style="width: 100%" />
+                        <img src="{{ resource_provider_domain }}{{ album.defaultImage.baseName }}?h=250&w=1000&fit=crop" alt="" style="width: 100%" />
                     </a>
+                    {% endif %}
+
                     <a href="{{ path('user_site_view_album', {slug: album.slug}) }}" data-menu="{{ path('user_site_view_album', {slug: album.slug}) }}" class="ajaxLink">
                         <h3>{% if album.translatedTitle[app.request.locale] is defined %}{{ album.translatedTitle[app.request.locale] }}{% endif %}</h3>
                         <p>

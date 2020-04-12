@@ -100,11 +100,11 @@ class BlogController extends AbstractController
         }
 
         /** @var Post $post */
-        $post = $postRepository->findOneBy(['site' => $site, 'slug' => $slug]);
-        $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
-        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'ASC']);
+        $post = $postRepository->findActiveBySlug($slug, $site);
+        $page = $pageRepository->findActiveBySlug(!empty($slug) ? $slug : 'home', $site);
+        $pages = $pageRepository->findActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
-        $morePosts = $postRepository->findActivePosts($site, 2);
+        $morePosts = $postRepository->findReadMorePosts($site);
 
         if (null === $post) {
             throw new NotFoundHttpException();

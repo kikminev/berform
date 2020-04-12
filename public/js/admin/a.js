@@ -19,7 +19,7 @@ a = {
         order = order.join(',');
         $.ajax({
             type: "POST",
-            data: 'nodes='+order,
+            data: 'nodes=' + order,
             url: url
         });
     },

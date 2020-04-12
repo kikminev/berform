@@ -1,17 +1,41 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-    <div class="container-fluid contextBar"><h1>{{ site.name }}</h1></div>
+    <div class="container-fluid contextBar breadcrumbs">
+        <h1>
+            <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+            <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a>
+            {% trans %}admin_links_albums{% endtrans %}
+        </h1>
+    </div>
     <div class="container">
 
         <div class="clear"></div>
 
         <div class="list boxList row">
+            <div class="itemWrap addNewTile col-md-3">
+                <a class="item" href="{{ path('user_admin_node_create', {site:site.id, type : 'album'}) }}">+</a>
+            </div>
+
             {% if nodes is not empty %}
                 {% for node in nodes %}
-                    <div class="itemWrap col-md-3">
+                    <div class="itemWrap col-md-3" id="{{node.id}}">
                         <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
+
+                            {% if node.defaultImage is not null %}
+                                <div class="itemDefaultImage">
+                                    <img src="{{ resource_provider_domain }}{{ node.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                                </div>
+                            {% endif %}
+
+
                             {% if node.translatedTitle[app.request.locale] is defined %}{{ node.translatedTitle[app.request.locale] }}{% endif %}
                         </a>
+
+                        <div class="itemActionControls">
+                            <a href="{{ path('user_admin_node_edit', {id : node.id, type : node.type}) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
+                            <a onclick="a.deleteObject('{{ path('user_admin_node_delete', {id : node.id, type : node.type}) }}', '{{ node.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}

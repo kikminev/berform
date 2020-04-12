@@ -34,6 +34,13 @@
             $.fancybox.defaults.hash = false;
         </script>
         <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('{{ resource_provider_domain }}{{ mainImage.baseName }}'); background-position: center center;"{% endif %}>
+            <div class="siteName">
+                {{ site.name }}
+            </div>
+            {% include('UserSite/Components/social_icons.html.twig') %}
+
+
+            <a href="https://www.berform.com" class="builtWithBerform" target="_blank">{% trans %}footer_built_with{% endtrans %} Berform</a>
         </footer>
     </body>
 </html>

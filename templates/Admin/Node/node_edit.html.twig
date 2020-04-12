@@ -1,9 +1,20 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
 
-<div class="breadcrumbs container-fluid contextBar">
-    <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a> &middot; {% trans %}admin_links_pages{% endtrans %}
+
+<div class="container-fluid contextBar breadcrumbs">
+    <h1>
+        <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+        <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a>
+        <a href="{{ path('user_admin_node_list', { type: 'album', site: site.id }) }}">{% trans %}admin_links_albums{% endtrans %}</a>
+
+        {% if node.translatedTitle[app.request.locale] is defined %}
+        >
+        {{ node.translatedTitle[app.request.locale] }}
+        {% endif %}
+    </h1>
 </div>
+
 
 <div class="container">
     <div class="contentEditForm row">
@@ -84,7 +95,6 @@
                     {% include('Admin/Upload/upload_form.html.twig') %}
                     {% include('Admin/Upload/file_list.html.twig') %}
                 </div>
-
             </div>
         </div>
 

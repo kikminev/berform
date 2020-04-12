@@ -62,10 +62,21 @@ class Page
     private $active;
 
     /**
+     * @var null|bool $deleted
+     * @MongoDB\Field(type="boolean")
+     */
+    private $deleted;
+
+    /**
      * @var array $translatedTitle
      * @MongoDB\Field(type="hash")
      */
     private $translatedTitle = [];
+    /**
+     * @var array $translatedMenuLink
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedMenuLink = [];
 
     /**
      * @var array $translatedContent
@@ -90,7 +101,6 @@ class Page
      * @MongoDB\ReferenceMany(targetDocument="File", storeAs="id")
      */
     private $files;
-
 
     /**
      * @var null|File $defaultImage
@@ -345,5 +355,31 @@ class Page
     public function setDefaultImage(?File $defaultImage): void
     {
         $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedMenuLink(): array
+    {
+        return $this->translatedMenuLink;
+    }
+
+    /**
+     * @param array $translatedMenuLink
+     */
+    public function setTranslatedMenuLink(array $translatedMenuLink): void
+    {
+        $this->translatedMenuLink = $translatedMenuLink;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
     }
 }

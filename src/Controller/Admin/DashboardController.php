@@ -22,7 +22,7 @@ class DashboardController extends AbstractController
 
         $user = $this->getUser();
         $sites = $siteRepository->getByUser($user);
-        $domains = $domainRepository->getByUser($user);
+        $domains = $domainRepository->findByUser($user);
 
         return $this->render(
             'Admin/dashboard.html.twig',

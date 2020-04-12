@@ -6,6 +6,7 @@ use App\Document\Site;
 use App\Repository\FileRepository;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\MongoDBException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -32,7 +33,7 @@ class UploadController extends AbstractController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function upload(Site $site, Request $request, S3FileUploader $fileUploader)
+    public function upload(Site $site, Request $request, S3FileUploader $fileUploader, ParameterBagInterface $params)
     {
         $filesBag = $request->files->get('files');
 
@@ -49,6 +50,8 @@ class UploadController extends AbstractController
         $url = $fileUploader->upload($newFileName, $file);
         $id = $this->attachFileToSite($site, $url, $newFileName);
 
+        $url = $params->get('resource_provider_domain').$newFileName.'?h=150&w=150&fit=crop&border-radius=10';
+
         return new JsonResponse(['url' => $url, 'id' => $id]);
     }
 
@@ -62,21 +65,36 @@ class UploadController extends AbstractController
         return new JsonResponse(['message' => 'ok']);
     }
 
-
     public static function getOrderedFiles(array $files): array
     {
         $orderedFiles = [];
+        $i = 0;
         foreach ($files as $file) {
-            $orderedFiles[$file->getOrder()] = $file;
+            $order = $file->getOrder();
+            if(!isset($orderedFiles[$order])) {
+                $orderedFiles[$order] = $file;
+            } else {
+                $orderedFiles[] = $file;
+            }
         }
         ksort($orderedFiles);
 
         return $orderedFiles;
     }
 
+    public static function getOrderedFilesIdsConcatenated(array $files): string
+    {
+        $fileConcatenated = '';
+        foreach ($files as $file) {
+            $fileConcatenated .= $file->getId() . ';';
+        }
+
+        return $fileConcatenated;
+    }
+
     private function attachFileToSite(Site $site, $url, $baseName)
     {
-        $this->denyAccessUnlessGranted('edit', $site);
+        $this->denyAccessUnlessGranted('modify', $site);
 
         $file = new File();
         $file->setSite($site);
