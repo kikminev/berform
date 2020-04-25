@@ -101,7 +101,7 @@ class UserSiteController extends AbstractController
                 'page' => $page,
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
-                'posts' => $postRepository->findActivePosts($site),
+                'posts' => $postRepository->findActivePostsBySite($site),
                 'featuredPostInParallax' => $postRepository->findOneBy([
                     'site' => $site,
                     'active' => true,

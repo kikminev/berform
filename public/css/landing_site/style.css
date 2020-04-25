@@ -11,9 +11,29 @@ html, body {
     margin-bottom: 500px;
 }
 .top-menu { position: absolute; top: 0px; left: 0px; z-index: 3; width: 100%; list-style: none; }
-.top-menu a { float: right; margin: 15px 15px 0px; }
+.top-menu a { float: right; background: #fff; border: 1px solid #fff; width: 120px; padding: 5px 10px; text-align: center; margin-top: 30px; font-size: 14px; color: #666;  }
+.top-menu a:hover { text-decoration: none; background: none; color: #333; border: 1px solid #fff; color: #fff; }
+.top-menu .left:hover { border-right: none; }
+.top-menu a.left {
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.top-menu a.right {
+    margin-right: 70px;
+    border-left: 1px #ccc solid;
+    -webkit-border-top-right-radius: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -moz-border-radius-bottomright: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 
-h1 { font-family: 'Playfair Display', serif; }
+h1 { font-size: 3.3em; font-family: 'Montserrat', sans-serif }
 h3, .step-number { font-family: 'Montserrat', sans-serif; }
 .mt10 { margin-top: 10px; }
 .mt20 { margin-top: 20px; }
@@ -23,10 +43,26 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
 .mb120 { margin-bottom: 120px; }
 .clear { clear: both; }
 
-#logo { position: absolute; top: 15px; left: 20px; z-index: 2; }
-#welcome-screen { background: #8DCF8C; }
+#logo { position: absolute; top: 25px; left: 70px; z-index: 2; color: #fff; font-family: 'Yeseva One', cursive; font-size: 20px; }
+.logo.logoFooter { font-family: 'Yeseva One', cursive; font-size: 20px; }
+#welcome-screen {
+    background-image: url("/img/home/2.jpg");
+    background-color: #8DCF8C;
+    background-position: center center;
+    background-size: cover;
+    color: #fff;
+    border-radius: 30px;
+    margin: 20px;
+}
+#welcome-screen.rp_d1 { background-image: url("/img/home/1.jpg"); }
+#welcome-screen.rp_d2 { background-image: url("/img/home/2.jpg"); }
+#welcome-screen.rp_l3 { background-image: url("/img/home/3.jpg"); }
+#welcome-screen.rp_d4 { background-image: url("/img/home/4.jpg"); }
+
+#welcome-screen span { text-transform: uppercase; letter-spacing: 2px; font-size: 1em; }
 .container-fluid { padding: 0px; }
 .centered-text { text-align: center; }
+.centered-text.subTitle { margin-top: 25px; }
 .full-height {
     height: 100%;
     position: relative;
@@ -44,13 +80,13 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
     z-index: 2;
 }
 
-.full-width-bottom-text { position: absolute; bottom: 30px; width: 100%; text-align: center; z-index: 2; }
+.full-width-bottom-text { position: absolute; bottom: 50px; width: 100%; text-align: center; z-index: 2; }
 
 /* home */
 .home-centered-section { padding: 70px 0px; }
 .home-centered-section h2 { text-align: center; font-family: 'Playfair Display',serif; }
-.features-cells h3 { margin-bottom: 30px; }
-.features-wrap { margin: 0px auto; }
+.features-cells h3 { margin-bottom: 30px; min-height: 75px; }
+.features-wrap { margin: 0px auto; margin-top: 25px }
 .features-wrap .features-cells { margin: 60px; }
 .step-number { font-size: 60px; }
 .action-button { display: block; margin: 60px auto 0px auto; width: 200px; height: 40px; line-height: 40px; -webkit-border-radius: 40px; -moz-border-radius: 40px; border-radius: 40px; text-align: center; text-transform: uppercase; -webkit-font-smoothing: initial; color: #ffffff; cursor: pointer; }
@@ -150,3 +186,10 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0000cd', endColorstr='#0069ea',GradientType=1 ); !* IE6-9 fallback on horizontal gradient *!*/
 
 }
+/* templates */
+.siteTemplates { margin-top: 50px; margin-bottom: 50px; }
+.templatePreview { width: 100%; height: 370px; border-radius: 15px; float: left; background-size: cover; background-position: center; position: relative; }
+.templatePreview:hover { box-shadow: 4px 4px 6px #9f9fa2; }
+.templatePreview .templateNameWrap { position: absolute; bottom: 20px; left: 20px;  color: #fff; }
+.templatePreview .templateNameWrap .name { font-family: "Playfair Display", serif; font-size: 20px; font-weight: bold; color: #fff; }
+.templatePreview .templateNameWrap .description { text-transform: uppercase; font-size: 13px; }

@@ -16,6 +16,8 @@ a:hover { text-decoration: none; }
 .mt50 { margin-top: 50px; }
 .logo {
     float: left;
+    font-family: 'Yeseva One', cursive;
+    color: #fff;
 }
 .mainContent { margin-bottom: 200px; }
 .topMenu {

@@ -2,12 +2,13 @@
 {% block body %}
     <div id="logo">b e r f o r m</div>
     <ul class="top-menu">
-        <li><a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a></li>
-        <li><a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a></li>
+        <li><a class="right" href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a></li>
+        <li><a class="left" href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a></li>
     </ul>
     <div class="full-height" id="welcome-screen">
         <div class="full-width-bottom-text">
             <h1>{% trans %}landing_site_welcome_text{% endtrans %}</h1>
+            <span>{% trans %}landing_site_welcome_text_line_2{% endtrans %}</span>
         </div>
     </div>
 
@@ -16,7 +17,6 @@
     {# FEATURES #}
     <div class="container full-height">
         <div class="features-wrap home-centered-section" name="features" id="features">
-            <div class="container">
                 <h2>{% trans %}main_site_features_header{% endtrans %}</h2>
 
                 <div class="sub-title centered-text">
@@ -61,7 +61,6 @@
                         {% trans %}user_site_features_multilanguage_support_content{% endtrans %}
                     </div>
                 </div>
-            </div>
         </div>
     </div>
     {# END FEATURES #}
@@ -121,21 +120,27 @@
     {# END SIGN UP #}
 
 
-
-    {% for template in templates %}
-        <div id="siteTemplates">
-            <div class="templatePreview">
-                <a onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_registration') }}'); return false;">
-                    <img width="150" src="{{ template.defaultImage }}" alt="{{ template.name }}" />
-                    <div id="templateName">{{ template.name }}</div>
-                </a>
-            </div>
+    <div class="siteTemplates container">
+        <div class="row">
+        {% for template in templates %}
+            <a class="templatePreviewWrap col-md-6" href="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_registration') }}'); return false;">
+                <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
+                    <div class="templateNameWrap">
+                        <div class="name">{{ template.name }}</div>
+                        <div class="description">
+                            {% if template.name == 'Explorer' %}
+                                Подходящ за блогъри
+                            {% elseif template.name == 'Photography' %}
+                                Подходящ за професионални фотографи
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
         </div>
-    {% endfor %}
-
-
-
-
+        <div class="clear"></div>
+    </div>
 
     {# PRICING #}
     {# PRICING #}
@@ -287,16 +292,4 @@
     {#<a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>#}
     {#<a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>#}
 
-    <script type="text/javascript">
-
-        $( document ).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-            $('#welcome-screen').css('height', $(window).height());
-        });
-
-        $(window).resize(function() {
-            $('#welcome-screen').css('height', $(window).height());
-        });
-
-    </script>
 {% endblock %}

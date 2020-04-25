@@ -16,11 +16,12 @@ class PostRepository extends DocumentRepository
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Post::class));
     }
 
-    public function findActivePosts(Site $site, $limit = false)
+    public function findActivePostsBySite(Site $site, $limit = false)
     {
         $qb = $this->createQueryBuilder()
             ->field('featuredParallax')->notEqual(true)
             ->field('active')->equals(true)
+            ->field('deleted')->notEqual(true)
             ->field('site')->equals($site)
             ->sort('createdAt', 'DESC');
 
@@ -34,7 +35,7 @@ class PostRepository extends DocumentRepository
 
     public function findReadMorePosts(Site $site): array
     {
-        $posts = $this->findActivePosts($site, 2);
+        $posts = $this->findActivePostsBySite($site, 2);
 
         $allHaveImages = true;
         /** @var Post $post */

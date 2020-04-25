@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Form\Admin\DomainType;
 use App\Repository\DomainRepository;
-use phpDocumentor\Reflection\Types\This;
 use App\Repository\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Document\Domain;

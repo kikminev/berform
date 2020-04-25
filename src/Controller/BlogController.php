@@ -48,8 +48,8 @@ class BlogController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $posts = $postRepository->findBy(['site' => $site, 'active' => true]);
-        $pages = $pageRepository->findBy(['site' => $site], ['order' => 'ASC']);
+        $posts = $postRepository->findActivePostsBySite($site);
+        $pages = $pageRepository->findActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         // todo: pagination
