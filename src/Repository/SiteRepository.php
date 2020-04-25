@@ -32,6 +32,7 @@ class SiteRepository extends DocumentRepository
     public function getTemplates()
     {
         $qb = $this->createQueryBuilder();
+        $qb->addAnd($qb->expr()->field('isTemplate')->equals(true));
         $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
         $qb->addAnd($qb->expr()->field('archived')->notEqual(true));
 
