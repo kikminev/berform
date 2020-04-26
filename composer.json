@@ -22,14 +22,14 @@
         "symfony/flex": "^1.1",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
-        "symfony/intl": "4.2.*",
+        "symfony/intl": "4.4.*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/process": "*",
         "symfony/security-bundle": "*",
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.1",
-        "symfony/translation": "4.2.*",
+        "symfony/translation": "4.4.*",
         "symfony/twig-bundle": "*",
         "symfony/validator": "*",
         "symfony/web-link": "*",
@@ -91,7 +91,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.2.*"
+            "require": "4.4.*"
         }
     }
 }
