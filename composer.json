@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "alcaeus/mongo-php-adapter": "dev-master",
@@ -23,6 +23,7 @@
         "symfony/flex": "^1.1",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
+        "symfony/http-client": "4.4.*",
         "symfony/intl": "4.4.*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",

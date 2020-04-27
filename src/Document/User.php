@@ -57,6 +57,14 @@ class User implements UserInterface
      */
     protected $files = [];
 
+    protected string $cloudflareApiKey;
+
+    protected string $ip;
+
+    protected string $cloudflareUserKey;
+
+    protected string $cloudflarePassword;
+
     /**
      * @return mixed
      */
@@ -183,5 +191,48 @@ class User implements UserInterface
     public function setFiles(array $files): void
     {
         $this->files = $files;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCloudflareApiKey(): string
+    {
+        return $this->cloudflareApiKey;
+    }
+
+    public function setCloudflareApiKey(string $cloudflareApiKey): void
+    {
+        $this->cloudflareApiKey = $cloudflareApiKey;
+    }
+
+    public function getIp(): string
+    {
+        return $this->ip;
+    }
+
+    public function setIp(string $ip): void
+    {
+        $this->ip = $ip;
+    }
+
+    public function getCloudflareUserKey(): string
+    {
+        return $this->cloudflareUserKey;
+    }
+
+    public function setCloudflareUserKey(string $cloudflareUserKey): void
+    {
+        $this->cloudflareUserKey = $cloudflareUserKey;
+    }
+
+    public function getCloudflarePassword(): string
+    {
+        return $this->cloudflarePassword;
+    }
+
+    public function setCloudflarePassword(string $cloudflarePassword): void
+    {
+        $this->cloudflarePassword = $cloudflarePassword;
     }
 }

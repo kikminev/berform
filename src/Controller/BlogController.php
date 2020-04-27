@@ -67,16 +67,6 @@ class BlogController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param $slug
-     * @param PostRepository $postRepository
-     * @param SiteRepository $siteRepository
-     * @param PageRepository $pageRepository
-     * @param DomainRepository $domainRepository
-     * @return Response
-     * @throws MongoDBException
-     */
     public function view(
         Request $request,
         $slug,

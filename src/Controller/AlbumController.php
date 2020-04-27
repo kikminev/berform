@@ -31,14 +31,6 @@ class AlbumController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    /**
-     * @param Request $request
-     * @param SiteRepository $siteRepository
-     * @param PageRepository $pageRepository
-     * @param ParameterBagInterface $params
-     * @param string $slug
-     * @return Response
-     */
     public function view(
         Request $request,
         SiteRepository $siteRepository,

@@ -3,6 +3,10 @@ index:
     host: berform.kik
     controller: App\Controller\LandingSiteController::home
 
+test:
+    path: /test
+    controller: App\Controller\TestController::test
+
 admin:
     path: /u
     controller: App\Controller\Admin\DashboardController::dashboard
