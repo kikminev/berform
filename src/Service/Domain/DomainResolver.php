@@ -20,7 +20,6 @@ class DomainResolver
         if (preg_match(sprintf('|(.*)\.%s|', $systemDomainDiscriminator), $host, $matches) && isset($matches[1])) {
             return $matches[1];
         }
-
         return $host;
     }
 }

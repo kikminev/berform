@@ -45,6 +45,12 @@ services:
         arguments:
             $s3Client: '@s3_uploader'
             $bucketName: '%env(S3_BUCKET_NAME)%'
+    App\DNS\CloudflareDnsUpdater:
+        arguments:
+            $hostAPIUrl: '%env(CLOUDFLARE_HOST_API)%'
+            $clientAPIUrl: '%env(CLOUDFLARE_CLIENT_API)%'
+            $cloudflareHostApiKey: '%env(CLOUDFLARE_HOST_API_KEY)%'
+            $passwordSalt: '%env(CLOUDFLARE_CLIENT_API_PASS_SALT)%'
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags:

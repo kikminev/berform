@@ -115,7 +115,6 @@ class SignupController extends AbstractController
         if ($selectedTemplate = $session->get('selectedTemplate')) {
 
             /** @var Site $selectedTemplate */
-            /** @var Site newte */
             $selectedTemplate = $siteRepository->find($selectedTemplate);
             if (null === $selectedTemplate) {
                 return $this->redirectToRoute('home');
@@ -124,6 +123,7 @@ class SignupController extends AbstractController
             $newSite = clone $selectedTemplate;
 
             // todo: this needs a service method
+            /** @var User $user */
             $user = $this->getUser();
             $userEmail = $user->getUsername();
             $emailName = explode('@', $userEmail);
@@ -134,11 +134,12 @@ class SignupController extends AbstractController
             $newSite->setIsTemplate(false);
             $documentManager->persist($newSite);
 
-            $pages = $newSite->getPages();
+            $pages = $selectedTemplate->getPages();
+
             foreach ($pages as $page) {
                 /** @var Page $newPage */
                 $newPage = clone $page;
-                $newPage->setUser($this->getUser());
+                $newPage->setUser($user);
                 $newPage->setSite($newSite);
 
                 $documentManager->persist($newPage);
@@ -146,7 +147,7 @@ class SignupController extends AbstractController
 
             $subscription = new Subscription();
             $subscription->setProduct($productRepository->findOneBySystemCode(Product::PRODUCT_TYPE_FREE_HOSTING));
-            $subscription->setUser($this->getUser());
+            $subscription->setUser($user);
             $subscription->setCreatedAt(new DateTime());
             $subscription->setUpdatedAt(new DateTime());
             $documentManager->persist($subscription);

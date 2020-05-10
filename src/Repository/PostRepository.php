@@ -19,6 +19,22 @@ class PostRepository extends DocumentRepository
     public function findActivePostsBySite(Site $site, $limit = false)
     {
         $qb = $this->createQueryBuilder()
+            ->field('active')->equals(true)
+            ->field('deleted')->notEqual(true)
+            ->field('site')->equals($site)
+            ->sort('createdAt', 'DESC');
+
+        if ($limit) {
+            $qb->limit($limit);
+        }
+
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $qb->getQuery()->execute();
+    }
+
+    public function findActivePostsBySiteWithoutFeatured(Site $site, $limit = false)
+    {
+        $qb = $this->createQueryBuilder()
             ->field('featuredParallax')->notEqual(true)
             ->field('active')->equals(true)
             ->field('deleted')->notEqual(true)

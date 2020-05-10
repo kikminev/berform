@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\DNS\CloudflareDnsUpdater;
+use App\Document\User;
 use App\Form\Admin\DomainType;
 use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
@@ -32,17 +34,27 @@ class DomainController extends AbstractController
         );
     }
 
-    public function create(Request $request, DocumentManager $documentManager): Response
-    {
+    public function create(
+        Request $request,
+        DocumentManager $documentManager,
+        CloudflareDnsUpdater $cloudflareDnsUpdater
+    ): Response {
+
         $this->denyAccessUnlessGranted('ROLE_USER');
 
+        /** @var User $user */
+        $user = $this->getUser();
         $domain = new Domain();
         $form = $this->createForm(DomainType::class, $domain);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $domain->setUser($this->getUser());
+            $domain->setUser($user);
+
+            if ($cloudflareDnsUpdater->createCloudflareAccount($user)) {
+                $cloudflareDnsUpdater->addDomainDNS($domain, $user);
+            }
 
             $documentManager->persist($domain);
             $documentManager->flush();

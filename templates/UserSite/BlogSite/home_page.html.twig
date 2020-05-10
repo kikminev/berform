@@ -14,6 +14,7 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-10 featuredPost">
                     {% set post = posts|first %}
+                    {% if post.files is defined %}
                     {% set file = post.files|first %}
 
                     <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
@@ -21,6 +22,7 @@
                             <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>
                         {% endif %}
                     </a>
+                    {% endif %}
 
                     <div class="featuredPostExcerpt row">
                         <div class="col-md-6">

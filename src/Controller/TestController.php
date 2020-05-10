@@ -2,30 +2,29 @@
 
 namespace App\Controller;
 
+use App\Document\Domain;
+use App\Document\User;
+use App\Repository\DomainRepository;
+use App\Repository\UserRepository;
+use Http\Discovery\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\DNS\CloudflareDnsRequester;
-use Symfony\Component\HttpClient\HttpClient;
+use App\DNS\CloudflareDnsUpdater;
+//use Symfony\Component\HttpClient\HttpClient;
 
 class TestController extends AbstractController
 {
-    public function test(CloudflareDnsRequester $cloudflareDnsRequester)
+    public function test(CloudflareDnsUpdater $cloudflareDnsUpdater, UserRepository $userRepository, DomainRepository $domainRepository)
     {
+        throw new NotFoundException();
+        /** @var User $user */
+        $user = $userRepository->find('5ea4506603ecf2226a1cd452');
 
-        $cloudflareDnsRequester->addDomainDNS('kik.com');
+        /** @var Domain $domain */
+        $domain = $domainRepository->find('5eb282e0312ceb10593d0432');
 
-        $client = HttpClient::create();
-        $response = $client->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
-
-        $statusCode = $response->getStatusCode();
-        // $statusCode = 200
-        $contentType = $response->getHeaders()['content-type'][0];
-        // $contentType = 'application/json'
-        $content = $response->getContent();
-        // $content = '{"id":521583, "name":"symfony-docs", ...}'
-        $content = $response->toArray();
-        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
-
-        print_r($content);
+        if ($cloudflareDnsUpdater->createCloudflareAccount($user)) {
+            $cloudflareDnsUpdater->addDomainDNS($domain, $user);
+        }
         exit;
     }
 }

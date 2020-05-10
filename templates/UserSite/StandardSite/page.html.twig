@@ -22,7 +22,7 @@
             ],
         });
     </script>
-    {%  if slug is defined and slug == 'contact-us' %}
+    {%  if slug is defined and (slug == 'contact-us' || slug == 'contact-me') %}
         {{ include('UserSite/contact_page.html.twig') }}
     {% endif %}
 {% endblock %}

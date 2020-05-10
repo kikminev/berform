@@ -42,6 +42,7 @@ class PageRepository extends DocumentRepository
             ->field('site')->equals($site->getId())
             ->field('deleted')->notEqual(true)
             ->field('active')->equals(true)
+            ->sort('order')
             ->getQuery()->execute();
     }
 

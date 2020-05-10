@@ -123,7 +123,7 @@
     <div class="siteTemplates container">
         <div class="row">
         {% for template in templates %}
-            <a class="templatePreviewWrap col-md-6" href="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_registration') }}'); return false;">
+            <a class="templatePreviewWrap col-md-6" onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_registration') }}'); return false;">
                 <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
                     <div class="templateNameWrap">
                         <div class="name">{{ template.name }}</div>

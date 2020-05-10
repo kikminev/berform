@@ -33,7 +33,6 @@ class User implements UserInterface
 
     /**
      * @var string $password
-     * @MongoDB\Field(type="string")
      */
     private $plainPassword;
 
@@ -48,22 +47,32 @@ class User implements UserInterface
      *
      * @MongoDB\ReferenceMany(targetDocument="Site", mappedBy="user", storeAs="id")
      */
-    protected $sites = [];
+    private $sites = [];
 
     /**
      * @var array $files
      *
      * @MongoDB\ReferenceMany(targetDocument="File", mappedBy="user", storeAs="id")
      */
-    protected $files = [];
+    private $files = [];
 
-    protected string $cloudflareApiKey;
+    /**
+     * @var string $cloudflareApiKey
+     * @MongoDB\Field(type="string")
+     */
+    private string $cloudflareApiKey = '';
 
-    protected string $ip;
+    /**
+     * @var string $ip
+     * @MongoDB\Field(type="string")
+     */
+    private string $ip = '';
 
-    protected string $cloudflareUserKey;
-
-    protected string $cloudflarePassword;
+    /**
+     * @var string $cloudflareUserKey
+     * @MongoDB\Field(type="string")
+     */
+    private string $cloudflareUserKey = '';
 
     /**
      * @return mixed
@@ -201,38 +210,43 @@ class User implements UserInterface
         return $this->cloudflareApiKey;
     }
 
+    /**
+     * @param string $cloudflareApiKey
+     */
     public function setCloudflareApiKey(string $cloudflareApiKey): void
     {
         $this->cloudflareApiKey = $cloudflareApiKey;
     }
 
+    /**
+     * @return string
+     */
     public function getIp(): string
     {
         return $this->ip;
     }
 
+    /**
+     * @param string $ip
+     */
     public function setIp(string $ip): void
     {
         $this->ip = $ip;
     }
 
+    /**
+     * @return string
+     */
     public function getCloudflareUserKey(): string
     {
         return $this->cloudflareUserKey;
     }
 
+    /**
+     * @param string $cloudflareUserKey
+     */
     public function setCloudflareUserKey(string $cloudflareUserKey): void
     {
         $this->cloudflareUserKey = $cloudflareUserKey;
-    }
-
-    public function getCloudflarePassword(): string
-    {
-        return $this->cloudflarePassword;
-    }
-
-    public function setCloudflarePassword(string $cloudflarePassword): void
-    {
-        $this->cloudflarePassword = $cloudflarePassword;
     }
 }

@@ -7,8 +7,7 @@ use App\Document\Site;
 class LayoutResolver
 {
     public const SITE_CATEGORY_PHOTOGRAPHY = 'photography',
-        SITE_CATEGORY_BLOG = 'blog',
-        SITE_CATEGORY_STANDARD = 'standard';
+        SITE_CATEGORY_BLOG = 'blog';
 
     public function getSiteTemplateCss(Site $site): string
     {
@@ -28,8 +27,6 @@ class LayoutResolver
 
     public function getPageTemplate(Site $site, string $slug): string
     {
-
-        $page = '';
         switch ($slug) {
             case 'home':
                 $page = 'home_page.html.twig';
@@ -38,6 +35,8 @@ class LayoutResolver
                 $page = 'photography.html.twig';
                 break;
             case 'contact':
+            case 'contact-me':
+            case 'contact-us':
                 $page = 'contact_page.html.twig';
                 break;
             default:
