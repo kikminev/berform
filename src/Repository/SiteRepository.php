@@ -14,11 +14,6 @@ class SiteRepository extends DocumentRepository
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Site::class));
     }
 
-    /**
-     * @param User $user
-     * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
     public function getByUser(User $user)
     {
         $qb = $this->createQueryBuilder();
@@ -27,6 +22,15 @@ class SiteRepository extends DocumentRepository
         $qb->addAnd($qb->expr()->field('archived')->notEqual(true));
 
         return $qb->getQuery()->execute();
+    }
+
+    public function deleteAllByUser(User $user)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->dm->createQueryBuilder(Site::class)
+            ->remove()
+            ->field('user')->equals($user)
+            ->getQuery()->execute();
     }
 
     public function getTemplates()

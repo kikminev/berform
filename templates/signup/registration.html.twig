@@ -1,5 +1,11 @@
 {% extends 'LandingSite/layout.html.twig' %}
 
 {% block body %}
+    {% for message in app.flashes('registration_messages') %}
+        <div class="alert alert-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {% include('signup/register_form.html.twig') %}
 {% endblock %}

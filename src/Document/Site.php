@@ -83,6 +83,12 @@ class Site
     private $translatedAddress = array();
 
     /**
+     * @var array $translatedDescription
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedDescription = array();
+
+    /**
      * @var null|string $workingFrom
      * @MongoDB\Field(type="string")
      */
@@ -412,6 +418,22 @@ class Site
     public function setTranslatedAddress(array $translatedAddress): void
     {
         $this->translatedAddress = $translatedAddress;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedDescription(): array
+    {
+        return $this->translatedDescription;
+    }
+
+    /**
+     * @param array $translatedDescription
+     */
+    public function setTranslatedDescription(array $translatedDescription): void
+    {
+        $this->translatedDescription = $translatedDescription;
     }
 
     /**

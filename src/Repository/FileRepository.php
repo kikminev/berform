@@ -32,11 +32,7 @@ class FileRepository extends DocumentRepository
             ->sort('order', 'ASC')
             ->getQuery()->execute();
     }
-    /**
-     * @param $fileId
-     * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
+
     public function getActiveFile($fileId)
     {
         return $this->dm->createQueryBuilder(File::class)
@@ -46,27 +42,10 @@ class FileRepository extends DocumentRepository
     }
 
 
-    //public function getPageFiles($files)
-    //{
-    //    return $this->dm->createQueryBuilder(File::class)
-    //        ->field('id')->in($files)
-    //        ->field('deleted')->notEqual(true)
-    //        ->sort('order', 'DESC')
-    //        ->getQuery()->execute();
-    //}
-    //
-    ///**
-    // * @param $page
-    // * @return mixed
-    // * @throws \Doctrine\ODM\MongoDB\MongoDBException
-    // */
-    //public function getPostFiles(Post $post)
-    //{
-    //
-    //    return $this->dm->createQueryBuilder(File::class)
-    //        ->field('post')->equals($post)
-    //        ->field('deleted')->notEqual(true)
-    //        ->sort('order', 'DESC')
-    //        ->getQuery()->execute();
-    //}
+    public function findAllByUser(User $user)
+    {
+        return $this->dm->createQueryBuilder(File::class)
+            ->field('user')->equals($user)
+            ->getQuery()->execute();
+    }
 }

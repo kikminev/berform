@@ -6,13 +6,15 @@ use App\Document\Page;
 use App\Document\Payment\Product;
 use App\Document\Site;
 use App\Document\Payment\Subscription;
+use App\Repository\AlbumRepository;
 use App\Repository\Payment\ProductRepository;
+use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
+use App\Repository\UserRepository;
+use App\Security\Signup\PasswordValidator;
+use App\Security\Signup\UserValidator;
 use DateTime;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\LockException as LockExceptionAlias;
-use Doctrine\ODM\MongoDB\Mapping\MappingException;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -24,6 +26,7 @@ use App\Form\UserType;
 use App\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class SignupController
@@ -54,17 +57,37 @@ class SignupController extends AbstractController
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
+        UserValidator $userValidator,
+        PasswordValidator $passwordValidator,
+        TranslatorInterface $translator,
         DocumentManager $documentManager
     ) {
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('app_signup_setup_account');
         }
 
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$userValidator->validate($form->getData())) {
+                foreach ($userValidator->getErrors() as $error) {
+                    $this->addFlash('registration_messages', $error);
+                }
+
+                return $this->redirectToRoute('app_registration');
+            }
+
+            if (!$passwordValidator->validate($user->getPlainPassword())) {
+                foreach ($passwordValidator->getErrors() as $error) {
+                    $this->addFlash('registration_messages', $error);
+                }
+
+                return $this->redirectToRoute('app_registration');
+            }
+
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
@@ -84,11 +107,6 @@ class SignupController extends AbstractController
         );
     }
 
-    /**
-     * @param Site $site
-     * @param SessionInterface $session
-     * @return JsonResponse;
-     */
     public function chooseTemplate(Site $site, SessionInterface $session): JsonResponse
     {
         $session->set('selectedTemplate', $site->getId());
@@ -96,24 +114,17 @@ class SignupController extends AbstractController
         return $this->json(['message' => 'ok']);
     }
 
-    /**
-     * @param SessionInterface $session
-     * @param SiteRepository $siteRepository
-     * @param ProductRepository $productRepository
-     * @param DocumentManager $documentManager
-     * @return RedirectResponse
-     * @throws LockExceptionAlias
-     * @throws MappingException
-     * @throws Exception
-     */
     public function setupAccount(
         SessionInterface $session,
         SiteRepository $siteRepository,
         ProductRepository $productRepository,
+        AlbumRepository $albumRepository,
+        PostRepository $postRepository,
         DocumentManager $documentManager
     ): RedirectResponse {
         if ($selectedTemplate = $session->get('selectedTemplate')) {
 
+            /** @noinspection PhpUnhandledExceptionInspection */
             /** @var Site $selectedTemplate */
             $selectedTemplate = $siteRepository->find($selectedTemplate);
             if (null === $selectedTemplate) {
@@ -127,6 +138,7 @@ class SignupController extends AbstractController
             $user = $this->getUser();
             $userEmail = $user->getUsername();
             $emailName = explode('@', $userEmail);
+            /** @noinspection PhpUnhandledExceptionInspection */
             $host = $emailName[0] . random_int(1, 10000000) . time();
 
             $newSite->setHost($host);
@@ -143,6 +155,26 @@ class SignupController extends AbstractController
                 $newPage->setSite($newSite);
 
                 $documentManager->persist($newPage);
+            }
+
+            $albums = $albumRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
+            foreach ($albums as $album) {
+                /** @var Page $newPage */
+                $newAlbum = clone $album;
+                $newAlbum->setUser($user);
+                $newAlbum->setSite($newSite);
+
+                $documentManager->persist($newAlbum);
+            }
+
+            $posts = $postRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
+            foreach ($posts as $post) {
+                /** @var Page $newPage */
+                $newPost = clone $post;
+                $newPost->setUser($user);
+                $newPost->setSite($newSite);
+
+                $documentManager->persist($newPost);
             }
 
             $subscription = new Subscription();

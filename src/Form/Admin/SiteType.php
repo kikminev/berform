@@ -58,7 +58,7 @@ class SiteType extends AbstractType
         }
 
         $builder->add('name', TextType::class, ['attr' => ['class' => 'slug_source']])
-            ->add('slug', TextType::class, ['attr' => ['class' => 'slug_input']])
+            ->add('host', TextType::class, ['attr' => ['class' => 'slug_input']])
             ->add('defaultLanguage', ChoiceType::class, ['choices' => $translatedLanguages])
             ->add('supportedLanguages',
                 ChoiceType::class,

@@ -163,3 +163,11 @@ user_site_view_page:
 user_site_view_album:
     path: /album/{slug}
     controller: App\Controller\AlbumController::view
+
+# CRM
+admin_list_customers:
+    path: /nimda/customer/list
+    controller: App\Controller\CRM\CustomerController::list
+admin_delete_customer:
+    path: /nimda/customer/delete/{user}
+    controller: App\Controller\CRM\CustomerController::delete

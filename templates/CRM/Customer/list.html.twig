@@ -1,0 +1,25 @@
+{% extends 'CRM/layout.html.twig' %}
+{% block body %}
+    {% for message in app.flashes('admin_system_messages') %}
+        <div class="alert alert-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table style="width: 100%;">
+        {% for customer in customers %}
+            {% if customer.system == false %}
+                <tr>
+                    <td>
+                        {{ customer.email }}
+                    </td>
+                    <td>
+                        {% if 'testing' in customer.email %}
+                            <a onclick="return confirm('Are you sure that you want to DELETE it?')"
+                               href="{{ path('admin_delete_customer', { user : customer.id }) }}">delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endblock %}

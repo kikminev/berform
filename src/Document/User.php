@@ -43,6 +43,12 @@ class User implements UserInterface
     private $active;
 
     /**
+     * @var null|bool $system
+     * @MongoDB\Field(type="boolean")
+     */
+    private $system;
+
+    /**
      * @var array $sites
      *
      * @MongoDB\ReferenceMany(targetDocument="Site", mappedBy="user", storeAs="id")
@@ -55,6 +61,12 @@ class User implements UserInterface
      * @MongoDB\ReferenceMany(targetDocument="File", mappedBy="user", storeAs="id")
      */
     private $files = [];
+
+    /**
+     * @var array $roles
+     * @MongoDB\Field(type="hash")
+     */
+    private $roles = [];
 
     /**
      * @var string $cloudflareApiKey
@@ -132,11 +144,18 @@ class User implements UserInterface
 
     public function getRoles(): array
     {
-        //$roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        $roles = $this->roles;
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     public function getSalt()
@@ -248,5 +267,21 @@ class User implements UserInterface
     public function setCloudflareUserKey(string $cloudflareUserKey): void
     {
         $this->cloudflareUserKey = $cloudflareUserKey;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getSystem(): ?bool
+    {
+        return $this->system;
+    }
+
+    /**
+     * @param bool|null $system
+     */
+    public function setSystem(?bool $system): void
+    {
+        $this->system = $system;
     }
 }

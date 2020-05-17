@@ -229,7 +229,7 @@ class PostController extends AbstractController
 
     public function list(Request $request, Site $site, PostRepository $postRepository, PageRepository $pageRepository)
     {
-        $posts = $postRepository->findActiveByUserSite($this->getUser(), $site);
+        $posts = $postRepository->findAllByUserSite($this->getUser(), $site);
 
         return $this->render(
             'Admin/Post/post_list.html.twig',

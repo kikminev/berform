@@ -65,14 +65,22 @@ class PostRepository extends DocumentRepository
         return ['posts' => $posts, 'allHaveImages' => $allHaveImages];
     }
 
-    public function findActiveByUserSite(User $user, Site $site)
+    public function findAllByUserSite(User $user, Site $site)
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return $this->dm->createQueryBuilder(Post::class)
             ->field('user')->equals($user)
             ->field('site')->equals($site)
-            ->field('active')->equals(true)
             ->field('deleted')->notEqual(true)
+            ->getQuery()->execute();
+    }
+
+    public function removeAllBySite(Site $site)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->dm->createQueryBuilder(Post::class)
+            ->remove()
+            ->field('site')->equals($site)
             ->getQuery()->execute();
     }
 

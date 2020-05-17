@@ -6,7 +6,7 @@ use App\Document\Page;
 use App\Document\Site;
 use App\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class PageRepository extends DocumentRepository
 {
@@ -53,6 +53,14 @@ class PageRepository extends DocumentRepository
             ->field('slug')->equals($slug)
             ->field('deleted')->notEqual(true)
             ->field('active')->equals(true)
+            ->getQuery()->getSingleResult();
+    }
+
+    public function deleteAllBySite(Site $site)
+    {
+        return $this->dm->createQueryBuilder(Page::class)
+            ->remove()
+            ->field('site')->equals($site->getId())
             ->getQuery()->getSingleResult();
     }
 }

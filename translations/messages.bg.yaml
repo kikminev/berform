@@ -2,6 +2,9 @@ language_label_en: English
 language_label_bg: Bulgarian
 landing_site_login: Вход
 landing_site_register: Регистрация
+landing_site_register_email_used: 'Вече има регистриран потребител с този e-mail.'
+landing_site_register_password_too_short: Паролата трябва по-дълга от 5 символа!
+landing_site_register_password_must_include_number: Паролата трябва да съдържа цифри!
 landing_site_welcome_text: Дом за вашите снимки
 landing_site_welcome_text_line_2: Създайте професионален сайт за фотографи
 

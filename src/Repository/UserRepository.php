@@ -12,4 +12,13 @@ class UserRepository extends DocumentRepository
     {
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(User::class));
     }
+
+    public function delete(User $user)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->dm->createQueryBuilder(User::class)
+            ->remove()
+            ->field('id')->equals($user->getId())
+            ->getQuery()->execute();
+    }
 }
