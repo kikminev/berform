@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Document\Page;
 use App\Document\Payment\Product;
+use App\Document\Post;
 use App\Document\Site;
 use App\Document\Payment\Subscription;
 use App\Repository\AlbumRepository;
@@ -169,7 +170,7 @@ class SignupController extends AbstractController
 
             $posts = $postRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
             foreach ($posts as $post) {
-                /** @var Page $newPage */
+                /** @var Post $newPost */
                 $newPost = clone $post;
                 $newPost->setUser($user);
                 $newPost->setSite($newSite);
@@ -180,6 +181,7 @@ class SignupController extends AbstractController
             $subscription = new Subscription();
             $subscription->setProduct($productRepository->findOneBySystemCode(Product::PRODUCT_TYPE_FREE_HOSTING));
             $subscription->setUser($user);
+            $subscription->setSite($newSite);
             $subscription->setCreatedAt(new DateTime());
             $subscription->setUpdatedAt(new DateTime());
             $documentManager->persist($subscription);

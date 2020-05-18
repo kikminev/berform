@@ -61,6 +61,6 @@ class PageRepository extends DocumentRepository
         return $this->dm->createQueryBuilder(Page::class)
             ->remove()
             ->field('site')->equals($site->getId())
-            ->getQuery()->getSingleResult();
+            ->getQuery()->execute();
     }
 }

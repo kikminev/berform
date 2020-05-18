@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Document\File;
 use App\Document\Page;
 use App\Document\Post;
+use App\Document\Site;
 use App\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\DocumentRepository;
@@ -46,6 +47,13 @@ class FileRepository extends DocumentRepository
     {
         return $this->dm->createQueryBuilder(File::class)
             ->field('user')->equals($user)
+            ->getQuery()->execute();
+    }
+
+    public function findAllBySite(Site $site)
+    {
+        return $this->dm->createQueryBuilder(File::class)
+            ->field('site')->equals($site)
             ->getQuery()->execute();
     }
 }

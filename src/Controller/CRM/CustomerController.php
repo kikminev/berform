@@ -74,7 +74,7 @@ class CustomerController extends AbstractController
         foreach ($sites as $site) {
             $this->pageRepository->deleteAllBySite($site);
             $this->albumRepository->deleteAllBySite($site);
-            $this->postRepository->removeAllBySite($site);
+            $this->postRepository->deleteAllBySite($site);
         }
 
         $this->subscriptionRepository->deleteAllByUser($user);
@@ -83,6 +83,6 @@ class CustomerController extends AbstractController
 
         $this->addFlash('admin_system_messages', 'The user has been deleted: ' . $user->getEmail());
 
-        return $this->redirectToRoute('admin_list_customers');
+        return $this->redirectToRoute('crm_list_customers');
     }
 }

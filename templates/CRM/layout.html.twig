@@ -24,7 +24,8 @@
 <body>
     <div class="container">
         <div class="menu">
-            <h2>Customers</h2>
+            <a href="{{ path('crm_list_customers') }}">Customers</a>
+            <a href="{{ path('crm_list_sites') }}">Sites</a>
         </div>
         <div class="container">
             {% block body %}{% endblock %}

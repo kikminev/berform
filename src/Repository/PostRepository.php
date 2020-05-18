@@ -75,7 +75,7 @@ class PostRepository extends DocumentRepository
             ->getQuery()->execute();
     }
 
-    public function removeAllBySite(Site $site)
+    public function deleteAllBySite(Site $site)
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return $this->dm->createQueryBuilder(Post::class)

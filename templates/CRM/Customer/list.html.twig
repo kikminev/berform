@@ -15,7 +15,7 @@
                     <td>
                         {% if 'testing' in customer.email %}
                             <a onclick="return confirm('Are you sure that you want to DELETE it?')"
-                               href="{{ path('admin_delete_customer', { user : customer.id }) }}">delete</a>
+                               href="{{ path('crm_delete_customer', { user : customer.id }) }}">delete</a>
                         {% endif %}
                     </td>
                 </tr>

@@ -272,7 +272,7 @@ class User implements UserInterface
     /**
      * @return bool|null
      */
-    public function getSystem(): ?bool
+    public function isSystem(): ?bool
     {
         return $this->system;
     }

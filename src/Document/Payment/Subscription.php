@@ -2,6 +2,7 @@
 
 namespace App\Document\Payment;
 
+use App\Document\Site;
 use App\Document\User;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -30,6 +31,12 @@ class Subscription
      * @MongoDB\ReferenceOne(targetDocument="\App\Document\User", storeAs="id")
      */
     protected $user;
+
+    /**
+     * @var Site $site
+     * @MongoDB\ReferenceOne(targetDocument="\App\Document\Site", storeAs="id")
+     */
+    protected $site;
 
     /**
      * @var \DateTime
@@ -91,5 +98,21 @@ class Subscription
     public function setExpiresAt(? DateTime $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
+    }
+
+    /**
+     * @return Site
+     */
+    public function getSite(): Site
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param Site $site
+     */
+    public function setSite(Site $site): void
+    {
+        $this->site = $site;
     }
 }

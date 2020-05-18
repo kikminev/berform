@@ -23,5 +23,22 @@ class SubscriptionRepository extends DocumentRepository
             ->field('user')->equals($user)
             ->getQuery()->execute();
     }
+
+    public function findAllBySite(Site $site)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->dm->createQueryBuilder(Subscription::class)
+            ->field('site')->equals($site)
+            ->getQuery()->execute();
+    }
+
+    public function deleteAllBySite(Site $site)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->dm->createQueryBuilder(Subscription::class)
+            ->remove()
+            ->field('site')->equals($site)
+            ->getQuery()->execute();
+    }
 }
 
