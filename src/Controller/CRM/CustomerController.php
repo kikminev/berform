@@ -6,13 +6,12 @@ namespace App\Controller\CRM;
 
 use App\Document\File;
 use App\Document\User;
-use App\Repository\AlbumRepository;
 use App\Repository\FileRepository;
-use App\Repository\PageRepository;
 use App\Repository\Payment\SubscriptionRepository;
-use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Repository\UserRepository;
+use App\Service\Site\SiteRemover;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,28 +20,22 @@ class CustomerController extends AbstractController
 {
     private UserRepository $userRepository;
     private SiteRepository $siteRepository;
-    private PageRepository $pageRepository;
-    private AlbumRepository $albumRepository;
-    private PostRepository $postRepository;
     private SubscriptionRepository $subscriptionRepository;
     private FileRepository $fileRepository;
+    private SiteRemover $siteRemover;
 
     public function __construct(
         UserRepository $userRepository,
         SiteRepository $siteRepository,
-        AlbumRepository $albumRepository,
-        PostRepository $postRepository,
-        PageRepository $pageRepository,
         FileRepository $fileRepository,
-        SubscriptionRepository $subscriptionRepository
+        SubscriptionRepository $subscriptionRepository,
+        SiteRemover $siteRemover
     ) {
         $this->userRepository = $userRepository;
         $this->siteRepository = $siteRepository;
-        $this->pageRepository = $pageRepository;
-        $this->albumRepository = $albumRepository;
-        $this->postRepository = $postRepository;
         $this->subscriptionRepository = $subscriptionRepository;
         $this->fileRepository = $fileRepository;
+        $this->siteRemover = $siteRemover;
     }
 
     public function list(): Response
@@ -60,7 +53,7 @@ class CustomerController extends AbstractController
     public function delete(User $user): RedirectResponse
     {
         if($user->isSystem()) {
-            throw new \Exception("Can't delete system user!");
+            throw new RuntimeException("Can't delete system user!");
         }
 
         $sites = $this->siteRepository->getByUser($user);
@@ -72,9 +65,7 @@ class CustomerController extends AbstractController
         }
 
         foreach ($sites as $site) {
-            $this->pageRepository->deleteAllBySite($site);
-            $this->albumRepository->deleteAllBySite($site);
-            $this->postRepository->deleteAllBySite($site);
+            $this->siteRemover->deleteSite($site);
         }
 
         $this->subscriptionRepository->deleteAllByUser($user);

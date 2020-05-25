@@ -19,6 +19,11 @@ class Post
         $this->files = new ArrayCollection();
     }
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     /**
      * @MongoDB\Id
      */

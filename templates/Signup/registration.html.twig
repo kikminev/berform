@@ -1,11 +1,15 @@
 {% extends 'LandingSite/layout.html.twig' %}
-
 {% block body %}
+<a id="logo" href="/" class="signUpPageLogo">b e r f o r m</a>
+
+    <div class="centeredForm">
     {% for message in app.flashes('registration_messages') %}
         <div class="alert alert-notice">
             {{ message }}
         </div>
     {% endfor %}
 
-    {% include('signup/register_form.html.twig') %}
+    {% include('Signup/register_form.html.twig') %}
+    <script>landingSite.setFullHeight();</script>
+</div>
 {% endblock %}

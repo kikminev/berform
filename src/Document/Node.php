@@ -16,6 +16,11 @@ class Node
         $this->files = new ArrayCollection();
     }
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     /**
      * @MongoDB\Id
      */
@@ -349,12 +354,6 @@ class Node
     public function setType($type): void
     {
         $this->type = $type;
-    }
-
-
-    public function __clone()
-    {
-        $this->id = null;
     }
 
     /**

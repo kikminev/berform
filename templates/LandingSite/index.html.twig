@@ -1,6 +1,6 @@
 {% extends 'LandingSite/layout.html.twig' %}
 {% block body %}
-    <div id="logo">b e r f o r m</div>
+    <a href="/" id="logo">b e r f o r m</a>
     <ul class="top-menu">
         <li><a class="right" href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a></li>
         <li><a class="left" href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a></li>
@@ -25,38 +25,32 @@
 
                 <div class="row features-cells">
                     <div class="col-md-4 features-cells-content">
-                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/cloud.png" alt="" />
                         <h3>{% trans %}user_site_features_hosting_header{% endtrans %}</h3>
                         {% trans %}user_site_features_hosting_content{% endtrans %}
                     </div>
 
                     <div class="col-md-4 features-cells-content">
-                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/control-panel.png" alt="" />
                         <h3>{% trans %}user_site_features_features_easy_administration{% endtrans %}</h3>
                         {% trans %}user_site_features_features_easy_administration_content{% endtrans %}
                     </div>
 
                     <div class="col-md-4 features-cells-content">
-                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/templates.png" alt="" />
                         <h3>{% trans %}user_site_features_beautiful_templates_header{% endtrans %}</h3>
                         {% trans %}user_site_features_beautiful_templates_content{% endtrans %}
                     </div>
                 </div>
                 <div class="row features-cells">
                     <div class="col-md-4 features-cells-content">
-                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/ssl.png" alt="" />
                         <h3>{% trans %}user_site_features_free_ssl_header{% endtrans %}</h3>
                         {% trans %}user_site_features_free_ssl_content{% endtrans %}
                     </div>
 
                     <div class="col-md-4 features-cells-content">
-                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/seo.png" alt="" />
                         <h3>{% trans %}user_site_features_seo_tools_header{% endtrans %}</h3>
                         {% trans %}user_site_features_seo_tools_content{% endtrans %}
                     </div>
 
                     <div class="col-md-4 features-cells-content">
-                        <img src="https://s3-eu-west-1.amazonaws.com/adaptix-web-builder/systemResources/icons-main-site/languages.png" alt="" />
                         <h3>{% trans %}user_site_features_multilanguage_support_header{% endtrans %}</h3>
                         {% trans %}user_site_features_multilanguage_support_content{% endtrans %}
                     </div>

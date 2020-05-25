@@ -46,7 +46,7 @@ class SignupController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('signup/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('Signup/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -66,8 +66,7 @@ class SignupController extends AbstractController
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('app_signup_setup_account');
         }
-
-
+        
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
@@ -103,7 +102,7 @@ class SignupController extends AbstractController
         }
 
         return $this->render(
-            'signup/registration.html.twig',
+            'Signup/registration.html.twig',
             ['form' => $form->createView()]
         );
     }

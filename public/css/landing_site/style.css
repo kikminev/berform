@@ -43,7 +43,9 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
 .mb120 { margin-bottom: 120px; }
 .clear { clear: both; }
 
-#logo { position: absolute; top: 25px; left: 70px; z-index: 2; color: #fff; font-family: 'Yeseva One', cursive; font-size: 20px; }
+#logo { position: absolute; top: 25px; left: 70px; z-index: 4; color: #fff; font-family: 'Yeseva One', cursive; font-size: 20px; }
+#logo:hover { text-decoration: none; }
+.signUpPageLogo { color: #333 !important; }
 .logo.logoFooter { font-family: 'Yeseva One', cursive; font-size: 20px; }
 #welcome-screen {
     background-image: url("/img/home/2.jpg");
@@ -194,3 +196,7 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
 .templatePreview .templateNameWrap { position: absolute; bottom: 20px; left: 20px;  color: #fff; }
 .templatePreview .templateNameWrap .name { font-family: "Playfair Display", serif; font-size: 20px; font-weight: bold; color: #fff; }
 .templatePreview .templateNameWrap .description { text-transform: uppercase; font-size: 13px; }
+
+.centeredForm { width: 600px; margin: 0px auto; text-align: center; height: 550px; }
+.centeredForm input {margin-bottom: 20px; }
+.registrationForm label { text-align: left; float: left; }

@@ -12,6 +12,11 @@ class File
 {
     use TimestampableEntity;
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     /**
      * @MongoDB\Id
      */

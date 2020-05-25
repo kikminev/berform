@@ -73,6 +73,11 @@ main_site_top_menu_login: Вход
 main_site_user_logged_in_text: Вход
 main_site_top_menu_sign_up: Регистрация
 
+# login
+main_site_login_login: Вход
+main_site_login_email: Email
+main_site_login_password: Парола
+main_site_login_register: Регистрация
 
 # admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
 # admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin

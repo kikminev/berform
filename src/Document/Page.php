@@ -16,6 +16,11 @@ class Page
         $this->files = new ArrayCollection();
     }
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     /**
      * @MongoDB\Id
      */
@@ -334,11 +339,6 @@ class Page
     public function __toString()
     {
         return $this->getName();
-    }
-
-    public function __clone()
-    {
-        $this->id = null;
     }
 
     /**
