@@ -1,12 +1,12 @@
 <div class="container">
     <div class="list boxList row siteItemWrap">
         <div class="heading">
-            <h2>{% trans %}admin_links_sites{% endtrans %} <a href="{{ path('user_admin_site_create') }}">+</a></h2>
+            <h2>{% trans %}admin_links_sites{% endtrans %} <a href="/#createNewSite">+</a></h2>
         </div>
         {% for site in sites %}
-            <div class="itemWrap col-md-3"><a class="item" href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a></div>
+            <div class="itemWrap {% if site.isTemplate == true %}isTemplate{% endif %} col-md-3"><a class="item" href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a></div>
         {% endfor %}
 
-        <a class="item col-md-3" href="{{ path('user_admin_site_create') }}">{% trans %}admin_links_create{% endtrans %}</a>
+        <a class="item col-md-3" href="/#createNewSite">{% trans %}admin_links_create{% endtrans %}</a>
     </div>
 </div>
