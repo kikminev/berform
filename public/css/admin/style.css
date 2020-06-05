@@ -89,6 +89,8 @@ a:hover { text-decoration: none; }
     align-items: flex-end;
     text-decoration: none;
 }
+.itemWrap.isTemplate .item { background-color: #d51616; color: #fff; }
+
 .itemWrap:hover .itemActionControls { display: block; }
 .domainItemWrap a.item, .siteItemWrap a.item { cursor: pointer !important; }
 .list .heading { float: left; width: 100%; }
