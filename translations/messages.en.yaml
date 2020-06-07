@@ -3,6 +3,8 @@ language_label_bg: Bulgarian
 landing_site_login: Login
 landing_site_register: Registration
 landing_site_welcome_text: Creating web sites is hard...<br /> Here you can create a pro site in 5 minutes!
+landing_site_welcome_text_line_2: Create a professional photography website
+
 
 # home
 main_site_start_now: Start now
@@ -29,14 +31,14 @@ main_site_how_it_works_step1_header: Pick your design
 main_site_how_it_works_step1_content: Choose professional design for your new website.
 main_site_how_it_works_step2_header: Choose your domain
 main_site_how_it_works_step2_content: Pick new domain name or connect your existing domain for your website.
-main_site_how_it_works_step3_header: Add products
-main_site_how_it_works_step3_content: Add your products and start selling.
+main_site_how_it_works_step3_header: Add content
+main_site_how_it_works_step3_content: Add info about you and your business.
 
 # pricing
 main_site_pricing_header: Pricing
 main_site_pricing_content: Start with our free 15 days trial and go premium later. One plan to rule them all.
 main_site_sign_up_header: Sign up to start your 15-day free trial
-main_site_sign_up_header_content: Sign up prepare your website and go premium when you are ready to launch.
+main_site_sign_up_header_content: Sign up, prepare your website and go premium when you are ready to launch.
 main_site_pricing_billed_annually: billed annually
 main_site_pricing_bgn_currency: BGN
 main_site_title: - the easiest way to create a website
@@ -64,3 +66,21 @@ main_site_categories: Unlimited categories
 main_site_product_options: Unlimited product options
 main_site_product_discounts: Discount campaigns
 main_site_product_cdn: Fast and reliable CDN
+
+# footer
+main_site_footer_company_description: We make it easy to start a professional website for photography and storrytelling. With a few clicks of the mouse you can launc your brand today.
+main_site_footer_links_product_header: About Us
+main_site_top_menu_features: Features
+main_site_top_menu_how_it_works: How it works
+main_site_top_menu_templates: Themes
+main_site_top_menu_pricing: Pricing
+main_site_top_menu_login: Login
+main_site_user_logged_in_text: Login
+main_site_top_menu_sign_up: Sign up
+
+# login
+# login
+main_site_login_login: Login
+main_site_login_email: E-mail
+main_site_login_password: Password
+main_site_login_register: Registration
