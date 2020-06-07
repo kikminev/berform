@@ -165,6 +165,9 @@ user_site_view_album:
     controller: App\Controller\AlbumController::view
 
 # CRM
+crm_dashboard:
+    path: /nimda
+    controller: App\Controller\CRM\CustomerController::list
 crm_list_customers:
     path: /nimda/customer/list
     controller: App\Controller\CRM\CustomerController::list
