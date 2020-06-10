@@ -84,3 +84,5 @@ main_site_login_login: Login
 main_site_login_email: E-mail
 main_site_login_password: Password
 main_site_login_register: Registration
+
+footer_built_with: Built with
