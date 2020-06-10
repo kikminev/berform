@@ -62,7 +62,7 @@
                         </li>
 
                         <li>
-                            <a class="scrollToLink" href="" rel="siteTemplates">{% trans %}main_site_top_menu_templates{% endtrans %}</a>
+                            <a class="scrollToLink" href="" rel="signUp">{% trans %}main_site_top_menu_templates{% endtrans %}</a>
                         </li>
 
                         <li>
@@ -70,15 +70,11 @@
                         </li>
 
                         <li class="loginLink">
-                            <a href="">{% trans %}main_site_top_menu_login{% endtrans %}</a>
-                        </li>
-
-                        <li class="loggedUserLink" style="display: none;">
-                            <a href="">{% trans %}main_site_user_logged_in_text{% endtrans %}</a>
+                            <a class="left" href="{{ path('app_login') }}">{% trans %}main_site_top_menu_login{% endtrans %}</a>
                         </li>
 
                         <li class="signUpLink">
-                            <a href="">{% trans %}main_site_top_menu_sign_up{% endtrans %}</a>
+                            <a class="left" href="{{ path('app_registration') }}">{% trans %}main_site_top_menu_sign_up{% endtrans %}</a>
                         </li>
 
 

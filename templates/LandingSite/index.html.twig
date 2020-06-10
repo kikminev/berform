@@ -115,7 +115,7 @@
     {# END SIGN UP #}
 
 
-    <div class="siteTemplates container">
+    <div class="siteTemplates container" id="siteTemplates" name="siteTemplates">
         <div class="row">
         {% for template in templates %}
             <a class="templatePreviewWrap col-md-6" onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_registration') }}'); return false;">
