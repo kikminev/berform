@@ -53,6 +53,12 @@ class File
     protected $order;
 
     /**
+     * @var int|null $size
+     * @MongoDB\Field(type="int")
+     */
+    private $size;
+
+    /**
      * @var User $user
      * @MongoDB\ReferenceOne(targetDocument="User", storeAs="id")
      */
@@ -195,5 +201,21 @@ class File
     public function setOrder(int $order): void
     {
         $this->order = $order;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param int|null $size
+     */
+    public function setSize(?int $size): void
+    {
+        $this->size = $size;
     }
 }

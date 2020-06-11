@@ -48,7 +48,7 @@ class UploadController extends AbstractController
 
         $newFileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
         $url = $fileUploader->upload($newFileName, $file);
-        $id = $this->attachFileToSite($site, $url, $newFileName);
+        $id = $this->attachFileToSite($site, $url, $newFileName, $file->getSize());
 
         $url = $params->get('resource_provider_domain').$newFileName.'?h=150&w=150&fit=crop&border-radius=10';
 
@@ -92,7 +92,7 @@ class UploadController extends AbstractController
         return $fileConcatenated;
     }
 
-    private function attachFileToSite(Site $site, $url, $baseName)
+    private function attachFileToSite(Site $site, $url, $baseName, $size)
     {
         $this->denyAccessUnlessGranted('modify', $site);
 
@@ -101,6 +101,7 @@ class UploadController extends AbstractController
         $file->setFileUrl($url);
         $file->setBaseName($baseName);
         $file->setUser($this->getUser());
+        $file->setSize($size);
 
         $this->documentManager->persist($file);
         $this->documentManager->flush($file);
