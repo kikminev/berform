@@ -1,16 +1,20 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
 
-    <div class="imageLibrary modalWindow" style="display: none; position: fixed; z-index: 10; top: 20px; right: 20px; bottom: 20px; left: 20px; background: red;">
-        {% if files is defined %}
-                {% for file in files %}
-                    {% if file.deleted != true %}
-                        <div class="imgWrap" id="object_{{ file.id }}" data-id="{{ file.id }}" data-url="{{ file.fileUrl }}">
-                            <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=150&w=150&fit=crop&border-radius=10" alt="" />
-                        </div>
-                    {% endif %}
-                {% endfor %}
-        {% endif %}
+    <div class="imageLibrary modalWindow">
+        <div class="innerWrap">
+            <a class="closeModal" onclick="$('.modalWindow').hide(); return false;"><i class="fas fa-times"></i></a>
+            <h2>Gallery</h2>
+            {% if files is defined %}
+                    {% for file in files %}
+                        {% if file.deleted != true %}
+                            <div class="imgWrap" id="object_{{ file.id }}" data-id="{{ file.id }}" data-url="{{ file.fileUrl }}">
+                                <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=150&w=150&fit=crop&border-radius=10" alt="" />
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+            {% endif %}
+        </div>
     </div>
 
     <div class="breadcrumbs container-fluid contextBar">

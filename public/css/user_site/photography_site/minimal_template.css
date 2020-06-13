@@ -214,14 +214,7 @@ h1 {
     background-position: center;
 }
 
-.singleImageStaticWrap img {
-    width: 100%;
-    overflow: hidden;
-}
-
-.singleImageStaticWrap img {
-    width: 100%;
-}
+.singleImageStaticWrap img {width: 100%; overflow: hidden; }
 
 .blogPage h1 {
     text-align: center;

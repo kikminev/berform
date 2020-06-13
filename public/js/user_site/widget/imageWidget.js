@@ -2,7 +2,6 @@ imageWidget = {
     transform: function () {
 
         $(".parallaxImageWrap").each(function (index) {
-            // console.log(index + ": " + [0].attr('src'));
             var img = $(this).find('img');
             var src = $(img).attr('src');
 
@@ -14,11 +13,10 @@ imageWidget = {
         });
 
         $(".singleImageStaticWrap").each(function (index) {
-            // console.log(index + ": " + [0].attr('src'));
             var img = $(this).find('img');
             var src = $(img).attr('src');
 
-            var link = '<a style="background-image: url(\'' + src + '\')" data-fancybox="gallery-s-'+index+'" href="' + src + '"></a>';
+            var link = '<a data-fancybox="gallery-s-'+index+'" href="' + src + '"><img src="'+src+'" /></a>';
             $(this).find('img').remove();
             $(this).html(link);
         });
