@@ -5,6 +5,8 @@ namespace App\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use App\Validation\Site\Slug\Page as SlugAssert;
+
 
 /**
  * @MongoDB\Document
@@ -48,6 +50,7 @@ class Page
 
     /**
      * @MongoDB\Field(type="string")
+     * @SlugAssert\SlugIsUnique
      */
     private $slug;
 

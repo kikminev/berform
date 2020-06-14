@@ -50,6 +50,8 @@ class PostController extends AbstractController
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
+        $orderedFiles = UploadController::getOrderedFiles($post->getFiles()->toArray());
+
 
         $form = $this->createForm(PostType::class, $post, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
@@ -72,10 +74,11 @@ class PostController extends AbstractController
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
             }
+
+            $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $updatedTranslatedTitle = [];
             $updatedTranslatedContent = [];
             $updatedTranslatedExcerpt = [];
@@ -112,10 +115,6 @@ class PostController extends AbstractController
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
         }
-
-        // todo: this needs to be refactored - SHOW ORDERED FILES
-        $orderedFiles = UploadController::getOrderedFiles($post->getFiles()->toArray());
-        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
             'Admin/Post/post_edit.html.twig',

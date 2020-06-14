@@ -121,3 +121,31 @@ a:hover { text-decoration: none; }
 .flash-notice { color: #FF7C5C; }
 .uploadButton { background: #333; color: #fff !important; display: flex; align-items: flex-end; padding: 0px 15px; font-size: 50px; }
 .htmlEditor .singleImageWrap { width: 100%; background: #333; overflow: hidden; }
+
+.imageLibrary { display: none; position: absolute; z-index: 10; background: white; width: 100%; top: 0px; }
+.imageLibrary .innerWrap { width: 850px; margin: auto; position: relative; }
+.imageLibrary h2 { margin-top: 30px; }
+.imageLibrary .imgWrap { cursor: pointer; }
+.closeModal {
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    background: #fff;
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #ccc;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    -webkit-box-shadow: 2px 2px 2px 0px rgba(191,191,191,1);
+    -moz-box-shadow: 2px 2px 2px 0px rgba(191,191,191,1);
+    box-shadow: 2px 2px 2px 0px rgba(191,191,191,1);
+}
+
+.closeModal:hover {
+    color: #007bff !important;
+    -webkit-box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
+    -moz-box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
+    box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
+}

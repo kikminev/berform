@@ -48,6 +48,8 @@ class PageController extends AbstractController
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
+        $orderedFiles = UploadController::getOrderedFiles($page->getFiles()->toArray());
+
 
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
@@ -70,6 +72,7 @@ class PageController extends AbstractController
                 $form->get('keywords_' . $language)->setData($translatedKeywords);
                 $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
             }
+            $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -109,10 +112,6 @@ class PageController extends AbstractController
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
         }
-
-        // todo: this needs to be refactored - SHOW ORDERED FILES
-        $orderedFiles = UploadController::getOrderedFiles($page->getFiles()->toArray());
-        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
             'Admin/Page/page_edit.html.twig',

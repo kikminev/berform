@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use App\Validation\Site\Slug\Post as SlugAssert;
 
 /**
  * @MongoDB\Document
@@ -47,6 +48,7 @@ class Post
     /**
      * @var null|string $slug
      * @MongoDB\Field(type="string")
+     * @SlugAssert\SlugIsUnique
      */
     private $slug;
 

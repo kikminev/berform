@@ -62,15 +62,27 @@ footer {
 .featuredParallaxPost .title { width: 100%; text-align: center; position: absolute; bottom: 250px; height: 100px; line-height: 100px; color: #fff; }
 .featuredParallaxPost .title a { color:#fff; }
 
-.morePosts { padding-top: 100px; padding-bottom: 100px; margin-top: 150px; margin-bottom: -150px; background-color: #D9D9D9; width: 100%; }
+.morePosts { padding-top: 100px; padding-bottom: 150px; margin-top: 150px; margin-bottom: -150px; background-color: #D9D9D9; width: 100%; }
 .morePosts .blogImgWrap { width: 100%; overflow: hidden; display: block; }
 .morePosts .noImage { width: 100%; height: 410px; background: #626262; overflow: hidden; display: block; }
 
 /*.morePosts h3 { margin-bottom: 30px; }*/
 
 /* blog */
-.blogPost #imagesWrap { position: relative; width: 350px; float: left; padding-bottom: 20px; margin-bottom: 30px; }
-.blogPost #imagesWrap .imgWrap { display: block; margin: 10px 10px; float: left; }
+.blogPost #imagesWrap { position: relative; width: 350px; float: left; padding-bottom: 20px; margin-bottom: 30px; background: #fff; }
+.moreImagesPlaceholder {
+    width: 110px;
+    height: 70px;
+    background: #333;
+    float: left;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 70px;
+}
+
+.blogPost #imagesWrap .imgWrap { display: block; margin: 10px 10px 0px 0px; float: left; }
 .blogPost .blogIconImgWrap { float: left; margin-left: -40px; }
 .blogPost, .blogListWrap { padding-left: 40px; margin-bottom: 150px; }
 .blogListWrap h2, .blogPost h1 { margin-bottom: 60px; }
@@ -81,7 +93,7 @@ footer {
 .parallaxImageWrap {  margin: 20px -50px; }
 .parallaxImageWrap a { height: 600px; width: 100%; display: block; background-attachment: fixed; background-position: center; }
 .singleImageStaticWrap img { width: 100%; overflow: hidden; }
-.singleImageStaticWrap img { width: 100%; }
+.singleImageStaticWrap a { width: 100%; display: block; }
 
 .blogPage h1 { text-align: center; margin: 100px 0px 100px; }
 
