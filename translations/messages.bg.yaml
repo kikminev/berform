@@ -85,6 +85,7 @@ main_site_login_register: Регистрация
 form_page_name: Име
 form_page_slug: Системно име
 form_post_already_used: Адресът на публикацията е вече зает!
+form_page_already_used: Адресът на страницата е вече зает!
 admin_form_page_title: Заглавие на страницата
 admin_form_page_content: Съдържание
 admin_form_page_description: Описание

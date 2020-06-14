@@ -48,7 +48,6 @@ class Post
     /**
      * @var null|string $slug
      * @MongoDB\Field(type="string")
-     *
      * @SlugAssert\SlugIsUnique
      */
     private $slug;

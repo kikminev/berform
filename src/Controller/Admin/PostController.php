@@ -78,9 +78,6 @@ class PostController extends AbstractController
             $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
         }
 
-
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             $updatedTranslatedTitle = [];
             $updatedTranslatedContent = [];

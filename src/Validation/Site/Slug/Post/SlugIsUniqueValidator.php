@@ -11,9 +11,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SlugIsUniqueValidator extends ConstraintValidator
 {
     private PostRepository $postRepository;
-    /**
-     * @var TranslatorInterface
-     */
     private TranslatorInterface $translator;
 
     public function __construct(PostRepository $postRepository, TranslatorInterface $translator)
@@ -24,8 +21,12 @@ class SlugIsUniqueValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): void
     {
-        $existingPost = $this->postRepository->findOneBy(['slug' => $value]);
-        if(null === $existingPost) {
+        $existingPost = $this->postRepository->findOneBy([
+            'slug' => $value,
+            'site' => $this->context->getObject()->getSite(),
+        ]);
+
+        if (null === $existingPost) {
             return;
         }
 
