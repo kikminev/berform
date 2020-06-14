@@ -86,3 +86,17 @@ main_site_login_password: Password
 main_site_login_register: Registration
 
 footer_built_with: Built with
+
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# page edit form
+form_page_name: Име
+form_page_slug: Системно име
+form_post_already_used: There is another post in this blog that uses the same slug!
+admin_form_page_title: Заглавие на страницата
+admin_form_page_content: Съдържание
+admin_form_page_description: Описание
+admin_form_page_keywords: Ключови думи
+admin_form_page_meta_description: Подробно описание
+admin_form_page_menu_link: Име на линка
+admin_site_activated_languages: Поддържани езици
