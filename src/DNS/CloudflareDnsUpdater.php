@@ -77,7 +77,6 @@ class CloudflareDnsUpdater implements DnsUpdater
             throw new RuntimeException('Domain zone can\'t be created without valid account');
         }
 
-        try {
             $response = $client->request('POST',
                 $this->clientAPIUrl . '/client/v4/zones',
                 [
@@ -90,24 +89,38 @@ class CloudflareDnsUpdater implements DnsUpdater
                 ]
             );
 
-            $result = json_decode($response->getContent());
+            if($response->getStatusCode() == 200) {
+                $result = json_decode($response->getContent());
+                $zoneId = $result->result->id;
 
-            $zoneId = $result->result->id;
-            $ns1 = $result->result->name_servers[0];
-            $ns2 = $result->result->name_servers[1];
+                $ns1 = $result->result->name_servers[0];
+                $ns2 = $result->result->name_servers[1];
 
-            $domain->setCloudflareZoneId($zoneId);
-            $domain->setNS1($ns1);
-            $domain->setNS2($ns2);
+                $domain->setCloudflareZoneId($zoneId);
+                $domain->setNS1($ns1);
+                $domain->setNS2($ns2);
 
-            $this->documentManager->flush($domain);
+                $params = json_encode(['type' => 'A', 'name' => $domainName, 'content' => '54.77.174.96', 'ttl' => 1]);
 
-            return true;
+                $client->request('POST',
+                    $this->clientAPIUrl . sprintf('/client/v4/zones/%s/dns_records', $zoneId),
+                    [
+                        'body' => $params,
+                        'headers' => [
+                            'X-Auth-Email' => $user->getEmail(),
+                            'X-Auth-Key' => $cloudFlareApiKey,
+                            'Content-Type' => 'application/json',
+                        ],
+                    ]
+                );
 
-        } catch (Exception $exception) {
-        }
+                $this->documentManager->persist($domain);
+                $this->documentManager->flush();
 
-        return false;
+                return true;
+            }
+
+            return false;
     }
 
     /**
@@ -116,11 +129,9 @@ class CloudflareDnsUpdater implements DnsUpdater
      * 1. adds A record
      * 2. adds A record for www
      * 3. setup of page rules for cache everything of the whole site. e.g. it caches www.domain.com entirely
-     * 4. setup for page rule for exclusion of www.domain.com/en/c which is the dynamic address that should not be cached
      */
     public function createDnsRecords($domainName, $zoneId)
     {
-        // todo: needs to be implemented
     }
 
     public function deleteDomainDNS(Domain $domain, User $user)

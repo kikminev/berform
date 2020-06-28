@@ -12,9 +12,17 @@ use App\Document\Domain;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DomainController extends AbstractController
 {
+    private TranslatorInterface $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * @param DomainRepository $domainRepository
      * @return \Symfony\Component\HttpFoundation\Response
@@ -37,6 +45,7 @@ class DomainController extends AbstractController
     public function create(
         Request $request,
         DocumentManager $documentManager,
+        DomainRepository $domainRepository,
         CloudflareDnsUpdater $cloudflareDnsUpdater
     ): Response {
 
@@ -50,14 +59,19 @@ class DomainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            if(null !== $domainRepository->findOneBy(['name' => $domain->getName()])) {
+                $this->addFlash('domain_list_notice', $this->translator->trans('admin_create_domain_error_already_exists'));
+
+                return $this->redirectToRoute('user_admin_domain_list');
+            }
+
             $domain->setUser($user);
 
             if ($cloudflareDnsUpdater->createCloudflareAccount($user)) {
-                $cloudflareDnsUpdater->addDomainDNS($domain, $user);
+                if(true !== $cloudflareDnsUpdater->addDomainDNS($domain, $user)) {
+                    $this->addFlash('domain_list_notice', $this->translator->trans('admin_create_domain_error_unknown'));
+                }
             }
-
-            $documentManager->persist($domain);
-            $documentManager->flush();
 
             return $this->redirectToRoute('user_admin_domain_list');
         }
@@ -90,6 +104,7 @@ class DomainController extends AbstractController
         return $this->render(
             'Admin/Domain/domain_edit.html.twig',
             [
+                'domain' => $domain,
                 'form' => $form->createView(),
             ]
         );
