@@ -10,6 +10,7 @@ body {
 a { text-decoration: none; cursor: pointer; }
 a:hover { text-decoration: none; }
 
+.errorNotice { width: 100%; margin: 20px auto; color: red; }
 .clear {
     clear: both;
 }
@@ -93,6 +94,7 @@ a:hover { text-decoration: none; }
 
 .itemWrap:hover .itemActionControls { display: block; }
 .domainItemWrap a.item, .siteItemWrap a.item { cursor: pointer !important; }
+.domainNameServers { margin-top: 30px; }
 .list .heading { float: left; width: 100%; }
 
 .topActionsBar a.btn { float: right; color: #fff; }
