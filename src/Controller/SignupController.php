@@ -124,11 +124,15 @@ class SignupController extends AbstractController
     ): RedirectResponse {
         if ($selectedTemplate = $session->get('selectedTemplate')) {
 
+            if(null == $this->getUser()) {
+                return $this->redirectToRoute('app_registration');
+            }
+
             /** @noinspection PhpUnhandledExceptionInspection */
             /** @var Site $selectedTemplate */
             $selectedTemplate = $siteRepository->find($selectedTemplate);
             if (null === $selectedTemplate) {
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('index');
             }
 
             $newSite = clone $selectedTemplate;
@@ -191,5 +195,26 @@ class SignupController extends AbstractController
         }
 
         return $this->redirectToRoute('admin');
+    }
+
+    public function previewSiteBeforeCreation(SessionInterface $session, SiteRepository $siteRepository) {
+
+        $selectedTemplate = $session->get('selectedTemplate');
+        if(null === $selectedTemplate) {
+            return $this->redirectToRoute('index');
+        }
+
+        $selectedTemplate = $siteRepository->find($selectedTemplate);
+        if (null === $selectedTemplate) {
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render(
+            'Signup/template_preview.html.twig',
+            [
+                'template' => $selectedTemplate
+            ]
+        );
+
     }
 }

@@ -15,7 +15,7 @@ landingSite = {
         $('#welcome-screen').addClass(backgrounds[Math.floor(Math.random()*backgrounds.length)]);
     },
     setFullHeight(formId) {
-        $('.content-wrap').css('height', $(window).height());
+        $('.content-wrap').css('min-height', $(window).height());
 
         if(formId === 'loginForm') {
             $('.content-wrap').css('padding-top', $(window).height() / 2 - 105);

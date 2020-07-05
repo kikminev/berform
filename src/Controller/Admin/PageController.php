@@ -144,6 +144,9 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('modify', $site);
 
         $page = new Page();
+        $page->setSite($site);
+        $page->setUser($this->getUser());
+
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
@@ -191,9 +194,6 @@ class PageController extends AbstractController
             $page->setTranslatedContent($updatedTranslatedContent);
             $page->setTranslatedKeywords($updatedTranslatedKeywords);
             $page->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
-            $page->setSite($site);
-            $page->setUser($this->getUser());
-
 
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
