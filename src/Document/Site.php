@@ -5,6 +5,7 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use App\Validation\Site\Host as HostAssert;
 
 /**
  * @MongoDB\Document
@@ -80,13 +81,13 @@ class Site
      * @var array $translatedAddress
      * @MongoDB\Field(type="hash")
      */
-    private $translatedAddress = array();
+    private $translatedAddress = [];
 
     /**
      * @var array $translatedDescription
      * @MongoDB\Field(type="hash")
      */
-    private $translatedDescription = array();
+    private $translatedDescription = [];
 
     /**
      * @var null|string $workingFrom
@@ -182,6 +183,7 @@ class Site
     /**
      * @var string $host
      * @MongoDB\Field(type="string")
+     * @HostAssert\HostIsUnique
      */
     protected $host;
 
@@ -195,7 +197,7 @@ class Site
      * @var array $supportedLanguages
      * @MongoDB\Field(type="hash")
      */
-    protected $supportedLanguages = array();
+    protected $supportedLanguages = [];
 
 
     /**
@@ -569,7 +571,8 @@ class Site
         $this->pages = $pages;
     }
 
-    public function __clone() {
+    public function __clone()
+    {
         $this->id = null;
     }
 
