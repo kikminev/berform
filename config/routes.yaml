@@ -30,6 +30,9 @@ app_signup_choose_template:
 app_signup_setup_account:
     path: /sign-up/setup-account
     controller: App\Controller\SignupController::setupAccount
+app_signup_preview_site:
+    path: /sign-up/preview-site
+    controller: App\Controller\SignupController::previewSiteBeforeCreation
 
 # sites
 user_admin_site_list:

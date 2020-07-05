@@ -31,20 +31,5 @@ a = {
         }
 
         $(".slug_input").val(url_slug(name));
-    },
-    selectSite: function (id) {
-
-    },
-    agLink: function (url) {
-        $.get(url);
-    },
-    openRegistration: function (addTemplateUrl, redirectUrl) {
-        $.ajax({
-            type: "GET",
-            url: addTemplateUrl,
-            success: function (response) {
-                window.location = redirectUrl;
-            }
-        });
     }
 }

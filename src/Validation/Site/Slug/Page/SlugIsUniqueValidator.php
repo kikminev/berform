@@ -25,15 +25,15 @@ class SlugIsUniqueValidator extends ConstraintValidator
             'slug' => $value,
             'site' => $this->context->getObject()->getSite(),
         ]);
-
         if (null === $existingPage) {
             return;
         }
 
         /** @var Page $validatedPage */
         $validatedPage = $this->context->getObject();
+        $validatedPageId = $validatedPage->getId();
 
-        if ($validatedPage->getId() !== $existingPage->getId()) {
+        if (($validatedPageId === null && $existingPage) || ($existingPage && $existingPage->getId() !== $validatedPageId)) {
             $this->context->buildViolation($this->translator->trans('form_page_already_used'))->addViolation();
         }
     }

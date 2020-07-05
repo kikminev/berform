@@ -11,8 +11,9 @@ h1 { text-align: center; margin: 100px 0px 100px; width: 100% }
 #pagesMenu li { margin-left: 40px; }
 
 .navigation { padding: 20px 0px; background: #fff; z-index: 2; position: relative; }
-.navigation .socialIcons { padding: .5rem 1rem; float: right; }
+.navigation .socialIcons { padding: .5rem 1rem; float: right; display: none; }
 .contactUsWrap .socialIcons a, .navigation .socialIcons a { padding: 0 .1rem; margin-right: 20px; }
+
 .blogHeader { padding: 25px 0px; margin-bottom: 40px; text-align: center; width: 100%;}
 .blogHeader div { width: 100%; text-align: center;}
 .blogTemplate { text-align: center; }
@@ -116,3 +117,7 @@ footer {
 #contactForm .contactFormRowCell { padding-left: 0px; }
 #contactForm #contact_submit { height: 35px; line-height: 35px; width: 100px; background: #000; border: 0px; color: #fff; border-radius: 40px; float: right; margin-top: 10px; text-transform: lowercase; }
 /* end contact page */
+
+@media only screen and (max-width: 828px) {
+    .navigation .socialIcons { display: none; }
+}

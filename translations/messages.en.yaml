@@ -78,6 +78,9 @@ main_site_top_menu_login: Login
 main_site_user_logged_in_text: Login
 main_site_top_menu_sign_up: Sign up
 
+# preview template page
+main_site_preview_template: Create your site now
+
 # login
 # login
 main_site_login_login: Login
