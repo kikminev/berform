@@ -97,6 +97,7 @@ form_page_name: Име
 form_page_slug: Системно име
 form_post_already_used: There is another post in this blog that uses the same slug!
 form_page_already_used: There is another page in this site that uses the same slug!
+form_site_already_used: The host name is already taken!
 admin_form_page_title: Заглавие на страницата
 admin_form_page_content: Съдържание
 admin_form_page_description: Описание
