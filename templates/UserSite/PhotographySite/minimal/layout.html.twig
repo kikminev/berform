@@ -4,10 +4,10 @@
     <body>
         <style type="text/css">
             {{ site.customCss }}
+            {% if page is defined %}{{ page.customCss|raw }}{% endif %}
         </style>
 
         {{ site.customHtml|raw }}
-        {% if page is defined %}{{ page.customHtml|raw }}{% endif %}
 
         <div class="container-fluid">
             <div class="row">
