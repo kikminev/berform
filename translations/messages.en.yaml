@@ -95,6 +95,7 @@ footer_built_with: Built with
 # page edit form
 form_page_name: Име
 form_page_slug: Системно име
+form_page_custom_css: Custom CSS
 form_post_already_used: There is another post in this blog that uses the same slug!
 form_page_already_used: There is another page in this site that uses the same slug!
 form_site_already_used: The host name is already taken!
