@@ -4,16 +4,17 @@ $(document).ready(function () {
         a.generateSlug();
     });
 
-    // used by page editor as we want to show only link button
+    // used by PAGE editor as it differs from the blog editor
     tinymce.init({
         selector: ".htmlEditor textarea",
         height: 500,
         menubar: false,
         content_css : "/tinymce/skins/content/default/content.min.css, /css/admin/custom_tinymce.css",
         plugins: [
-            'link'
+            'link',
+            'code'
         ],
-        toolbar: 'link',
+        toolbar: 'link code',
         contextmenu: "link",
     });
 
@@ -27,9 +28,9 @@ $(document).ready(function () {
             'parallaxImage': '/tinymce/plugins/imageLibrary/parallaxImage.js',
         },
         plugins: [
-            'link image'
+            'link image code'
         ],
-        toolbar: 'link singleImage parallaxImage',
+        toolbar: 'link singleImage parallaxImage code',
         contextmenu: "link singleImage parallaxImage",
     });
 
