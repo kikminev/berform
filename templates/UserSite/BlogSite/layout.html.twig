@@ -34,7 +34,10 @@
         <script type="text/javascript">
             $.fancybox.defaults.hash = false;
         </script>
-        <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('{{ resource_provider_domain }}{{ mainImage.baseName }}'); background-position: center center;"{% endif %}>
+
+        {# this is the old footer that takes the first page image as a bg #}
+        {# <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('{{ resource_provider_domain }}{{ mainImage.baseName }}'); background-position: center center;"{% endif %}> #}
+        <footer class="footer">
             <div class="siteName">
                 {{ site.name }}
             </div>
