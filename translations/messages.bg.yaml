@@ -84,6 +84,7 @@ main_site_login_register: Регистрация
 # page edit form
 form_page_name: Име
 form_page_slug: Системно име
+form_page_custom_css: Допълнителен CSS
 form_post_already_used: Адресът на публикацията е вече зает!
 form_page_already_used: Адресът на страницата е вече зает!
 admin_form_page_title: Заглавие на страницата

@@ -65,6 +65,12 @@ class Page
     private $locale;
 
     /**
+     * @var null|string $customCss
+     * @MongoDB\Field(type="string")
+     */
+    protected $customCss;
+
+    /**
      * @MongoDB\Field(type="boolean")
      */
     private $active;
@@ -384,5 +390,21 @@ class Page
     public function setDeleted(bool $deleted): void
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomCss(): ?string
+    {
+        return $this->customCss;
+    }
+
+    /**
+     * @param string|null $customCss
+     */
+    public function setCustomCss(?string $customCss): void
+    {
+        $this->customCss = $customCss;
     }
 }
