@@ -13,13 +13,14 @@ mediaLibrary = {
         return html;
     },
     init: function () {
-        $(".imgWrap").click(function () {
-            let imageUrl = $(this).data('url');
+        $(".imageLibrary .imgWrap").click(function () {
+                let imageUrl = $(this).data('url');
             mediaLibrary.insertImageInEditor(mediaLibrary.getWidgetHtml(imageUrl, mediaLibrary.imageWidgetStyle));
         });
     },
+
     open: function () {
-        $('.imageLibrary').fadeIn('slow');
+        $('.imageLibrary').show();
     },
     close: function () {
         $('.imageLibrary').fadeOut();
