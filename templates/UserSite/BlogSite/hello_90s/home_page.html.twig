@@ -1,0 +1,26 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+    <div class="container blogList">
+        <div class="row">
+            {% set postsAfterFeaturedOne = posts %}
+            {% for post in postsAfterFeaturedOne %}
+                <div class="blogPostListWrap">
+                    <a class="ajaxLink blogExcerptWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                        <h3 class="title">
+                            {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                        </h3>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: [
+                "close"
+            ],
+        });
+    </script>
+{% endblock %}

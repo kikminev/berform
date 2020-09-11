@@ -21,6 +21,12 @@ class SlugIsUniqueValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): void
     {
+
+        $site = $this->context->getObject()->getSite();
+        if (null === $site) {
+            return;
+        }
+
         $existingPost = $this->postRepository->findOneBy([
             'slug' => $value,
             'site' => $this->context->getObject()->getSite(),

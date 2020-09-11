@@ -127,10 +127,7 @@ class Post
         return $this->id;
     }
 
-    /**
-     * @return Site
-     */
-    public function getSite(): Site
+    public function getSite(): ?Site
     {
         return $this->site;
     }

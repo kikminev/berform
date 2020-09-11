@@ -46,9 +46,9 @@ class LayoutResolver
 
         switch ($site->getCategory()) {
             case static::SITE_CATEGORY_BLOG:
-                return 'UserSite/BlogSite/'.$page;
+                return 'UserSite/BlogSite/' . $site->getTemplate() . '/' . $page;
             case static::SITE_CATEGORY_PHOTOGRAPHY:
-                return 'UserSite/PhotographySite/minimal/'.$page;
+                return 'UserSite/PhotographySite/' . $site->getTemplate() . '/' . $page;
             default:
                 return 'UserSite/StandardSite/'.$page;
         }
@@ -61,7 +61,7 @@ class LayoutResolver
             case static::SITE_CATEGORY_PHOTOGRAPHY:
                 return 'PhotographySite\minimal\layout';
             case static::SITE_CATEGORY_BLOG:
-                return 'BlogSite\layout';
+                return 'BlogSite\\'.$site->getTemplate().'\layout';
             default:
                 return 'StandardSite/layout';
         }

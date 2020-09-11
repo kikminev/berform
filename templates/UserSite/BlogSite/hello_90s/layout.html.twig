@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+{% include('UserSite/Components/head.html.twig') %}
+<body>
+<style type="text/css">
+    {{ site.customCss|raw }}
+    {% if page is defined %}{{ page.customCss|raw }}{% endif %}
+</style>
+
+{{ site.customHtml|raw }}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="navigation col-md-12">
+            {% include('UserSite/Components/social_icons.html.twig') %}
+            {% include('UserSite/Components/navigation_menu.html.twig') %}
+        </div>
+    </div>
+</div>
+    <main class="cd-main {% if slug != 'home' %}innerPage{% endif %}">
+        <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">
+            <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
+
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8">
+                        <a class="siteName" href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
+                        <small class="siteNameDescription">Full-stack web developer playing with clouds, LAMP, MongoDB, JavaScript.</small>
+
+                        {% block body %}{% endblock %}
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+{% include('UserSite/Components/loading_bar.html.twig') %}
+
+<script type="text/javascript">
+    $.fancybox.defaults.hash = false;
+</script>
+
+{# this is the old footer that takes the first page image as a bg #}
+{# <footer class="footer" {% if page is defined and page is not null and page.files|length > 0 %}{% set mainImage = page.files|first %}style="background: url('{{ resource_provider_domain }}{{ mainImage.baseName }}'); background-position: center center;"{% endif %}> #}
+<footer class="footer">
+    <div class="siteName">
+        {{ site.name }}
+    </div>
+    {% include('UserSite/Components/social_icons.html.twig') %}
+
+
+    <a href="https://www.berform.com" class="builtWithBerform" target="_blank">{% trans %}footer_built_with{% endtrans %} Berform</a>
+</footer>
+</body>
+</html>

@@ -53,8 +53,10 @@ class BlogController extends AbstractController
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         // todo: pagination
+        $template = 'UserSite/BlogSite/'.$site->getTemplate().'/list.html.twig';
+
         return $this->render(
-            'UserSite/BlogSite/list.html.twig',
+            $template,
             [
                 'site' => $site,
                 'pages' => $pages,
@@ -91,7 +93,6 @@ class BlogController extends AbstractController
 
         /** @var Post $post */
         $post = $postRepository->findActiveBySlug($slug, $site);
-        $page = $pageRepository->findActiveBySlug(!empty($slug) ? $slug : 'home', $site);
         $pages = $pageRepository->findActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
         $morePosts = $postRepository->findReadMorePosts($site);
@@ -101,12 +102,11 @@ class BlogController extends AbstractController
         }
 
         return $this->render(
-            'UserSite/BlogSite/post.html.twig',
+            'UserSite/BlogSite/'.$site->getTemplate().'/post.html.twig',
             [
                 'site' => $site,
                 'post' => $post,
                 'slug' => $slug,
-                'page' => $page,
                 'pages' => $pages,
                 'morePosts' => $morePosts,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
