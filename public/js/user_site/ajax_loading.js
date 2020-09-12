@@ -89,6 +89,14 @@ jQuery(document).ready(function ($) {
                 isAnimating = false;
                 userSite.init();
 
+                if (sectionId === 'home') {
+                    dashboard.find('.innerPage').addClass('pageCategory');
+                    dashboard.find('.pageCategory').removeClass('innerPage');
+                } else {
+                    dashboard.find('.pageCategory').addClass('innerPage');
+                }
+
+
                 var body = $("html, body");
             });
 

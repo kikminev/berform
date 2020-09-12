@@ -18,19 +18,12 @@
         </div>
     </div>
 </div>
-    <main class="cd-main {% if slug != 'home' %}innerPage{% endif %}">
+    <main class="cd-main pageCategory {% if slug != 'home' %}innerPage{% endif %}">
         <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">
             <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
 
-                <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-8">
-                        <a class="siteName" href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
-                        <small class="siteNameDescription">Full-stack web developer playing with clouds, LAMP, MongoDB, JavaScript.</small>
 
                         {% block body %}{% endblock %}
-                    </div>
-                </div>
 
             </div>
         </section>
@@ -49,8 +42,6 @@
         {{ site.name }}
     </div>
     {% include('UserSite/Components/social_icons.html.twig') %}
-
-
     <a href="https://www.berform.com" class="builtWithBerform" target="_blank">{% trans %}footer_built_with{% endtrans %} Berform</a>
 </footer>
 </body>

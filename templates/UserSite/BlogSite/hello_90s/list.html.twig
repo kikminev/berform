@@ -1,21 +1,28 @@
 {% extends 'UserSite/' ~ layout ~ '.html.twig' %}
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
-            <div>
-                {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+
+            <a class="siteName" href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
+            <small class="siteNameDescription">Full-stack web developer playing with clouds, LAMP, MongoDB, JavaScript.</small>
+
+            <div class="container">
+                <div class="row">
+                    <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                    <div>
+                        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="blogListWrap">
+                        {% include('UserSite/BlogSite/'~site.template~'/post_items_list.html.twig') %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="blogListWrap">
-{#                {% set templateName =  %}#}
-                {% include('UserSite/BlogSite/'~site.template~'/post_items_list.html.twig') %}
-            </div>
-        </div>
-    </div>
-
 {% endblock %}
