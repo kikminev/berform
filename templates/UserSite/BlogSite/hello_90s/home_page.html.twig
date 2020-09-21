@@ -7,7 +7,7 @@
     <div class="col-md-8">
     <a class="siteName" href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
     <small class="siteNameDescription"></small>
-    <div class="container blogList">
+    <div class="container-fluid blogList">
         <div class="row">
             {% set postsAfterFeaturedOne = posts %}
             {% for post in postsAfterFeaturedOne %}
