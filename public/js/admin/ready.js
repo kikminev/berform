@@ -28,9 +28,9 @@ $(document).ready(function () {
             'parallaxImage': '/tinymce/plugins/imageLibrary/parallaxImage.js',
         },
         plugins: [
-            'link image code'
+            'link image code codesample'
         ],
-        toolbar: 'link singleImage parallaxImage code',
+        toolbar: 'link singleImage parallaxImage code codesample',
         contextmenu: "link singleImage parallaxImage",
     });
 

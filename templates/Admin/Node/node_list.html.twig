@@ -9,38 +9,47 @@
     </div>
     <div class="container">
 
+        <div class="topActionsBar">
+            <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
+        </div>
+
         <div class="clear"></div>
 
         <div class="list boxList row">
-            <div class="itemWrap addNewTile col-md-3">
-                <a class="item" href="{{ path('user_admin_node_create', {site:site.id, type : 'album'}) }}">+</a>
-            </div>
 
-            {% if nodes is not empty %}
-                {% for node in nodes %}
-                    <div class="itemWrap col-md-3" id="{{node.id}}">
-                        <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
+            {% include('Admin/Components/top_actions_bar.html.twig') %}
 
-                            {% if node.defaultImage is not null %}
-                                <div class="itemDefaultImage">
-                                    <img src="{{ resource_provider_domain }}{{ node.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
-                                </div>
-                            {% endif %}
+            <div class="row" style="width: 100%;">
+                <div class="itemWrap addNewTile col-md-3">
+                    <a class="item" href="{{ path('user_admin_node_create', {site:site.id, type : 'album'}) }}">+</a>
+                </div>
+
+                {% if nodes is not empty %}
+                    {% for node in nodes %}
+                        <div class="itemWrap col-md-3" id="{{node.id}}">
+                            <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
+
+                                {% if node.defaultImage is not null %}
+                                    <div class="itemDefaultImage">
+                                        <img src="{{ resource_provider_domain }}{{ node.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                                    </div>
+                                {% endif %}
 
 
-                            {% if node.translatedTitle[app.request.locale] is defined %}{{ node.translatedTitle[app.request.locale] }}{% endif %}
-                        </a>
+                                {% if node.translatedTitle[app.request.locale] is defined %}{{ node.translatedTitle[app.request.locale] }}{% endif %}
+                            </a>
 
-                        <div class="itemActionControls">
-                            <a href="{{ path('user_admin_node_edit', {id : node.id, type : node.type}) }}"><i class="fas fa-pencil-alt"></i></a>
-                            <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
-                            <a onclick="a.deleteObject('{{ path('user_admin_node_delete', {id : node.id, type : node.type}) }}', '{{ node.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                            <div class="itemActionControls">
+                                <a href="{{ path('user_admin_node_edit', {id : node.id, type : node.type}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
+                                <a onclick="a.deleteObject('{{ path('user_admin_node_delete', {id : node.id, type : node.type}) }}', '{{ node.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <a href="{{ path('user_admin_node_create', {'type' : type, 'site' : site.id}) }}">{{ ('admin_create_node_' ~ type) | trans }}</a>
-            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <a href="{{ path('user_admin_node_create', {'type' : type, 'site' : site.id}) }}">{{ ('admin_create_node_' ~ type) | trans }}</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
