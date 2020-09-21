@@ -84,6 +84,12 @@ class Site
     private $translatedAddress = [];
 
     /**
+     * @var array $translatedTemplateName
+     * @MongoDB\Field(type="hash")
+     */
+    private $translatedTemplateName = [];
+
+    /**
      * @var array $translatedDescription
      * @MongoDB\Field(type="hash")
      */
@@ -686,5 +692,21 @@ class Site
     public function setArchived($archived): void
     {
         $this->archived = $archived;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedTemplateName(): array
+    {
+        return $this->translatedTemplateName;
+    }
+
+    /**
+     * @param array $translatedTemplateName
+     */
+    public function setTranslatedTemplateName(array $translatedTemplateName): void
+    {
+        $this->translatedTemplateName = $translatedTemplateName;
     }
 }
