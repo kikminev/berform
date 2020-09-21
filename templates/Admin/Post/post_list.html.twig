@@ -13,42 +13,40 @@
 
     <div class="topActionsBar">
         <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
-        <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-success btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
     </div>
 
     <div class="clear"></div>
 
     <div class="list boxList row">
-        <div class="heading">
-            <h2>{% trans %}admin_links_posts{% endtrans %} <a href="{{ path('user_admin_post_create', {site:site.id}) }}">+</a></h2>
-        </div>
+        {% include('Admin/Components/top_actions_bar.html.twig') %}
 
-        <div class="itemWrap addNewTile col-md-3">
-            <a class="item" href="{{ path('user_admin_post_create', {site:site.id}) }}">+</a>
-        </div>
-
-        {% for post in posts %}
-            <div class="itemWrap col-md-3" id="{{ post.id }}">
-                <a class="item" href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">
-
-                    {% if post.defaultImage is not null %}
-                        <div class="itemDefaultImage">
-                            <img src="{{ resource_provider_domain }}{{ post.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
-                        </div>
-                    {% endif %}
-
-                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
-                </a>
-                <div class="clear"></div>
-
-                <div class="itemActionControls">
-                    <a href="{{ path('user_admin_post_edit', {id : post.id, site : post.site.id}) }}"><i class="fas fa-pencil-alt"></i></a>
-                    <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
-                    <a onclick="a.deleteObject('{{ path('user_admin_post_delete', {id : post.id}) }}', '{{ post.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
-                </div>
+        <div class="row"  style="width: 100%;">
+            <div class="itemWrap addNewTile col-md-3">
+                <a class="item" href="{{ path('user_admin_post_create', {site:site.id}) }}">+</a>
             </div>
-        {% endfor %}
 
+            {% for post in posts %}
+                <div class="itemWrap col-md-3" id="{{ post.id }}">
+                    <a class="item" href="{{ path('user_admin_post_edit', {site:post.site.id, id: post.id}) }}">
+
+                        {% if post.defaultImage is not null %}
+                            <div class="itemDefaultImage">
+                                <img src="{{ resource_provider_domain }}{{ post.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                            </div>
+                        {% endif %}
+
+                        {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                    </a>
+                    <div class="clear"></div>
+
+                    <div class="itemActionControls">
+                        <a href="{{ path('user_admin_post_edit', {id : post.id, site : post.site.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                        <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
+                        <a onclick="a.deleteObject('{{ path('user_admin_post_delete', {id : post.id}) }}', '{{ post.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
     </div>
 </div>

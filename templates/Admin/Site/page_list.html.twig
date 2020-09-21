@@ -10,17 +10,12 @@
 
         <div class="topActionsBar">
             <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
-            <a href="{{ path('user_admin_post_list', {site : site.id}) }}" type="button" class="btn btn-success btn-sm" style="margin-right: 10px;"><i class="fas fa-blog"></i> {% trans %}admin_links_blog{% endtrans %}</a>
         </div>
 
         <div class="clear"></div>
 
         <div class="list boxList row">
-            <div class="heading">
-                {% trans %}admin_links_pages{% endtrans %} <a href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>
-                <a href="{{ path('user_admin_node_list', { type: 'album', site: site.id }) }}">{% trans %}admin_links_albums{% endtrans %}</a> <a href="{{ path('user_admin_node_create', { type: 'album', site: site.id }) }}">+</a></h3>
-            </div>
-
+            {% include('Admin/Components/top_actions_bar.html.twig') %}
 
             <div class="row sortableNodes" style="width: 100%;">
                 <div class="itemWrap addNewTile col-md-3">

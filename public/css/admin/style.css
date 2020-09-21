@@ -96,6 +96,7 @@ a:hover { text-decoration: none; }
 .domainItemWrap a.item, .siteItemWrap a.item { cursor: pointer !important; }
 .domainNameServers { margin-top: 30px; }
 .list .heading { float: left; width: 100%; }
+.topActionLinks a { margin: 0px 25px 20px 0px; display: block; float: left; }
 
 .topActionsBar a.btn { float: right; color: #fff; }
 .contentEditForm .nav-tabs, .contentEditForm label { margin-top: 20px; }
