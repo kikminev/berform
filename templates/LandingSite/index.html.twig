@@ -121,13 +121,9 @@
             <a class="templatePreviewWrap col-md-6" onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_signup_preview_site') }}'); return false;">
                 <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
                     <div class="templateNameWrap">
-                        <div class="name">{{ template.name }}</div>
+                        <div class="name">{% if template.translatedTemplateName[app.request.locale] is defined %}{{ template.translatedTemplateName[app.request.locale] }}{% endif %}</div>
                         <div class="description">
-                            {% if template.name == 'Explorer' %}
-                                Suitable for blogs and storrytelling
-                            {% elseif template.name == 'Mark Williams Photography' %}
-                                Suitable for professional photographers
-                            {% endif %}
+                            {% if template.translatedDescription[app.request.locale] is defined %}{{ template.translatedDescription[app.request.locale] }}{% endif %}
                         </div>
                     </div>
                 </div>
