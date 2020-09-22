@@ -47,6 +47,9 @@ user_admin_site_edit:
 user_admin_site_delete:
     path: /u/site/delete/{id}
     controller: App\Controller\Admin\SiteController::delete
+user_admin_site_preview:
+    path: /u/site/preview/{id}
+    controller: App\Controller\Admin\SiteController::redirectToSite
 
 # domains
 user_admin_domain_create:

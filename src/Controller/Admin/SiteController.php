@@ -5,7 +5,9 @@ namespace App\Controller\Admin;
 use App\Document\Page;
 use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
+use App\Service\Domain\DomainResolver;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -143,5 +145,13 @@ class SiteController extends AbstractController
         $documentManager->flush();
 
         return $this->redirectToRoute('admin');
+    }
+
+    public function redirectToSite(Site $site, DomainResolver $domainResolver): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('modify', $site);
+
+        return $domainResolver->getSiteReachableDomain($site);
     }
 }
