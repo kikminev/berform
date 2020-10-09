@@ -40,6 +40,7 @@ footer {
 #blog-content h1 { display: none; }
 /*.innerPage { padding-bottom: 150px; }*/
 .innerPage h1 { margin: 150px 0px 50px; }
+.publishedAt { float: left; width: 100%; color: #555; font-size: small; }
 
 .albumWrap { margin-bottom: 100px; }
 .albumWrap img { margin-bottom: 10px; }
