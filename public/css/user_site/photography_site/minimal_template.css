@@ -234,3 +234,5 @@ h1 {
     overflow: hidden;
     display: block;
 }
+
+.publishedAt { float: left; width: 100%; color: #555; font-size: small; }
