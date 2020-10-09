@@ -33,7 +33,9 @@
                         </div>
                     {% endif %}
             {% endif %}
-            {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
+             {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
+
+            <div class="publishedAt" style="margin-bottom: 30px;">{% trans %}form_post_published_at{% endtrans %}: {{ post.publishedAt|date('d.m.Y') }}</div>
         </div>
     </div>
 

@@ -6,8 +6,7 @@ use App\Document\Post;
 use App\Document\Site;
 use App\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use Doctrine\ODM\PHPCR\Query\Query;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class PostRepository extends DocumentRepository
 {
@@ -22,7 +21,7 @@ class PostRepository extends DocumentRepository
             ->field('active')->equals(true)
             ->field('deleted')->notEqual(true)
             ->field('site')->equals($site)
-            ->sort('createdAt', 'DESC');
+            ->sort('publishedAt', 'DESC');
 
         if ($limit) {
             $qb->limit($limit);
@@ -72,6 +71,7 @@ class PostRepository extends DocumentRepository
             ->field('user')->equals($user)
             ->field('site')->equals($site)
             ->field('deleted')->notEqual(true)
+            ->sort('publishedAt', 'DESC')
             ->getQuery()->execute();
     }
 

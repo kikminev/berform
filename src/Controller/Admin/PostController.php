@@ -8,6 +8,7 @@ use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
+use DateTime;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,7 +44,6 @@ class PostController extends AbstractController
         FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
-
         $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $post);
 
@@ -110,6 +110,7 @@ class PostController extends AbstractController
                 }
             }
 
+            $post->setUpdatedAt(new DateTime());
             $this->documentManager->persist($post);
             $this->documentManager->flush();
 
@@ -147,6 +148,7 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('modify', $site);
 
         $post = new Post();
+        $post->setCreatedAt(new DateTime());
         $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });

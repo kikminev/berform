@@ -5,15 +5,15 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use App\Validation\Site\Slug\Post as SlugAssert;
+use Gedmo\Timestampable\Traits\TimestampableDocument;
 
 /**
  * @MongoDB\Document
  */
 class Post
 {
-    use TimestampableEntity;
+    use TimestampableDocument;
 
     public function __construct()
     {
@@ -107,11 +107,10 @@ class Post
     private $files = array();
 
     /**
-     * @var DateTime $publishedAt
-     *
-     * @MongoDB\Date
+     * @var null|DateTime
+     * @MongoDB\Field(type="date")
      */
-    private $publishedAt;
+    protected $publishedAt;
 
     /**
      * @var null|File $defaultImage
@@ -269,17 +268,17 @@ class Post
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getPublishedAt(): DateTime
+    public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
     }
 
     /**
-     * @param DateTime $publishedAt
+     * @param DateTime|null $publishedAt
      */
-    public function setPublishedAt(DateTime $publishedAt): void
+    public function setPublishedAt(?DateTime $publishedAt): void
     {
         $this->publishedAt = $publishedAt;
     }

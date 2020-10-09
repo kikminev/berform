@@ -6,6 +6,7 @@ a { color: #383E41; }
 .contentContainer a { color: #4d7bae; }
 a:hover { text-decoration: none; }
 h1 { text-align: center; margin: 100px 0px 100px; width: 100% }
+.publishedAt { float: left; width: 100%; color: #555; font-size: small; }
 .home h1 { margin: 0px; }
 
 #pagesMenu li { margin-left: 40px; }

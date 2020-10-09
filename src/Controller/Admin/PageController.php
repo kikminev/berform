@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
+use DateTime;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -107,6 +108,7 @@ class PageController extends AbstractController
                 }
             }
 
+            $page->setUpdatedAt(new DateTime());
             $this->documentManager->persist($page);
             $this->documentManager->flush();
 
@@ -144,6 +146,7 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('modify', $site);
 
         $page = new Page();
+        $page->setCreatedAt(new DateTime());
         $page->setSite($site);
         $page->setUser($this->getUser());
 

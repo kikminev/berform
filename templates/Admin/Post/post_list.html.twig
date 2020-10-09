@@ -36,13 +36,15 @@
                             </div>
                         {% endif %}
 
-                        {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+                        <span>
+                            {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}<br />{% endif %}
+                            <small class="publishedAt">{% if post.publishedAt is not empty %}{{ post.publishedAt|date('d.m.Y') }}{% endif %}</small>
+                        </span>
                     </a>
                     <div class="clear"></div>
 
                     <div class="itemActionControls">
                         <a href="{{ path('user_admin_post_edit', {id : post.id, site : post.site.id}) }}"><i class="fas fa-pencil-alt"></i></a>
-                        <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
                         <a onclick="a.deleteObject('{{ path('user_admin_post_delete', {id : post.id}) }}', '{{ post.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>

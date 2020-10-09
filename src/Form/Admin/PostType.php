@@ -4,6 +4,8 @@ namespace App\Form\Admin;
 
 use App\Document\Post;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,6 +27,7 @@ class PostType extends AbstractType
     {
         $builder->add('name', TextType::class, ['attr' => ['class' => 'slug_source'], 'label' => $this->translator->trans('form_page_name')]);
         $builder->add('slug', TextType::class, ['attr' => ['class' => 'slug_input', 'readonly' => true], 'label' => $this->translator->trans('form_page_slug')]);
+        $builder->add('publishedAt', DateType::class, ['attr' => ['label' => $this->translator->trans('form_page_slug')]]);
 
         foreach ($options['supported_languages'] as $language) {
             $builder->add('title_'.$language, TextType::class, ['mapped' => false]);
