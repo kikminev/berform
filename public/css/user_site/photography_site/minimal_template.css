@@ -216,6 +216,7 @@ h1 {
 
 .singleImageStaticWrap img {width: 100%; overflow: hidden; }
 
+/*region Description*/
 .blogPage h1 {
     text-align: center;
     margin: 100px 0px 100px;
@@ -227,6 +228,7 @@ h1 {
     margin-top: 150px;
     background-color: #ddd;
 }
+/*endregion*/
 
 .morePosts a { color: #212529 }
 .morePosts .blogImgWrap {

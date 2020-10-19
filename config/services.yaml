@@ -8,6 +8,7 @@ parameters:
     locale: 'bg'
     system_domains: ['sitemax.kik', 'sitemax.bg']
     mailgun_api_key: '%env(MAILGUN_API_KEY)%'
+    mailgun_api_endpoint: '%env(MAILGUN_API_ENDPOINT)%'
     mailgun_domain: '%env(MAILGUN_DOMAIN)%'
 services:
     # default configuration for services in *this* file

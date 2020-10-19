@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Document\Message;
 use App\Form\ContactType;
+use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -23,10 +24,14 @@ class ContactController extends AbstractController
     }
 
 
-    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params)
+    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params, DomainRepository $domainRepository)
     {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
+        if (null === $site && null !== $domain) {
+            $site = $siteRepository->findOneBy(['domain' => $domain]);
+        }
 
         $form = $this->createForm(ContactType::class, new Message());
         $form->handleRequest($request);
@@ -39,7 +44,7 @@ class ContactController extends AbstractController
             $documentManager->persist($message);
             $documentManager->flush();
 
-            $mg = Mailgun::create($params->get('mailgun_api_key'));
+            $mg = Mailgun::create($params->get('mailgun_api_key'), $params->get('mailgun_api_endpoint'));
             $mg->messages()->send($params->get('mailgun_domain'), [
                 'from' => $message->getEmail(),
                 'to' => $site->getUser()->getEmail(),
