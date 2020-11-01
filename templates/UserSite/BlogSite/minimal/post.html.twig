@@ -62,13 +62,7 @@
                             </a>
                         {% else %}
                             <div class="noImage"></div>
-
                         {% endif %}
-
-{#                        {% if morePosts.allHaveImages == false %}#}
-{#                            <div class="noImage"></div>#}
-{#                        {% endif %}#}
-
                         <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
                             <p>
                                 <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>

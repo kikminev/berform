@@ -236,5 +236,6 @@ h1 {
     overflow: hidden;
     display: block;
 }
+.morePosts h3 { min-height: 70px; }
 
 .publishedAt { float: left; width: 100%; color: #555; font-size: small; }

@@ -67,6 +67,7 @@ footer {
 .morePosts { padding-top: 100px; padding-bottom: 150px; margin-top: 150px; margin-bottom: -150px; background-color: #D9D9D9; width: 100%; }
 .morePosts .blogImgWrap { width: 100%; overflow: hidden; display: block; }
 .morePosts .noImage { width: 100%; height: 410px; background: #626262; overflow: hidden; display: block; }
+.morePosts h3 { min-height: 70px; }
 
 /* blog */
 .blogPost #imagesWrap { position: relative; width: 350px; float: left; padding-bottom: 20px; margin-bottom: 30px; background: #fff; }
