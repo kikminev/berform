@@ -92,10 +92,7 @@ class UserSiteController extends AbstractController
                 'site' => $site,
                 'slug' => $slug,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
-                'albums' => $slug === 'photography' ? $albumRepository->findBy([
-                    'site' => $site,
-                    'active' => true,
-                ]) : null,
+                'albums' => $slug === 'photography' ? $albumRepository->findAllBySite($site) : null,
                 'files' => UploadController::getOrderedFiles($page->getFiles()->toArray()), // todo: thos should not be in controller
                 'pages' => $pages,
                 'page' => $page,
