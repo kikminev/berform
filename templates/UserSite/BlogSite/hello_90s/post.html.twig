@@ -61,7 +61,7 @@
                             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
                                 <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=410&w=800&fit=crop" alt="" />
                             </a>
-                        {% elseif morePosts.allHaveImages == false %}
+                        {% else %}
                             <div class="noImage"></div>
                         {% endif %}
 
