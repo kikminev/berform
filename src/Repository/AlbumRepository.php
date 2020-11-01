@@ -15,11 +15,23 @@ class AlbumRepository extends DocumentRepository
         parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Album::class));
     }
 
-    public function findAllByUserSite(User $User, Site $site)
+    public function findAllByUserSite(User $user, Site $site)
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return $this->dm->createQueryBuilder(Album::class)
             ->field('site')->equals($site)
+            ->field('user')->equals($user)
+            ->field('active')->equals(true)
+            ->field('deleted')->notEqual(true)
+            ->getQuery()->execute();
+    }
+
+    public function findAllBySite(Site $site)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        return $this->dm->createQueryBuilder(Album::class)
+            ->field('site')->equals($site)
+            ->field('active')->equals(true)
             ->field('deleted')->notEqual(true)
             ->getQuery()->execute();
     }
