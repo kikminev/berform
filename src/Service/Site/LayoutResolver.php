@@ -59,7 +59,7 @@ class LayoutResolver
 
         switch ($site->getCategory()) {
             case static::SITE_CATEGORY_PHOTOGRAPHY:
-                return 'PhotographySite\minimal\layout';
+                return 'PhotographySite\\'.$site->getTemplate().'\layout';
             case static::SITE_CATEGORY_BLOG:
                 return 'BlogSite\\'.$site->getTemplate().'\layout';
             default:

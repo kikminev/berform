@@ -1,0 +1,30 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <div>
+                    <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                    <div>
+                        {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+                    </div>
+                </div>
+
+                {% if files is defined and files|length > 0 %}
+                    <div id="imagesWrap" class="pageImages">
+                        {% for file in files %}
+                            <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}">
+                                <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=50&w=50&fit=crop" alt=""/>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

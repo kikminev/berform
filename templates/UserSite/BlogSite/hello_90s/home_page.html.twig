@@ -11,7 +11,7 @@
         <div class="row">
             {% set postsAfterFeaturedOne = posts %}
             {% for post in postsAfterFeaturedOne %}
-                <div class="blogPostListWrap">
+                <div class="blogPostListWrap" style="width: 100%;">
                     <a class="ajaxLink blogExcerptWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
                         <h3 class="title">
                             {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
