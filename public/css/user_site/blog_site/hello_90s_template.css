@@ -29,7 +29,7 @@ footer {
     z-index: 1;
 }
 
-.blogPostListWrap { margin-bottom: 40px; display: block; }
+.blogPostListWrap { margin-bottom: 40px; display: block; width: 100%; }
 
 .footer .siteName { font-size: 100px; margin-top: 300px; text-align: center; width: 100%; color: #fff; }
 .footer .socialIcons { text-align: center; }

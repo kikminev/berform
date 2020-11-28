@@ -21,7 +21,7 @@
 
             <div class="row" style="width: 100%;">
                 <div class="itemWrap addNewTile col-md-3">
-                    <a class="item" href="{{ path('user_admin_node_create', {site:site.id, type : 'album'}) }}">+</a>
+                    <a class="item" href="{{ path('user_admin_node_create', {site:site.id, type : type}) }}">+</a>
                 </div>
 
                 {% if nodes is not empty %}

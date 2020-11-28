@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Document\Album;
+use App\Document\Shot;
 use App\Form\Admin\NodeType;
+use App\Form\Admin\ShotType;
 use App\Repository\AlbumRepository;
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
@@ -55,6 +57,9 @@ class NodeController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         switch ($type) {
+            case 'shot':
+                $qb = $documentManager->createQueryBuilder(Shot::class);
+                break;
             case 'album':
             default:
                 $qb = $documentManager->createQueryBuilder(Album::class);
@@ -214,19 +219,24 @@ class NodeController extends AbstractController
         ParameterBagInterface $param
     ): Response {
         $this->denyAccessUnlessGranted('modify', $site);
-
-        switch ($type) {
-            case 'album':
-                $node = new Album();
-                break;
-        }
-
-        $node->setType($type);
         $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
 
-        $form = $this->createForm(NodeType::class, $node, ['supported_languages' => $supportedLanguages]);
+        switch ($type) {
+            case 'shot':
+                $node = new Shot();
+                $form = $this->createForm(ShotType::class, $node, ['supported_languages' => $supportedLanguages]);
+                $editTemplate = 'Admin/Node/single_image_edit.html.twig';
+                break;
+            case 'album':
+                $node = new Album();
+                $form = $this->createForm(NodeType::class, $node, ['supported_languages' => $supportedLanguages]);
+                $editTemplate = 'Admin/Node/node_edit.html.twig';
+                break;
+        }
+
+        $node->setType($type);
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
@@ -239,10 +249,21 @@ class NodeController extends AbstractController
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
                 $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
                 $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
-                $form->get('title_' . $language)->setData($translatedTitle);
-                $form->get('content_' . $language)->setData($translatedContent);
-                $form->get('keywords_' . $language)->setData($translatedKeywords);
-                $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
+
+                if($form->has('title_' . $language)) {
+                    $form->get('title_' . $language)->setData($translatedTitle);
+                }
+
+                if($form->has('content_' . $language)) {
+                    $form->get('content_' . $language)->setData($translatedContent);
+                }
+                if ($form->has('keywords_' . $language)) {
+                    $form->get('keywords_' . $language)->setData($translatedKeywords);
+                }
+
+                if($form->has('meta_description_' . $language)) {
+                    $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
+                }
             }
         }
 
@@ -253,10 +274,10 @@ class NodeController extends AbstractController
             $updatedTranslatedKeywords = [];
             $updatedTranslatedMetaDescription = [];
             foreach ($supportedLanguages as $language) {
-                $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
-                $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
-                $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
-                $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
+                $updatedTranslatedTitle[$language] =  isset($form['title_' . $language]) ? $form['title_' . $language]->getData() : null;
+                $updatedTranslatedContent[$language] = isset($form['content_' . $language]) ? $form['content_' . $language]->getData() : null;
+                $updatedTranslatedKeywords[$language] = isset($form['keywords_' . $language]) ? $form['keywords_' . $language]->getData() : null;
+                $updatedTranslatedMetaDescription[$language] = isset($form['meta_description_' . $language]) ? $form['meta_description_' . $language]->getData() : null;
             }
 
             $node->setTranslatedTitle($updatedTranslatedTitle);
@@ -267,6 +288,10 @@ class NodeController extends AbstractController
             $node->setUser($this->getUser());
 
             $attachedFiles = $request->request->get('node')['attachedFiles'] ?? false;
+            if('shot' === $type) {
+                $attachedFiles = $request->request->get('shot')['attachedFiles'] ?? false;
+            }
+
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
                 $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
@@ -288,7 +313,7 @@ class NodeController extends AbstractController
         }
 
         return $this->render(
-            'Admin/Node/node_edit.html.twig',
+            $editTemplate,
             [
                 'site' => $site,
                 'form' => $form->createView(),

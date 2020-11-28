@@ -106,6 +106,7 @@ admin_links_sites: Сайтове
 admin_links_domains: Домейни
 admin_links_pages: Страници
 admin_links_albums: Албуми
+admin_links_shots: Снимки
 admin_links_posts: Публикации
 admin_no_posts: Нямате създадено съдържание
 admin_links_create: Създай нов
@@ -116,6 +117,7 @@ admin_links_site_preview: Отвори сайта
 admin_links_blog: Блог
 admin_links_blog_edit_post: Редактирай публикация
 admin_create_node_album: Създай нов албум
+admin_create_node_shot: Добави нова снимка
 
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site

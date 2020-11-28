@@ -1,3 +1,17 @@
+body, html {
+    height: 100%;
+}
+
+.fullScreenBackground {
+    background-image: url("https://berform.s3.eu-west-1.amazonaws.com/ffc21b2761526bf8dae45f31c3d33228.jpeg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navigationWrap { position: fixed; top: 0px; left: 0px; }
+
 .header h1 {
     text-align: center;
     width: 100%;
