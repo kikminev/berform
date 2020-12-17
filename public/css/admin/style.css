@@ -115,16 +115,18 @@ a:hover { text-decoration: none; }
 
 /* uploaded images */
 #imagesWrap { }
-.imgWrap { position: relative; overflow: hidden; float: left; margin: 20px 20px 0px 0px; width: 150px; height: 150px; border-radius: 10px; }
+.imgWrap { position: relative; overflow: hidden; float: left; margin: 20px 20px 0px 0px; width: 150px; height: 150px; border-radius: 10px; background: #fff0b7; }
 .imgWrap .galleryImg { cursor: move; }
 .fileActionButton { display: none; position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; background: white; border-radius: 30px; line-height: 30px; text-align: center; font-size: small; color: #666666 !important; }
 .imgWrap:hover .fileActionButton { display: block; }
 .reorderFile { right: 50px; }
 #imagesWrap { margin: 20px 0px; }
-
 .flash-notice { color: #FF7C5C; }
 .uploadButton { background: #333; color: #fff !important; display: flex; align-items: flex-end; padding: 0px 15px; font-size: 50px; }
 .htmlEditor .singleImageWrap { width: 100%; background: #333; overflow: hidden; }
+
+#progressBarWrap { width: 100%; padding: 10px 0px; float: left; padding-top: 20px; }
+.progressStep { width: 30px; height: 10px; display: block; background: gray; float: left; margin-right: 2px; }
 
 .imageLibrary {
     display: none;
