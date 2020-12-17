@@ -9,7 +9,7 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
 }
-
+.fullScreenBackground.home { display: none !important; }
 .navigationWrap { position: fixed; top: 0px; left: 0px; }
 
 .header h1 {

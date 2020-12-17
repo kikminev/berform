@@ -1,6 +1,7 @@
 {% extends 'UserSite/' ~ layout ~ '.html.twig' %}
 
 {% block body %}
+
     <div class="container">
         <div class="row header">
             <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>

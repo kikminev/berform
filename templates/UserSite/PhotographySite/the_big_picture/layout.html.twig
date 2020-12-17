@@ -9,7 +9,6 @@
 
 {{ site.customHtml|raw }}
 
-<div class="fullScreenBackground"></div>
 
 <div class="container-fluid navigationWrap">
     <div class="row">
@@ -20,6 +19,9 @@
         </div>
     </div>
 </div>
+{% if slug is not defined or slug == 'home' %}
+    <div class="fullScreenBackground"></div>
+{% endif %}
 
 <main class="cd-main">
     <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">
