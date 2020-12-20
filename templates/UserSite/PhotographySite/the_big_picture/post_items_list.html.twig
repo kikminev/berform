@@ -1,0 +1,23 @@
+{% for post in posts %}
+    <div class="blogPost">
+        <h2>
+            <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+            </a>
+        </h2>
+        <p>
+            {% if post.files|length > 0 %}
+                {% set file = post.files[0] %}
+                <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=200&w=350&fit=crop" alt=""/>
+                </a>
+            {% endif %}
+
+            {% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw }}{% endif %}
+        <div class="clear"></div>
+        <a class="ajaxLink moreLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">{% trans %}user_site_blog_read_more{% endtrans %}</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+{% endfor %}

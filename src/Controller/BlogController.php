@@ -52,11 +52,8 @@ class BlogController extends AbstractController
         $pages = $pageRepository->findActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
-        // todo: pagination
-        $template = 'UserSite/BlogSite/'.$site->getTemplate().'/list.html.twig';
-
         return $this->render(
-            $template,
+            $this->layoutResolver->getBlogList($site),
             [
                 'site' => $site,
                 'pages' => $pages,

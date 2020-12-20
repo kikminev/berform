@@ -10,7 +10,8 @@ body, html {
     background-size: cover;
 }
 .fullScreenBackground.home { display: none !important; }
-.navigationWrap { position: fixed; top: 0px; left: 0px; }
+.navigationWrap {  }
+.fixedNavigation { position: fixed; top: 0px; left: 0px; }
 
 .header h1 {
     text-align: center;
