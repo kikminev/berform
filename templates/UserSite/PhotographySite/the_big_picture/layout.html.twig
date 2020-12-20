@@ -9,8 +9,7 @@
 
 {{ site.customHtml|raw }}
 
-
-<div class="container-fluid navigationWrap">
+<div class="container-fluid navigationWrap {% if slug is not defined or slug == 'home' %}fixedNavigation{% endif %}">
     <div class="row">
         <div class="navigation col-md-12">
             <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>

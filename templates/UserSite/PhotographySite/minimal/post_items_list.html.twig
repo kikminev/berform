@@ -1,0 +1,10 @@
+{% for post in posts %}
+    <div class="blogPost blogPostListWrap">
+        <h3>
+            <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}
+            </a>
+        </h3>
+        <div class="clear"></div>
+    </div>
+{% endfor %}

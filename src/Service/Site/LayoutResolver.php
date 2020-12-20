@@ -50,20 +50,30 @@ class LayoutResolver
             case static::SITE_CATEGORY_PHOTOGRAPHY:
                 return 'UserSite/PhotographySite/' . $site->getTemplate() . '/' . $page;
             default:
-                return 'UserSite/StandardSite/'.$page;
+                return 'UserSite/StandardSite/' . $page;
         }
     }
 
     public function getLayout(Site $site): string
     {
-
         switch ($site->getCategory()) {
             case static::SITE_CATEGORY_PHOTOGRAPHY:
-                return 'PhotographySite\\'.$site->getTemplate().'\layout';
+                return 'PhotographySite\\' . $site->getTemplate() . '\layout';
             case static::SITE_CATEGORY_BLOG:
-                return 'BlogSite\\'.$site->getTemplate().'\layout';
+                return 'BlogSite\\' . $site->getTemplate() . '\layout';
             default:
                 return 'StandardSite/layout';
+        }
+    }
+
+    public function getBlogList(Site $site): string
+    {
+        switch ($site->getCategory()) {
+            case static::SITE_CATEGORY_PHOTOGRAPHY:
+            default:
+                return 'UserSite/PhotographySite\\' . $site->getTemplate() . '/list.html.twig';
+            case static::SITE_CATEGORY_BLOG:
+                return 'UserSite/BlogSite\\' . $site->getTemplate() . '/list.html.twig';
         }
     }
 }
