@@ -76,4 +76,15 @@ class LayoutResolver
                 return 'UserSite/BlogSite\\' . $site->getTemplate() . '/list.html.twig';
         }
     }
+
+    public function getBlogPostTemplate(Site $site): string
+    {
+        switch ($site->getCategory()) {
+            case static::SITE_CATEGORY_PHOTOGRAPHY:
+            default:
+                return 'UserSite/PhotographySite\\' . $site->getTemplate() . '/post.html.twig';
+            case static::SITE_CATEGORY_BLOG:
+                return 'UserSite/BlogSite\\' . $site->getTemplate() . '/post.html.twig';
+        }
+    }
 }

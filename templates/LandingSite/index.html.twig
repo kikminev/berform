@@ -118,16 +118,22 @@
     <div class="siteTemplates container" id="siteTemplates" name="siteTemplates">
         <div class="row">
         {% for template in templates %}
-            <a class="templatePreviewWrap col-md-6" onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_signup_preview_site') }}'); return false;">
-                <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
-                    <div class="templateNameWrap">
-                        <div class="name">{% if template.translatedTemplateName[app.request.locale] is defined %}{{ template.translatedTemplateName[app.request.locale] }}{% endif %}</div>
-                        <div class="description">
-                            {% if template.translatedDescription[app.request.locale] is defined %}{{ template.translatedDescription[app.request.locale] }}{% endif %}
+            <div class="templatePreviewWrap col-md-6">
+                <a onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_signup_preview_site') }}'); return false;">
+                    <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
+                        <div class="templateNameWrap">
+                            <div class="name">{% if template.translatedTemplateName[app.request.locale] is defined %}{{ template.translatedTemplateName[app.request.locale] }}{% endif %}</div>
+                            <div class="description">
+                                {% if template.translatedDescription[app.request.locale] is defined %}{{ template.translatedDescription[app.request.locale] }}{% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+
+                <a href="{{ template.previewUrl }}" target="_blank" class="openPreviewOfTemplateButton"><i class="fas fa-eye"></i> Preview</a>
+
+            </div>
+
         {% endfor %}
         </div>
         <div class="clear"></div>
