@@ -99,7 +99,7 @@ class BlogController extends AbstractController
         }
 
         return $this->render(
-            'UserSite/BlogSite/'.$site->getTemplate().'/post.html.twig',
+            $this->layoutResolver->getBlogPostTemplate($site),
             [
                 'site' => $site,
                 'post' => $post,

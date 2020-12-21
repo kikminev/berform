@@ -9,9 +9,9 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
 }
-.fullScreenBackground.home { display: none !important; }
+.innerPageWrap .fullScreenBackground { display: none !important; }
 .navigationWrap {  }
-.fixedNavigation { position: fixed; top: 0px; left: 0px; }
+.homePageWrap.fixedNavigation { position: fixed; top: 0px; left: 0px; }
 
 .header h1 {
     text-align: center;
@@ -240,3 +240,38 @@ h1 {
 .morePosts h3 { min-height: 70px; }
 
 .publishedAt { float: left; width: 100%; color: #555; font-size: small; }
+
+
+.morePosts { padding-top: 100px; padding-bottom: 150px; margin-top: 150px; margin-bottom: -150px; background-color: #D9D9D9; width: 100%; }
+.morePosts .blogImgWrap { width: 100%; overflow: hidden; display: block; }
+.morePosts .noImage { width: 100%; height: 410px; background: #626262; overflow: hidden; display: block; }
+.morePosts h3 { min-height: 70px; }
+
+/* blog */
+.blogPost #imagesWrap { position: relative; width: 350px; float: left; padding-bottom: 20px; margin-bottom: 30px; background: #fff; }
+.moreImagesPlaceholder {
+    width: 110px;
+    height: 70px;
+    background: #333;
+    float: left;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 70px;
+}
+
+.blogPost #imagesWrap .imgWrap { display: block; margin: 10px 10px 0px 0px; float: left; }
+.blogPost .blogIconImgWrap { float: left; margin-left: -40px; }
+.blogPost, .blogListWrap { padding-left: 40px; margin-bottom: 150px; }
+.blogListWrap h2, .blogPost h1 { margin-bottom: 60px; }
+.blogListWrap .blogImgWrap, .blogPost .blogImgWrap { float: left; margin: -20px 30px 20px -40px; }
+.blogListWrap .moreLink { margin-bottom: 100px; float: left }
+
+
+.parallaxImageWrap {  margin: 20px -50px; }
+.parallaxImageWrap a { height: 600px; width: 100%; display: block; background-attachment: fixed; background-position: center; }
+.singleImageStaticWrap img { width: 100%; overflow: hidden; }
+.singleImageStaticWrap a { width: 100%; display: block; }
+
+.blogPage h1 { text-align: center; margin: 100px 0px 100px; }

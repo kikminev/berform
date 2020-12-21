@@ -90,9 +90,13 @@ jQuery(document).ready(function ($) {
                 userSite.init();
 
                 if (sectionId === 'home') {
+                    dashboard.addClass('homePageWrap');
+                    dashboard.removeClass('innerPageWrap');
                     dashboard.find('.innerPage').addClass('pageCategory');
                     dashboard.find('.pageCategory').removeClass('innerPage');
                 } else {
+                    dashboard.addClass('innerPageWrap');
+                    dashboard.removeClass('homePageWrap');
                     dashboard.find('.pageCategory').addClass('innerPage');
                 }
 

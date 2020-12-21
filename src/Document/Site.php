@@ -176,6 +176,12 @@ class Site
     protected $defaultImage;
 
     /**
+     * @var string|null $previewUrl
+     * @MongoDB\Field(type="string")
+     */
+    protected $previewUrl;
+
+    /**
      * @var bool $published
      * @MongoDB\Field(type="bool")
      */
@@ -708,5 +714,21 @@ class Site
     public function setTranslatedTemplateName(array $translatedTemplateName): void
     {
         $this->translatedTemplateName = $translatedTemplateName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPreviewUrl(): ?string
+    {
+        return $this->previewUrl;
+    }
+
+    /**
+     * @param string|null $previewUrl
+     */
+    public function setPreviewUrl(?string $previewUrl): void
+    {
+        $this->previewUrl = $previewUrl;
     }
 }
