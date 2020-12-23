@@ -104,6 +104,7 @@ admin_profile_change_password: Смяна на парола
 admin_profile: Профил
 admin_links_sites: Сайтове
 admin_links_domains: Домейни
+admin_links_billing: Подновявания
 admin_links_pages: Страници
 admin_links_albums: Албуми
 admin_links_shots: Снимки
@@ -119,14 +120,6 @@ admin_links_blog_edit_post: Редактирай публикация
 admin_create_node_album: Създай нов албум
 admin_create_node_shot: Добави нова снимка
 
-# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
-# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
-user_site_blog_read_more: прочети повече
-user_site_supported_languages_bg: бг
-user_site_supported_languages_en: en
-
-user_site_contact_us_address: Адрес:
-user_site_contact_us_email: Електронна поща:
 
 # admin
 admin_language_label_en: Английски
@@ -139,6 +132,23 @@ admin_domains_header_label: Домейн
 
 # page edit
 admin_page_edit_domain: Домейн
+
+# products and subscriptions
+admin_all_subscriptions_title: Всички услуги
+admin_subscriptions_site_name: "Сайт:"
+admin_subscriptions_type: "Тип:"
+admin_subscriptions_type_hosting: "хостинг"
+admin_subscriptions_expires_at: "Изтича на:"
+landing_site_billing_upgrade_plan: "поднови"
+
+# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
+# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
+user_site_blog_read_more: прочети повече
+user_site_supported_languages_bg: бг
+user_site_supported_languages_en: en
+
+user_site_contact_us_address: "Адрес:"
+user_site_contact_us_email: "Електронна поща:"
 
 # password
 password_validation_general_not_valid: Грешна парола

@@ -6,15 +6,14 @@ use App\Document\Site;
 use App\Document\User;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Timestampable\Traits\TimestampableDocument;
 
 /**
  * @MongoDB\Document
  */
 class Subscription
 {
-    use TimestampableEntity;
-
+    use TimestampableDocument;
     /**
      * @MongoDB\Id
      */
