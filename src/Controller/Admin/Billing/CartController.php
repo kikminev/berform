@@ -29,11 +29,15 @@ class CartController extends AbstractController
     {
         $cart = $this->session->get('cart');
 
-        $products = $productRepository->findAllByIds(['5d32fda5d5ef96554d3da817']);
+        $subscriptionToProduct = [];
+        foreach ($cart as $productsInCart) {
+            $product = $productRepository->findOneBy(['id' => $productsInCart['productId']]);
+            $subscriptionToProduct[$productsInCart['subscriptionId']] = $product;
+        }
 
         return $this->render(
             'Admin/Billing/cart_view.html.twig',
-            ['products' => $products]
+            ['products' => $subscriptionToProduct]
         );
     }
 

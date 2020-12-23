@@ -7,6 +7,9 @@ body {
     margin: 0px;
 }
 
+h1.centeredTitle { text-align: center; margin: 50px 0px 50px; font-size: 2rem; }
+
+
 a { text-decoration: none; cursor: pointer; }
 a:hover { text-decoration: none; }
 
@@ -167,3 +170,9 @@ a:hover { text-decoration: none; }
     -moz-box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
     box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
 }
+
+/* products and subscriptions */
+.subscriptionWrap { float: left; width: 100%; background: #333; margin-bottom: 10px; color: #fff; padding: 15px; border-radius: 10px; position: relative; }
+.renewButtonWrap { padding-right: 0px; float: right }
+.renewButton { background: #fff; padding: 4px 12px 4px 15px; border-radius: 20px; float: right; color: #333; }
+.renewButton:hover { background: #ccc; color: #000; }

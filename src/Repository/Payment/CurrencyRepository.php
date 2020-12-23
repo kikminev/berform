@@ -4,7 +4,7 @@ namespace App\Repository\Payment;
 
 use App\Document\Payment\Currency;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class CurrencyRepository extends DocumentRepository
 {

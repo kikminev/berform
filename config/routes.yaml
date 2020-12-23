@@ -132,10 +132,11 @@ app_logout:
 # end profile
 
 
+
 ## billing
-#admin_billing:
-#    path: /u/billing/payment/list
-#    controller: App\Controller\admin\BillingController::listPayments
+admin_billing:
+    path: /u/billing/payment/list
+    controller: App\Controller\Admin\Billing\BillingController::listPayments
 admin_billing_cart_add:
     path: /u/billing/cart/add/{product}/{subscription}
     controller: App\Controller\Admin\Billing\CartController::addProduct

@@ -187,6 +187,10 @@ class SignupController extends AbstractController
             $subscription->setSite($newSite);
             $subscription->setCreatedAt(new DateTime());
             $subscription->setUpdatedAt(new DateTime());
+            $subscription->setExpiresAt(new DateTime('+ 7 days'));
+            $subscription->setCreatedAt(new DateTime());
+            $subscription->setUpdatedAt(new DateTime());
+
             $documentManager->persist($subscription);
 
             $documentManager->flush();
