@@ -139,11 +139,15 @@ admin_billing:
     controller: App\Controller\Admin\Billing\BillingController::listPayments
 admin_billing_cart_add:
     path: /u/billing/cart/add/{product}/{subscription}
-    controller: App\Controller\Admin\Billing\CartController::addProduct
+    controller: App\Controller\Admin\Billing\CartController::addSubscription
 
 admin_billing_cart_view:
     path: /u/billing/cart/view
     controller: App\Controller\Admin\Billing\CartController::view
+
+admin_billing_cart_checkout:
+    path: /u/billing/cart/checkout
+    controller: App\Controller\Admin\Billing\CartController::checkout
 
 # user site
 user_site_contact:

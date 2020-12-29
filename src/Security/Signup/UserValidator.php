@@ -3,16 +3,16 @@
 namespace App\Security\Signup;
 
 use App\Document\User;
-use App\Repository\UserRepository;
+use App\Repository\UserRepositoryOld;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserValidator
 {
     private TranslatorInterface $translator;
     private array $errors = [];
-    private UserRepository $userRepository;
+    private UserRepositoryOld $userRepository;
 
-    public function __construct(TranslatorInterface $translator, UserRepository $userRepository)
+    public function __construct(TranslatorInterface $translator, UserRepositoryOld $userRepository)
     {
         $this->translator = $translator;
         $this->userRepository = $userRepository;

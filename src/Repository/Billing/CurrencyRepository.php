@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Billing;
 
-use App\Entity\Customer;
+use App\Entity\Billing\Currency;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Customer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Customer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Customer[]    findAll()
- * @method Customer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Currency|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Currency|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Currency[]    findAll()
+ * @method Currency[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CustomerRepository extends ServiceEntityRepository
+class CurrencyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Customer::class);
+        parent::__construct($registry, Currency::class);
     }
 
     // /**
-    //  * @return Customer[] Returns an array of Customer objects
+    //  * @return Currency[] Returns an array of Currency objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CustomerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Customer
+    public function findOneBySomeField($value): ?Currency
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

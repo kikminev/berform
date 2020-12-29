@@ -44,7 +44,7 @@ main_site_sign_up_header: Създайте вашия сайт сега
 main_site_sign_up_header_content: Регистрирайте се и създайте вашия безплатен сайт. <br />Когато сте готови да имате собствен домейн, може да преминете към нашата платена версия.
 main_site_pricing_billed_annually: месечно
 main_site_pricing_bgn_currency: ЛВ
-main_site_title: - най-лесният начин да създадете сайт
+main_site_title: "- най-лесният начин да създадете сайт"
 main_site_base_host_price_bgn: ЛВ
 main_site_base_host_price_eur: '&euro;'
 main_site_pricing_products: Продукти
@@ -138,8 +138,15 @@ admin_all_subscriptions_title: Всички услуги
 admin_subscriptions_site_name: "Сайт:"
 admin_subscriptions_type: "Тип:"
 admin_subscriptions_type_hosting: "хостинг"
+admin_subscriptions_type_free_hosting: "хостинг"
 admin_subscriptions_expires_at: "Изтича на:"
 landing_site_billing_upgrade_plan: "поднови"
+landing_site_cart_header: "Продукти"
+landing_site_cart_product_yearly_subscription: 1 година
+landing_site_cart_total: Сума за плащане
+landing_site_cart_taxes: Такси
+landing_site_cart_total_amount: Крайна цена
+landing_site_billing_no_products: Няма добавени продукти
 
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
 # User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site

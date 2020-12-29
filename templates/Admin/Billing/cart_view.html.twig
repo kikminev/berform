@@ -1,16 +1,91 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
-    {% if products|length > 0 %}
-        {% for product in products %}
-            <div>
-                {{ product.systemCode }}
-            </div>
-            <div>
-                {{ showPriceWithTaxes(product.price, product.currency.systemCode) }}
-            </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 
-        {% endfor %}
-    {% else %}
-        {% trans %}landing_site_billing_no_products{% endtrans %}
-    {% endif %}
+    <div class="container cartWrap">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {% if subscriptions|length > 0 %}
+                <h1>{% trans %}landing_site_cart_header{% endtrans %}</h1>
+                    {% for subscription in subscriptions %}
+                        <div class="row productWrap">
+                        <div class="product col-md-4">
+                            {% set product = productsBySubscriptionId[subscription.id] %}
+                            {% set subscriptionType = 'admin_subscriptions_type_' ~ product.systemCode %}{{ subscriptionType|trans }}
+                        </div>
+                        <div class="col-md-4">{% trans %}landing_site_cart_product_yearly_subscription{% endtrans %}</div>
+                        <div class="col-md-4">
+                            {{ product.price }} {{ product.currency.systemCode }}
+                        </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% trans %}landing_site_billing_no_products{% endtrans %}
+                {% endif %}
+
+                {% if subscriptions|length > 0 %}
+                <div class="checkoutButtonWrap">
+                    <h2>{% trans %}landing_site_cart_total{% endtrans %}</h2>
+
+                    <div class="row">
+                        <div class="col-md-6">{% trans %}landing_site_cart_taxes{% endtrans %}</div>
+                        <div class="col-md-6">{{ taxAmount }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">{% trans %}landing_site_cart_total_amount{% endtrans %}</div>
+                        <div class="col-md-6">{{ totalAmountWithTaxes }}</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+
+
+{#    <section>#}
+{#        <div class="product">#}
+{#            <img#}
+{#                    src="https://i.imgur.com/EHyR2nP.png"#}
+{#                    alt="The cover of Stubborn Attachments"#}
+{#            />#}
+{#            <div class="description">#}
+{#                <h3>Stubborn Attachments</h3>#}
+{#                <h5>$20.00</h5>#}
+{#            </div>#}
+{#        </div>#}
+{#        <button id="checkout-button">Checkout</button>#}
+{#    </section>#}
+
+
+{#    <script type="text/javascript">#}
+{#        var stripe = Stripe("pk_test_51I1XREEhLqLirlZw1LLixKu4KnyJtd8IhhJo55rIy8BJHpZh0sihxPdZSTHYRI93Ygck5pAJwqOcKTNwIxPTAm2Y00QrRRBjmi");#}
+{#        var checkoutButton = document.getElementById("checkout-button");#}
+
+{#        checkoutButton.addEventListener("click", function () {#}
+{#            fetch("{{ path('admin_billing_cart_checkout') }}", {#}
+{#                method: "POST",#}
+{#            })#}
+{#                .then(function (response) {#}
+{#                    return response.json();#}
+{#                })#}
+{#                .then(function (session) {#}
+{#                    return stripe.redirectToCheckout({ sessionId: session.id });#}
+{#                })#}
+{#                .then(function (result) {#}
+{#                    // If redirectToCheckout fails due to a browser or network#}
+{#                    // error, you should display the localized error message to your#}
+{#                    // customer using error.message.#}
+{#                    if (result.error) {#}
+{#                        alert(result.error.message);#}
+{#                    }#}
+{#                })#}
+{#                .catch(function (error) {#}
+{#                    console.error("Error:", error);#}
+{#                });#}
+{#        });#}
+{#    </script>#}
 {% endblock %}

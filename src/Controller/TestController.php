@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Document\Domain;
 use App\Document\User;
 use App\Repository\DomainRepository;
-use App\Repository\UserRepository;
+use App\Repository\UserRepositoryOld;
 use Http\Discovery\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\DNS\CloudflareDnsUpdater;
@@ -13,7 +13,7 @@ use App\DNS\CloudflareDnsUpdater;
 
 class TestController extends AbstractController
 {
-    public function test(CloudflareDnsUpdater $cloudflareDnsUpdater, UserRepository $userRepository, DomainRepository $domainRepository)
+    public function test(CloudflareDnsUpdater $cloudflareDnsUpdater, UserRepositoryOld $userRepository, DomainRepository $domainRepository)
     {
         throw new NotFoundException();
         /** @var User $user */

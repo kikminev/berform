@@ -176,3 +176,9 @@ a:hover { text-decoration: none; }
 .renewButtonWrap { padding-right: 0px; float: right }
 .renewButton { background: #fff; padding: 4px 12px 4px 15px; border-radius: 20px; float: right; color: #333; }
 .renewButton:hover { background: #ccc; color: #000; }
+
+.cartWrap { margin-top: 100px; text-align: center; }
+.cartWrap h1 { margin-bottom: 40px; text-align: center; }
+.cartWrap .productWrap { text-align: center; padding: 30px; background: #f2f2f2; margin-bottom: 10px; border-radius: 10px; }
+.checkoutButtonWrap { margin-top: 100px; }
+.checkoutButtonWrap h2 { font-size: 22px; }

@@ -4,11 +4,13 @@ namespace App\Service\Billing;
 
 class TaxesCalculator
 {
-    public function calculateTax($price) {
+    public static function calculateTax($price)
+    {
         return 0.2 * $price;
     }
 
-    public function calculatePriceWithTaxes($price) {
-        return $price + $this->calculateTax($price);
+    public static function calculatePriceWithTaxes(float $price): float
+    {
+        return $price + self::calculateTax($price);
     }
 }

@@ -32,6 +32,6 @@ class BillingExtension extends AbstractExtension
     {
         $price = $this->taxesCalculator->calculatePriceWithTaxes($price);
 
-        return $price . $currency;
+        return $price . ' ' . $currency;
     }
 }

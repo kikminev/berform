@@ -11,7 +11,7 @@ use App\Repository\AlbumRepository;
 use App\Repository\Payment\ProductRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
-use App\Repository\UserRepository;
+use App\Repository\UserRepositoryOld;
 use App\Security\Signup\PasswordValidator;
 use App\Security\Signup\UserValidator;
 use DateTime;
