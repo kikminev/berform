@@ -10,7 +10,7 @@ use App\Document\Site;
 use App\Form\ContactType;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
-use App\Repository\PageRepository;
+//use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
@@ -44,7 +44,7 @@ class UserSiteController extends AbstractController
     /**
      * @param Request $request
      * @param SiteRepository $siteRepository
-     * @param PageRepository $pageRepository
+//     * @param PageRepository $pageRepository
      * @param ParameterBagInterface $params
      * @param string $slug
      * @return Response
@@ -54,7 +54,7 @@ class UserSiteController extends AbstractController
         Request $request,
         SiteRepository $siteRepository,
         DomainRepository $domainRepository,
-        PageRepository $pageRepository,
+//        PageRepository $pageRepository,
         AlbumRepository $albumRepository,
         PostRepository $postRepository,
         ParameterBagInterface $params,

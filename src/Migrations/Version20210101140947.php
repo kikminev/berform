@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201229182018 extends AbstractMigration
+final class Version20210101140947 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,10 @@ final class Version20201229182018 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE TABLE "order" (id INT NOT NULL, total_amount INT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('ALTER TABLE site ALTER facebook DROP NOT NULL');
+        $this->addSql('ALTER TABLE site ALTER instagram DROP NOT NULL');
+        $this->addSql('ALTER TABLE site ALTER linked_in DROP NOT NULL');
+        $this->addSql('ALTER TABLE site ALTER twitter DROP NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,6 +34,9 @@ final class Version20201229182018 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('DROP TABLE "order"');
+        $this->addSql('ALTER TABLE site ALTER facebook SET NOT NULL');
+        $this->addSql('ALTER TABLE site ALTER instagram SET NOT NULL');
+        $this->addSql('ALTER TABLE site ALTER linked_in SET NOT NULL');
+        $this->addSql('ALTER TABLE site ALTER twitter SET NOT NULL');
     }
 }

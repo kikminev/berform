@@ -8,8 +8,9 @@ use App\Form\Admin\NodeType;
 use App\Form\Admin\ShotType;
 use App\Repository\AlbumRepository;
 use App\Repository\FileRepository;
-use App\Repository\PageRepository;
+//use App\Repository\PageRepository;
 use function Clue\StreamFilter\append;
+
 use Exception;
 use MongoDB\BSON\ObjectId;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -334,7 +335,7 @@ class NodeController extends AbstractController
     public function reorder(
         Request $request,
         string $type,
-        PageRepository $pageRepository,
+//        PageRepository $pageRepository,
         FileRepository $fileRepository
     ): JsonResponse {
 
@@ -349,8 +350,8 @@ class NodeController extends AbstractController
                 break;
             case 'page':
             default:
-            $nodes = $pageRepository->findActiveByIds($ids, $this->getUser());
-                break;
+//            $nodes = $pageRepository->findActiveByIds($ids, $this->getUser());
+//                break;
         }
 
         /** @var Node $file */

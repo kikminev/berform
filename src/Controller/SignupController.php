@@ -7,15 +7,16 @@ use App\Document\Payment\Product;
 use App\Document\Post;
 use App\Document\Site;
 use App\Document\Payment\Subscription;
+use App\Entity\UserCustomer;
 use App\Repository\AlbumRepository;
 use App\Repository\Payment\ProductRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
-use App\Repository\UserRepositoryOld;
 use App\Security\Signup\PasswordValidator;
 use App\Security\Signup\UserValidator;
 use DateTime;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -24,7 +25,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use \Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\UserType;
-use App\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -52,7 +52,10 @@ class SignupController extends AbstractController
     /**
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param DocumentManager $documentManager
+     * @param UserValidator $userValidator
+     * @param PasswordValidator $passwordValidator
+     * @param TranslatorInterface $translator
+     * @param EntityManagerInterface $entityManager
      * @return RedirectResponse|Response
      */
     public function register(
@@ -61,13 +64,13 @@ class SignupController extends AbstractController
         UserValidator $userValidator,
         PasswordValidator $passwordValidator,
         TranslatorInterface $translator,
-        DocumentManager $documentManager
+        EntityManagerInterface $entityManager
     ) {
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('app_signup_setup_account');
         }
         
-        $user = new User();
+        $user = new UserCustomer();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -90,15 +93,18 @@ class SignupController extends AbstractController
 
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            $user->setIsActive(true);
+            $user->setIsSystem(false);
 
-            $documentManager->persist($user);
-            $documentManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->container->get('security.token_storage')->setToken($token);
             $this->container->get('session')->set('_security_main', serialize($token));
 
-            return $this->redirectToRoute('app_signup_setup_account');
+            echo 'ok'; exit;
+//            return $this->redirectToRoute('app_signup_setup_account');
         }
 
         return $this->render(
@@ -120,8 +126,10 @@ class SignupController extends AbstractController
         ProductRepository $productRepository,
         AlbumRepository $albumRepository,
         PostRepository $postRepository,
-        DocumentManager $documentManager
+        EntityManagerInterface $entityManager
     ): RedirectResponse {
+        die('dada');
+        // todo: this needs to be implemented
         if ($selectedTemplate = $session->get('selectedTemplate')) {
 
             if(null == $this->getUser()) {
@@ -148,7 +156,7 @@ class SignupController extends AbstractController
             $newSite->setHost($host);
             $newSite->setUser($user);
             $newSite->setIsTemplate(false);
-            $documentManager->persist($newSite);
+            $entityManager->persist($newSite);
 
             $pages = $selectedTemplate->getPages();
 
@@ -158,7 +166,7 @@ class SignupController extends AbstractController
                 $newPage->setUser($user);
                 $newPage->setSite($newSite);
 
-                $documentManager->persist($newPage);
+                $entityManager->persist($newPage);
             }
 
             $albums = $albumRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
@@ -168,7 +176,7 @@ class SignupController extends AbstractController
                 $newAlbum->setUser($user);
                 $newAlbum->setSite($newSite);
 
-                $documentManager->persist($newAlbum);
+                $entityManager->persist($newAlbum);
             }
 
             $posts = $postRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
@@ -178,7 +186,7 @@ class SignupController extends AbstractController
                 $newPost->setUser($user);
                 $newPost->setSite($newSite);
 
-                $documentManager->persist($newPost);
+                $entityManager->persist($newPost);
             }
 
             $subscription = new Subscription();
@@ -191,9 +199,9 @@ class SignupController extends AbstractController
             $subscription->setCreatedAt(new DateTime());
             $subscription->setUpdatedAt(new DateTime());
 
-            $documentManager->persist($subscription);
+            $entityManager->persist($subscription);
 
-            $documentManager->flush();
+            $entityManager->flush();
 
             $session->remove('selectedTemplate');
         }

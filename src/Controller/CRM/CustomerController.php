@@ -9,7 +9,7 @@ use App\Document\User;
 use App\Repository\FileRepository;
 use App\Repository\Payment\SubscriptionRepository;
 use App\Repository\SiteRepository;
-use App\Repository\UserRepositoryOld;
+use App\Repository\UserCustomerRepository;
 use App\Service\Site\SiteRemover;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,14 +18,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerController extends AbstractController
 {
-    private UserRepositoryOld $userRepository;
+    private UserCustomerRepository $userRepository;
     private SiteRepository $siteRepository;
     private SubscriptionRepository $subscriptionRepository;
     private FileRepository $fileRepository;
     private SiteRemover $siteRemover;
 
     public function __construct(
-        UserRepositoryOld $userRepository,
+        UserCustomerRepository $userRepository,
         SiteRepository $siteRepository,
         FileRepository $fileRepository,
         SubscriptionRepository $subscriptionRepository,

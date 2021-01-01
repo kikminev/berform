@@ -2,8 +2,9 @@
 
 namespace App\Security;
 
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Entity\UserCustomer;
+use App\Repository\UserCustomerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -23,17 +24,19 @@ class Authenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private $documentManager;
+    private $entityManager;
     private $router;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private UserCustomerRepository $userRepository;
 
-    public function __construct(DocumentManager $documentManager, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager, UserCustomerRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
     }
 
     public function supports(Request $request)
@@ -64,7 +67,10 @@ class Authenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->documentManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $this->userRepository->find(1);
+        $this->userRepository->findOneBy(['email' => $credentials['email']]);
+
+        $user = $this->entityManager->getRepository(UserCustomer::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error

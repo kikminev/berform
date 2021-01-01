@@ -47,4 +47,13 @@ class SiteRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getTemplates()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.isTemplate = :value')
+            ->setParameter('value', true)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -7,7 +7,7 @@ use App\Document\Album;
 use App\Document\Site;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
-use App\Repository\PageRepository;
+//use App\Repository\PageRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use App\Service\Site\LayoutResolver;
@@ -35,7 +35,7 @@ class AlbumController extends AbstractController
         Request $request,
         SiteRepository $siteRepository,
         DomainRepository $domainRepository,
-        PageRepository $pageRepository,
+//        PageRepository $pageRepository,
         AlbumRepository $albumRepository,
         ParameterBagInterface $params,
         string $slug

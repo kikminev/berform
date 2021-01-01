@@ -6,7 +6,7 @@ use App\Document\File;
 use App\Document\Post;
 use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
-use App\Repository\PageRepository;
+//use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use DateTime;
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -228,18 +228,18 @@ class PostController extends AbstractController
         );
     }
 
-    public function list(Request $request, Site $site, PostRepository $postRepository, PageRepository $pageRepository)
-    {
-        $posts = $postRepository->findAllByUserSite($this->getUser(), $site);
-
-        return $this->render(
-            'Admin/Post/post_list.html.twig',
-            [
-                'posts' => $posts,
-                'site' => $site,
-            ]
-        );
-    }
+//    public function list(Request $request, Site $site, PostRepository $postRepository, PageRepository $pageRepository)
+//    {
+//        $posts = $postRepository->findAllByUserSite($this->getUser(), $site);
+//
+//        return $this->render(
+//            'Admin/Post/post_list.html.twig',
+//            [
+//                'posts' => $posts,
+//                'site' => $site,
+//            ]
+//        );
+//    }
 
     public function delete(Post $post)
     {

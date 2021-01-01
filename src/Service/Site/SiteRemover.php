@@ -6,7 +6,7 @@ use App\Document\File;
 use App\Document\Site;
 use App\Repository\AlbumRepository;
 use App\Repository\FileRepository;
-use App\Repository\PageRepository;
+//use App\Repository\PageRepository;
 use App\Repository\Payment\SubscriptionRepository;
 use App\Repository\PostRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -14,7 +14,7 @@ use RuntimeException;
 
 class SiteRemover
 {
-    private PageRepository $pageRepository;
+//    private PageRepository $pageRepository;
     private PostRepository $postRepository;
     private AlbumRepository $albumRepository;
     private FileRepository $fileRepository;
@@ -22,14 +22,14 @@ class SiteRemover
     private SubscriptionRepository $subscriptionRepository;
 
     public function __construct(
-        PageRepository $pageRepository,
+//        PageRepository $pageRepository,
         PostRepository $postRepository,
         AlbumRepository $albumRepository,
         FileRepository $fileRepository,
         DocumentManager $documentManager,
         SubscriptionRepository $subscriptionRepository
     ) {
-        $this->pageRepository = $pageRepository;
+//        $this->pageRepository = $pageRepository;
         $this->postRepository = $postRepository;
         $this->albumRepository = $albumRepository;
         $this->fileRepository = $fileRepository;
@@ -51,7 +51,7 @@ class SiteRemover
 
         $this->documentManager->flush();
 
-        $this->pageRepository->deleteAllBySite($site);
+//        $this->pageRepository->deleteAllBySite($site);
         $this->albumRepository->deleteAllBySite($site);
         $this->postRepository->deleteAllBySite($site);
         $this->subscriptionRepository->deleteAllBySite($site);

@@ -1,7 +1,8 @@
 security:
     encoders:
-        App\Document\User:
+        App\Entity\UserCustomer:
             algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -9,9 +10,10 @@ security:
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
-            mongodb:
-                class: App\Document\User
+            entity:
+                class: App\Entity\UserCustomer
                 property: email
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

@@ -7,7 +7,7 @@ use App\Document\Message;
 use App\Document\Post;
 use App\Form\ContactType;
 use App\Repository\DomainRepository;
-use App\Repository\PageRepository;
+//use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
@@ -32,7 +32,7 @@ class BlogController extends AbstractController
 
     public function list(
         Request $request,
-        PageRepository $pageRepository,
+//        PageRepository $pageRepository,
         SiteRepository $siteRepository,
         DomainRepository $domainRepository,
         PostRepository $postRepository
@@ -49,7 +49,7 @@ class BlogController extends AbstractController
         }
 
         $posts = $postRepository->findActivePostsBySite($site);
-        $pages = $pageRepository->findActiveBySite($site);
+//        $pages = $pageRepository->findActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         return $this->render(
@@ -71,7 +71,7 @@ class BlogController extends AbstractController
         $slug,
         PostRepository $postRepository,
         SiteRepository $siteRepository,
-        PageRepository $pageRepository,
+//        PageRepository $pageRepository,
         DomainRepository $domainRepository
     ): Response {
 
@@ -90,7 +90,7 @@ class BlogController extends AbstractController
 
         /** @var Post $post */
         $post = $postRepository->findActiveBySlug($slug, $site);
-        $pages = $pageRepository->findActiveBySite($site);
+//        $pages = $pageRepository->findActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
         $morePosts = $postRepository->findReadMorePosts($site);
 
