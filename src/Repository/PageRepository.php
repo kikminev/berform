@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Page;
+use App\Entity\Site;
+use App\Entity\UserCustomer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +49,15 @@ class PageRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findActiveByUserSite(UserCustomer $user, Site $site)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.userCustomer = :user')
+            ->andWhere('p.site = :site')
+            ->setParameter('user', $user)
+            ->setParameter('site', $site)
+            ->getQuery()
+            ->getResult();
+    }
 }

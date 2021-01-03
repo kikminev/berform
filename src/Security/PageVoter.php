@@ -2,8 +2,7 @@
 
 namespace App\Security;
 
-use App\Document\Page;
-use App\Document\User;
+use App\Entity\Page;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;

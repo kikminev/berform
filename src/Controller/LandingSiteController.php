@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\UserSite\SiteRepository;
+use App\Repository\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LandingSiteController extends AbstractController

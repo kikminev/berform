@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repository\UserSite;
+namespace App\Repository;
 
-use App\Entity\UserSite\Site;
+use App\Entity\UserCustomer;
+use App\Entity\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -53,6 +54,15 @@ class SiteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.isTemplate = :value')
             ->setParameter('value', true)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getByUser(UserCustomer $user)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.userCustomer = :value')
+            ->setParameter('value', $user->getId())
             ->getQuery()
             ->getResult();
     }

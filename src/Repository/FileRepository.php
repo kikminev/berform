@@ -2,58 +2,49 @@
 
 namespace App\Repository;
 
-use App\Document\File;
-use App\Document\Page;
-use App\Document\Post;
-use App\Document\Site;
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use App\Entity\File;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-// todo: move this to be universal for page and post
-class FileRepository extends DocumentRepository
+/**
+ * @method File|null find($id, $lockMode = null, $lockVersion = null)
+ * @method File|null findOneBy(array $criteria, array $orderBy = null)
+ * @method File[]    findAll()
+ * @method File[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class FileRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(File::class));
+        parent::__construct($registry, File::class);
     }
 
-
-    /**
-     * @param $fileId
-     * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function getActiveByIds($fileIds, User $user)
+    // /**
+    //  * @return File[] Returns an array of File objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('user')->equals($user)
-            ->field('deleted')->notEqual(true)
-            ->field('id')->in($fileIds)
-            ->sort('order', 'ASC')
-            ->getQuery()->execute();
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('f.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
+    */
 
-    public function getActiveFile($fileId)
+    /*
+    public function findOneBySomeField($value): ?File
     {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('deleted')->notEqual(true)
-            ->field('id')->equals($fileId)
-            ->getQuery()->getSingleResult();
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
-
-
-    public function findAllByUser(User $user)
-    {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('user')->equals($user)
-            ->getQuery()->execute();
-    }
-
-    public function findAllBySite(Site $site)
-    {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('site')->equals($site)
-            ->getQuery()->execute();
-    }
+    */
 }

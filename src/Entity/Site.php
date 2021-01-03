@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Entity\UserSite;
+namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserSite\SiteRepository;
+use App\Repository\SiteRepository;
 
 /**
  * @ORM\Entity(repositoryClass=SiteRepository::class)
@@ -86,6 +88,27 @@ class Site
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $twitter;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=UserCustomer::class, inversedBy="sites")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userCustomer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="site", orphanRemoval=true)
+     */
+    private $pages;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $supportedLanguages = [];
+
+    public function __construct()
+    {
+        $this->pages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -262,5 +285,64 @@ class Site
     public function setSlug($slug): void
     {
         $this->slug = $slug;
+    }
+
+    public function getUserCustomer(): ?UserCustomer
+    {
+        return $this->userCustomer;
+    }
+
+    public function setUserCustomer(?UserCustomer $userCustomer): self
+    {
+        $this->userCustomer = $userCustomer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->contains($page)) {
+            $this->pages->removeElement($page);
+            // set the owning side to null (unless already changed)
+            if ($page->getSite() === $this) {
+                $page->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSupportedLanguages(): ?array
+    {
+        return $this->supportedLanguages;
+    }
+
+    /**
+     * @param array $supportedLanguages
+     */
+    public function setSupportedLanguages(array $supportedLanguages): void
+    {
+        $this->supportedLanguages = $supportedLanguages;
     }
 }

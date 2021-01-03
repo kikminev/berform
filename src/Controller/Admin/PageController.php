@@ -2,8 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Page;
 use App\Repository\FileRepository;
-use App\Repository\PageRepository;
 use DateTime;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
-use App\Document\Page;
-use App\Document\File;
 use App\Form\Admin\PageType;
 
 class PageController extends AbstractController

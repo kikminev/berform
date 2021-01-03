@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller\CRM;
-
 
 use App\Document\Site;
 use App\Repository\SiteRepository;

@@ -57,6 +57,18 @@ class Page
      */
     private $defaultImage;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=UserCustomer::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userCustomer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +166,30 @@ class Page
     public function setDefaultImage(?string $defaultImage): self
     {
         $this->defaultImage = $defaultImage;
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    public function getUserCustomer(): ?UserCustomer
+    {
+        return $this->userCustomer;
+    }
+
+    public function setUserCustomer(?UserCustomer $userCustomer): self
+    {
+        $this->userCustomer = $userCustomer;
 
         return $this;
     }
