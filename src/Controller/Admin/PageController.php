@@ -4,25 +4,26 @@ namespace App\Controller\Admin;
 
 use App\Entity\Page;
 use App\Repository\FileRepository;
+use App\Repository\PageRepository;
 use DateTime;
 use Doctrine\ODM\MongoDB\MongoDBException;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use App\Form\Admin\PageType;
 
 class PageController extends AbstractController
 {
-    private $documentManager;
+    private $entityManager;
 
     // todo: import repositories with auto-wiring
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -37,6 +38,7 @@ class PageController extends AbstractController
         Request $request,
         Page $page,
         FileRepository $fileRepository,
+        PageRepository $pageRepository,
         ParameterBagInterface $param
     ): Response {
 
@@ -44,11 +46,12 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $page);
 
         $site = $page->getSite();
-        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
-            return in_array($language, $site->getSupportedLanguages(), false);
-        });
-        $orderedFiles = UploadController::getOrderedFiles($page->getFiles()->toArray());
+        $supportedLanguages = array_filter($param->get('supported_languages'),
+            function ($language) use ($site) {
+                return in_array($language, $site->getSupportedLanguages(), false);
+            });
 
+        $orderedFiles = UploadController::getOrderedFiles($page->getFiles()->toArray());
 
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
@@ -96,19 +99,23 @@ class PageController extends AbstractController
 
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
-                $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
-                $page->setFiles($pageFiles);
+                $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
-                if(!empty($pageFiles) && null === $page->getDefaultImage()) {
+                $pageFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
+                foreach ($pageFiles as $attachedFile) {
+                    $page->addFile($attachedFile);
+                }
+
+                if (!empty($pageFiles) && null === $page->getDefaultImage()) {
                     $defaultImage = array_keys($pageFiles)[0];
                     $page->setDefaultImage($pageFiles[$defaultImage]);
                 }
             }
 
             $page->setUpdatedAt(new DateTime());
-            $this->documentManager->persist($page);
-            $this->documentManager->flush();
+            $this->entityManager->persist($page);
+            $this->entityManager->flush();
+
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $page->getSite()->getId()]);
         }
@@ -148,9 +155,10 @@ class PageController extends AbstractController
         $page->setSite($site);
         $page->setUser($this->getUser());
 
-        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
-            return in_array($language, $site->getSupportedLanguages(), false);
-        });
+        $supportedLanguages = array_filter($param->get('supported_languages'),
+            function ($language) use ($site) {
+                return in_array($language, $site->getSupportedLanguages(), false);
+            });
 
         $form = $this->createForm(PageType::class, $page, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
@@ -199,17 +207,17 @@ class PageController extends AbstractController
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $pageFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $pageFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
                 $page->setFiles($pageFiles);
 
-                if(!empty($pageFiles) && null === $page->getDefaultImage()) {
+                if (!empty($pageFiles) && null === $page->getDefaultImage()) {
                     $defaultImage = array_keys($pageFiles)[0];
                     $page->setDefaultImage($pageFiles[$defaultImage]);
                 }
             }
 
-            $this->documentManager->persist($page);
-            $this->documentManager->flush();
+            $this->entityManager->persist($page);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_site_build', ['id' => $site->getId()]);
         }
@@ -232,7 +240,7 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $page);
 
         $page->setDeleted(true);
-        $this->documentManager->flush();
+        $this->entityManager->flush();
 
         return new JsonResponse('deleted');
     }

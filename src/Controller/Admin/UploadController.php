@@ -2,26 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Document\Site;
-use App\Repository\FileRepository;
+use App\Entity\File;
+use App\Entity\Site;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Service\FileUploader\S3FileUploader;
 use Symfony\Component\HttpFoundation\File\File as FileUpload;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Document\File;
 
 class UploadController extends AbstractController
 {
     const MAX_ALLOWED_SIZE = 2000000;
 
-    private $documentManager;
+    private $entityManager;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -48,17 +47,17 @@ class UploadController extends AbstractController
         $url = $fileUploader->upload($newFileName, $file);
         $id = $this->attachFileToSite($site, $url, $newFileName, $file->getSize());
 
-        $url = $params->get('resource_provider_domain').$newFileName.'?h=150&w=150&fit=crop&border-radius=10';
+        $url = $params->get('resource_provider_domain') . $newFileName . '?h=150&w=150&fit=crop&border-radius=10';
 
         return new JsonResponse(['url' => $url, 'id' => $id]);
     }
 
-    public function deleteFile(File $file, DocumentManager $documentManager)
+    public function deleteFile(File $file, EntityManagerInterface $entityManager)
     {
         $this->denyAccessUnlessGranted('edit', $file);
 
-        $file->setDeleted(true);
-        $documentManager->flush();
+        $file->setIsDeleted(true);
+        $entityManager->flush();
 
         return new JsonResponse(['message' => 'ok']);
     }
@@ -68,8 +67,9 @@ class UploadController extends AbstractController
         $orderedFiles = [];
         $i = 0;
         foreach ($files as $file) {
-            $order = $file->getOrder();
-            if(!isset($orderedFiles[$order])) {
+            /** @var File $file */
+            $order = $file->getSequenceOrder();
+            if (!isset($orderedFiles[$order])) {
                 $orderedFiles[$order] = $file;
             } else {
                 $orderedFiles[] = $file;
@@ -98,11 +98,12 @@ class UploadController extends AbstractController
         $file->setSite($site);
         $file->setFileUrl($url);
         $file->setBaseName($baseName);
-        $file->setUser($this->getUser());
+
+        $file->setUserCustomer($this->getUser());
         $file->setSize($size);
 
-        $this->documentManager->persist($file);
-        $this->documentManager->flush($file);
+        $this->entityManager->persist($file);
+        $this->entityManager->flush();
 
         return $file->getId();
     }

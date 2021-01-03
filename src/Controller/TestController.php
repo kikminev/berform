@@ -9,6 +9,7 @@ use App\Document\User;
 use App\Entity\Page;
 use App\Entity\Site;
 use App\Repository\DomainRepository;
+use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\UserCustomerRepository;
 use App\Repository\SiteRepository;
@@ -28,8 +29,20 @@ class TestController extends AbstractController
         DomainRepository $domainRepository,
         EntityManagerInterface $entityManager,
         SiteRepository $siteRepository,
+        FileRepository $fileRepository,
         PageRepository $pageRepository
     ) {
+
+        $user = $this->getUser();
+        $t = $fileRepository->getActiveByIds(['1', '3'], $user);
+echo count($t);
+        foreach ($t as $f) {
+            echo $f->getId();
+        }
+
+        echo 'ok';
+        exit;
+
 
         $site = $siteRepository->find(1);
         $site->setSupportedLanguages(['en']);

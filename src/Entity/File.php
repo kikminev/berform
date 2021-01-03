@@ -23,9 +23,9 @@ class File
     private $isActive;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", options={"default" : false})
      */
-    private $isDeleted;
+    private $isDeleted = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -58,6 +58,11 @@ class File
      */
     private $site;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="files")
+     */
+    private $page;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,12 +80,12 @@ class File
         return $this;
     }
 
-    public function getIsDeleted(): ?bool
+    public function getIsDeleted(): bool
     {
         return $this->isDeleted;
     }
 
-    public function setIsDeleted(?bool $isDeleted): self
+    public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
 
@@ -155,6 +160,18 @@ class File
     public function setSite(?Site $site): self
     {
         $this->site = $site;
+
+        return $this;
+    }
+
+    public function getPage(): ?Page
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Page $page): self
+    {
+        $this->page = $page;
 
         return $this;
     }

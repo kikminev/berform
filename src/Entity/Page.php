@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\PageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PageRepository::class)
  */
 class Page
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -53,7 +58,7 @@ class Page
     private $isDeleted;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity=File::class)
      */
     private $defaultImage;
 
@@ -68,6 +73,41 @@ class Page
      * @ORM\JoinColumn(nullable=false)
      */
     private $userCustomer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=File::class, mappedBy="page")
+     */
+    private $files;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedTitle = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedMenuLink = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedContent = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedKeywords = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedMetaDescription = [];
+
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,18 +198,6 @@ class Page
         return $this;
     }
 
-    public function getDefaultImage(): ?string
-    {
-        return $this->defaultImage;
-    }
-
-    public function setDefaultImage(?string $defaultImage): self
-    {
-        $this->defaultImage = $defaultImage;
-
-        return $this;
-    }
-
     public function getSite(): ?Site
     {
         return $this->site;
@@ -192,5 +220,112 @@ class Page
         $this->userCustomer = $userCustomer;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|File[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            // set the owning side to null (unless already changed)
+            if ($file->getPage() === $this) {
+                $file->setPage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTranslatedTitle(): ?array
+    {
+        return $this->translatedTitle;
+    }
+
+    public function setTranslatedTitle(?array $translatedTitle): self
+    {
+        $this->translatedTitle = $translatedTitle;
+
+        return $this;
+    }
+
+    public function getTranslatedMenuLink(): ?array
+    {
+        return $this->translatedMenuLink;
+    }
+
+    public function setTranslatedMenuLink(?array $translatedMenuLink): self
+    {
+        $this->translatedMenuLink = $translatedMenuLink;
+
+        return $this;
+    }
+
+    public function getTranslatedContent(): ?array
+    {
+        return $this->translatedContent;
+    }
+
+    public function setTranslatedContent(?array $translatedContent): self
+    {
+        $this->translatedContent = $translatedContent;
+
+        return $this;
+    }
+
+    public function getTranslatedKeywords(): ?array
+    {
+        return $this->translatedKeywords;
+    }
+
+    public function setTranslatedKeywords(?array $translatedKeywords): self
+    {
+        $this->translatedKeywords = $translatedKeywords;
+
+        return $this;
+    }
+
+    public function getTranslatedMetaDescription(): ?array
+    {
+        return $this->translatedMetaDescription;
+    }
+
+    public function setTranslatedMetaDescription(?array $translatedMetaDescription): self
+    {
+        $this->translatedMetaDescription = $translatedMetaDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getDefaultImage(): ?File
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * @param File $defaultImage
+     */
+    public function setDefaultImage(File $defaultImage): void
+    {
+        $this->defaultImage = $defaultImage;
     }
 }

@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\File;
+use App\Entity\UserCustomer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method File|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +49,19 @@ class FileRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getActiveByIds($fileIds, UserCustomer $user)
+    {
+
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb->andWhere('f.userCustomer = :user')
+            ->andWhere($qb->expr()->not($qb->expr()->eq('f.isDeleted', ':isDeleted')))
+            ->andWhere($qb->expr()->in('f.id', $fileIds))
+            ->setParameter('user', $user)
+            ->setParameter('isDeleted', true)
+            ->orderBy('f.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
