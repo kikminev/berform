@@ -2,38 +2,30 @@
 
 namespace App\Controller\Admin;
 
-use App\Document\Album;
-use App\Document\Shot;
+use App\Entity\Page;
+use App\Entity\Site;
 use App\Form\Admin\NodeType;
 use App\Form\Admin\ShotType;
 use App\Repository\AlbumRepository;
-//use App\Repository\PageRepository;
-use App\Repository\FileRepository;
 use App\Repository\PageRepository;
-use function Clue\StreamFilter\append;
-
+use App\Repository\FileRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use App\Document\Site;
-use App\Document\Page;
-use App\Document\Node;
-use App\Document\File;
-use App\Form\Admin\PageType;
 
 class NodeController extends AbstractController
 {
-    private $documentManager;
+    private $entityManager;
     private $albumRepository;
 
     // todo: import repositories with auto-wiring
-    public function __construct(DocumentManager $documentManager, AlbumRepository $albumRepository)
+    public function __construct(EntityManagerInterface $entityManager, AlbumRepository $albumRepository)
     {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
         $this->albumRepository = $albumRepository;
     }
 
@@ -51,7 +43,6 @@ class NodeController extends AbstractController
         String $type,
         Site $site,
         FileRepository $fileRepository,
-        DocumentManager $documentManager,
         ParameterBagInterface $param
     ): Response {
 
@@ -59,11 +50,11 @@ class NodeController extends AbstractController
 
         switch ($type) {
             case 'shot':
-                $qb = $documentManager->createQueryBuilder(Shot::class);
+                $qb = $this->entityManager->createQueryBuilder(Shot::class);
                 break;
             case 'album':
             default:
-                $qb = $documentManager->createQueryBuilder(Album::class);
+                $qb = $this->entityManager->createQueryBuilder(Album::class);
                 break;
         }
 
@@ -87,7 +78,6 @@ class NodeController extends AbstractController
      * @param string $type
      * @param string $id
      * @param FileRepository $fileRepository
-     * @param DocumentManager $documentManager
      * @param ParameterBagInterface $param
      * @return Response
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
@@ -97,7 +87,6 @@ class NodeController extends AbstractController
         string $type,
         string $id,
         FileRepository $fileRepository,
-        DocumentManager $documentManager,
         ParameterBagInterface $param
     ): Response {
 
@@ -107,7 +96,7 @@ class NodeController extends AbstractController
             case 'album':
             default:
                 /** @var Album $node */
-                $node = $documentManager->getRepository(Album::class)->findOneBy([
+                $node = $this->entityManager->getRepository(Album::class)->findOneBy([
                     'user' => $this->getUser(),
                     'id' => $id,
                 ]);
@@ -177,8 +166,8 @@ class NodeController extends AbstractController
                 }
             }
 
-            $this->documentManager->persist($node);
-            $this->documentManager->flush();
+            $this->entityManager->persist($node);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_node_list', [
                 'site' => $node->getSite()->getId(),
@@ -304,8 +293,8 @@ class NodeController extends AbstractController
                 }
             }
 
-            $this->documentManager->persist($node);
-            $this->documentManager->flush();
+            $this->entityManager->persist($node);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_node_list', [
                 'site' => $node->getSite()->getId(),
@@ -359,12 +348,12 @@ class NodeController extends AbstractController
             $file->setOrder(array_search($file->getId(), $ids, false));
         }
 
-        $this->documentManager->flush();
+        $this->entityManager->flush();
 
         return new JsonResponse('ok');
     }
 
-    public function delete(DocumentManager $documentManager, string $type, string $id): JsonResponse
+    public function delete(string $type, string $id): JsonResponse
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -372,7 +361,7 @@ class NodeController extends AbstractController
             case 'album':
             default:
                 /** @var Album $node */
-                $node = $documentManager->getRepository(Album::class)->findOneBy([
+                $node = $this->entityManager->getRepository(Album::class)->findOneBy([
                     'user' => $this->getUser(),
                     'id' => $id,
                 ]);
@@ -387,7 +376,7 @@ class NodeController extends AbstractController
         $this->denyAccessUnlessGranted('modify', $node);
 
         $node->setDeleted(true);
-        $documentManager->flush();
+        $this->entityManager->flush();
 
         return new JsonResponse('deleted');
     }

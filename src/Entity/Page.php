@@ -38,11 +38,6 @@ class Page
     private $sequenceOrder;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $locale;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $customCss;
@@ -146,18 +141,6 @@ class Page
     public function setSequenceOrder(?int $sequenceOrder): self
     {
         $this->sequenceOrder = $sequenceOrder;
-
-        return $this;
-    }
-
-    public function getLocale(): ?string
-    {
-        return $this->locale;
-    }
-
-    public function setLocale(string $locale): self
-    {
-        $this->locale = $locale;
 
         return $this;
     }

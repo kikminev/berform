@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use App\Controller\Admin\UploadController;
 use App\Document\Album;
-use App\Document\Site;
+use App\Entity\Site;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
-//use App\Repository\PageRepository;
+use App\Repository\PageRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use App\Service\Site\LayoutResolver;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,24 +22,27 @@ class AlbumController extends AbstractController
 {
     private $domainResolver;
     private $layoutResolver;
-    private $documentManager;
+    private $entityManager;
 
-    public function __construct(DomainResolver $domainResolver, LayoutResolver $layoutResolver, DocumentManager $documentManager)
-    {
+    public function __construct(
+        DomainResolver $domainResolver,
+        LayoutResolver $layoutResolver,
+        EntityManagerInterface $entityManager
+    ) {
         $this->domainResolver = $domainResolver;
         $this->layoutResolver = $layoutResolver;
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
     }
 
     public function view(
         Request $request,
         SiteRepository $siteRepository,
         DomainRepository $domainRepository,
-//        PageRepository $pageRepository,
+        PageRepository $pageRepository,
         AlbumRepository $albumRepository,
         ParameterBagInterface $params,
         string $slug
-    ):Response {
+    ): Response {
 
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);

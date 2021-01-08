@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Page;
+use App\Entity\Site;
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use DateTime;
@@ -13,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Document\Site;
 use App\Form\Admin\PageType;
 
 class PageController extends AbstractController
@@ -153,7 +153,9 @@ class PageController extends AbstractController
         $page = new Page();
         $page->setCreatedAt(new DateTime());
         $page->setSite($site);
-        $page->setUser($this->getUser());
+        $page->setUserCustomer($this->getUser());
+        $page->setUpdatedAt(new DateTime());
+        $page->setCreatedAt(new DateTime());
 
         $supportedLanguages = array_filter($param->get('supported_languages'),
             function ($language) use ($site) {
