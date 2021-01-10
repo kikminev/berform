@@ -2,46 +2,36 @@
 
 namespace App\Repository;
 
-use App\Document\Album;
-use App\Document\Site;
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use App\Entity\Album;
+use App\Entity\Site;
+use App\Entity\UserCustomer;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
-class AlbumRepository extends DocumentRepository
+/**
+ * @method Album|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Album|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Album[]    findAll()
+ * @method Album[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class AlbumRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Album::class));
+        parent::__construct($registry, Album::class);
     }
 
-    public function findAllByUserSite(User $user, Site $site)
+    public function getActiveByUserSite(UserCustomer $user, Site $site)
     {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Album::class)
-            ->field('site')->equals($site)
-            ->field('user')->equals($user)
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->getQuery()->execute();
-    }
 
-    public function findAllBySite(Site $site)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Album::class)
-            ->field('site')->equals($site)
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->getQuery()->execute();
-    }
+        $qb = $this->createQueryBuilder('f');
 
-    public function deleteAllBySite(Site $site)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Album::class)
-            ->remove()
-            ->field('site')->equals($site)
-            ->getQuery()->execute();
+        return $qb->andWhere('f.userCustomer = :user')
+            ->andWhere('f.isDeleted = false OR f.isDeleted IS NULL')
+            ->setParameter('user', $user)
+            ->orderBy('f.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

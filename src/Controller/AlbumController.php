@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Admin\UploadController;
-use App\Document\Album;
+use App\Entity\Album;
 use App\Entity\Site;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;

@@ -27,7 +27,7 @@
                 {% if nodes is not empty %}
                     {% for node in nodes %}
                         <div class="itemWrap col-md-3" id="{{node.id}}">
-                            <a class="item" href="{{ path('user_admin_node_edit', {type: node.type, id:node.id}) }}">
+                            <a class="item" href="{{ path('user_admin_node_edit', {type: type, id:node.id}) }}">
 
                                 {% if node.defaultImage is not null %}
                                     <div class="itemDefaultImage">
@@ -40,9 +40,9 @@
                             </a>
 
                             <div class="itemActionControls">
-                                <a href="{{ path('user_admin_node_edit', {id : node.id, type : node.type}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{{ path('user_admin_node_edit', {id : node.id, type : type}) }}"><i class="fas fa-pencil-alt"></i></a>
                                 <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
-                                <a onclick="a.deleteObject('{{ path('user_admin_node_delete', {id : node.id, type : node.type}) }}', '{{ node.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                                <a onclick="a.deleteObject('{{ path('user_admin_node_delete', {id : node.id, type : type}) }}', '{{ node.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                     {% endfor %}

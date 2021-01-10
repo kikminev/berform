@@ -23,7 +23,7 @@ class SiteRemover
 
     public function __construct(
 //        PageRepository $pageRepository,
-        PostRepository $postRepository,
+//        PostRepository $postRepository,
         AlbumRepository $albumRepository,
         FileRepository $fileRepository,
         DocumentManager $documentManager,

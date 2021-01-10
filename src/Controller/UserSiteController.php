@@ -56,7 +56,7 @@ class UserSiteController extends AbstractController
         DomainRepository $domainRepository,
 //        PageRepository $pageRepository,
         AlbumRepository $albumRepository,
-        PostRepository $postRepository,
+//        PostRepository $postRepository,
         ParameterBagInterface $params,
         LayoutResolver $layoutResolver,
         string $slug = 'home'

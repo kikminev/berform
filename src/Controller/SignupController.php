@@ -125,7 +125,7 @@ class SignupController extends AbstractController
         SiteRepository $siteRepository,
         ProductRepository $productRepository,
         AlbumRepository $albumRepository,
-        PostRepository $postRepository,
+//        PostRepository $postRepository,
         EntityManagerInterface $entityManager
     ): RedirectResponse {
         die('dada');

@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Album;
+use App\Entity\Node;
 use App\Entity\Page;
 use App\Entity\Site;
 use App\Form\Admin\NodeType;
@@ -43,6 +45,7 @@ class NodeController extends AbstractController
         String $type,
         Site $site,
         FileRepository $fileRepository,
+        AlbumRepository $albumRepository,
         ParameterBagInterface $param
     ): Response {
 
@@ -50,18 +53,13 @@ class NodeController extends AbstractController
 
         switch ($type) {
             case 'shot':
-                $qb = $this->entityManager->createQueryBuilder(Shot::class);
+//                $qb = $this->entityManager->createQueryBuilder(Shot::class);
                 break;
             case 'album':
             default:
-                $qb = $this->entityManager->createQueryBuilder(Album::class);
+            $nodes = $this->albumRepository->getActiveByUserSite($this->getUser(), $site);
                 break;
         }
-
-        $qb->addAnd($qb->expr()->field('user')->equals($this->getUser()));
-        $qb->addAnd($qb->expr()->field('site')->equals($site->getId()));
-        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
-        $nodes = $qb->getQuery()->execute();
 
         return $this->render(
             'Admin/Node/node_list.html.twig',
@@ -97,7 +95,7 @@ class NodeController extends AbstractController
             default:
                 /** @var Album $node */
                 $node = $this->entityManager->getRepository(Album::class)->findOneBy([
-                    'user' => $this->getUser(),
+                    'userCustomer' => $this->getUser(),
                     'id' => $id,
                 ]);
                 break;
@@ -176,15 +174,14 @@ class NodeController extends AbstractController
         }
 
         // todo: this needs to be refactored - SHOW ORDERED FILES
-        $orderedFiles = UploadController::getOrderedFiles($node->getFiles()->toArray());
-        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
+//        $orderedFiles = UploadController::getOrderedFiles($node->getFiles()->toArray());
+//        $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
             'Admin/Node/node_edit.html.twig',
             [
                 'form' => $form->createView(),
-                'files' => $orderedFiles,
-                'page' => $node,
+//                'files' => $orderedFiles,
                 'supportedLanguages' => $supportedLanguages,
                 'site' => $node->getSite(),
                 'node' => $node,
@@ -226,7 +223,6 @@ class NodeController extends AbstractController
                 break;
         }
 
-        $node->setType($type);
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
@@ -275,7 +271,7 @@ class NodeController extends AbstractController
             $node->setTranslatedKeywords($updatedTranslatedKeywords);
             $node->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
             $node->setSite($site);
-            $node->setUser($this->getUser());
+            $node->setUserCustomer($this->getUser());
 
             $attachedFiles = $request->request->get('node')['attachedFiles'] ?? false;
             if('shot' === $type) {

@@ -2,13 +2,13 @@
 
 namespace App\Form\Admin;
 
+use App\Entity\Node;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Document\Node;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -35,7 +35,7 @@ class NodeType extends AbstractType
         }
 
         $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
-        $builder->add('active', null, ['required' => false]);
+        $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }
 

@@ -34,8 +34,8 @@ class BlogController extends AbstractController
         Request $request,
 //        PageRepository $pageRepository,
         SiteRepository $siteRepository,
-        DomainRepository $domainRepository,
-        PostRepository $postRepository
+        DomainRepository $domainRepository//,
+//        PostRepository $postRepository
     ) {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
@@ -69,7 +69,7 @@ class BlogController extends AbstractController
     public function view(
         Request $request,
         $slug,
-        PostRepository $postRepository,
+//        PostRepository $postRepository,
         SiteRepository $siteRepository,
 //        PageRepository $pageRepository,
         DomainRepository $domainRepository
