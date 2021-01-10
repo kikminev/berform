@@ -13,6 +13,7 @@ class Subscription
 {
     use TimestampableEntity;
 
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

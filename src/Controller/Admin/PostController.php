@@ -2,30 +2,31 @@
 
 namespace App\Controller\Admin;
 
-use App\Document\File;
-use App\Document\Post;
+use App\Entity\Post;
+use App\Entity\Site;
 use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
+
 //use App\Repository\PageRepository;
+use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use DateTime;
 use Doctrine\ODM\MongoDB\MongoDBException;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use App\Document\Site;
 
 class PostController extends AbstractController
 {
-    private $documentManager;
+    private $entityManager;
 
     // todo: import repositories with auto-wiring
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -47,9 +48,10 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $post);
 
-        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
-            return in_array($language, $site->getSupportedLanguages(), false);
-        });
+        $supportedLanguages = array_filter($param->get('supported_languages'),
+            function ($language) use ($site) {
+                return in_array($language, $site->getSupportedLanguages(), false);
+            });
         $orderedFiles = UploadController::getOrderedFiles($post->getFiles()->toArray());
 
 
@@ -101,18 +103,18 @@ class PostController extends AbstractController
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $postFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
                 $post->setFiles($postFiles);
 
-                if(!empty($postFiles) && null === $post->getDefaultImage()) {
+                if (!empty($postFiles) && null === $post->getDefaultImage()) {
                     $defaultImage = array_keys($postFiles)[0];
                     $post->setDefaultImage($postFiles[$defaultImage]);
                 }
             }
 
             $post->setUpdatedAt(new DateTime());
-            $this->documentManager->persist($post);
-            $this->documentManager->flush();
+            $this->entityManager->persist($post);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
         }
@@ -124,7 +126,7 @@ class PostController extends AbstractController
                 'files' => $orderedFiles,
                 'post' => $post,
                 'supportedLanguages' => $supportedLanguages,
-                'site' => $post->getSite()
+                'site' => $post->getSite(),
             ]
         );
     }
@@ -149,9 +151,10 @@ class PostController extends AbstractController
 
         $post = new Post();
         $post->setCreatedAt(new DateTime());
-        $supportedLanguages = array_filter($param->get('supported_languages'), function($language) use ($site) {
-            return in_array($language, $site->getSupportedLanguages(), false);
-        });
+        $supportedLanguages = array_filter($param->get('supported_languages'),
+            function ($language) use ($site) {
+                return in_array($language, $site->getSupportedLanguages(), false);
+            });
 
         $form = $this->createForm(PostType::class, $post, ['supported_languages' => $supportedLanguages]);
         $form->handleRequest($request);
@@ -197,22 +200,24 @@ class PostController extends AbstractController
             $post->setTranslatedKeywords($updatedTranslatedKeywords);
             $post->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
             $post->setSite($site);
-            $post->setUser($this->getUser());
+            $post->setUserCustomer($this->getUser());
+            $post->setUpdatedAt(new DateTime());
+            $post->setCreatedAt(new DateTime());
 
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles= $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $postFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
                 $post->setFiles($postFiles);
 
-                if(!empty($postFiles) && null === $post->getDefaultImage()) {
+                if (!empty($postFiles) && null === $post->getDefaultImage()) {
                     $defaultImage = array_keys($postFiles)[0];
                     $post->setDefaultImage($postFiles[$defaultImage]);
                 }
             }
 
-            $this->documentManager->persist($post);
-            $this->documentManager->flush();
+            $this->entityManager->persist($post);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_post_list', ['site' => $post->getSite()->getId()]);
         }
@@ -228,18 +233,22 @@ class PostController extends AbstractController
         );
     }
 
-//    public function list(Request $request, Site $site, PostRepository $postRepository, PageRepository $pageRepository)
-//    {
-//        $posts = $postRepository->findAllByUserSite($this->getUser(), $site);
-//
-//        return $this->render(
-//            'Admin/Post/post_list.html.twig',
-//            [
-//                'posts' => $posts,
-//                'site' => $site,
-//            ]
-//        );
-//    }
+    public function list(
+        Request $request,
+        Site $site,
+        PostRepository $postRepository,
+        PageRepository $pageRepository
+    ) {
+        $posts = $postRepository->findAllByUserSite($this->getUser(), $site);
+
+        return $this->render(
+            'Admin/Post/post_list.html.twig',
+            [
+                'posts' => $posts,
+                'site' => $site,
+            ]
+        );
+    }
 
     public function delete(Post $post)
     {
@@ -247,7 +256,7 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $post);
 
         $post->setDeleted(true);
-        $this->documentManager->flush();
+        $this->entityManager->flush();
 
         return new JsonResponse('deleted');
     }

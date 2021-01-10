@@ -2,20 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\InheritanceType;
-
 /**
  * @Entity
  */
 class Album extends Node
 {
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
