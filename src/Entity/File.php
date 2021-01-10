@@ -68,6 +68,11 @@ class File
      */
     private $album;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="files")
+     */
+    private $post;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -189,6 +194,18 @@ class File
     public function setAlbum(?Album $album): self
     {
         $this->album = $album;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }

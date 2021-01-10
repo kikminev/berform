@@ -2,96 +2,49 @@
 
 namespace App\Repository;
 
-use App\Document\Post;
-use App\Document\Site;
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use App\Entity\Post;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PostRepository extends DocumentRepository
+/**
+ * @method Post|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Post|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Post[]    findAll()
+ * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class PostRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Post::class));
+        parent::__construct($registry, Post::class);
     }
 
-    public function findActivePostsBySite(Site $site, $limit = false)
+    // /**
+    //  * @return Post[] Returns an array of Post objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        $qb = $this->createQueryBuilder()
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->field('site')->equals($site)
-            ->sort('publishedAt', 'DESC');
-
-        if ($limit) {
-            $qb->limit($limit);
-        }
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
-    }
-
-    public function findActivePostsBySiteWithoutFeatured(Site $site, $limit = false)
-    {
-        $qb = $this->createQueryBuilder()
-            ->field('featuredParallax')->notEqual(true)
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->field('site')->equals($site)
-            ->sort('createdAt', 'DESC');
-
-        if ($limit) {
-            $qb->limit($limit);
-        }
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
-    }
-
-    public function findReadMorePosts(Site $site): array
-    {
-        $posts = $this->findActivePostsBySite($site, 2);
-
-        $allHaveImages = true;
-        /** @var Post $post */
-        foreach ($posts as $post) {
-            if (null === $post->getDefaultImage()) {
-                $allHaveImages = false;
-                break;
-            }
-        }
-
-        return ['posts' => $posts, 'allHaveImages' => $allHaveImages];
-    }
-
-    public function findAllByUserSite(User $user, Site $site)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Post::class)
-            ->field('user')->equals($user)
-            ->field('site')->equals($site)
-            ->field('deleted')->notEqual(true)
-            ->sort('publishedAt', 'DESC')
-            ->getQuery()->execute();
-    }
-
-    public function deleteAllBySite(Site $site)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Post::class)
-            ->remove()
-            ->field('site')->equals($site)
-            ->getQuery()->execute();
-    }
-
-    public function findActiveBySlug(string $slug, Site $site)
-    {
-        return $this->dm->createQueryBuilder(Post::class)
-            ->field('site')->equals($site)
-            ->field('slug')->equals($slug)
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
             ->getQuery()
-            ->getSingleResult();
+            ->getResult()
+        ;
     }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Post
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }
