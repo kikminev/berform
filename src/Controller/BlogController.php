@@ -33,8 +33,8 @@ class BlogController extends AbstractController
     public function list(
         Request $request,
 //        PageRepository $pageRepository,
-        SiteRepository $siteRepository,
-        DomainRepository $domainRepository//,
+        SiteRepository $siteRepository
+//        DomainRepository $domainRepository//,
 //        PostRepository $postRepository
     ) {
         /** @var Site $site */
@@ -70,9 +70,9 @@ class BlogController extends AbstractController
         Request $request,
         $slug,
 //        PostRepository $postRepository,
-        SiteRepository $siteRepository,
+        SiteRepository $siteRepository
 //        PageRepository $pageRepository,
-        DomainRepository $domainRepository
+//        DomainRepository $domainRepository
     ): Response {
 
         // todo: fix this if and extract to a normal logic

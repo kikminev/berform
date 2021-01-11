@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Document\Page;
 use App\Entity\Site;
-use App\Repository\DomainRepository;
+//use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,7 +37,8 @@ class SiteController extends AbstractController
         );
     }
 
-    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager, DomainRepository $domainRepository): Response
+//    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager, DomainRepository $domainRepository): Response
+    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         // todo: copy pages from template

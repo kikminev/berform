@@ -26,7 +26,7 @@ class TestController extends AbstractController
     public function test(
         CloudflareDnsUpdater $cloudflareDnsUpdater,
         UserCustomerRepository $userRepository,
-        DomainRepository $domainRepository,
+//        DomainRepository $domainRepository,
         EntityManagerInterface $entityManager,
         SiteRepository $siteRepository,
         FileRepository $fileRepository,

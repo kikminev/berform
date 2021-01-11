@@ -3,7 +3,6 @@
 namespace App\Form\Admin;
 
 use App\Entity\UserCustomer;
-use App\Repository\DomainRepository;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,7 +28,7 @@ class SiteType extends AbstractType
         SupportedLanguageToNumberTransformer $supportedLanguageToStringTransformer,
         ParameterBagInterface $param,
         TranslatorInterface $translator,
-        DomainRepository $domainRepository,
+//        DomainRepository $domainRepository,
         Security $security
     ) {
         $this->supportedLanguageToStringTransformer = $supportedLanguageToStringTransformer;

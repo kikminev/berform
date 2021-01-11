@@ -2,8 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Document\User;
 use App\Form\Admin\ChangePasswordType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,29 +14,28 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProfileController extends AbstractController
 {
-    private $documentManager;
     private $translator;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator)
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
     {
-        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
         $this->translator = $translator;
     }
 
-    //public function edit(): ?Response
-    //{
-    //    $this->denyAccessUnlessGranted('ROLE_USER');
-    //
-    //    return $this->render(
-    //        'Admin/Profile/edit.html.twig',
-    //        []
-    //    );
-    //}
+    public function edit(): ?Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        return $this->render(
+            'Admin/Profile/edit.html.twig',
+            []
+        );
+    }
 
     public function changePassword(
         Request $request,
-        UserPasswordEncoderInterface $userPasswordEncoder,
-        DocumentManager $documentManager
+        UserPasswordEncoderInterface $userPasswordEncoder
     ): ?Response {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -66,7 +66,7 @@ class ProfileController extends AbstractController
             if ($userPasswordEncoder->isPasswordValid($user, $oldPassword) && $newPassword === $newPasswordRepeat) {
                 $password = $userPasswordEncoder->encodePassword($user, $newPassword);
                 $user->setPassword($password);
-                $documentManager->flush($user);
+                $this->entityManager->flush($user);
             }
         }
 

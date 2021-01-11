@@ -108,6 +108,11 @@ class Site
      */
     private $supportedLanguages = [];
 
+    /**
+     * @ORM\OneToOne(targetEntity=Domain::class, mappedBy="site", cascade={"persist", "remove"})
+     */
+    private $domain;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -347,5 +352,22 @@ class Site
     public function setSupportedLanguages(array $supportedLanguages): void
     {
         $this->supportedLanguages = $supportedLanguages;
+    }
+
+    public function getDomain(): ?Domain
+    {
+        return $this->domain;
+    }
+
+    public function setDomain(Domain $domain): self
+    {
+        $this->domain = $domain;
+
+        // set the owning side of the relation if necessary
+        if ($domain->getSite() !== $this) {
+            $domain->setSite($this);
+        }
+
+        return $this;
     }
 }

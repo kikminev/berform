@@ -24,7 +24,8 @@ class ContactController extends AbstractController
     }
 
 
-    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params, DomainRepository $domainRepository)
+//    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params, DomainRepository $domainRepository)
+    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params)
     {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);

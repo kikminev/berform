@@ -53,7 +53,7 @@ class UserSiteController extends AbstractController
     public function renderPage(
         Request $request,
         SiteRepository $siteRepository,
-        DomainRepository $domainRepository,
+//        DomainRepository $domainRepository,
 //        PageRepository $pageRepository,
         AlbumRepository $albumRepository,
 //        PostRepository $postRepository,

@@ -2,36 +2,49 @@
 
 namespace App\Repository;
 
-use App\Document\Domain;
-use App\Entity\UserCustomer;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use App\Entity\Domain;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class DomainRepository extends DocumentRepository
+/**
+ * @method Domain|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Domain|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Domain[]    findAll()
+ * @method Domain[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class DomainRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Domain::class));
+        parent::__construct($registry, Domain::class);
     }
 
-    public function findByUser(UserCustomer $user)
+    // /**
+    //  * @return Domain[] Returns an array of Domain objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->addAnd($qb->expr()->field('user')->equals($user));
-        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('d.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
+    */
 
-    public function findActiveByUser(UserCustomer $user)
+    /*
+    public function findOneBySomeField($value): ?Domain
     {
-        $qb = $this->createQueryBuilder();
-        $qb->addAnd($qb->expr()->field('user')->equals($user));
-        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
-        $qb->addAnd($qb->expr()->field('active')->equals(true));
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
+    */
 }

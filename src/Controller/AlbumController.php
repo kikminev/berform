@@ -37,7 +37,7 @@ class AlbumController extends AbstractController
     public function view(
         Request $request,
         SiteRepository $siteRepository,
-        DomainRepository $domainRepository,
+//        DomainRepository $domainRepository,
         PageRepository $pageRepository,
         AlbumRepository $albumRepository,
         ParameterBagInterface $params,

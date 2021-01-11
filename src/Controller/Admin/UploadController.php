@@ -101,6 +101,8 @@ class UploadController extends AbstractController
 
         $file->setUserCustomer($this->getUser());
         $file->setSize($size);
+        $file->setCreatedAt(new \DateTime());
+        $file->setUpdatedAt(new \DateTime());
 
         $this->entityManager->persist($file);
         $this->entityManager->flush();

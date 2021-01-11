@@ -2,10 +2,9 @@
 
 namespace App\DNS;
 
-use App\Document\Domain;
-use App\Document\User;
+use App\Entity\Domain;
+use App\Entity\UserCustomer;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Exception;
 use RuntimeException;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -31,7 +30,7 @@ class CloudflareDnsUpdater implements DnsUpdater
         $this->documentManager = $documentManager;
     }
 
-    public function createCloudflareAccount(User $user): bool
+    public function createCloudflareAccount(UserCustomer $user): bool
     {
         $email = $user->getEmail();
         $client = HttpClient::create();
@@ -65,7 +64,7 @@ class CloudflareDnsUpdater implements DnsUpdater
         return true;
     }
 
-    public function addDomainDNS(Domain $domain, User $user): bool
+    public function addDomainDNS(Domain $domain, UserCustomer $user): bool
     {
         $client = HttpClient::create();
         $domainName = $domain->getName();
@@ -134,7 +133,7 @@ class CloudflareDnsUpdater implements DnsUpdater
     {
     }
 
-    public function deleteDomainDNS(Domain $domain, User $user)
+    public function deleteDomainDNS(Domain $domain, UserCustomer $user)
     {
     }
 

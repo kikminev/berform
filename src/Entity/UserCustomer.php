@@ -74,9 +74,15 @@ class UserCustomer implements UserInterface
      */
     private $sites;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Domain::class, mappedBy="userCustomer", orphanRemoval=true)
+     */
+    private $domains;
+
     public function __construct()
     {
         $this->sites = new ArrayCollection();
+        $this->domains = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,6 +260,37 @@ class UserCustomer implements UserInterface
             // set the owning side to null (unless already changed)
             if ($site->getUserCustomer() === $this) {
                 $site->setUserCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domain[]
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    public function addDomain(Domain $domain): self
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+            $domain->setUserCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): self
+    {
+        if ($this->domains->contains($domain)) {
+            $this->domains->removeElement($domain);
+            // set the owning side to null (unless already changed)
+            if ($domain->getUserCustomer() === $this) {
+                $domain->setUserCustomer(null);
             }
         }
 
