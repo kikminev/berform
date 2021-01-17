@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Domain;
+use App\Entity\UserCustomer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,6 +36,15 @@ class DomainRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByUser(UserCustomer $user)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.userCustomer = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Domain

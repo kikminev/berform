@@ -2,8 +2,11 @@
 
 namespace App\Form\Admin;
 
+use App\Entity\Domain;
+use App\Entity\Site;
 use App\Entity\UserCustomer;
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
+use App\Repository\DomainRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Document\Site;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -28,7 +30,7 @@ class SiteType extends AbstractType
         SupportedLanguageToNumberTransformer $supportedLanguageToStringTransformer,
         ParameterBagInterface $param,
         TranslatorInterface $translator,
-//        DomainRepository $domainRepository,
+        DomainRepository $domainRepository,
         Security $security
     ) {
         $this->supportedLanguageToStringTransformer = $supportedLanguageToStringTransformer;
@@ -63,11 +65,11 @@ class SiteType extends AbstractType
                     'label' => $this->translator->trans('admin_site_activated_languages')
                 ])
             ->add('domain',
-                DocumentType::class,
+                EntityType::class,
                 [
                     'label' => $this->translator->trans('admin_page_edit_domain'),
                     'class' => Domain::class,
-                    'choices' => $this->domainRepository->findActiveByUser($user),
+                    'choices' => $this->domainRepository->findByUser($user),
                     'choice_label' => function ($domain) {
                         /** @var Domain $domain */
                         return $domain->getName();

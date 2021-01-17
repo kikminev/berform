@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Document\Page;
 use App\Entity\Site;
 //use App\Repository\DomainRepository;
+use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,8 +38,7 @@ class SiteController extends AbstractController
         );
     }
 
-//    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager, DomainRepository $domainRepository): Response
-    public function create(Request $request, ParameterBagInterface $param, DocumentManager $documentManager): Response
+    public function create(Request $request, ParameterBagInterface $param, EntityManagerInterface $entityManager, DomainRepository $domainRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         // todo: copy pages from template
@@ -54,11 +54,11 @@ class SiteController extends AbstractController
 
             $site->setUser($this->getUser());
 
-            $templateSite = $documentManager->getRepository(Site::class)->findOneBy(['isTemplate' => true]);
-            $templatePages = $documentManager->getRepository(Page::class)->findBy(['site' => $templateSite]);
+            $templateSite = $entityManager->getRepository(Site::class)->findOneBy(['isTemplate' => true]);
+            $templatePages = $entityManager->getRepository(Page::class)->findBy(['site' => $templateSite]);
 
-            $documentManager->persist($site);
-            $documentManager->flush();
+            $entityManager->persist($site);
+            $entityManager->flush();
 
             /** @var Page $page */
             foreach ($templatePages as $page) {

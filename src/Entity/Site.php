@@ -113,6 +113,21 @@ class Site
      */
     private $domain;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $workingFrom;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $workingTo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $customCss;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -367,6 +382,42 @@ class Site
         if ($domain->getSite() !== $this) {
             $domain->setSite($this);
         }
+
+        return $this;
+    }
+
+    public function getWorkingFrom(): ?string
+    {
+        return $this->workingFrom;
+    }
+
+    public function setWorkingFrom(?string $workingFrom): self
+    {
+        $this->workingFrom = $workingFrom;
+
+        return $this;
+    }
+
+    public function getWorkingTo(): ?string
+    {
+        return $this->workingTo;
+    }
+
+    public function setWorkingTo(?string $workingTo): self
+    {
+        $this->workingTo = $workingTo;
+
+        return $this;
+    }
+
+    public function getCustomCss(): ?string
+    {
+        return $this->customCss;
+    }
+
+    public function setCustomCss(?string $customCss): self
+    {
+        $this->customCss = $customCss;
 
         return $this;
     }
