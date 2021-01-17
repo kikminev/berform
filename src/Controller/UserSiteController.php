@@ -11,6 +11,7 @@ use App\Form\ContactType;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
 //use App\Repository\PageRepository;
+use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
@@ -41,22 +42,13 @@ class UserSiteController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    /**
-     * @param Request $request
-     * @param SiteRepository $siteRepository
-//     * @param PageRepository $pageRepository
-     * @param ParameterBagInterface $params
-     * @param string $slug
-     * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
     public function renderPage(
         Request $request,
         SiteRepository $siteRepository,
-//        DomainRepository $domainRepository,
-//        PageRepository $pageRepository,
+        DomainRepository $domainRepository,
+        PageRepository $pageRepository,
         AlbumRepository $albumRepository,
-//        PostRepository $postRepository,
+        PostRepository $postRepository,
         ParameterBagInterface $params,
         LayoutResolver $layoutResolver,
         string $slug = 'home'
@@ -98,10 +90,10 @@ class UserSiteController extends AbstractController
                 'page' => $page,
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
-                'posts' => $postRepository->findActivePostsBySiteWithoutFeatured($site),
+                'posts' => $postRepository->findActivePostsBySite($site),
                 'featuredPostInParallax' => $postRepository->findOneBy([
                     'site' => $site,
-                    'active' => true,
+                    'isActive' => true,
                     'featuredParallax' => true,
                 ]),
             ]

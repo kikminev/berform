@@ -60,4 +60,13 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findActiveBySite(Site $site)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.site = :site')
+            ->setParameter('site', $site)
+            ->getQuery()
+            ->getResult();
+    }
 }

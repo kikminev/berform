@@ -48,4 +48,14 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findActivePostsBySite(Site $site): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.site = :site')
+            ->andWhere('p.featuredParallax = :site')
+            ->andWhere('p.isActive = true')
+            ->setParameter('site', $site)
+            ->getQuery()
+            ->getResult();
+    }
 }
