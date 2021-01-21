@@ -24,13 +24,15 @@ class AlbumRepository extends ServiceEntityRepository
 
     public function getActiveByUserSite(UserCustomer $user, Site $site)
     {
+        $qb = $this->createQueryBuilder('a');
 
-        $qb = $this->createQueryBuilder('f');
-
-        return $qb->andWhere('f.userCustomer = :user')
-            ->andWhere('f.isDeleted = false OR f.isDeleted IS NULL')
+        return $qb
+            ->andWhere('a.userCustomer = :user')
+            ->andWhere('a.site = :site')
+            ->andWhere('a.isDeleted = false OR a.isDeleted IS NULL')
             ->setParameter('user', $user)
-            ->orderBy('f.sequenceOrder', 'ASC')
+            ->setParameter('site', $site)
+            ->orderBy('a.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();
     }

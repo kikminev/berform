@@ -2,7 +2,6 @@
 
 namespace App\Form\Admin;
 
-use App\Entity\Node;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,16 +33,8 @@ class NodeType extends AbstractType
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('admin_form_page_meta_description')]);
         }
 
-        $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
         $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => Node::class,
-            'supported_languages' => null,
-        ));
     }
 }

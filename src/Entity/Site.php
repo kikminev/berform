@@ -128,6 +128,26 @@ class Site
      */
     private $customCss;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $customHtml;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedTemplateName = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedAddress = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $translatedDescription = [];
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -418,6 +438,54 @@ class Site
     public function setCustomCss(?string $customCss): self
     {
         $this->customCss = $customCss;
+
+        return $this;
+    }
+
+    public function getCustomHtml(): ?string
+    {
+        return $this->customHtml;
+    }
+
+    public function setCustomHtml(?string $customHtml): self
+    {
+        $this->customHtml = $customHtml;
+
+        return $this;
+    }
+
+    public function getTranslatedTemplateName(): ?array
+    {
+        return $this->translatedTemplateName;
+    }
+
+    public function setTranslatedTemplateName(?array $translatedTemplateName): self
+    {
+        $this->translatedTemplateName = $translatedTemplateName;
+
+        return $this;
+    }
+
+    public function getTranslatedAddress(): ?array
+    {
+        return $this->translatedAddress;
+    }
+
+    public function setTranslatedAddress(?array $translatedAddress): self
+    {
+        $this->translatedAddress = $translatedAddress;
+
+        return $this;
+    }
+
+    public function getTranslatedDescription(): ?array
+    {
+        return $this->translatedDescription;
+    }
+
+    public function setTranslatedDescription(?array $translatedDescription): self
+    {
+        $this->translatedDescription = $translatedDescription;
 
         return $this;
     }

@@ -2,14 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Album;
-use App\Entity\Node;
-use App\Entity\Page;
 use App\Entity\Shot;
 use App\Entity\Site;
-use App\Form\Admin\AlbumType;
 use App\Form\Admin\ShotType;
-use App\Repository\AlbumRepository;
 use App\Repository\PageRepository;
 use App\Repository\FileRepository;
 use App\Repository\ShotRepository;
@@ -21,12 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class NodeController extends AbstractController
+class ShotController extends AbstractController
 {
     private $entityManager;
-    private $albumRepository;
 
-    // todo: import repositories with auto-wiring
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -37,22 +30,12 @@ class NodeController extends AbstractController
         Request $request,
         String $type,
         Site $site,
-        AlbumRepository $albumRepository,
         ShotRepository $shotRepository,
         ParameterBagInterface $param
     ): Response {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
-
-        switch ($type) {
-            case 'shot':
-                $nodes = $shotRepository->getActiveByUserSite($this->getUser(), $site);
-                break;
-            case 'album':
-            default:
-            $nodes = $albumRepository->getActiveByUserSite($this->getUser(), $site);
-                break;
-        }
+        $nodes = $shotRepository->getActiveByUserSite($this->getUser(), $site);
 
         return $this->render(
             'Admin/Node/node_list.html.twig',
@@ -78,60 +61,37 @@ class NodeController extends AbstractController
         string $type,
         string $id,
         FileRepository $fileRepository,
-        AlbumRepository $albumRepository,
         ShotRepository $shotRepository,
         ParameterBagInterface $param
     ): Response {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        /** @var Node $node */
+        $shot = $shotRepository->findOneBy(['userCustomer' => $this->getUser(), 'id' => $id]);
+        $site = $shot->getSite();
+        $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
+            return in_array($language, $site->getSupportedLanguages(), false);
+        });
+        $form = $this->createForm(ShotType::class, $shot, ['supported_languages' => $supportedLanguages]);
 
-        switch ($type) {
-            case 'shot':
-                $node = $shotRepository->findOneBy(['userCustomer' => $this->getUser(), 'id' => $id]);
-                $site = $node->getSite();
-                $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
-                    return in_array($language, $site->getSupportedLanguages(), false);
-                });
-echo get_class($node); exit;
-                $form = $this->createForm(ShotType::class, $node, ['supported_languages' => $supportedLanguages]);
-                break;
-            case 'album':
-            default:
-                $node = $albumRepository->findOneBy(['userCustomer' => $this->getUser(), 'id' => $id]);
-                $site = $node->getSite();
-                $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
-                    return in_array($language, $site->getSupportedLanguages(), false);
-                });
 
-                $form = $this->createForm(AlbumType::class, $node, ['supported_languages' => $supportedLanguages]);
-                break;
-        }
-
-        if (null === $node) {
+        if (null === $shot) {
             /** @noinspection PhpUnhandledExceptionInspection */
             throw new Exception('Error');
         }
 
-        $this->denyAccessUnlessGranted('modify', $node);
+        $this->denyAccessUnlessGranted('modify', $shot);
 
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            $currentTranslatedTitles = $node->getTranslatedTitle();
-            $currentTranslatedContent = $node->getTranslatedContent();
-            $currentTranslatedKeywords = $node->getTranslatedKeywords();
-            $currentTranslatedMetaDescription = $node->getTranslatedMetaDescription();
+            $currentTranslatedTitles = $shot->getTranslatedTitle();
+            $currentTranslatedContent = $shot->getTranslatedContent();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
-                $translatedKeywords = isset($currentTranslatedKeywords[$language]) ? $currentTranslatedKeywords[$language] : '';
-                $translatedMetaDescription = isset($currentTranslatedMetaDescription[$language]) ? $currentTranslatedMetaDescription[$language] : '';
                 $form->get('title_' . $language)->setData($translatedTitle);
                 $form->get('content_' . $language)->setData($translatedContent);
-                $form->get('keywords_' . $language)->setData($translatedKeywords);
-                $form->get('meta_description_' . $language)->setData($translatedMetaDescription);
             }
         }
 
@@ -139,45 +99,39 @@ echo get_class($node); exit;
 
             $updatedTranslatedTitle = [];
             $updatedTranslatedContent = [];
-            $updatedTranslatedKeywords = [];
-            $updatedTranslatedMetaDescription = [];
             foreach ($supportedLanguages as $language) {
                 $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
                 $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
-                $updatedTranslatedKeywords[$language] = $form['keywords_' . $language]->getData();
-                $updatedTranslatedMetaDescription[$language] = $form['meta_description_' . $language]->getData();
             }
 
-            $node->setTranslatedTitle($updatedTranslatedTitle);
-            $node->setTranslatedContent($updatedTranslatedContent);
-            $node->setTranslatedKeywords($updatedTranslatedKeywords);
-            $node->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
+            $shot->setTranslatedTitle($updatedTranslatedTitle);
+            $shot->setTranslatedContent($updatedTranslatedContent);
 
-            $attachedFiles = $request->request->get($type)['attachedFiles'] ?? false;
+            $attachedFiles = $request->request->get('shot')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
                 $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($nodeFiles as $attachedFile) {
-                    $node->addFile($attachedFile);
+                    $shot->addFile($attachedFile);
                 }
 
-                if(!empty($nodeFiles) && null === $node->getDefaultImage()) {
+                if(!empty($nodeFiles) && null === $shot->getDefaultImage()) {
                     $defaultImage = array_keys($nodeFiles)[0];
-                    $node->setDefaultImage($nodeFiles[$defaultImage]);
+                    $shot->setDefaultImage($nodeFiles[$defaultImage]);
                 }
             }
-            $this->entityManager->persist($node);
+            $this->entityManager->persist($shot);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_node_list', [
-                'site' => $node->getSite()->getId(),
+                'site' => $shot->getSite()->getId(),
                 'type' => 'album',
             ]);
         }
 
         // todo: this needs to be refactored - SHOW ORDERED FILES
-        $orderedFiles = UploadController::getOrderedFiles($node->getFiles()->toArray());
+        $orderedFiles = UploadController::getOrderedFiles($shot->getFiles()->toArray());
         $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
@@ -186,8 +140,8 @@ echo get_class($node); exit;
                 'form' => $form->createView(),
                 'files' => $orderedFiles,
                 'supportedLanguages' => $supportedLanguages,
-                'site' => $node->getSite(),
-                'node' => $node,
+                'site' => $shot->getSite(),
+                'node' => $shot,
             ]
         );
     }
@@ -204,18 +158,9 @@ echo get_class($node); exit;
             return in_array($language, $site->getSupportedLanguages(), false);
         });
 
-        switch ($type) {
-            case 'shot':
-                $node = new Shot();
-                $form = $this->createForm(ShotType::class, $node, ['supported_languages' => $supportedLanguages]);
-                $editTemplate = 'Admin/Node/single_image_edit.html.twig';
-                break;
-            case 'album':
-                $node = new Album();
-                $form = $this->createForm(AlbumType::class, $node, ['supported_languages' => $supportedLanguages]);
-                $editTemplate = 'Admin/Node/node_edit.html.twig';
-                break;
-        }
+        $node = new Shot();
+        $form = $this->createForm(ShotType::class, $node, ['supported_languages' => $supportedLanguages]);
+        $editTemplate = 'Admin/Node/single_image_edit.html.twig';
 
         $form->handleRequest($request);
 
@@ -328,7 +273,7 @@ echo get_class($node); exit;
                 break;
             case 'page':
             default:
-            $nodes = $pageRepository->findActiveByIds($ids, $this->getUser());
+                $nodes = $pageRepository->findActiveByIds($ids, $this->getUser());
                 break;
         }
 
