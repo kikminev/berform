@@ -8,6 +8,7 @@ use App\Form\Admin\ShotType;
 use App\Repository\PageRepository;
 use App\Repository\FileRepository;
 use App\Repository\ShotRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -28,7 +29,6 @@ class ShotController extends AbstractController
 
     public function list(
         Request $request,
-        String $type,
         Site $site,
         ShotRepository $shotRepository,
         ParameterBagInterface $param
@@ -38,9 +38,8 @@ class ShotController extends AbstractController
         $nodes = $shotRepository->getActiveByUserSite($this->getUser(), $site);
 
         return $this->render(
-            'Admin/Node/node_list.html.twig',
+            'Admin/Shot/shot_list.html.twig',
             [
-                'type' => $type,
                 'nodes' => $nodes,
                 'site' => $site,
             ]
@@ -49,7 +48,6 @@ class ShotController extends AbstractController
 
     /**
      * @param Request $request
-     * @param string $type
      * @param string $id
      * @param FileRepository $fileRepository
      * @param ParameterBagInterface $param
@@ -58,7 +56,6 @@ class ShotController extends AbstractController
      */
     public function edit(
         Request $request,
-        string $type,
         string $id,
         FileRepository $fileRepository,
         ShotRepository $shotRepository,
@@ -85,57 +82,57 @@ class ShotController extends AbstractController
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            $currentTranslatedTitles = $shot->getTranslatedTitle();
             $currentTranslatedContent = $shot->getTranslatedContent();
             foreach ($supportedLanguages as $language) {
-                $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
-                $form->get('title_' . $language)->setData($translatedTitle);
-                $form->get('content_' . $language)->setData($translatedContent);
+
+                if($form->has('content_' . $language)) {
+                    $form->get('content_' . $language)->setData($translatedContent);
+                }
             }
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $updatedTranslatedTitle = [];
             $updatedTranslatedContent = [];
             foreach ($supportedLanguages as $language) {
-                $updatedTranslatedTitle[$language] = $form['title_' . $language]->getData();
                 $updatedTranslatedContent[$language] = $form['content_' . $language]->getData();
             }
 
-            $shot->setTranslatedTitle($updatedTranslatedTitle);
             $shot->setTranslatedContent($updatedTranslatedContent);
 
             $attachedFiles = $request->request->get('shot')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
-                $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
-                foreach ($nodeFiles as $attachedFile) {
+                $shotFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
+                foreach ($shotFiles as $attachedFile) {
                     $shot->addFile($attachedFile);
                 }
 
-                if(!empty($nodeFiles) && null === $shot->getDefaultImage()) {
-                    $defaultImage = array_keys($nodeFiles)[0];
-                    $shot->setDefaultImage($nodeFiles[$defaultImage]);
+                if(!empty($shotFiles) && null === $shot->getDefaultImage()) {
+                    $defaultImage = array_keys($shotFiles)[0];
+                    $shot->setDefaultImage($shotFiles[$defaultImage]);
                 }
             }
             $this->entityManager->persist($shot);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('user_admin_node_list', [
+            return $this->redirectToRoute('user_admin_shot_list', [
                 'site' => $shot->getSite()->getId(),
-                'type' => 'album',
             ]);
         }
 
+
+        $files = $shotRepository->getShotFiles($shot);
+        echo count($files); exit;
         // todo: this needs to be refactored - SHOW ORDERED FILES
+//        echo count($shot->getFiles()); exit;
         $orderedFiles = UploadController::getOrderedFiles($shot->getFiles()->toArray());
         $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
-            'Admin/Node/node_edit.html.twig',
+            'Admin/Shot/shot_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'files' => $orderedFiles,
@@ -149,7 +146,6 @@ class ShotController extends AbstractController
     public function create(
         Request $request,
         Site $site,
-        string $type,
         FileRepository $fileRepository,
         ParameterBagInterface $param
     ): Response {
@@ -158,17 +154,19 @@ class ShotController extends AbstractController
             return in_array($language, $site->getSupportedLanguages(), false);
         });
 
-        $node = new Shot();
-        $form = $this->createForm(ShotType::class, $node, ['supported_languages' => $supportedLanguages]);
+        $shot = new Shot();
+        $shot->setUpdatedAt(new DateTime());
+        $shot->setCreatedAt(new DateTime());
+        $form = $this->createForm(ShotType::class, $shot, ['supported_languages' => $supportedLanguages]);
         $editTemplate = 'Admin/Node/single_image_edit.html.twig';
 
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            $currentTranslatedTitles = $node->getTranslatedTitle();
-            $currentTranslatedContent = $node->getTranslatedContent();
-            $currentTranslatedKeywords = $node->getTranslatedKeywords();
-            $currentTranslatedMetaDescription = $node->getTranslatedMetaDescription();
+            $currentTranslatedTitles = $shot->getTranslatedTitle();
+            $currentTranslatedContent = $shot->getTranslatedContent();
+            $currentTranslatedKeywords = $shot->getTranslatedKeywords();
+            $currentTranslatedMetaDescription = $shot->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
@@ -205,33 +203,33 @@ class ShotController extends AbstractController
                 $updatedTranslatedMetaDescription[$language] = isset($form['meta_description_' . $language]) ? $form['meta_description_' . $language]->getData() : null;
             }
 
-            $node->setTranslatedTitle($updatedTranslatedTitle);
-            $node->setTranslatedContent($updatedTranslatedContent);
-            $node->setTranslatedKeywords($updatedTranslatedKeywords);
-            $node->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
-            $node->setSite($site);
-            $node->setUserCustomer($this->getUser());
+            $shot->setTranslatedTitle($updatedTranslatedTitle);
+            $shot->setTranslatedContent($updatedTranslatedContent);
+            $shot->setTranslatedKeywords($updatedTranslatedKeywords);
+            $shot->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
+            $shot->setSite($site);
+            $shot->setUserCustomer($this->getUser());
 
-            $attachedFiles = $request->request->get($type)['attachedFiles'] ?? false;
+            $attachedFiles = $request->request->get('shot')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
                 $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($nodeFiles as $attachedFile) {
-                    $node->addFile($attachedFile);
+                    $shot->addFile($attachedFile);
                 }
 
-                if(!empty($nodeFiles) && null === $node->getDefaultImage()) {
+                if(!empty($nodeFiles) && null === $shot->getDefaultImage()) {
                     $defaultImage = array_keys($nodeFiles)[0];
-                    $node->setDefaultImage($nodeFiles[$defaultImage]);
+                    $shot->setDefaultImage($nodeFiles[$defaultImage]);
                 }
             }
 
-            $this->entityManager->persist($node);
+            $this->entityManager->persist($shot);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_node_list', [
-                'site' => $node->getSite()->getId(),
+                'site' => $shot->getSite()->getId(),
                 'type' => 'album',
             ]);
         }
@@ -242,7 +240,7 @@ class ShotController extends AbstractController
                 'site' => $site,
                 'form' => $form->createView(),
                 'supportedLanguages' => $supportedLanguages,
-                'node' => $node,
+                'node' => $shot,
             ]
         );
     }

@@ -72,6 +72,11 @@ class File
     private $album;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Shot::class, inversedBy="files")
+     */
+    private $shot;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="files")
      */
     private $post;
@@ -197,6 +202,18 @@ class File
     public function setAlbum(?Album $album): self
     {
         $this->album = $album;
+
+        return $this;
+    }
+
+    public function getShot(): ?Shot
+    {
+        return $this->shot;
+    }
+
+    public function setShot(?Shot $shot): self
+    {
+        $this->shot = $shot;
 
         return $this;
     }

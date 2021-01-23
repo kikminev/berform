@@ -4,6 +4,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Shot;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,9 +34,7 @@ class ShotType extends NodeType
                 ]);
         }
 
-        $builder->add('attachedFiles',
-            HiddenType::class,
-            ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
         $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }

@@ -151,7 +151,6 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('modify', $site);
 
         $page = new Page();
-        $page->setCreatedAt(new DateTime());
         $page->setSite($site);
         $page->setUserCustomer($this->getUser());
         $page->setUpdatedAt(new DateTime());

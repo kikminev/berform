@@ -35,4 +35,18 @@ class ShotRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getShotFiles(Shot $shot)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        return $qb
+            ->innerJoin('s.files', 'files')
+//            ->andWhere('s.id = :shot')
+//            ->andWhere('s.isDeleted = false OR s.isDeleted IS NULL')
+//            ->setParameter('shot', $shot->getId())
+            ->orderBy('s.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
