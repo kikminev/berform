@@ -207,7 +207,7 @@ class PageController extends AbstractController
 
             $attachedFiles = $request->request->get('page')['attachedFiles'] ?? false;
             if ($attachedFiles) {
-                $attachedFilesIds = explode(';', $attachedFiles);
+                $attachedFilesIds = array_filter(explode(';', $attachedFiles));
                 $pageFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
                 $page->setFiles($pageFiles);
 

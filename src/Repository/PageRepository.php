@@ -65,7 +65,21 @@ class PageRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.site = :site')
+            ->andWhere('p.isActive = true')
             ->setParameter('site', $site)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findActiveByIdsAndUser(array $ids, UserCustomer $user)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+            $qb
+//            ->andWhere('p.userCustomer = :user')
+//            ->andWhere($qb->expr()->in('p.id', $ids))
+//            ->setParameter('user', $user)
+            ->orderBy('p.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();
     }

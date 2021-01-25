@@ -90,6 +90,19 @@ user_admin_shot_delete:
     path: /u/shot/delete/{id}
     controller: App\Controller\Admin\ShotController::delete
 
+user_admin_album_list:
+    path: /u/album/{site}
+    controller: App\Controller\Admin\AlbumController::list
+user_admin_album_create:
+    path: /u/album/create/{site}
+    controller: App\Controller\Admin\AlbumController::create
+user_admin_album_edit:
+    path: /u/album/edit/{id}
+    controller: App\Controller\Admin\AlbumController::edit
+user_admin_album_delete:
+    path: /u/album/delete/{id}
+    controller: App\Controller\Admin\AlbumController::delete
+
 # nodes
 user_admin_node_list:
     path: /u/node/list/{type}/{site}

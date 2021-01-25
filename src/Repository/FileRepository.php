@@ -50,14 +50,14 @@ class FileRepository extends ServiceEntityRepository
     }
     */
 
-    public function getActiveByIds($fileIds, UserCustomer $user)
+    public function getActiveByIds(array $ids, UserCustomer $user)
     {
 
         $qb = $this->createQueryBuilder('f');
 
         return $qb->andWhere('f.userCustomer = :user')
             ->andWhere($qb->expr()->not($qb->expr()->eq('f.isDeleted', ':isDeleted')))
-            ->andWhere($qb->expr()->in('f.id', $fileIds))
+            ->andWhere($qb->expr()->in('f.id', $ids))
             ->setParameter('user', $user)
             ->setParameter('isDeleted', true)
             ->orderBy('f.sequenceOrder', 'ASC')
