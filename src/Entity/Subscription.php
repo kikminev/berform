@@ -12,8 +12,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 class Subscription
 {
     use TimestampableEntity;
-
-
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -22,57 +21,77 @@ class Subscription
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Product::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $type;
+    private $product;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=UserCustomer::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userCustomer;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $expiresAt;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Site::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $site;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $user;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getProduct(): ?Product
     {
-        return $this->type;
+        return $this->product;
     }
 
-    public function setType(string $type): self
+    public function setProduct(?Product $product): self
     {
-        $this->type = $type;
+        $this->product = $product;
 
         return $this;
     }
 
-    public function getSite(): ?string
+    public function getUserCustomer(): ?UserCustomer
+    {
+        return $this->userCustomer;
+    }
+
+    public function setUserCustomer(?UserCustomer $userCustomer): self
+    {
+        $this->userCustomer = $userCustomer;
+
+        return $this;
+    }
+
+    public function getExpiresAt(): ?\DateTimeInterface
+    {
+        return $this->expiresAt;
+    }
+
+    public function setExpiresAt(\DateTimeInterface $expiresAt): self
+    {
+        $this->expiresAt = $expiresAt;
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
     {
         return $this->site;
     }
 
-    public function setSite(string $site): self
+    public function setSite(Site $site): self
     {
         $this->site = $site;
-
-        return $this;
-    }
-
-    public function getUser(): ?string
-    {
-        return $this->user;
-    }
-
-    public function setUser(string $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

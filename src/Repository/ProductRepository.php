@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Billing;
+namespace App\Repository;
 
-use App\Entity\Billing\Product;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +47,13 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOneBySystemCode(string $systemCode): ?Product
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.systemCode = :systemCode')
+            ->setParameter('systemCode', $systemCode)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

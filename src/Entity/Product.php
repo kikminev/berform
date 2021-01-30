@@ -10,6 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product
 {
+
+    public const PRODUCT_TYPE_DOMAIN = 'domain',
+        PRODUCT_TYPE_HOSTING = 'hosting',
+        PRODUCT_TYPE_FREE_HOSTING = 'free_hosting';
+
+    public const PRODUCT_DOMAIN_BG = 'bg',
+        PRODUCT_DOMAIN_COM = 'com',
+        PRODUCT_DOMAIN_NET = 'net',
+        PRODUCT_DOMAIN_BIZ = 'biz',
+        PRODUCT_DOMAIN_EU = 'eu';
+
+    public const PRODUCT_HOSTING = 'standard';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

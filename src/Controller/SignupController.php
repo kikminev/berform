@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Album;
-use App\Entity\Billing\Subscription;
+use App\Entity\Product;
+use App\Entity\Subscription;
 use App\Entity\Page;
 use App\Entity\Post;
 use App\Entity\Site;
 use App\Entity\UserCustomer;
 use App\Repository\AlbumRepository;
-use App\Repository\Payment\ProductRepository;
 use App\Repository\PostRepository;
+use App\Repository\ProductRepository;
 use App\Repository\SiteRepository;
 use App\Security\Signup\PasswordValidator;
 use App\Security\Signup\UserValidator;
@@ -191,7 +192,7 @@ class SignupController extends AbstractController
 
             $subscription = new Subscription();
             $subscription->setProduct($productRepository->findOneBySystemCode(Product::PRODUCT_TYPE_FREE_HOSTING));
-            $subscription->setUser($user);
+            $subscription->setUserCustomer($user);
             $subscription->setSite($newSite);
             $subscription->setCreatedAt(new DateTime());
             $subscription->setUpdatedAt(new DateTime());
