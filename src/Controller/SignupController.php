@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Document\Page;
-use App\Document\Payment\Product;
-use App\Document\Post;
-use App\Document\Site;
-use App\Document\Payment\Subscription;
+use App\Entity\Album;
+use App\Entity\Billing\Subscription;
+use App\Entity\Page;
+use App\Entity\Post;
+use App\Entity\Site;
 use App\Entity\UserCustomer;
 use App\Repository\AlbumRepository;
 use App\Repository\Payment\ProductRepository;
@@ -15,7 +15,6 @@ use App\Repository\SiteRepository;
 use App\Security\Signup\PasswordValidator;
 use App\Security\Signup\UserValidator;
 use DateTime;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,6 +94,8 @@ class SignupController extends AbstractController
             $user->setPassword($password);
             $user->setIsActive(true);
             $user->setIsSystem(false);
+            $user->setCreatedAt(new DateTime());
+            $user->setUpdatedAt(new DateTime());
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -103,8 +104,7 @@ class SignupController extends AbstractController
             $this->container->get('security.token_storage')->setToken($token);
             $this->container->get('session')->set('_security_main', serialize($token));
 
-            echo 'ok'; exit;
-//            return $this->redirectToRoute('app_signup_setup_account');
+            return $this->redirectToRoute('app_signup_setup_account');
         }
 
         return $this->render(
@@ -125,10 +125,9 @@ class SignupController extends AbstractController
         SiteRepository $siteRepository,
         ProductRepository $productRepository,
         AlbumRepository $albumRepository,
-//        PostRepository $postRepository,
+        PostRepository $postRepository,
         EntityManagerInterface $entityManager
     ): RedirectResponse {
-        die('dada');
         // todo: this needs to be implemented
         if ($selectedTemplate = $session->get('selectedTemplate')) {
 
@@ -146,7 +145,7 @@ class SignupController extends AbstractController
             $newSite = clone $selectedTemplate;
 
             // todo: this needs a service method
-            /** @var User $user */
+            /** @var UserCustomer $user */
             $user = $this->getUser();
             $userEmail = $user->getUsername();
             $emailName = explode('@', $userEmail);
@@ -154,7 +153,7 @@ class SignupController extends AbstractController
             $host = $emailName[0] . random_int(1, 10000000) . time();
 
             $newSite->setHost($host);
-            $newSite->setUser($user);
+            $newSite->setUserCustomer($user);
             $newSite->setIsTemplate(false);
             $entityManager->persist($newSite);
 
@@ -163,27 +162,28 @@ class SignupController extends AbstractController
             foreach ($pages as $page) {
                 /** @var Page $newPage */
                 $newPage = clone $page;
-                $newPage->setUser($user);
+                $newPage->setUserCustomer($user);
                 $newPage->setSite($newSite);
 
                 $entityManager->persist($newPage);
             }
 
-            $albums = $albumRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
+            $albums = $albumRepository->findAllByUserSite($selectedTemplate->getUserCustomer(), $selectedTemplate);
+            /** @var Album $album */
             foreach ($albums as $album) {
                 /** @var Page $newPage */
                 $newAlbum = clone $album;
-                $newAlbum->setUser($user);
+                $newAlbum->setUserCustomer($user);
                 $newAlbum->setSite($newSite);
 
                 $entityManager->persist($newAlbum);
             }
 
-            $posts = $postRepository->findAllByUserSite($selectedTemplate->getUser(), $selectedTemplate);
+            $posts = $postRepository->findAllByUserSite($selectedTemplate->getUserCustomer(), $selectedTemplate);
             foreach ($posts as $post) {
                 /** @var Post $newPost */
                 $newPost = clone $post;
-                $newPost->setUser($user);
+                $newPost->setUserCustomer($user);
                 $newPost->setSite($newSite);
 
                 $entityManager->persist($newPost);

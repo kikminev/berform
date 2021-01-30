@@ -36,4 +36,32 @@ class AlbumRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllBySite(Site $site)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        return $qb
+            ->andWhere('a.site = :site')
+            ->andWhere('a.isDeleted = false OR a.isDeleted IS NULL')
+            ->andWhere('a.isActive = true')
+            ->setParameter('site', $site)
+            ->orderBy('a.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllByUserSite(UserCustomer $user, Site $site)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        return $qb
+            ->andWhere('a.site = :site')
+            ->andWhere('a.userCustomer = :user')
+            ->setParameter('user', $user)
+            ->setParameter('site', $site)
+            ->orderBy('a.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

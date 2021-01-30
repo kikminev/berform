@@ -1,0 +1,84 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="blogPost">
+                <h1>{% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale] }}{% endif %}</h1>
+
+                <div class="clear"></div>
+
+                {% if post.files|length > 0 %}
+                {% set mainImage = post.files[0] %}
+                {% if files|length > 0 %}
+                <div id="imagesWrap">
+                    <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ mainImage.baseName }}"><img src="{{ resource_provider_domain }}{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
+
+                    <div class="blogIconImgWrap">
+                        {% for file in files %}
+                        {% if loop.first != true %}
+                        <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}" style="{% if loop.index > 6 %}display:none{% endif %}"><img src="{{ resource_provider_domain }}{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
+                        {% endif %}
+                        {% endfor %}
+                        {% if files.count > 7 %}
+                        <div class="moreImagesPlaceholder">+ {{ files.count - 6 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+                {% if post.translatedContent[app.request.locale] is defined %}{{ post.translatedContent[app.request.locale]|raw }}{% endif %}
+
+                <div class="publishedAt" style="margin-bottom: 30px;">{% trans %}form_post_published_at{% endtrans %}: {{ post.publishedAt|date('d.m.Y') }}</div>
+            </div>
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<div class="morePosts">
+    <div class="container">
+        <div class="row">
+            {#                <div class="col-md-12"><h3 style="text-align: center">Read more</h3></div>#}
+            {% for post in morePosts.posts %}
+            <div class="col-md-6">
+                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    <h3 class="title">
+                        {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale]|truncate(80) }}{% endif %}
+                    </h3>
+                </a>
+
+                {% set file = post.files|first %}
+                {% if post.files|length > 0 %}
+                <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=410&w=800&fit=crop" alt="" />
+                </a>
+                {% else %}
+                <div class="noImage"></div>
+                {% endif %}
+                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    <p>
+                        <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+                    </p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('[data-fancybox="gallery"]').fancybox({
+        buttons: [
+            "close"
+        ],
+    });
+</script>
+
+{% endblock %}

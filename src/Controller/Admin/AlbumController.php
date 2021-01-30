@@ -3,17 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Album;
-use App\Entity\Node;
 use App\Entity\Site;
 use App\Form\Admin\AlbumType;
 use App\Repository\AlbumRepository;
-use App\Repository\PageRepository;
 use App\Repository\FileRepository;
 use App\Repository\ShotRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,7 +40,7 @@ class AlbumController extends AbstractController
         $nodes = $albumRepository->getActiveByUserSite($this->getUser(), $site);
 
         return $this->render(
-            'Admin/Node/node_list.html.twig',
+            'Admin/Album/album_list.html.twig',
             [
                 'nodes' => $nodes,
                 'site' => $site,
@@ -148,7 +146,7 @@ class AlbumController extends AbstractController
         $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
-            'Admin/Node/node_edit.html.twig',
+            'Admin/Album/album_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'files' => $orderedFiles,
@@ -170,17 +168,20 @@ class AlbumController extends AbstractController
             return in_array($language, $site->getSupportedLanguages(), false);
         });
 
-        $node = new Album();
-        $form = $this->createForm(AlbumType::class, $node, ['supported_languages' => $supportedLanguages]);
-        $editTemplate = 'Admin/Node/node_edit.html.twig';
+        $album = new Album();
+        $album->setUpdatedAt(new DateTime());
+        $album->setCreatedAt(new DateTime());
+
+        $form = $this->createForm(AlbumType::class, $album, ['supported_languages' => $supportedLanguages]);
+        $editTemplate = 'Admin/Album/album_edit.html.twig';
 
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            $currentTranslatedTitles = $node->getTranslatedTitle();
-            $currentTranslatedContent = $node->getTranslatedContent();
-            $currentTranslatedKeywords = $node->getTranslatedKeywords();
-            $currentTranslatedMetaDescription = $node->getTranslatedMetaDescription();
+            $currentTranslatedTitles = $album->getTranslatedTitle();
+            $currentTranslatedContent = $album->getTranslatedContent();
+            $currentTranslatedKeywords = $album->getTranslatedKeywords();
+            $currentTranslatedMetaDescription = $album->getTranslatedMetaDescription();
             foreach ($supportedLanguages as $language) {
                 $translatedTitle = isset($currentTranslatedTitles[$language]) ? $currentTranslatedTitles[$language] : '';
                 $translatedContent = isset($currentTranslatedContent[$language]) ? $currentTranslatedContent[$language] : '';
@@ -217,12 +218,12 @@ class AlbumController extends AbstractController
                 $updatedTranslatedMetaDescription[$language] = isset($form['meta_description_' . $language]) ? $form['meta_description_' . $language]->getData() : null;
             }
 
-            $node->setTranslatedTitle($updatedTranslatedTitle);
-            $node->setTranslatedContent($updatedTranslatedContent);
-            $node->setTranslatedKeywords($updatedTranslatedKeywords);
-            $node->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
-            $node->setSite($site);
-            $node->setUserCustomer($this->getUser());
+            $album->setTranslatedTitle($updatedTranslatedTitle);
+            $album->setTranslatedContent($updatedTranslatedContent);
+            $album->setTranslatedKeywords($updatedTranslatedKeywords);
+            $album->setTranslatedMetaDescription($updatedTranslatedMetaDescription);
+            $album->setSite($site);
+            $album->setUserCustomer($this->getUser());
 
             $attachedFiles = $request->request->get('album')['attachedFiles'] ?? false;
             if ($attachedFiles) {
@@ -230,20 +231,20 @@ class AlbumController extends AbstractController
 
                 $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($nodeFiles as $attachedFile) {
-                    $node->addFile($attachedFile);
+                    $album->addFile($attachedFile);
                 }
 
-                if(!empty($nodeFiles) && null === $node->getDefaultImage()) {
+                if(!empty($nodeFiles) && null === $album->getDefaultImage()) {
                     $defaultImage = array_keys($nodeFiles)[0];
-                    $node->setDefaultImage($nodeFiles[$defaultImage]);
+                    $album->setDefaultImage($nodeFiles[$defaultImage]);
                 }
             }
 
-            $this->entityManager->persist($node);
+            $this->entityManager->persist($album);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('user_admin_album_list', [
-                'site' => $node->getSite()->getId(),
+                'site' => $album->getSite()->getId(),
                 'type' => 'album',
             ]);
         }
@@ -254,7 +255,7 @@ class AlbumController extends AbstractController
                 'site' => $site,
                 'form' => $form->createView(),
                 'supportedLanguages' => $supportedLanguages,
-                'node' => $node,
+                'node' => $album,
             ]
         );
     }

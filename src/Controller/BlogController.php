@@ -2,20 +2,18 @@
 
 namespace App\Controller;
 
-use App\Document\File;
-use App\Document\Message;
-use App\Document\Post;
+use App\Entity\Message;
+use App\Entity\Post;
+use App\Entity\Site;
 use App\Form\ContactType;
 use App\Repository\DomainRepository;
-//use App\Repository\PageRepository;
+use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use App\Service\Site\LayoutResolver;
-use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Document\Site;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,10 +30,10 @@ class BlogController extends AbstractController
 
     public function list(
         Request $request,
-//        PageRepository $pageRepository,
-        SiteRepository $siteRepository
-//        DomainRepository $domainRepository//,
-//        PostRepository $postRepository
+        PageRepository $pageRepository,
+        SiteRepository $siteRepository,
+        DomainRepository $domainRepository,
+        PostRepository $postRepository
     ) {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
@@ -49,7 +47,7 @@ class BlogController extends AbstractController
         }
 
         $posts = $postRepository->findActivePostsBySite($site);
-//        $pages = $pageRepository->findActiveBySite($site);
+        $pages = $pageRepository->findAllActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         return $this->render(
@@ -69,10 +67,10 @@ class BlogController extends AbstractController
     public function view(
         Request $request,
         $slug,
-//        PostRepository $postRepository,
-        SiteRepository $siteRepository
-//        PageRepository $pageRepository,
-//        DomainRepository $domainRepository
+        PostRepository $postRepository,
+        SiteRepository $siteRepository,
+        PageRepository $pageRepository,
+        DomainRepository $domainRepository
     ): Response {
 
         // todo: fix this if and extract to a normal logic
@@ -90,7 +88,7 @@ class BlogController extends AbstractController
 
         /** @var Post $post */
         $post = $postRepository->findActiveBySlug($slug, $site);
-//        $pages = $pageRepository->findActiveBySite($site);
+        $pages = $pageRepository->findAllActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
         $morePosts = $postRepository->findReadMorePosts($site);
 

@@ -37,7 +37,7 @@ class AlbumController extends AbstractController
     public function view(
         Request $request,
         SiteRepository $siteRepository,
-//        DomainRepository $domainRepository,
+        DomainRepository $domainRepository,
         PageRepository $pageRepository,
         AlbumRepository $albumRepository,
         ParameterBagInterface $params,
@@ -57,8 +57,8 @@ class AlbumController extends AbstractController
         }
 
         /** @var Album $album */
-        $album = $albumRepository->findOneBy(['active' => true, 'slug' => $slug]);
-        $pages = $pageRepository->findBy(['site' => $site, 'active' => true], ['order' => 'ASC']);
+        $album = $albumRepository->findOneBy(['isActive' => true, 'slug' => $slug]);
+        $pages = $pageRepository->findBy(['site' => $site, 'isActive' => true], ['sequenceOrder' => 'ASC']);
 
         if (null === $album) {
             throw new NotFoundHttpException();

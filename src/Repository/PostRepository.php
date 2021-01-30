@@ -48,14 +48,52 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function findActivePostsBySite(Site $site): array
+    public function findActivePostsBySite(Site $site, int $limit = null): array
     {
-        return $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p');
+
+        if($limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb
             ->andWhere('p.site = :site')
             ->andWhere('p.featuredParallax = :site')
             ->andWhere('p.isActive = true')
             ->setParameter('site', $site)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findActiveBySlug(string $slug, Site $site)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return $qb
+            ->andWhere('p.site = :site')
+            ->andWhere('p.slug = :slug')
+            ->andWhere('p.isDeleted = false OR p.isDeleted IS NULL')
+            ->andWhere('p.isActive = true')
+            ->setParameter('site', $site)
+            ->setParameter('slug', $slug)
+            ->orderBy('p.publishedAt', 'DESC')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function findReadMorePosts(Site $site): array
+    {
+        $posts = $this->findActivePostsBySite($site, 2);
+
+        $allHaveImages = true;
+        /** @var Post $post */
+        foreach ($posts as $post) {
+            if (null === $post->getDefaultImage()) {
+                $allHaveImages = false;
+                break;
+            }
+        }
+
+        return ['posts' => $posts, 'allHaveImages' => $allHaveImages];
     }
 }

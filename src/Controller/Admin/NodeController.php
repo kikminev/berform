@@ -4,15 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Album;
 use App\Entity\Node;
-use App\Entity\Page;
-use App\Entity\Shot;
-use App\Entity\Site;
-use App\Form\Admin\AlbumType;
-use App\Form\Admin\ShotType;
-use App\Repository\AlbumRepository;
+
 use App\Repository\PageRepository;
 use App\Repository\FileRepository;
-use App\Repository\ShotRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -32,14 +26,6 @@ class NodeController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param Request $request
-     * @param string $type
-     * @param PageRepository $pageRepository
-     * @param FileRepository $fileRepository
-     * @return JsonResponse
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
     public function reorder(
         Request $request,
         string $type,
@@ -62,10 +48,8 @@ class NodeController extends AbstractController
                 break;
         }
 
-        echo count($nodes);
-        /** @var Node $file */
         foreach ($nodes as $file) {
-            $file->setOrder(array_search($file->getId(), $ids, false));
+            $file->setSequenceOrder(array_search($file->getId(), $ids, false));
         }
 
         $this->entityManager->flush();
