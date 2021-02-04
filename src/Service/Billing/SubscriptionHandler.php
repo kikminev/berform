@@ -2,10 +2,9 @@
 
 namespace App\Service\Billing;
 
-use App\Document\Payment\Subscription as PaymentSubscription;
-use App\Document\Payment\Product;
-use App\Repository\Payment\ProductRepository;
-use App\Repository\Payment\SubscriptionRepository;
+use App\Document\Payment\Subscription;
+use App\Entity\Product;
+use App\Repository\ProductRepository;
 
 class SubscriptionHandler
 {
@@ -28,7 +27,7 @@ class SubscriptionHandler
         $upgradeableTo = false;
         $paidHostingProduct = $this->productRepository->findOneBySystemCode(Product::PRODUCT_TYPE_HOSTING);
 
-        /** @var PaymentSubscription $subscription */
+        /** @var Subscription $subscription */
         foreach ($subscriptions as $subscription) {
 
             if (Product::PRODUCT_TYPE_FREE_HOSTING === $subscription->getProduct()->getSystemCode()) {

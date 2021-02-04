@@ -5,7 +5,7 @@ namespace App\Controller\Admin\Billing;
 use App\Billing\Cart;
 use App\Document\Payment\Product;
 use App\Document\Payment\Subscription;
-use App\Repository\Payment\CurrencyRepository;
+use App\Repository\CurrencyRepository;
 use App\Repository\ProductRepository;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;

@@ -7,7 +7,7 @@ namespace App\Controller\CRM;
 use App\Document\File;
 use App\Document\User;
 use App\Repository\FileRepository;
-use App\Repository\Payment\SubscriptionRepository;
+use App\Repository\SubscriptionRepository;
 use App\Repository\UserCustomerRepository;
 use App\Repository\SiteRepository;
 use App\Service\Site\SiteRemover;

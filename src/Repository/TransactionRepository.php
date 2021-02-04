@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Billing;
+namespace App\Repository;
 
 use App\Entity\Billing\Transaction;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

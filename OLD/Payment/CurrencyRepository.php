@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Payment;
+namespace App\Repository;
 
 use App\Document\Payment\Currency;
 use Doctrine\ODM\MongoDB\DocumentManager;

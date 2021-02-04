@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Billing;
+namespace App\Repository;
 
 use App\Entity\Billing\Currency;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
