@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\Billing\SubscriptionRepository;
+use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 

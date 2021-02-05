@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\Billing;
+namespace App\Entity;
 
-use App\Repository\Billing\CurrencyRepository;
+use App\Repository\CurrencyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

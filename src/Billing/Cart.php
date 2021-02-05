@@ -2,10 +2,8 @@
 
 namespace App\Billing;
 
-use App\Document\Payment\Currency;
-use App\Document\Payment\Product;
-use App\Document\Payment\Subscription;
-use App\Repository\Payment\ProductRepository;
+use App\Entity\Currency;
+use App\Entity\Subscription;
 use App\Service\Billing\TaxesCalculator;
 
 class Cart

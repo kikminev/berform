@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Billing\Currency;
+use App\Entity\Currency;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
