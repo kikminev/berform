@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Entity\Subscription;
 use App\Repository\CurrencyRepository;
 use App\Repository\ProductRepository;
+use Exception;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,8 +36,8 @@ class CartController extends AbstractController
         $subscriptions = $cart->getSubscriptions();
         $productsBySubscriptionId = [];
         if(null != $subscriptions) {
-            foreach ($subscriptions as $subscription) {
-                $productsBySubscriptionId[$subscription->getId()] = $productRepository->find($subscription->getProduct()->getId());
+            foreach ($subscriptions as $subscriptionId => $productId) {
+                $productsBySubscriptionId[$subscriptionId] = $productRepository->find($productId);
             }
         }
 
@@ -59,7 +60,7 @@ class CartController extends AbstractController
             $cart = new Cart();
         }
 
-        $cart->addSubscription($subscription);
+        $cart->attachSubscriptionToNewProduct($subscription, $product);
 
         $this->session->set('cart', $cart);
 
@@ -69,26 +70,27 @@ class CartController extends AbstractController
     public function checkout(): JsonResponse
     {
         Stripe::setApiKey('sk_test_51I1XREEhLqLirlZw3vmtBlPk3MtGW7TtxckCDmXFWAnAJtcYzpDJ8D0J55wIFUqSUHnOoQKhbzcqnhl2tfy3SaC9006ExulQVP');
-        $checkout_session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [
-                [
-                    'price_data' => [
-                        'currency' => 'usd',
-                        'unit_amount' => 2000,
-                        'product_data' => [
-                            'name' => 'Stubborn Attachments',
-                            'images' => ["https://i.imgur.com/EHyR2nP.png"],
-                        ],
-                    ],
-                    'quantity' => 1,
-                ],
-            ],
-            'mode' => 'payment',
-            'success_url' => 'http://berform.kik/success.html',
-            'cancel_url' => 'http://berform.kik/cancel.html',
-        ]);
 
-        return new JsonResponse(['id' => $checkout_session->id]);
+        try {
+            $checkout_session = \Stripe\Checkout\Session::create([
+                'success_url' => 'https://example.com/success.html?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => 'https://example.com/canceled.html',
+                'payment_method_types' => ['card'],
+                'mode' => 'subscription',
+                'line_items' => [[
+                    'price' => 'price_1IIGJPEhLqLirlZwTw1kvykg',
+                    'quantity' => 1,
+                ]],
+            ]);
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'error' => [
+                    'message' => $e->getMessage(),
+                ],
+            ], 400);
+        }
+
+
+        return new JsonResponse(['sessionId' => $checkout_session['id']]);
     }
 }

@@ -8,17 +8,17 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 {% if subscriptions|length > 0 %}
-                <h1>{% trans %}landing_site_cart_header{% endtrans %}</h1>
-                    {% for subscription in subscriptions %}
+                    <h1>{% trans %}landing_site_cart_header{% endtrans %}</h1>
+                    {% for subscription, product in subscriptions %}
                         <div class="row productWrap">
-                        <div class="product col-md-4">
-                            {% set product = productsBySubscriptionId[subscription.id] %}
-                            {% set subscriptionType = 'admin_subscriptions_type_' ~ product.systemCode %}{{ subscriptionType|trans }}
-                        </div>
-                        <div class="col-md-4">{% trans %}landing_site_cart_product_yearly_subscription{% endtrans %}</div>
-                        <div class="col-md-4">
-                            {{ product.price }} {{ product.currency.systemCode }}
-                        </div>
+                            <div class="product col-md-4">
+                                {% set product = productsBySubscriptionId[subscription] %}
+                                {% set subscriptionType = 'admin_subscriptions_type_' ~ product.systemCode %}{{ subscriptionType|trans }}
+                            </div>
+                            <div class="col-md-4">{% trans %}landing_site_cart_product_yearly_subscription{% endtrans %}</div>
+                            <div class="col-md-4">
+                                {{ product.price }} {{ product.currency.systemCode }}
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -26,18 +26,18 @@
                 {% endif %}
 
                 {% if subscriptions|length > 0 %}
-                <div class="checkoutButtonWrap">
-                    <h2>{% trans %}landing_site_cart_total{% endtrans %}</h2>
+                    <div class="checkoutButtonWrap">
+                        <h2>{% trans %}landing_site_cart_total{% endtrans %}</h2>
 
-                    <div class="row">
-                        <div class="col-md-6">{% trans %}landing_site_cart_taxes{% endtrans %}</div>
-                        <div class="col-md-6">{{ taxAmount }}</div>
+                        <div class="row">
+                            <div class="col-md-6">{% trans %}landing_site_cart_taxes{% endtrans %}</div>
+                            <div class="col-md-6">{{ taxAmount }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{% trans %}landing_site_cart_total_amount{% endtrans %}</div>
+                            <div class="col-md-6">{{ totalAmountWithTaxes }}</div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">{% trans %}landing_site_cart_total_amount{% endtrans %}</div>
-                        <div class="col-md-6">{{ totalAmountWithTaxes }}</div>
-                    </div>
-                </div>
                 {% endif %}
             </div>
             <div class="col-md-2"></div>
@@ -45,47 +45,32 @@
     </div>
 
 
-
-{#    <section>#}
-{#        <div class="product">#}
-{#            <img#}
-{#                    src="https://i.imgur.com/EHyR2nP.png"#}
-{#                    alt="The cover of Stubborn Attachments"#}
-{#            />#}
-{#            <div class="description">#}
-{#                <h3>Stubborn Attachments</h3>#}
-{#                <h5>$20.00</h5>#}
-{#            </div>#}
-{#        </div>#}
-{#        <button id="checkout-button">Checkout</button>#}
-{#    </section>#}
+    <button id="checkout">Subscribe</button>
 
 
-{#    <script type="text/javascript">#}
-{#        var stripe = Stripe("pk_test_51I1XREEhLqLirlZw1LLixKu4KnyJtd8IhhJo55rIy8BJHpZh0sihxPdZSTHYRI93Ygck5pAJwqOcKTNwIxPTAm2Y00QrRRBjmi");#}
-{#        var checkoutButton = document.getElementById("checkout-button");#}
+    <script type="text/javascript">
+        var stripe = Stripe("pk_test_51I1XREEhLqLirlZw1LLixKu4KnyJtd8IhhJo55rIy8BJHpZh0sihxPdZSTHYRI93Ygck5pAJwqOcKTNwIxPTAm2Y00QrRRBjmi");
+        var createCheckoutSession = function (priceId) {
+            return fetch("{{ path('admin_billing_cart_checkout') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    priceId: priceId
+                })
+            }).then(function (result) {
+                return result.json();
+            });
+        };
 
-{#        checkoutButton.addEventListener("click", function () {#}
-{#            fetch("{{ path('admin_billing_cart_checkout') }}", {#}
-{#                method: "POST",#}
-{#            })#}
-{#                .then(function (response) {#}
-{#                    return response.json();#}
-{#                })#}
-{#                .then(function (session) {#}
-{#                    return stripe.redirectToCheckout({ sessionId: session.id });#}
-{#                })#}
-{#                .then(function (result) {#}
-{#                    // If redirectToCheckout fails due to a browser or network#}
-{#                    // error, you should display the localized error message to your#}
-{#                    // customer using error.message.#}
-{#                    if (result.error) {#}
-{#                        alert(result.error.message);#}
-{#                    }#}
-{#                })#}
-{#                .catch(function (error) {#}
-{#                    console.error("Error:", error);#}
-{#                });#}
-{#        });#}
-{#    </script>#}
+        document.getElementById("checkout").addEventListener("click", function (evt) {
+            createCheckoutSession('price_1IIGJPEhLqLirlZwTw1kvykg').then(function (data) {
+                stripe.redirectToCheckout({
+                    sessionId: data.sessionId
+                }).then(handleResult);
+            });
+        });
+
+    </script>
 {% endblock %}

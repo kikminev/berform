@@ -55,6 +55,6 @@ class SiteVoter extends Voter
 
     private function canModify(Site $site, UserCustomer $user): bool
     {
-        return $user === $site->getUser();
+        return $user === $site->getUserCustomer();
     }
 }
