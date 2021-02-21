@@ -108,9 +108,44 @@ admin_form_page_meta_description: Подробно описание
 admin_form_page_menu_link: Име на линка
 admin_site_activated_languages: Поддържани езици
 
+# top menu
+admin_links_dashboard: Home
+admin_links_profile: Profile
+admin_links_logout: Logout
+admin_profile_change_password: Change password
+admin_profile: Profile
+admin_links_sites: Sites
+admin_links_domains: Domains
+admin_links_billing: Billing
+admin_links_pages: Pages
+admin_links_albums: Albums
+admin_links_shots: Pictures
+admin_links_posts: Publications
+admin_no_posts: You don't have any posts
+admin_links_create: Create new site
+admin_links_create_page: Create new
+admin_links_create_domain: Add a domain
+admin_links_site_settings: Site Settings
+admin_links_site_preview: Site preview
+admin_links_blog: Blog
+admin_links_blog_edit_post: Edit
+admin_create_node_album: Create new album
+admin_create_shot: Add new picture
+
 # domain edit
 admin_create_domain_error_already_exists: This domain name is already in use!
 admin_create_domain_error_unknown: Unknown error has occurred! The domain hasn't been added.
 admin_name_servers: 'In order to point your domain name to Berform and use it with the platform you should use set the following name servers:'
 admin_name_server_1: 'Name server 1:'
 admin_name_server_2: 'Name server 2:'
+
+# cart
+landing_site_cart_header: Products
+landing_site_billing_no_products: There are no products in the cart.
+landing_site_cart_total: Total to pay
+landing_site_cart_checkout: Checkout
+landing_site_cart_taxes: Taxes
+landing_site_cart_total_amount: Total
+admin_subscriptions_type_hosting: Hosting
+landing_site_billing_upgrade_plan: renew
+landing_site_cart_product_yearly_subscription: 1 year

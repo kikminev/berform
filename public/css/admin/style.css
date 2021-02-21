@@ -182,3 +182,6 @@ a:hover { text-decoration: none; }
 .cartWrap .productWrap { text-align: center; padding: 30px; background: #f2f2f2; margin-bottom: 10px; border-radius: 10px; }
 .checkoutButtonWrap { margin-top: 100px; }
 .checkoutButtonWrap h2 { font-size: 22px; }
+
+
+.actionButton { display: block; margin: 60px auto 0px auto; width: 200px; height: 40px; line-height: 40px; -webkit-border-radius: 40px; -moz-border-radius: 40px; border-radius: 40px; text-align: center; text-transform: uppercase; -webkit-font-smoothing: initial; color: #fff !important; cursor: pointer; background: #0000cd;  }

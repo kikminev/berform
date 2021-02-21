@@ -5,10 +5,12 @@ namespace App\Billing;
 use App\Entity\Currency;
 use App\Entity\Product;
 use App\Entity\Subscription;
+use App\Repository\CurrencyRepository;
 use App\Service\Billing\TaxesCalculator;
 
 class Cart
 {
+    private Currency $currency;
     private array $subscriptions;
 
     public function attachSubscriptionToNewProduct(Subscription $subscription, Product $product)
@@ -32,7 +34,6 @@ class Cart
         foreach ($this->subscriptions as $subscriptionId => $product) {
             $total += $product->getPrice();
         }
-
         $total = TaxesCalculator::calculatePriceWithTaxes($total);
 
         return $total;
@@ -60,8 +61,11 @@ class Cart
 
     public function getCurrency(): Currency
     {
-        $product = $this->subscriptions[array_key_first($this->subscriptions)];
+        return $this->currency;
+    }
 
-        return $product['product']->getCurrency();
+    public function setCurrency(Currency $currency)
+    {
+        $this->currency = $currency;
     }
 }

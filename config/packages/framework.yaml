@@ -32,3 +32,4 @@ parameters:
     system_domain_discriminator: berform
     resource_provider_domain: '%env(RESOURCE_PROVIDER_DOMAIN)%'
     platform_main_domain: '%env(PLATFORM_MAIN_DOMAIN)%'
+    stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'

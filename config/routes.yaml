@@ -170,6 +170,14 @@ admin_billing_cart_view:
     path: /u/billing/cart/view
     controller: App\Controller\Admin\Billing\CartController::view
 
+admin_billing_cart_success:
+    path: /u/billing/cart/thank_you
+    controller: App\Controller\Admin\Billing\CartController::success
+
+admin_billing_cart_cancelled:
+    path: /u/billing/cart/cancelled
+    controller: App\Controller\Admin\Billing\CartController::cancelled
+
 admin_billing_cart_checkout:
     path: /u/billing/cart/checkout
     controller: App\Controller\Admin\Billing\CartController::checkout
