@@ -182,6 +182,10 @@ admin_billing_cart_checkout:
     path: /u/billing/cart/checkout
     controller: App\Controller\Admin\Billing\CartController::checkout
 
+admin_billing_cart_webhook_endpoint:
+    path: /u/billing/webhook
+    controller: App\Controller\Admin\Billing\CartController::stripeWebhookEndpoint
+
 # user site
 user_site_contact:
     path: /contact/send_message

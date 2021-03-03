@@ -31,13 +31,13 @@ class CartController extends AbstractController
     {
         /** @var Cart $cart */
         $cart = $this->session->get('cart');
-        if(null == $cart) {
+        if (null == $cart) {
             $cart = new Cart();
         }
 
         $subscriptions = $cart->getSubscriptions();
         $productsBySubscriptionId = [];
-        if(null != $subscriptions) {
+        if (null != $subscriptions) {
             foreach ($subscriptions as $subscriptionId => $productId) {
                 $productsBySubscriptionId[$subscriptionId] = $productRepository->find($productId);
             }
@@ -50,7 +50,7 @@ class CartController extends AbstractController
                 'subscriptions' => $subscriptions,
                 'productsBySubscriptionId' => $productsBySubscriptionId,
                 'taxAmount' => $cart->getTaxes(),
-                'totalAmountWithTaxes' => $cart->getTotalWithTaxes()
+                'totalAmountWithTaxes' => $cart->getTotalWithTaxes(),
             ]
         );
     }
@@ -70,12 +70,15 @@ class CartController extends AbstractController
         );
     }
 
-    public function addSubscription(Product $product, Subscription $subscription, CurrencyRepository $currencyRepository)
-    {
+    public function addSubscription(
+        Product $product,
+        Subscription $subscription,
+        CurrencyRepository $currencyRepository
+    ) {
         /** @var Cart $cart */
         $cart = $this->session->get('cart');
-        if(null == $cart) {
-            $currency = $currencyRepository->findOneBy(['systemCode'=> 'GBP']);
+        if (null == $cart) {
+            $currency = $currencyRepository->findOneBy(['systemCode' => 'GBP']);
             $cart = new Cart();
             $cart->setCurrency($currency);
         }
@@ -96,16 +99,22 @@ class CartController extends AbstractController
 
         try {
             $checkout_session = \Stripe\Checkout\Session::create([
-                'success_url' => $this->generateUrl('admin_billing_cart_success', ['session_id' => '{CHECKOUT_SESSION_ID}'], UrlGeneratorInterface::ABSOLUTE_URL),
-                'cancel_url' => $this->generateUrl('admin_billing_cart_cancelled', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'success_url' => $this->generateUrl('admin_billing_cart_success',
+                    ['session_id' => '{CHECKOUT_SESSION_ID}'],
+                    UrlGeneratorInterface::ABSOLUTE_URL),
+                'cancel_url' => $this->generateUrl('admin_billing_cart_cancelled',
+                    [],
+                    UrlGeneratorInterface::ABSOLUTE_URL),
                 'payment_method_types' => ['card'],
                 'mode' => 'subscription',
 
-                'line_items' => [[
-                    'price' => $priceId,
-                    'quantity' => 1,
-                    'tax_rates' => [$defaultUKTaxRate],
-                ]],
+                'line_items' => [
+                    [
+                        'price' => $priceId,
+                        'quantity' => 1,
+                        'tax_rates' => [$defaultUKTaxRate],
+                    ],
+                ],
             ]);
         } catch (Exception $e) {
             return new JsonResponse([
@@ -118,55 +127,51 @@ class CartController extends AbstractController
         return new JsonResponse(['sessionId' => $checkout_session['id']]);
     }
 
-    public function stripeWebhookEndpoint()
+    public function stripeWebhookEndpoint(Request $request)
     {
-//        $stripeSecretKey = $this->getParameter('stripe_secret_key');
-//        \Stripe\Stripe::setApiKey(
-//            $stripeSecretKey
-//        );
-//
-//        $app->post('/webhook', function(Request $request, Response $response) {
-//            $logger = $this->get('logger');
-//            $event = $request->getParsedBody();
-//            // Parse the message body and check the signature
-//            $webhookSecret = {{'STRIPE_WEBHOOK_SECRET'}};
-//    if ($webhookSecret) {
-//        try {
-//            $event = \Stripe\Webhook::constructEvent(
-//                $request->getBody(),
-//                $request->getHeaderLine('stripe-signature'),
-//                $webhookSecret
-//            );
-//        } catch (\Exception $e) {
-//            return $response->withJson([ 'error' => $e->getMessage() ])->withStatus(403);
-//        }
-//    } else {
-//        $event = $request->getParsedBody();
-//    }
-//    $type = $event['type'];
-//    $object = $event['data']['object'];
+        $stripeSecretKey = $this->getParameter('stripe_secret_key');
+        \Stripe\Stripe::setApiKey(
+            $stripeSecretKey
+        );
 
-//    switch ($type) {
-//        case 'checkout.session.completed':
-//            // Payment is successful and the subscription is created.
-//            // You should provision the subscription.
-//            break;
-//        case 'invoice.paid':
-//            // Continue to provision the subscription as payments continue to be made.
-//            // Store the status in your database and check when a user accesses your service.
-//            // This approach helps you avoid hitting rate limits.
-//            break;
-//        case 'invoice.payment_failed':
-//            // The payment failed or the customer does not have a valid payment method.
-//            // The subscription becomes past_due. Notify your customer and send them to the
-//            // customer portal to update their payment information.
-//            break;
-//        // ... handle other event types
-//        default:
-//            // Unhandled event type
-//    }
-//
-//    return $response->withJson([ 'status' => 'success' ])->withStatus(200);
-//});
+        $webhookSecret = 'STRIPE_WEBHOOK_SECRET';
+
+        if ($webhookSecret) {
+            try {
+                $event = \Stripe\Webhook::constructEvent(
+                    $request->getContent(),
+                    $request->get('stripe-signature'),
+                    $webhookSecret
+                );
+            } catch (\Exception $e) {
+                return new JsonResponse(['error' => $e->getMessage()]);
+            }
+        } else {
+            $event = $request->getContent();
+        }
+        $type = $event['type'];
+        $object = $event['data']['object'];
+
+        switch ($type) {
+            case 'checkout.session.completed':
+                // Payment is successful and the subscription is created.
+                // You should provision the subscription.
+                break;
+            case 'invoice.paid':
+                // Continue to provision the subscription as payments continue to be made.
+                // Store the status in your database and check when a user accesses your service.
+                // This approach helps you avoid hitting rate limits.
+                break;
+            case 'invoice.payment_failed':
+                // The payment failed or the customer does not have a valid payment method.
+                // The subscription becomes past_due. Notify your customer and send them to the
+                // customer portal to update their payment information.
+                break;
+            // ... handle other event types
+            default:
+                // Unhandled event type
+        }
+
+        return new JsonResponse('ok');
     }
 }
