@@ -1,6 +1,6 @@
 index:
     path: /
-    host: berform.kik
+    host: dev.berform.com
     controller: App\Controller\LandingSiteController::home
 
 test:
@@ -182,8 +182,8 @@ admin_billing_cart_checkout:
     path: /u/billing/cart/checkout
     controller: App\Controller\Admin\Billing\CartController::checkout
 
-admin_billing_cart_webhook_endpoint:
-    path: /u/billing/webhook
+billing_cart_webhook_endpoint:
+    path: /billing/webhook
     controller: App\Controller\Admin\Billing\CartController::stripeWebhookEndpoint
 
 # user site

@@ -107,7 +107,6 @@ class CartController extends AbstractController
                     UrlGeneratorInterface::ABSOLUTE_URL),
                 'payment_method_types' => ['card'],
                 'mode' => 'subscription',
-
                 'line_items' => [
                     [
                         'price' => $priceId,
@@ -130,27 +129,35 @@ class CartController extends AbstractController
     public function stripeWebhookEndpoint(Request $request)
     {
         $stripeSecretKey = $this->getParameter('stripe_secret_key');
+        $webhookSecret = $this->getParameter('stripe_webhook_secret_key');
+
         \Stripe\Stripe::setApiKey(
             $stripeSecretKey
         );
 
-        $webhookSecret = 'STRIPE_WEBHOOK_SECRET';
 
-        if ($webhookSecret) {
-            try {
-                $event = \Stripe\Webhook::constructEvent(
-                    $request->getContent(),
-                    $request->get('stripe-signature'),
-                    $webhookSecret
-                );
-            } catch (\Exception $e) {
-                return new JsonResponse(['error' => $e->getMessage()]);
-            }
-        } else {
-            $event = $request->getContent();
+        $object = json_decode($request->getContent());
+
+        if(!isset($object->type)) {
+            throw new Exception('Webhook: type should be set');
         }
-        $type = $event['type'];
-        $object = $event['data']['object'];
+
+        if(!isset($object->id)) {
+            throw new Exception('Webhook: id should be set');
+        }
+
+        $type = $object->type;
+
+
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $request->getContent(),
+                $request->headers->get('stripe-signature'),
+                $webhookSecret
+            );
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()]);
+        }
 
         switch ($type) {
             case 'checkout.session.completed':
@@ -158,9 +165,25 @@ class CartController extends AbstractController
                 // You should provision the subscription.
                 break;
             case 'invoice.paid':
-                // Continue to provision the subscription as payments continue to be made.
-                // Store the status in your database and check when a user accesses your service.
-                // This approach helps you avoid hitting rate limits.
+
+                if(!isset($object->data->object->hosted_invoice_url)) {
+                    throw new Exception('Webhook: hosted_invoice_url should be set');
+                }
+
+                if(!isset($object->data->object->hosted_invoice_url)) {
+                    throw new Exception('Webhook: hosted_invoice_url should be set');
+                }
+
+                if(!isset($object->data->object->invoice_pdf)) {
+                    throw new Exception('Webhook: invoice_pdf should be set');
+                }
+
+                if(!isset($object->data->object->paid)) {
+                    throw new Exception('Webhook: paid should be set');
+                }
+
+                // activate subscription
+
                 break;
             case 'invoice.payment_failed':
                 // The payment failed or the customer does not have a valid payment method.
