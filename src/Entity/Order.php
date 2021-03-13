@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\Billing;
+namespace App\Entity;
 
-use App\Repository\Billing\OrderRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -12,6 +12,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Order
 {
+    public const ORDER_STATUS_CART = "cart",
+        ORDER_STATUS_PENDING = "pending",
+        ORDER_STATUS_COMPLETED = "completed",
+        ORDER_STATUS_cancelled = "cancelled";
+
     use TimestampableEntity;
 
     /**
@@ -26,6 +31,22 @@ class Order
      */
     private $totalAmount;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripeId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=UserCustomer::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userCustomer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +60,42 @@ class Order
     public function setTotalAmount(int $totalAmount): self
     {
         $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStripeId(): ?string
+    {
+        return $this->stripeId;
+    }
+
+    public function setStripeId(?string $stripeId): self
+    {
+        $this->stripeId = $stripeId;
+
+        return $this;
+    }
+
+    public function getUserCustomer(): ?UserCustomer
+    {
+        return $this->userCustomer;
+    }
+
+    public function setUserCustomer(?UserCustomer $userCustomer): self
+    {
+        $this->userCustomer = $userCustomer;
 
         return $this;
     }

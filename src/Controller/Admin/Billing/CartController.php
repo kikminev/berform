@@ -3,13 +3,18 @@
 namespace App\Controller\Admin\Billing;
 
 use App\Billing\Cart;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\Subscription;
 use App\Repository\CurrencyRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
+use Stripe\Webhook;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +25,13 @@ class CartController extends AbstractController
 {
     private $session;
     private Cart $cart;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(SessionInterface $session, Cart $cart)
+    public function __construct(SessionInterface $session, Cart $cart, EntityManagerInterface $entityManager)
     {
         $this->session = $session;
         $this->cart = $cart;
+        $this->entityManager = $entityManager;
     }
 
     public function view(CurrencyRepository $currencyRepository, ProductRepository $productRepository)
@@ -77,7 +84,7 @@ class CartController extends AbstractController
     ) {
         /** @var Cart $cart */
         $cart = $this->session->get('cart');
-        if (null == $cart) {
+        if (null === $cart) {
             $currency = $currencyRepository->findOneBy(['systemCode' => 'GBP']);
             $cart = new Cart();
             $cart->setCurrency($currency);
@@ -89,7 +96,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('admin_billing_cart_view');
     }
 
-    public function checkout(Request $request): JsonResponse
+    public function checkout(Request $request, OrderRepository $orderRepository): JsonResponse
     {
         $stripeSecretKey = $this->getParameter('stripe_secret_key');
         Stripe::setApiKey($stripeSecretKey);
@@ -115,6 +122,25 @@ class CartController extends AbstractController
                     ],
                 ],
             ]);
+
+
+            $order = $orderRepository->findOneBy(['userCustomer' => $this->getUser(), 'status' => Order::ORDER_STATUS_CART]);
+
+            if(null === $order) {
+                $order = new Order();
+                $order->setStripeId($checkout_session['id']);
+                $order->setUserCustomer($this->getUser());
+                $order->setCreatedAt(new DateTime());
+                $order->setUpdatedAt(new DateTime());
+                $order->setStatus(Order::ORDER_STATUS_CART);
+
+                $cart = $this->session->get('cart');
+                $order->setTotalAmount($cart->getTotalWithTaxes());
+            }
+
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
+
         } catch (Exception $e) {
             return new JsonResponse([
                 'error' => [
@@ -122,11 +148,11 @@ class CartController extends AbstractController
                 ],
             ], 400);
         }
-
+print_r($checkout_session); exit;
         return new JsonResponse(['sessionId' => $checkout_session['id']]);
     }
 
-    public function stripeWebhookEndpoint(Request $request)
+    public function stripeWebhookEndpoint(Request $request, OrderRepository $orderRepository)
     {
         $stripeSecretKey = $this->getParameter('stripe_secret_key');
         $webhookSecret = $this->getParameter('stripe_webhook_secret_key');
@@ -148,9 +174,8 @@ class CartController extends AbstractController
 
         $type = $object->type;
 
-
         try {
-            $event = \Stripe\Webhook::constructEvent(
+            $event = Webhook::constructEvent(
                 $request->getContent(),
                 $request->headers->get('stripe-signature'),
                 $webhookSecret
@@ -160,12 +185,7 @@ class CartController extends AbstractController
         }
 
         switch ($type) {
-            case 'checkout.session.completed':
-                // Payment is successful and the subscription is created.
-                // You should provision the subscription.
-                break;
             case 'invoice.paid':
-
                 if(!isset($object->data->object->hosted_invoice_url)) {
                     throw new Exception('Webhook: hosted_invoice_url should be set');
                 }
@@ -182,7 +202,7 @@ class CartController extends AbstractController
                     throw new Exception('Webhook: paid should be set');
                 }
 
-                // activate subscription
+//                $order = $orderRepository->findOneBy(['userCustomer' => $this->getUser(), 'stripeId' => $ses])
 
                 break;
             case 'invoice.payment_failed':

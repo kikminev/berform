@@ -20,10 +20,8 @@
                                 {{ product.price }} {{ product.currency.systemCode }}
                             </div>
                         </div>
-                    {% endfor %}
-                {% else %}
-                    {% trans %}landing_site_billing_no_products{% endtrans %}
-                {% endif %}
+
+
 
                 {% if subscriptions|length > 0 %}
                     <div class="checkoutButtonWrap">
@@ -39,29 +37,40 @@
                         </div>
                     </div>
                 {% endif %}
+
+                    <a class="actionButton" id="checkoutBttn">{% trans %}Checkout{% endtrans %}</a>
+
+                    <script type="text/javascript">
+                        var stripe = Stripe("{{ stripe_public_key }}");
+
+                        $("#checkoutBttn").click(function () {
+                            $.ajax({
+                                type: "POST",
+                                url: '{{ path('admin_billing_cart_checkout') }}',
+                                data: {'priceId': '{{ stripe_default_uk_price_yearly }}', 'subscription' : '{{ subscription }}'},
+                                success: function (result) {
+
+                                    stripe.redirectToCheckout({
+                                        sessionId: result.sessionId
+                                    }).then(handleResult);
+                                },
+                                error: function (result) {
+                                    alert('An error has occurred. Please contact our support team.');
+                                }
+                            });
+                        });
+                    </script>
+
+                    {% endfor %}
+                {% else %}
+                    {% trans %}landing_site_billing_no_products{% endtrans %}
+                {% endif %}
+
+
             </div>
             <div class="col-md-2"></div>
         </div>
     </div>
 
-    <a class="actionButton" id="checkoutBttn">{% trans %}Checkout{% endtrans %}</a>
 
-    <script type="text/javascript">
-        var stripe = Stripe("{{ stripe_public_key }}");
-
-
-        $("#checkoutBttn").click(function () {
-            $.ajax({
-                type: "POST",
-                url: '{{ path('admin_billing_cart_checkout') }}',
-                data: {'priceId': '{{ stripe_default_uk_price_yearly }}'},
-                success: function (result) {
-
-                    stripe.redirectToCheckout({
-                        sessionId: result.sessionId
-                    }).then(handleResult);
-                },
-            });
-        });
-    </script>
 {% endblock %}

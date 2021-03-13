@@ -15,6 +15,8 @@ class Cart
 
     public function attachSubscriptionToNewProduct(Subscription $subscription, Product $product)
     {
+        // currently customer can renew only one product at a time.
+        $this->subscriptions = [];
         $this->subscriptions[$subscription->getId()] = $product;
     }
 
@@ -23,11 +25,11 @@ class Cart
         return $this->subscriptions;
     }
 
-    public function getTotalWithTaxes(): float
+        public function getTotalWithTaxes(): float
     {
         $total = 0;
 
-        if (null == $this->subscriptions) {
+        if (null === $this->subscriptions) {
             return 0;
         }
 
