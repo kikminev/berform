@@ -6,9 +6,11 @@ use App\Billing\Cart;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\Subscription;
+use App\Entity\Transaction;
 use App\Repository\CurrencyRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use App\Repository\TransactionRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -105,6 +107,23 @@ class CartController extends AbstractController
         $defaultUKTaxRate = 'txr_1IMbPYEhLqLirlZwOSYtNkHI';
 
         try {
+
+            $order = $orderRepository->findOneBy(['userCustomer' => $this->getUser(), 'status' => Order::STATUS_CART]);
+
+            if(null === $order) {
+                $order = new Order();
+                $order->setUserCustomer($this->getUser());
+                $order->setCreatedAt(new DateTime());
+                $order->setUpdatedAt(new DateTime());
+                $order->setStatus(Order::STATUS_CART);
+
+                $cart = $this->session->get('cart');
+                $order->setTotalAmount($cart->getTotalWithTaxes());
+            }
+
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
+
             $checkout_session = \Stripe\Checkout\Session::create([
                 'success_url' => $this->generateUrl('admin_billing_cart_success',
                     ['session_id' => '{CHECKOUT_SESSION_ID}'],
@@ -113,7 +132,9 @@ class CartController extends AbstractController
                     [],
                     UrlGeneratorInterface::ABSOLUTE_URL),
                 'payment_method_types' => ['card'],
+                'customer_email' => $this->getUser()->getUsername(),
                 'mode' => 'subscription',
+                'metadata' => ['orderNumber' => $order->getId()],
                 'line_items' => [
                     [
                         'price' => $priceId,
@@ -123,23 +144,9 @@ class CartController extends AbstractController
                 ],
             ]);
 
-
-            $order = $orderRepository->findOneBy(['userCustomer' => $this->getUser(), 'status' => Order::ORDER_STATUS_CART]);
-
-            if(null === $order) {
-                $order = new Order();
-                $order->setStripeId($checkout_session['id']);
-                $order->setUserCustomer($this->getUser());
-                $order->setCreatedAt(new DateTime());
-                $order->setUpdatedAt(new DateTime());
-                $order->setStatus(Order::ORDER_STATUS_CART);
-
-                $cart = $this->session->get('cart');
-                $order->setTotalAmount($cart->getTotalWithTaxes());
-            }
-
-            $this->entityManager->persist($order);
+            $order->setStripeId($checkout_session['id']);
             $this->entityManager->flush();
+
 
         } catch (Exception $e) {
             return new JsonResponse([
@@ -148,11 +155,11 @@ class CartController extends AbstractController
                 ],
             ], 400);
         }
-print_r($checkout_session); exit;
+
         return new JsonResponse(['sessionId' => $checkout_session['id']]);
     }
 
-    public function stripeWebhookEndpoint(Request $request, OrderRepository $orderRepository)
+    public function stripeWebhookEndpoint(Request $request, OrderRepository $orderRepository, TransactionRepository  $transactionRepository)
     {
         $stripeSecretKey = $this->getParameter('stripe_secret_key');
         $webhookSecret = $this->getParameter('stripe_webhook_secret_key');
@@ -202,7 +209,44 @@ print_r($checkout_session); exit;
                     throw new Exception('Webhook: paid should be set');
                 }
 
-//                $order = $orderRepository->findOneBy(['userCustomer' => $this->getUser(), 'stripeId' => $ses])
+                if(!isset($object->data->object->subscription)) {
+                    throw new Exception('Webhook: subscription should be set');
+                }
+
+                $transaction = $transactionRepository->findOneBy(['subscription' => $object->data->object->subscription]);
+                if(null === $transaction) {
+                    throw new Exception('Webhook: Transaction was not found by subscription id');
+                }
+
+                $transaction->setStatus(Transaction::STATUS_COMPLETED);
+                $transaction->setInvoicePdf($object->data->object->invoice_pdf);
+                $this->entityManager->flush();
+
+                break;
+            case 'checkout.session.completed':
+                if(!isset($object->data->object->metadata->orderNumber)) {
+                    throw new Exception('Webhook: no order number provided');
+                }
+
+                if(!isset($object->data->object->subscription)) {
+                    throw new Exception('Webhook: no order number provided');
+                }
+
+                $orderNumber = $object->data->object->metadata->orderNumber;
+                $order = $orderRepository->find($orderNumber);
+                $order->setStatus(Order::STATUS_COMPLETED);
+                if(null === $order) {
+                    throw new Exception('Webhook: order was not found by webhok order number');
+                }
+
+                $transaction = new Transaction();
+                $transaction->setCreatedAt(new DateTime());
+                $transaction->setUpdatedAt(new DateTime());
+                $transaction->setSubscription($object->data->object->subscription);
+                $transaction->setStatus(Transaction::STATUS_PENDING);
+                $this->entityManager->persist($transaction);
+
+                $this->entityManager->flush();
 
                 break;
             case 'invoice.payment_failed':

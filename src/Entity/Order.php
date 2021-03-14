@@ -12,10 +12,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Order
 {
-    public const ORDER_STATUS_CART = "cart",
-        ORDER_STATUS_PENDING = "pending",
-        ORDER_STATUS_COMPLETED = "completed",
-        ORDER_STATUS_cancelled = "cancelled";
+    public const STATUS_CART = "cart",
+        STATUS_PENDING = "pending",
+        STATUS_COMPLETED = "completed",
+        STATUS_CANCELLED = "cancelled";
 
     use TimestampableEntity;
 
