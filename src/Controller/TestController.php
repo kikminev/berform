@@ -2,97 +2,35 @@
 
 namespace App\Controller;
 
-use App\Document\Domain;
-use App\Document\User;
-
-//use App\Entity\UserCustomer;
-use App\Entity\Page;
-use App\Entity\Site;
-use App\Repository\DomainRepository;
-use App\Repository\FileRepository;
-use App\Repository\PageRepository;
-use App\Repository\UserCustomerRepository;
-use App\Repository\SiteRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Mail\Envelope;
+use App\Mail\Sender;
 use Http\Discovery\Exception\NotFoundException;
+use Mailgun\Mailgun;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\DNS\CloudflareDnsUpdater;
-
-//use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class TestController extends AbstractController
 {
-    public function test(
-        CloudflareDnsUpdater $cloudflareDnsUpdater,
-        UserCustomerRepository $userRepository,
-//        DomainRepository $domainRepository,
-        EntityManagerInterface $entityManager,
-        SiteRepository $siteRepository,
-        FileRepository $fileRepository,
-        PageRepository $pageRepository
-    ) {
-
-        $user = $this->getUser();
-        $t = $fileRepository->getActiveByIds(['1', '3'], $user);
-echo count($t);
-        foreach ($t as $f) {
-            echo $f->getId();
-        }
-
-        echo 'ok';
-        exit;
-
-
-        $site = $siteRepository->find(1);
-        $site->setSupportedLanguages(['en']);
-
-        $entityManager->flush();
-//        $site
-
-//        $user = $userRepository->find(1);
-//        $user->setRoles(['ROLE_USER']);
-//        $a = $user->getRoles();
-//        print_r($a);
-        exit;
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-        echo 'ok';
-        exit;
-
-
-
-        $site = $siteRepository->find(1);
-
-        $page = new Page();
-        $page->setSite($site);
-        $page->setName('Home');
-        $page->setSlug('home');
-        $page->setLocale('en');
-        $page->setIsActive(true);
-        $page->setSequenceOrder(1);
-        //        $page->setDefaultImage(1);
-
-//        $entityManager->persist($page);
-//        $entityManager->flush();
-
-
-
-        //        $site = new Site();
-        //        $site->setSlug('photography');
-        //        $site->setName("Mark Williams Photography");
-        //        $site->setEmail("hello@berform.com");
-        //        $site->setIsTemplate(true);
-        //        $site->setDefaultImage('https://berform.s3-eu-west-1.amazonaws.com/template_photography.jpg');
-        //        $site->setHost('photography');
-        //        $site->setCategory('photography');
-        //        $site->setTemplate('minimal');
-        //
-        //        $entityManager->persist($site);
-        //        $entityManager->flush();
-
-
+    public function test(ParameterBagInterface $parameterBag, Sender $sender)
+    {
         throw new NotFoundException();
+
+        $message = $this->render('Mail/Payment/successful_payment.html.twig', ['invoice_pdf' => 'https://invoice.stripe.com/i/acct_1I1XREEhLqLirlZw/invst_J7AlbFECXpt7eLM78rlqVp562MP9CZG'])->getContent();
+
+        $messageTEst = new Envelope('no-reply@berform.com', 'kokominev@yahoo.com', $message);
+        $sender->send($messageTEst);
+
+        echo 'dada12'; exit;
+
+        $mg = Mailgun::create($parameterBag->get('mailgun_api_key'), $parameterBag->get('mailgun_api_endpoint'));
+        $mg->messages()->send($parameterBag->get('mailgun_domain'),
+            [
+                'from' => 'no-reply@berform.com',
+                'to' => 'kokominev@yahoo.com',
+                'subject' => sprintf('%s', 'Kik Minev'),
+                'html' => $message,
+            ]);
+
+        return $this->json(['message' => 'ok']);
     }
 }
