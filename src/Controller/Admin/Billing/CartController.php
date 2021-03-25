@@ -14,6 +14,7 @@ use App\Repository\TransactionRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Gedmo\Translator\TranslationInterface;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 use Stripe\Webhook;
@@ -22,6 +23,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Mail\Message;
+use App\Mail\Sender;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CartController extends AbstractController
 {
@@ -159,7 +163,7 @@ class CartController extends AbstractController
         return new JsonResponse(['sessionId' => $checkout_session['id']]);
     }
 
-    public function stripeWebhookEndpoint(Request $request, OrderRepository $orderRepository, TransactionRepository  $transactionRepository)
+    public function stripeWebhookEndpoint(Request $request, OrderRepository $orderRepository, TransactionRepository  $transactionRepository, Sender $sender, TranslatorInterface  $translator)
     {
         $stripeSecretKey = $this->getParameter('stripe_secret_key');
         $webhookSecret = $this->getParameter('stripe_webhook_secret_key');
@@ -213,6 +217,10 @@ class CartController extends AbstractController
                     throw new Exception('Webhook: subscription should be set');
                 }
 
+                if(!isset($object->data->object->customer_email)) {
+                    throw new Exception('Webhook: customer_email should be set');
+                }
+
                 $transaction = $transactionRepository->findOneBy(['subscription' => $object->data->object->subscription]);
                 if(null === $transaction) {
                     throw new Exception('Webhook: Transaction was not found by subscription id');
@@ -222,6 +230,11 @@ class CartController extends AbstractController
                 $transaction->setInvoicePdf($object->data->object->invoice_pdf);
                 $this->entityManager->flush();
 
+
+                $message = $this->render('Mail/Payment/successful_payment.html.twig', ['invoice_pdf' => $object->data->object->invoice_pdf])->getContent();
+                $messageTEst = new Message($stripeSecretKey = $this->getParameter('system_no_reply_email'), $object->data->object->customer_email, $message, $translator->trans('landing_sitec_successful_payment_email_subject'));
+                $sender->send($messageTEst);
+
                 break;
             case 'checkout.session.completed':
                 if(!isset($object->data->object->metadata->orderNumber)) {
@@ -229,20 +242,22 @@ class CartController extends AbstractController
                 }
 
                 if(!isset($object->data->object->subscription)) {
-                    throw new Exception('Webhook: no order number provided');
+                    throw new Exception('Webhook: no subscription number provided');
                 }
 
                 $orderNumber = $object->data->object->metadata->orderNumber;
                 $order = $orderRepository->find($orderNumber);
-                $order->setStatus(Order::STATUS_COMPLETED);
                 if(null === $order) {
                     throw new Exception('Webhook: order was not found by webhok order number');
                 }
+
+                $order->setStatus(Order::STATUS_COMPLETED);
 
                 $transaction = new Transaction();
                 $transaction->setCreatedAt(new DateTime());
                 $transaction->setUpdatedAt(new DateTime());
                 $transaction->setSubscription($object->data->object->subscription);
+                $transaction->setOrder($order);
                 $transaction->setStatus(Transaction::STATUS_PENDING);
                 $this->entityManager->persist($transaction);
 

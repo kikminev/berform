@@ -123,7 +123,7 @@ class AlbumController extends AbstractController
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
-                $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
+                $nodeFiles = $fileRepository->findActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($nodeFiles as $attachedFile) {
                     $album->addFile($attachedFile);
                 }
@@ -229,7 +229,7 @@ class AlbumController extends AbstractController
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
-                $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
+                $nodeFiles = $fileRepository->findActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($nodeFiles as $attachedFile) {
                     $album->addFile($attachedFile);
                 }

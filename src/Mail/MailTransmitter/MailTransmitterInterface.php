@@ -3,9 +3,9 @@
 
 namespace App\Mail\MailTransmitter;
 
-use App\Mail\Envelope;
+use App\Mail\Message;
 
 interface MailTransmitterInterface
 {
-    public function transmit(Envelope $envelope);
+    public function transmit(Message $envelope);
 }

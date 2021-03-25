@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
+// todo: this needs to be renamed to ProductType and Subscription to become a product
 class Product
 {
 

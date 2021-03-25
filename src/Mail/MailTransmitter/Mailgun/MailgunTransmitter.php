@@ -4,7 +4,7 @@
 namespace App\Mail\MailTransmitter\Mailgun;
 
 
-use App\Mail\Envelope;
+use App\Mail\Message;
 use App\Mail\MailTransmitter\MailTransmitterInterface;
 use Mailgun\Mailgun;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -18,15 +18,15 @@ class MailgunTransmitter implements MailTransmitterInterface
         $this->parameterBag = $parameterBag;
     }
 
-    public function transmit(Envelope $envelope)
+    public function transmit(Message $message)
     {
         $mailgunClient = Mailgun::create($this->parameterBag->get('mailgun_api_key'), $this->parameterBag->get('mailgun_api_endpoint'));
         return $mailgunClient->messages()->send($this->parameterBag->get('mailgun_domain'),
             [
-                'from' => $envelope->getFrom(),
-                'to' => $envelope->getTo(),
-                'subject' => sprintf('%s', 'Kik Minev'),
-                'html' => $envelope->getContent(),
+                'from' => $message->getFrom(),
+                'to' => $message->getTo(),
+                'subject' => sprintf('%s', $message->getSubject()),
+                'html' => $message->getContent(),
             ]);
     }
 }

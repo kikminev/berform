@@ -14,8 +14,8 @@ class Sender
         $this->transmitter = $mailGunTransmitter;
     }
 
-    public function send(Envelope $envelope)
+    public function send(Message $message)
     {
-        $this->transmitter->transmit($envelope);
+        $this->transmitter->transmit($message);
     }
 }

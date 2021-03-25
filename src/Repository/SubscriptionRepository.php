@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Site;
 use App\Entity\Subscription;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,4 +49,10 @@ class SubscriptionRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function deleteAllBySite(Site $site):void {
+        $qb = $this->createQueryBuilder('s');
+        $deleteQuery = $qb->delete('App:Subscription', 's')->where('s.site = :siteId')->setParameter('siteId', $site->getId())->getQuery();
+        $deleteQuery->execute();
+    }
 }

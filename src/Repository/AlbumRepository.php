@@ -64,4 +64,11 @@ class AlbumRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function deleteAllBySite(Site $site):void {
+        $qb = $this->createQueryBuilder('a');
+        $deleteQuery = $qb->delete('App:Album', 'a')->where('a.site = :siteId')->setParameter('siteId', $site->getId())->getQuery();
+        $deleteQuery->execute();
+    }
 }
+

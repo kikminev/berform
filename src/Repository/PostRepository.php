@@ -96,4 +96,10 @@ class PostRepository extends ServiceEntityRepository
 
         return ['posts' => $posts, 'allHaveImages' => $allHaveImages];
     }
+
+    public function deleteAllBySite(Site $site):void {
+        $qb = $this->createQueryBuilder('p');
+        $deleteQuery = $qb->delete('App:Post', 'p')->where('p.site = :siteId')->setParameter('siteId', $site->getId())->getQuery();
+        $deleteQuery->execute();
+    }
 }

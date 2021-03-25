@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\Billing\TransactionRepository;
+use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -28,6 +28,12 @@ class Transaction
      * @ORM\Column(type="string", length=255)
      */
     private $subscription;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Order::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $order;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -78,5 +84,15 @@ class Transaction
         $this->invoicePdf = $invoicePdf;
 
         return $this;
+    }
+
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    public function setOrder($order): void
+    {
+        $this->order = $order;
     }
 }

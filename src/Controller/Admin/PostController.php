@@ -103,7 +103,7 @@ class PostController extends AbstractController
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $postFiles = $fileRepository->findActiveByIds($attachedFilesIds, $this->getUser())->toArray();
                 $post->setFiles($postFiles);
 
                 if (!empty($postFiles) && null === $post->getDefaultImage()) {
@@ -207,7 +207,7 @@ class PostController extends AbstractController
             $attachedFiles = $request->request->get('post')['attachedFiles'] ?? false;
             if ($attachedFiles) {
                 $attachedFilesIds = explode(';', $attachedFiles);
-                $postFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser())->toArray();
+                $postFiles = $fileRepository->findActiveByIds($attachedFilesIds, $this->getUser())->toArray();
                 $post->setFiles($postFiles);
 
                 if (!empty($postFiles) && null === $post->getDefaultImage()) {

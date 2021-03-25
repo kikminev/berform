@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\File;
+use App\Entity\Site;
 use App\Entity\UserCustomer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,7 +52,18 @@ class FileRepository extends ServiceEntityRepository
     */
 
 
-    public function getActiveByIds(array $ids, UserCustomer $user)
+    public function findAllBySite(Site $site)
+    {
+
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb->andWhere('f.site = :site')
+            ->setParameter('site', $site->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findActiveByIds(array $ids, UserCustomer $user)
     {
 
         $qb = $this->createQueryBuilder('f');

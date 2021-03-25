@@ -7,6 +7,24 @@ test:
     path: /test
     controller: App\Controller\TestController::test
 
+# CRM
+crm_dashboard:
+    path: /nimda
+    controller: App\Controller\CRM\CustomerController::list
+crm_list_customers:
+    path: /nimda/customer/list
+    controller: App\Controller\CRM\CustomerController::list
+crm_delete_customer:
+    path: /nimda/customer/delete/{user}
+    controller: App\Controller\CRM\CustomerController::delete
+crm_list_sites:
+    path: /nimda/site/list
+    controller: App\Controller\CRM\SiteController::list
+crm_delete_site:
+    path: /nimda/site/delete/{site}
+    controller: App\Controller\CRM\SiteController::delete
+# END CRM
+
 admin:
     path: /u
     controller: App\Controller\Admin\DashboardController::dashboard
@@ -211,20 +229,3 @@ user_site_view_page:
 user_site_view_album:
     path: /album/{slug}
     controller: App\Controller\AlbumController::view
-
-# CRM
-crm_dashboard:
-    path: /nimda
-    controller: App\Controller\CRM\CustomerController::list
-crm_list_customers:
-    path: /nimda/customer/list
-    controller: App\Controller\CRM\CustomerController::list
-crm_delete_customer:
-    path: /nimda/customer/delete/{user}
-    controller: App\Controller\CRM\CustomerController::delete
-crm_list_sites:
-    path: /nimda/site/list
-    controller: App\Controller\CRM\SiteController::list
-crm_delete_site:
-    path: /nimda/site/delete/{site}
-    controller: App\Controller\CRM\SiteController::delete

@@ -1,3 +1,11 @@
+1. I fixed the Site Remover and we should introduce conections between orders and transactions and site or user so we can delete it
+1.1. Change the prices
+2. show the payments in the admin
+3. transfer the templates to postgres
+
+
+
+
+------------------
 1. When completing the webhook extend the subscription deadlin
-2. Add subject to envelope
-3. Connect the cart controller to sender
+4. style the email to account for the payment

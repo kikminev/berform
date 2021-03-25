@@ -105,7 +105,7 @@ class ShotController extends AbstractController
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
-                $shotFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
+                $shotFiles = $fileRepository->findActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($shotFiles as $attachedFile) {
                     $shot->addFile($attachedFile);
                 }
@@ -214,7 +214,7 @@ class ShotController extends AbstractController
             if ($attachedFiles) {
                 $attachedFilesIds = array_filter(explode(';', $attachedFiles));
 
-                $nodeFiles = $fileRepository->getActiveByIds($attachedFilesIds, $this->getUser());
+                $nodeFiles = $fileRepository->findActiveByIds($attachedFilesIds, $this->getUser());
                 foreach ($nodeFiles as $attachedFile) {
                     $shot->addFile($attachedFile);
                 }
@@ -267,7 +267,7 @@ class ShotController extends AbstractController
 
         switch ($type) {
             case 'file':
-                $nodes = $fileRepository->getActiveByIds($ids, $this->getUser());
+                $nodes = $fileRepository->findActiveByIds($ids, $this->getUser());
                 break;
             case 'page':
             default:

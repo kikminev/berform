@@ -146,6 +146,7 @@ landing_site_cart_total: Total to pay
 landing_site_cart_checkout: Checkout
 landing_site_cart_taxes: Taxes
 landing_site_cart_total_amount: Total
+landing_sitec_successful_payment_email_subject: Payment received
 admin_subscriptions_type_hosting: Hosting
 landing_site_billing_upgrade_plan: renew
 landing_site_cart_product_yearly_subscription: 1 year

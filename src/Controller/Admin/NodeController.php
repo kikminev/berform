@@ -40,7 +40,7 @@ class NodeController extends AbstractController
 
         switch ($type) {
             case 'file':
-                $nodes = $fileRepository->getActiveByIds($ids, $this->getUser());
+                $nodes = $fileRepository->findActiveByIds($ids, $this->getUser());
                 break;
             case 'page':
             default:

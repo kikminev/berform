@@ -104,4 +104,10 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function deleteAllBySite(Site $site):void {
+        $qb = $this->createQueryBuilder('p');
+        $deleteQuery = $qb->delete('App:Page', 'p')->where('p.site = :siteId')->setParameter('siteId', $site->getId())->getQuery();
+        $deleteQuery->execute();
+    }
 }

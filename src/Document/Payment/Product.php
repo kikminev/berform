@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * @MongoDB\Document
  */
+
 class Product
 {
     public const PRODUCT_TYPE_DOMAIN = 'domain',

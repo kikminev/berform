@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Mail\Envelope;
+use App\Mail\Message;
 use App\Mail\Sender;
 use Http\Discovery\Exception\NotFoundException;
 use Mailgun\Mailgun;
@@ -17,7 +17,7 @@ class TestController extends AbstractController
 
         $message = $this->render('Mail/Payment/successful_payment.html.twig', ['invoice_pdf' => 'https://invoice.stripe.com/i/acct_1I1XREEhLqLirlZw/invst_J7AlbFECXpt7eLM78rlqVp562MP9CZG'])->getContent();
 
-        $messageTEst = new Envelope('no-reply@berform.com', 'kokominev@yahoo.com', $message);
+        $messageTEst = new Message('no-reply@berform.com', 'kokominev@yahoo.com', $message);
         $sender->send($messageTEst);
 
         echo 'dada12'; exit;
