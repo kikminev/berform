@@ -48,7 +48,6 @@ class UserSiteController extends AbstractController
     ): Response {
 
         // todo: fix this if and extract to a normal logic
-        /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         if (null === $site && null !== $domain) {
@@ -59,7 +58,6 @@ class UserSiteController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        /** @var Page $page */
         $page = $pageRepository->findOneBy(['site' => $site->getId(), 'slug' => !empty($slug) ? $slug : 'home']);
         $pages = $pageRepository->findAllActiveBySite($site);
 

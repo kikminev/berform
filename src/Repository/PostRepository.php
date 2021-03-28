@@ -58,9 +58,9 @@ class PostRepository extends ServiceEntityRepository
 
         return $qb
             ->andWhere('p.site = :site')
-            ->andWhere('p.featuredParallax = :site')
+//            ->andWhere('p.featuredParallax = :site')
             ->andWhere('p.isActive = true')
-            ->setParameter('site', $site)
+            ->setParameter('site', $site->getId())
             ->getQuery()
             ->getResult();
     }
