@@ -19,7 +19,7 @@ h1 { text-align: center; margin: 100px 0px 100px; width: 100% }
 .blogHeader div { width: 100%; text-align: center;}
 .blogTemplate { text-align: center; }
 .featuredPost { position: relative; color: #383E41; min-height: 400px; background-color: #3c3c3c; padding: 0px; }
-.featuredPost img { width: 100%; }
+.featuredPost a { width: 100%; height: 400px; display: block; }
 .featuredPost .featuredPostExcerpt { width: 50%; height: 200px; position: absolute; padding: 20px; bottom: -80px; left: 100px; background: #f4e9e2; overflow: hidden }
 
 .blogPostListWrap { margin-bottom: 170px; position: relative; }

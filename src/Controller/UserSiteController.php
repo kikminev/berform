@@ -8,6 +8,7 @@ use App\Form\ContactType;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
 //use App\Repository\PageRepository;
+use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
@@ -42,6 +43,7 @@ class UserSiteController extends AbstractController
         PageRepository $pageRepository,
         AlbumRepository $albumRepository,
         PostRepository $postRepository,
+        FileRepository $fileRepository,
         ParameterBagInterface $params,
         LayoutResolver $layoutResolver,
         string $slug = 'home'
@@ -74,7 +76,7 @@ class UserSiteController extends AbstractController
                 'slug' => $slug,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
                 'albums' => $slug === 'photography' ? $albumRepository->findAllBySite($site) : null,
-                'files' => UploadController::getOrderedFiles($page->getFiles()->toArray()), // todo: thos should not be in controller
+                'files' => UploadController::getOrderedFiles($fileRepository->findAllActiveByPage($page)), // todo: thos should not be in controller
                 'pages' => $pages,
                 'page' => $page,
                 'form' => $form->createView(),

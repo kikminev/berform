@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\Message;
 use App\Entity\Post;
 use App\Entity\Site;
 use App\Form\ContactType;
 use App\Repository\DomainRepository;
+use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
@@ -70,13 +72,13 @@ class BlogController extends AbstractController
         PostRepository $postRepository,
         SiteRepository $siteRepository,
         PageRepository $pageRepository,
-        DomainRepository $domainRepository
+        DomainRepository $domainRepository,
+        FileRepository $fileRepository
     ): Response {
 
         // todo: fix this if and extract to a normal logic
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
-
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         if (null === $site && null !== $domain) {
             $site = $siteRepository->findOneBy(['domain' => $domain]);
@@ -105,7 +107,7 @@ class BlogController extends AbstractController
                 'pages' => $pages,
                 'morePosts' => $morePosts,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
-                'files' => $post->getFiles(),
+                'files' => $fileRepository->findAllActiveByPost($post),
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
             ]

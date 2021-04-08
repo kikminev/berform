@@ -60,6 +60,7 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere('p.site = :site')
 //            ->andWhere('p.featuredParallax = :site')
             ->andWhere('p.isActive = true')
+            ->orderBy('p.publishedAt', 'DESC')
             ->setParameter('site', $site->getId())
             ->getQuery()
             ->getResult();

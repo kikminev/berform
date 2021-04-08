@@ -7,7 +7,7 @@
             <h2>Gallery</h2>
             {% if files is defined %}
                     {% for file in files %}
-                        {% if file.deleted != true %}
+                        {% if file.isDeleted != true %}
                             <div class="imgWrap" id="object_{{ file.id }}" data-id="{{ file.id }}" data-url="{{ file.fileUrl }}">
                                 <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=150&w=150&fit=crop&border-radius=10" alt="" />
                             </div>

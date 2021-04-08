@@ -7,6 +7,7 @@ use App\Entity\Album;
 use App\Entity\Site;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
+use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
@@ -40,6 +41,7 @@ class AlbumController extends AbstractController
         DomainRepository $domainRepository,
         PageRepository $pageRepository,
         AlbumRepository $albumRepository,
+        FileRepository $fileRepository,
         ParameterBagInterface $params,
         string $slug
     ): Response {
@@ -72,7 +74,7 @@ class AlbumController extends AbstractController
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
                 'pages' => $pages,
                 'album' => $album,
-                'files' => UploadController::getOrderedFiles($album->getFiles()->toArray()),
+                'files' => UploadController::getOrderedFiles($fileRepository->findAllActiveByAlbumAndSite($album, $site)),
                 'layout' => $this->layoutResolver->getLayout($site),
             ]
         );
