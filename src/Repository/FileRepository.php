@@ -119,14 +119,17 @@ class FileRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllActiveByPost(Post $post)
+    public function findAllActiveByPostAndSite(Post $post, Site $site)
     {
         $qb = $this->createQueryBuilder('f');
 
         return $qb
             ->andWhere('f.post = :post')
-            ->andWhere('f.isDeleted = false OR f.isDeleted IS NULL')
+            ->andWhere('f.site = :site')
+            ->andWhere($qb->expr()->not($qb->expr()->neq('f.isDeleted', ':isDeleted')))
+            ->setParameter('isDeleted', false)
             ->setParameter('post', $post)
+            ->setParameter('site', $site)
             ->orderBy('f.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();

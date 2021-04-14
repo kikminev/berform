@@ -1,7 +1,5 @@
-- add templates uploads
-- add template names and translations
 - install postgres on the server
-
+- fix minimal and big picture template
 
 1. I fixed the Site Remover and we should introduce conections between orders and transactions and site or user so we can delete it
 1.1. Change the prices

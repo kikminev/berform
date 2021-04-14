@@ -148,6 +148,11 @@ class Site
      */
     private $translatedDescription = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $templateSystemCode;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -486,6 +491,18 @@ class Site
     public function setTranslatedDescription(?array $translatedDescription): self
     {
         $this->translatedDescription = $translatedDescription;
+
+        return $this;
+    }
+
+    public function getTemplateSystemCode(): ?string
+    {
+        return $this->templateSystemCode;
+    }
+
+    public function setTemplateSystemCode(?string $templateSystemCode): self
+    {
+        $this->templateSystemCode = $templateSystemCode;
 
         return $this;
     }

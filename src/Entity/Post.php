@@ -99,6 +99,11 @@ class Post
      */
     private $publishedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $defaultImageUrl;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -304,6 +309,18 @@ class Post
     public function setPublishedAt(?\DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getDefaultImageUrl(): ?string
+    {
+        return $this->defaultImageUrl;
+    }
+
+    public function setDefaultImageUrl(string $defaultImageUrl): self
+    {
+        $this->defaultImageUrl = $defaultImageUrl;
 
         return $this;
     }

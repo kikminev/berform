@@ -14,8 +14,8 @@
 
         <div class="clear"></div>
 
-            {% if post.files|length > 0 %}
-                {% set mainImage = post.files[0] %}
+            {% if files|length > 0 %}
+                {% set mainImage = files[0] %}
                     {% if files|length > 0 %}
                         <div id="imagesWrap">
                             <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ mainImage.baseName }}"><img src="{{ resource_provider_domain }}{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
@@ -57,10 +57,9 @@
                             </h3>
                         </a>
 
-                        {% set file = post.files|first %}
-                        {% if post.files|length > 0 %}
+                        {% if post.defaultImageUrl is not null %}
                             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=410&w=800&fit=crop" alt="" />
+                                <img src="{{ resource_provider_domain }}{{ post.defaultImageUrl }}?h=410&w=800&fit=crop" alt="" />
                             </a>
                         {% else %}
                             <div class="noImage"></div>
