@@ -17,7 +17,7 @@ class Post
 
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -90,7 +90,7 @@ class Post
     private $files;
 
     /**
-     * @ORM\OneToOne(targetEntity=File::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=File::class, cascade={"persist", "remove"})
      */
     private $defaultImage;
 

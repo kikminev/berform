@@ -20,7 +20,7 @@ class Node
 
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -53,7 +53,7 @@ class Node
     private $sequenceOrder;
 
     /**
-     * @ORM\OneToOne(targetEntity=File::class)
+     * @ORM\ManyToOne(targetEntity=File::class)
      */
     private $defaultImage;
 

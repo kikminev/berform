@@ -4,8 +4,7 @@
 namespace App\Controller\CRM;
 
 
-use App\Document\File;
-use App\Document\User;
+use App\Entity\UserCustomer;
 use App\Repository\FileRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserCustomerRepository;
@@ -50,7 +49,7 @@ class CustomerController extends AbstractController
         );
     }
 
-    public function delete(User $user): RedirectResponse
+    public function delete(UserCustomer $user): RedirectResponse
     {
         if($user->isSystem()) {
             throw new RuntimeException("Can't delete system user!");
