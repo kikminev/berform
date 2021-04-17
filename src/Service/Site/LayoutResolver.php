@@ -2,7 +2,8 @@
 
 namespace App\Service\Site;
 
-use App\Document\Site;
+
+use App\Entity\Site;
 
 class LayoutResolver
 {

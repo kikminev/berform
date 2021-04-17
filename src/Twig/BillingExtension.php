@@ -25,13 +25,13 @@ class BillingExtension extends AbstractExtension
 
     public function showTax(float $price)
     {
-        return $this->taxesCalculator->calculateTax($price);
+        return TaxesCalculator::calculateTax($price);
     }
 
     public function showPriceWithTaxes(float $price, string $currency)
     {
-        $price = $this->taxesCalculator->calculatePriceWithTaxes($price);
+        $price = TaxesCalculator::calculatePriceWithTaxes($price);
 
-        return $price . $currency;
+        return $price . ' ' . $currency;
     }
 }

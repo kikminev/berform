@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Document\Site;
-use App\Document\User;
+use App\Entity\Site;
+use App\Entity\UserCustomer;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -26,6 +26,7 @@ class SiteVoter extends Voter
         }
 
         if (!$subject instanceof Site) {
+
             return false;
         }
 
@@ -35,13 +36,12 @@ class SiteVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
-
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             return true;
         }
 
         // the user must be logged in; if not, deny access
-        if (!$user instanceof User) {
+        if (!$user instanceof UserCustomer) {
             return false;
         }
 
@@ -53,8 +53,8 @@ class SiteVoter extends Voter
         }
     }
 
-    private function canModify(Site $site, User $user): bool
+    private function canModify(Site $site, UserCustomer $user): bool
     {
-        return $user === $site->getUser();
+        return $user === $site->getUserCustomer();
     }
 }

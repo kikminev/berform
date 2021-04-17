@@ -2,26 +2,25 @@
 
 namespace App\Security\Signup;
 
-use App\Document\User;
-use App\Repository\UserRepository;
+use App\Entity\UserCustomer;
+use App\Repository\UserCustomerRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserValidator
 {
     private TranslatorInterface $translator;
     private array $errors = [];
-    private UserRepository $userRepository;
+    private UserCustomerRepository $userRepository;
 
-    public function __construct(TranslatorInterface $translator, UserRepository $userRepository)
+    public function __construct(TranslatorInterface $translator, UserCustomerRepository $userRepository)
     {
         $this->translator = $translator;
         $this->userRepository = $userRepository;
     }
 
-    public function validate(User $user): bool
+    public function validate(UserCustomer $user): bool
     {
-        echo $user->getEmail();
-        if($this->userRepository->findOneByEmail($user->getEmail())) {
+        if($this->userRepository->findOneBy(['email' => $user->getEmail()])) {
             $this->errors[] = $this->translator->trans('landing_site_register_email_used');
         }
 

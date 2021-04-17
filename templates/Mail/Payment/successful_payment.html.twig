@@ -1,0 +1,9 @@
+{% extends 'Mail/layout.html.twig' %}
+{% block body %}
+    <br />
+    Your payment has been successful!
+    <p>
+        <br />
+        Download your receipt<br /> <a href="{{ invoice_pdf }}">{{ invoice_pdf }}</a>
+    </p>
+{% endblock %}

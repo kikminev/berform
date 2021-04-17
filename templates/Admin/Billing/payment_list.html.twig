@@ -1,30 +1,27 @@
 {% extends 'Admin/layout.html.twig' %}
 {% block body %}
+<div class="container col-md-8 all allSubscriptionsWrap">
+    <h1 class="centeredTitle">{% trans %}admin_all_subscriptions_title{% endtrans %}</h1>
+    {% for subscription in subscriptions %}
+        <div class="subscriptionWrap">
+            <div class="col-md-6" style="float: left;">
+                {% trans %}admin_subscriptions_site_name{% endtrans %} {{ subscription.subscription.site.name }}
+                <br/>
+                {% trans %}admin_subscriptions_expires_at{% endtrans %}
+                {{ subscription.subscription.expiresAt|date }}
+                <br/>
+                <span>{% trans %}admin_subscriptions_type{% endtrans %}  {% set subscriptionType = 'admin_subscriptions_type_' ~ subscription.subscription.product.type %}{{ subscriptionType|trans }}</span>
+            </div>
 
-    <div class="row">
-        <div class="container col-md-8 all allSubscriptionsWrap">
-            <h1 class="centeredTitle">{% trans %}admin_all_subscriptions_title{% endtrans %}</h1>
-            {% for subscription in subscriptions %}
-                <div class="subscriptionWrap">
-                    <div class="col-md-6" style="float: left;">
-                        {% trans %}admin_subscriptions_site_name{% endtrans %} {{ subscription.subscription.site.name }}
-                        <br/>
-                        {% trans %}admin_subscriptions_expires_at{% endtrans %}
-                        {{ subscription.subscription.expiresAt|date }}
-                        <br/>
-                        <span>{% trans %}admin_subscriptions_type{% endtrans %}  {% set subscriptionType = 'admin_subscriptions_type_' ~ subscription.subscription.product.type %}{{ subscriptionType|trans }}</span>
-                    </div>
-
-                    {% if subscription.upgradeable == true %}
-                        <div class="col-md-6 renewButtonWrap">
-                            <a class="renewButton"
-                               href="{{ path('admin_billing_cart_add', {product : subscription.upgradeTo.id, subscription : subscription.subscription.id}) }}">{% trans %}landing_site_billing_upgrade_plan{% endtrans %}
-                                <i class="fas fa-arrow-alt-circle-right"></i>
-                            </a>
-                        </div>
-                    {% endif %}
+            {% if subscription.upgradeable == true %}
+                <div class="col-md-6 renewButtonWrap">
+                    <a class="renewButton"
+                       href="{{ path('admin_billing_cart_add', {product : subscription.upgradeTo.id, subscription : subscription.subscription.id}) }}">{% trans %}landing_site_billing_upgrade_plan{% endtrans %}
+                        <i class="fas fa-arrow-alt-circle-right"></i>
+                    </a>
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
-    </div>
+    {% endfor %}
+</div>
 {% endblock %}

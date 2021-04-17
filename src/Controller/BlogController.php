@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use App\Document\File;
-use App\Document\Message;
-use App\Document\Post;
+use App\Entity\File;
+use App\Entity\Message;
+use App\Entity\Post;
+use App\Entity\Site;
 use App\Form\ContactType;
 use App\Repository\DomainRepository;
+use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use App\Service\Site\LayoutResolver;
-use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Document\Site;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -49,7 +49,7 @@ class BlogController extends AbstractController
         }
 
         $posts = $postRepository->findActivePostsBySite($site);
-        $pages = $pageRepository->findActiveBySite($site);
+        $pages = $pageRepository->findAllActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
 
         return $this->render(
@@ -72,13 +72,13 @@ class BlogController extends AbstractController
         PostRepository $postRepository,
         SiteRepository $siteRepository,
         PageRepository $pageRepository,
-        DomainRepository $domainRepository
+        DomainRepository $domainRepository,
+        FileRepository $fileRepository
     ): Response {
 
         // todo: fix this if and extract to a normal logic
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
-
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         if (null === $site && null !== $domain) {
             $site = $siteRepository->findOneBy(['domain' => $domain]);
@@ -90,7 +90,7 @@ class BlogController extends AbstractController
 
         /** @var Post $post */
         $post = $postRepository->findActiveBySlug($slug, $site);
-        $pages = $pageRepository->findActiveBySite($site);
+        $pages = $pageRepository->findAllActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
         $morePosts = $postRepository->findReadMorePosts($site);
 
@@ -107,7 +107,7 @@ class BlogController extends AbstractController
                 'pages' => $pages,
                 'morePosts' => $morePosts,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
-                'files' => $post->getFiles(),
+                'files' => $fileRepository->findAllActiveByPost($post),
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
             ]

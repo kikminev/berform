@@ -2,8 +2,7 @@
 
 namespace App\Form\Admin;
 
-use App\Document\User;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\UserCustomer;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,7 +31,7 @@ class ChangePasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => User::class,
+            'data_class' => UserCustomer::class,
         ));
     }
 }

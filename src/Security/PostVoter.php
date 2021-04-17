@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Document\Post;
-use App\Document\User;
+use App\Entity\Post;
+use App\Entity\UserCustomer;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -42,7 +42,7 @@ class PostVoter extends Voter
         }
 
         // the user must be logged in; if not, deny access
-        if (!$user instanceof User) {
+        if (!$user instanceof UserCustomer) {
             return false;
         }
 
@@ -57,7 +57,7 @@ class PostVoter extends Voter
         throw new \LogicException('Something went wrong in Post voting!');
     }
 
-    private function canView(Post $post, User $user): bool
+    private function canView(Post $post, UserCustomer $user): bool
     {
         // if they can edit, they can view
         if ($this->canEdit($post, $user)) {
@@ -67,7 +67,7 @@ class PostVoter extends Voter
         return false;
     }
 
-    private function canEdit(Post $post, User $user): bool
+    private function canEdit(Post $post, UserCustomer $user): bool
     {
         return $user === $post->getUser();
     }

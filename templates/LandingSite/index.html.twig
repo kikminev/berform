@@ -161,10 +161,6 @@
                                 <div class="smallNumber">.99</div>
                             </div>
 
-                            {% if app.request.getHttpHost() == 'www.perform.bg' or app.request.getHttpHost() == 'co.com' %}
-                                <div class="currencyWrap">{{ baseHostPrice[app.request.getHttpHost()]|trans|raw }}</div>
-                            {% endif %}
-
                             <div class="clear"></div>
                             <div class="priceDescription">{% trans %}main_site_pricing_billed_annually{% endtrans %}</div>
                         </div>

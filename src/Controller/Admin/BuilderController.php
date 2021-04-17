@@ -2,13 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Site;
 use App\Repository\PageRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use App\Document\Site;
-use App\Document\Page;
 
 class BuilderController extends AbstractController
 {
@@ -35,3 +33,5 @@ class BuilderController extends AbstractController
         );
     }
 }
+
+

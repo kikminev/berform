@@ -30,7 +30,7 @@ class Currency
     /**
      * @return string
      */
-    public function getSystemCode(): string
+    public function getSystemCode(): stringadmin_billing_cart_view
     {
         return $this->systemCode;
     }

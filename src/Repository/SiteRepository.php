@@ -2,45 +2,68 @@
 
 namespace App\Repository;
 
-use App\Document\Site;
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use App\Entity\UserCustomer;
+use App\Entity\Site;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class SiteRepository extends DocumentRepository
+/**
+ * @method Site|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Site|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Site[]    findAll()
+ * @method Site[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class SiteRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Site::class));
+        parent::__construct($registry, Site::class);
     }
 
-    public function getByUser(User $user)
+    // /**
+    //  * @return Site1[] Returns an array of Site1 objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->addAnd($qb->expr()->field('user')->equals($user));
-        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
-        $qb->addAnd($qb->expr()->field('archived')->notEqual(true));
-
-        return $qb->getQuery()->execute();
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
+    */
 
-    public function deleteAllByUser(User $user)
+    /*
+    public function findOneBySomeField($value): ?Site1
     {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Site::class)
-            ->remove()
-            ->field('user')->equals($user)
-            ->getQuery()->execute();
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
+    */
 
     public function getTemplates()
     {
-        $qb = $this->createQueryBuilder();
-        $qb->addAnd($qb->expr()->field('isTemplate')->equals(true));
-        $qb->addAnd($qb->expr()->field('deleted')->notEqual(true));
-        $qb->addAnd($qb->expr()->field('archived')->notEqual(true));
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.isTemplate = :value')
+            ->setParameter('value', true)
+            ->getQuery()
+            ->getResult();
+    }
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
+    public function getByUser(UserCustomer $user)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.userCustomer = :value')
+            ->setParameter('value', $user->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

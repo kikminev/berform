@@ -7,7 +7,7 @@
     {% endfor %}
     <table style="width: 100%;">
         {% for customer in customers %}
-            {% if customer.system == false %}
+            {% if customer.isSystem == false %}
                 <tr>
                     <td>
                         {{ customer.email }}

@@ -3,12 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\DNS\CloudflareDnsUpdater;
-use App\Document\User;
+use App\Entity\Domain;
+use App\Entity\UserCustomer;
 use App\Form\Admin\DomainType;
 use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Document\Domain;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -32,7 +32,7 @@ class DomainController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $domains = $domainRepository->findByUser($this->getUser());
+        $domains = $domainRepository->findByUserCustomer($this->getUser());
 
         return $this->render(
             'Admin/Domain/domain_list.html.twig',
@@ -51,7 +51,7 @@ class DomainController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        /** @var User $user */
+        /** @var UserCustomer $user */
         $user = $this->getUser();
         $domain = new Domain();
         $form = $this->createForm(DomainType::class, $domain);
@@ -65,7 +65,7 @@ class DomainController extends AbstractController
                 return $this->redirectToRoute('user_admin_domain_list');
             }
 
-            $domain->setUser($user);
+            $domain->setUserCustomer($user);
 
             if ($cloudflareDnsUpdater->createCloudflareAccount($user)) {
                 if(true !== $cloudflareDnsUpdater->addDomainDNS($domain, $user)) {

@@ -2,13 +2,13 @@
 
 namespace App\Form\Admin;
 
+use App\Entity\Page;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Document\Page;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -35,9 +35,9 @@ class PageType extends AbstractType
             $builder->add('meta_description_'.$language, TextareaType::class, ['mapped' => false, 'required' => false, 'label' => $this->translator->trans('admin_form_page_meta_description')]);
         }
 
-        $builder->add('customCss', TextareaType::class, ['attr' => ['label' => $this->translator->trans('form_page_custom_css')]]);
+        $builder->add('customCss', TextareaType::class, ['required' => false, 'attr' => ['label' => $this->translator->trans('form_page_custom_css')]]);
         $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
-        $builder->add('active', null, ['required' => false]);
+        $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }
 

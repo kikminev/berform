@@ -116,7 +116,7 @@ class Post
      * @var null|File $defaultImage
      * @MongoDB\ReferenceOne(targetDocument="File", storeAs="id")
      */
-    private $defaultImage;
+        private $defaultImage;
 
     /**
      * @return mixed

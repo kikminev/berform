@@ -10,7 +10,9 @@
             {% if site.isTemplate == false %}
                 <tr>
                     <td>
-                        {{ site.name }}({{ site.user.email }})
+                        {{ site.id }}.
+                        {{ site.name }} ({{ site.userCustomer.email }})
+
                         <a onclick="return confirm('Are you sure that you want to DELETE it?')"
                            href="{{ path('crm_delete_site', { site : site.id }) }}">delete</a>
                     </td>

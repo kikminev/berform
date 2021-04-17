@@ -2,58 +2,133 @@
 
 namespace App\Repository;
 
-use App\Document\File;
-use App\Document\Page;
-use App\Document\Post;
-use App\Document\Site;
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use App\Entity\Album;
+use App\Entity\File;
+use App\Entity\Page;
+use App\Entity\Post;
+use App\Entity\Site;
+use App\Entity\UserCustomer;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-// todo: move this to be universal for page and post
-class FileRepository extends DocumentRepository
+/**
+ * @method File|null find($id, $lockMode = null, $lockVersion = null)
+ * @method File|null findOneBy(array $criteria, array $orderBy = null)
+ * @method File[]    findAll()
+ * @method File[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class FileRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(File::class));
+        parent::__construct($registry, File::class);
     }
 
-
-    /**
-     * @param $fileId
-     * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function getActiveByIds($fileIds, User $user)
+    // /**
+    //  * @return File[] Returns an array of File objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('user')->equals($user)
-            ->field('deleted')->notEqual(true)
-            ->field('id')->in($fileIds)
-            ->sort('order', 'ASC')
-            ->getQuery()->execute();
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('f.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
     }
+    */
 
-    public function getActiveFile($fileId)
+    /*
+    public function findOneBySomeField($value): ?File
     {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('deleted')->notEqual(true)
-            ->field('id')->equals($fileId)
-            ->getQuery()->getSingleResult();
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
+    */
 
-
-    public function findAllByUser(User $user)
-    {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('user')->equals($user)
-            ->getQuery()->execute();
-    }
 
     public function findAllBySite(Site $site)
     {
-        return $this->dm->createQueryBuilder(File::class)
-            ->field('site')->equals($site)
-            ->getQuery()->execute();
+
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb->andWhere('f.site = :site')
+            ->setParameter('site', $site->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllActiveBySite(Site $site)
+    {
+
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb->andWhere('f.site = :site')
+            ->andWhere($qb->expr()->not($qb->expr()->neq('f.isDeleted', ':isDeleted')))
+            ->setParameter('site', $site->getId())
+            ->setParameter('isDeleted', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllActiveByPage(Page $page)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb->andWhere('f.page = :page')
+            ->andWhere($qb->expr()->not($qb->expr()->neq('f.isDeleted', ':isDeleted')))
+            ->setParameter('page', $page->getId())
+            ->setParameter('isDeleted', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findActiveByIds(array $ids, UserCustomer $user)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb->andWhere('f.userCustomer = :user')
+            ->andWhere($qb->expr()->not($qb->expr()->eq('f.isDeleted', ':isDeleted')))
+            ->andWhere($qb->expr()->in('f.id', $ids))
+            ->setParameter('user', $user)
+            ->setParameter('isDeleted', true)
+            ->orderBy('f.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllActiveByAlbumAndSite(Album $album, Site $site)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere('f.album = :album')
+            ->andWhere('f.site = :site')
+            ->andWhere('f.isDeleted = false OR f.isDeleted IS NULL')
+            ->setParameter('site', $site)
+            ->setParameter('album', $album)
+            ->orderBy('f.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllActiveByPost(Post $post)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere('f.post = :post')
+            ->andWhere('f.isDeleted = false OR f.isDeleted IS NULL')
+            ->setParameter('post', $post)
+            ->orderBy('f.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Document\File;
 use App\Document\User;
+use App\Entity\File;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;

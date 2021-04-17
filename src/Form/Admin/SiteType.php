@@ -2,13 +2,11 @@
 
 namespace App\Form\Admin;
 
-use App\Document\Domain;
-use App\Document\User;
+use App\Entity\Domain;
+use App\Entity\Site;
+use App\Entity\UserCustomer;
 use App\Repository\DomainRepository;
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use phpDocumentor\Reflection\Types\This;
-use Stubs\DocumentManager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,10 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Document\Site;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use App\Form\Admin\SupportedLanguageToNumberTransformer;
 
 class SiteType extends AbstractType
 {
@@ -49,7 +45,7 @@ class SiteType extends AbstractType
         $supportedLanguages = $this->param->get('supported_languages');
         $siteActivatedLanguages = $options['supported_languages'];
 
-        /** @var User $user */
+        /** @var UserCustomer $user */
         $user = $this->security->getUser();
 
         $translatedLanguages = [];
@@ -69,11 +65,11 @@ class SiteType extends AbstractType
                     'label' => $this->translator->trans('admin_site_activated_languages')
                 ])
             ->add('domain',
-                DocumentType::class,
+                EntityType::class,
                 [
                     'label' => $this->translator->trans('admin_page_edit_domain'),
                     'class' => Domain::class,
-                    'choices' => $this->domainRepository->findActiveByUser($user),
+                    'choices' => $this->domainRepository->findByUser($user),
                     'choice_label' => function ($domain) {
                         /** @var Domain $domain */
                         return $domain->getName();

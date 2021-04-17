@@ -2,11 +2,12 @@
 
 namespace App\Form\Admin;
 
+use App\Entity\Shot;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Document\Node;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -33,17 +34,15 @@ class ShotType extends NodeType
                 ]);
         }
 
-        $builder->add('attachedFiles',
-            HiddenType::class,
-            ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
-        $builder->add('active', null, ['required' => false]);
+        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+        $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Node::class,
+            'data_class' => Shot::class,
             'supported_languages' => null,
         ]);
     }

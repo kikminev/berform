@@ -2,29 +2,35 @@
 
 namespace App\Controller;
 
-use App\Document\Domain;
-use App\Document\User;
-use App\Repository\DomainRepository;
-use App\Repository\UserRepository;
+use App\Mail\Message;
+use App\Mail\Sender;
 use Http\Discovery\Exception\NotFoundException;
+use Mailgun\Mailgun;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\DNS\CloudflareDnsUpdater;
-//use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class TestController extends AbstractController
 {
-    public function test(CloudflareDnsUpdater $cloudflareDnsUpdater, UserRepository $userRepository, DomainRepository $domainRepository)
+    public function test(ParameterBagInterface $parameterBag, Sender $sender)
     {
         throw new NotFoundException();
-        /** @var User $user */
-        $user = $userRepository->find('5ea4506603ecf2226a1cd452');
 
-        /** @var Domain $domain */
-        $domain = $domainRepository->find('5eb282e0312ceb10593d0432');
+        $message = $this->render('Mail/Payment/successful_payment.html.twig', ['invoice_pdf' => 'https://invoice.stripe.com/i/acct_1I1XREEhLqLirlZw/invst_J7AlbFECXpt7eLM78rlqVp562MP9CZG'])->getContent();
 
-        if ($cloudflareDnsUpdater->createCloudflareAccount($user)) {
-            $cloudflareDnsUpdater->addDomainDNS($domain, $user);
-        }
-        exit;
+        $messageTEst = new Message('no-reply@berform.com', 'kokominev@yahoo.com', $message);
+        $sender->send($messageTEst);
+
+        echo 'dada12'; exit;
+
+        $mg = Mailgun::create($parameterBag->get('mailgun_api_key'), $parameterBag->get('mailgun_api_endpoint'));
+        $mg->messages()->send($parameterBag->get('mailgun_domain'),
+            [
+                'from' => 'no-reply@berform.com',
+                'to' => 'kokominev@yahoo.com',
+                'subject' => sprintf('%s', 'Kik Minev'),
+                'html' => $message,
+            ]);
+
+        return $this->json(['message' => 'ok']);
     }
 }

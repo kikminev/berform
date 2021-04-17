@@ -17,9 +17,9 @@
                     {% if post.files is defined %}
                     {% set file = post.files|first %}
 
-                    <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
+                    <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" style="background: url('{{ resource_provider_domain }}{{ file.baseName }}') no-repeat; background-position: center;">
                         {% if file is not empty %}
-                            <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>
+{#                            <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>#}
                         {% endif %}
                     </a>
                     {% endif %}

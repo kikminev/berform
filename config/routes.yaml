@@ -1,11 +1,29 @@
 index:
     path: /
-    host: berform.kik
+    host: dev.berform.com
     controller: App\Controller\LandingSiteController::home
 
 test:
     path: /test
     controller: App\Controller\TestController::test
+
+# CRM
+crm_dashboard:
+    path: /nimda
+    controller: App\Controller\CRM\CustomerController::list
+crm_list_customers:
+    path: /nimda/customer/list
+    controller: App\Controller\CRM\CustomerController::list
+crm_delete_customer:
+    path: /nimda/customer/delete/{user}
+    controller: App\Controller\CRM\CustomerController::delete
+crm_list_sites:
+    path: /nimda/site/list
+    controller: App\Controller\CRM\SiteController::list
+crm_delete_site:
+    path: /nimda/site/delete/{site}
+    controller: App\Controller\CRM\SiteController::delete
+# END CRM
 
 admin:
     path: /u
@@ -77,6 +95,31 @@ user_admin_page_delete:
     path: /u/page/delete/{id}
     controller: App\Controller\Admin\PageController::delete
 
+user_admin_shot_list:
+    path: /u/shot/{site}
+    controller: App\Controller\Admin\ShotController::list
+user_admin_shot_create:
+    path: /u/shot/create/{site}
+    controller: App\Controller\Admin\ShotController::create
+user_admin_shot_edit:
+    path: /u/shot/edit/{id}
+    controller: App\Controller\Admin\ShotController::edit
+user_admin_shot_delete:
+    path: /u/shot/delete/{id}
+    controller: App\Controller\Admin\ShotController::delete
+
+user_admin_album_list:
+    path: /u/album/{site}
+    controller: App\Controller\Admin\AlbumController::list
+user_admin_album_create:
+    path: /u/album/create/{site}
+    controller: App\Controller\Admin\AlbumController::create
+user_admin_album_edit:
+    path: /u/album/edit/{id}
+    controller: App\Controller\Admin\AlbumController::edit
+user_admin_album_delete:
+    path: /u/album/delete/{id}
+    controller: App\Controller\Admin\AlbumController::delete
 
 # nodes
 user_admin_node_list:
@@ -139,11 +182,27 @@ admin_billing:
     controller: App\Controller\Admin\Billing\BillingController::listPayments
 admin_billing_cart_add:
     path: /u/billing/cart/add/{product}/{subscription}
-    controller: App\Controller\Admin\Billing\CartController::addProduct
+    controller: App\Controller\Admin\Billing\CartController::addSubscription
 
 admin_billing_cart_view:
     path: /u/billing/cart/view
     controller: App\Controller\Admin\Billing\CartController::view
+
+admin_billing_cart_success:
+    path: /u/billing/cart/thank_you
+    controller: App\Controller\Admin\Billing\CartController::success
+
+admin_billing_cart_cancelled:
+    path: /u/billing/cart/cancelled
+    controller: App\Controller\Admin\Billing\CartController::cancelled
+
+admin_billing_cart_checkout:
+    path: /u/billing/cart/checkout
+    controller: App\Controller\Admin\Billing\CartController::checkout
+
+billing_cart_webhook_endpoint:
+    path: /billing/webhook
+    controller: App\Controller\Admin\Billing\CartController::stripeWebhookEndpoint
 
 # user site
 user_site_contact:
@@ -170,20 +229,3 @@ user_site_view_page:
 user_site_view_album:
     path: /album/{slug}
     controller: App\Controller\AlbumController::view
-
-# CRM
-crm_dashboard:
-    path: /nimda
-    controller: App\Controller\CRM\CustomerController::list
-crm_list_customers:
-    path: /nimda/customer/list
-    controller: App\Controller\CRM\CustomerController::list
-crm_delete_customer:
-    path: /nimda/customer/delete/{user}
-    controller: App\Controller\CRM\CustomerController::delete
-crm_list_sites:
-    path: /nimda/site/list
-    controller: App\Controller\CRM\SiteController::list
-crm_delete_site:
-    path: /nimda/site/delete/{site}
-    controller: App\Controller\CRM\SiteController::delete

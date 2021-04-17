@@ -2,9 +2,8 @@
 
 namespace App\Form\Admin;
 
-use App\Document\Post;
+use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,7 +38,7 @@ class PostType extends AbstractType
 
         $builder->add('attachedFiles', HiddenType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
         $builder->add('featuredParallax', null, ['required' => false]);
-        $builder->add('active', null, ['required' => false]);
+        $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }
 

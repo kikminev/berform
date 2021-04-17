@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Controller\CRM;
 
-
-use App\Document\Site;
+use App\Entity\Site;
 use App\Repository\SiteRepository;
 use App\Service\Site\SiteRemover;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

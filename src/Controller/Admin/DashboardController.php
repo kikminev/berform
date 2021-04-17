@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -22,7 +21,7 @@ class DashboardController extends AbstractController
 
         $user = $this->getUser();
         $sites = $siteRepository->getByUser($user);
-        $domains = $domainRepository->findByUser($user);
+        $domains = $domainRepository->findByUserCustomer($user);
 
         return $this->render(
             'Admin/dashboard.html.twig',

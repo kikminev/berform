@@ -2,50 +2,84 @@
 
 namespace App\Repository;
 
-use App\Document\Post;
-use App\Document\Site;
-use App\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use App\Entity\Post;
+use App\Entity\Site;
+use App\Entity\UserCustomer;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PostRepository extends DocumentRepository
+/**
+ * @method Post|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Post|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Post[]    findAll()
+ * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class PostRepository extends ServiceEntityRepository
 {
-    public function __construct(DocumentManager $dm)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($dm, $dm->getUnitOfWork(), $dm->getClassMetadata(Post::class));
+        parent::__construct($registry, Post::class);
     }
 
-    public function findActivePostsBySite(Site $site, $limit = false)
+    // /**
+    //  * @return Post[] Returns an array of Post objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
-        $qb = $this->createQueryBuilder()
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->field('site')->equals($site)
-            ->sort('publishedAt', 'DESC');
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
 
-        if ($limit) {
-            $qb->limit($limit);
+    public function findAllByUserSite(UserCustomer $user, Site $site): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.userCustomer = :user')
+            ->andWhere('p.site = :site')
+            ->setParameter('user', $user)
+            ->setParameter('site', $site)
+            ->getQuery()
+            ->getResult();
+    }
+    public function findActivePostsBySite(Site $site, int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if($limit) {
+            $qb->setMaxResults($limit);
         }
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
+        return $qb
+            ->andWhere('p.site = :site')
+//            ->andWhere('p.featuredParallax = :site')
+            ->andWhere('p.isActive = true')
+            ->orderBy('p.publishedAt', 'DESC')
+            ->setParameter('site', $site->getId())
+            ->getQuery()
+            ->getResult();
     }
 
-    public function findActivePostsBySiteWithoutFeatured(Site $site, $limit = false)
+    public function findActiveBySlug(string $slug, Site $site)
     {
-        $qb = $this->createQueryBuilder()
-            ->field('featuredParallax')->notEqual(true)
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->field('site')->equals($site)
-            ->sort('createdAt', 'DESC');
+        $qb = $this->createQueryBuilder('p');
 
-        if ($limit) {
-            $qb->limit($limit);
-        }
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $qb->getQuery()->execute();
+        return $qb
+            ->andWhere('p.site = :site')
+            ->andWhere('p.slug = :slug')
+            ->andWhere('p.isDeleted = false OR p.isDeleted IS NULL')
+            ->andWhere('p.isActive = true')
+            ->setParameter('site', $site)
+            ->setParameter('slug', $slug)
+            ->orderBy('p.publishedAt', 'DESC')
+            ->getQuery()
+            ->getSingleResult();
     }
 
     public function findReadMorePosts(Site $site): array
@@ -64,34 +98,9 @@ class PostRepository extends DocumentRepository
         return ['posts' => $posts, 'allHaveImages' => $allHaveImages];
     }
 
-    public function findAllByUserSite(User $user, Site $site)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Post::class)
-            ->field('user')->equals($user)
-            ->field('site')->equals($site)
-            ->field('deleted')->notEqual(true)
-            ->sort('publishedAt', 'DESC')
-            ->getQuery()->execute();
-    }
-
-    public function deleteAllBySite(Site $site)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->dm->createQueryBuilder(Post::class)
-            ->remove()
-            ->field('site')->equals($site)
-            ->getQuery()->execute();
-    }
-
-    public function findActiveBySlug(string $slug, Site $site)
-    {
-        return $this->dm->createQueryBuilder(Post::class)
-            ->field('site')->equals($site)
-            ->field('slug')->equals($slug)
-            ->field('active')->equals(true)
-            ->field('deleted')->notEqual(true)
-            ->getQuery()
-            ->getSingleResult();
+    public function deleteAllBySite(Site $site):void {
+        $qb = $this->createQueryBuilder('p');
+        $deleteQuery = $qb->delete('App:Post', 'p')->where('p.site = :siteId')->setParameter('siteId', $site->getId())->getQuery();
+        $deleteQuery->execute();
     }
 }

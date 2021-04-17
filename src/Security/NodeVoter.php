@@ -4,7 +4,7 @@
 namespace App\Security;
 
 
-use App\Document\Node;
+use App\Entity\Node;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use App\Document\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

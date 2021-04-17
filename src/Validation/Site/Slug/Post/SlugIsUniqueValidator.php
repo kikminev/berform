@@ -13,9 +13,11 @@ class SlugIsUniqueValidator extends ConstraintValidator
     private PostRepository $postRepository;
     private TranslatorInterface $translator;
 
-    public function __construct(PostRepository $postRepository, TranslatorInterface $translator)
+    public function __construct(
+//        PostRepository $postRepository,
+        TranslatorInterface $translator)
     {
-        $this->postRepository = $postRepository;
+//        $this->postRepository = $postRepository;
         $this->translator = $translator;
     }
 
