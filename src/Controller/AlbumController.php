@@ -59,7 +59,7 @@ class AlbumController extends AbstractController
         }
 
         /** @var Album $album */
-        $album = $albumRepository->findOneBy(['isActive' => true, 'slug' => $slug]);
+        $album = $albumRepository->findOneBy(['isActive' => true, 'slug' => $slug, 'site' => $site]);
         $pages = $pageRepository->findBy(['site' => $site, 'isActive' => true], ['sequenceOrder' => 'ASC']);
 
         if (null === $album) {

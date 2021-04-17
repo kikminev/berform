@@ -17,7 +17,7 @@ class Site
 
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -147,6 +147,11 @@ class Site
      * @ORM\Column(type="json", nullable=true)
      */
     private $translatedDescription = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $templateSystemCode;
 
     public function __construct()
     {
@@ -486,6 +491,18 @@ class Site
     public function setTranslatedDescription(?array $translatedDescription): self
     {
         $this->translatedDescription = $translatedDescription;
+
+        return $this;
+    }
+
+    public function getTemplateSystemCode(): ?string
+    {
+        return $this->templateSystemCode;
+    }
+
+    public function setTemplateSystemCode(?string $templateSystemCode): self
+    {
+        $this->templateSystemCode = $templateSystemCode;
 
         return $this;
     }

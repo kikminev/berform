@@ -11,7 +11,6 @@ use App\Repository\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DomainController extends AbstractController
@@ -44,7 +43,6 @@ class DomainController extends AbstractController
 
     public function create(
         Request $request,
-        DocumentManager $documentManager,
         DomainRepository $domainRepository,
         CloudflareDnsUpdater $cloudflareDnsUpdater
     ): Response {
@@ -84,7 +82,7 @@ class DomainController extends AbstractController
         );
     }
 
-    public function edit(Request $request, Domain $domain, DocumentManager $documentManager): Response
+    public function edit(Request $request, Domain $domain): Response
     {
         $this->denyAccessUnlessGranted('edit', $domain);
 
@@ -95,8 +93,8 @@ class DomainController extends AbstractController
 
             $domain->setUser($this->getUser());
 
-            $documentManager->persist($domain);
-            $documentManager->flush();
+//            $documentManager->persist($domain);
+//            $documentManager->flush();
 
             return $this->redirectToRoute('user_admin_domain_list');
         }
@@ -110,7 +108,7 @@ class DomainController extends AbstractController
         );
     }
 
-    public function delete(Domain $domain, DocumentManager $documentManager, SiteRepository $siteRepository): ?Response
+    public function delete(Domain $domain, SiteRepository $siteRepository): ?Response
     {
         $this->denyAccessUnlessGranted('edit', $domain);
 
@@ -124,8 +122,8 @@ class DomainController extends AbstractController
             return $this->redirectToRoute('user_admin_domain_list');
         }
 
-        $documentManager->remove($domain);
-        $documentManager->flush();
+//        $documentManager->remove($domain);
+//        $documentManager->flush();
 
         return $this->redirectToRoute('user_admin_domain_list');
     }

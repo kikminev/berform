@@ -10,7 +10,6 @@ use App\Service\Domain\DomainResolver;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Document\Site;
 use Mailgun\Mailgun;
 
@@ -25,7 +24,7 @@ class ContactController extends AbstractController
 
 
 //    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params, DomainRepository $domainRepository)
-    public function sendMessage(Request $request, SiteRepository $siteRepository, DocumentManager $documentManager, ParameterBagInterface $params)
+    public function sendMessage(Request $request, SiteRepository $siteRepository, ParameterBagInterface $params, DomainRepository $domainRepository)
     {
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
@@ -42,8 +41,8 @@ class ContactController extends AbstractController
             /** @var Message $message */
             $message = $form->getData();
             $message->setSite($site);
-            $documentManager->persist($message);
-            $documentManager->flush();
+//            $documentManager->persist($message);
+//            $documentManager->flush();
 
             $mg = Mailgun::create($params->get('mailgun_api_key'), $params->get('mailgun_api_endpoint'));
             $mg->messages()->send($params->get('mailgun_domain'), [

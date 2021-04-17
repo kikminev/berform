@@ -13,28 +13,19 @@
 
                 <div class="col-md-1"></div>
                 <div class="col-md-10 featuredPost">
-                    {% set post = posts|first %}
-                    {% if post.files is defined %}
-                    {% set file = post.files|first %}
+                    <a class="ajaxLink blogImgWrap" data-section-id="{{ featuredPost.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" style="background: url('{{ resource_provider_domain }}{{ featuredPost.defaultImageUrl }}') no-repeat; background-position: center;"></a>
 
-                    <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" style="background: url('{{ resource_provider_domain }}{{ file.baseName }}') no-repeat; background-position: center;">
-                        {% if file is not empty %}
-{#                            <img src="{{ resource_provider_domain }}{{ file.baseName }}" alt=""/>#}
-                        {% endif %}
-                    </a>
-                    {% endif %}
-
-                    {% if posts is not empty %}
+                    {% if featuredPost is not empty %}
                     <div class="featuredPostExcerpt row">
                         <div class="col-md-6">
                             <h2>
-                                <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                    {% if post.translatedTitle[app.request.locale] is defined %}{{ post.translatedTitle[app.request.locale]|raw|truncate(60, true) }}{% endif %}
+                                <a class="ajaxLink" data-section-id="{{ featuredPost.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}">
+                                    {% if featuredPost.translatedTitle[app.request.locale] is defined %}{{ featuredPost.translatedTitle[app.request.locale]|raw|truncate(60, true) }}{% endif %}
                                 </a>
                             </h2>
                         </div>
                         <div class="col-md-6">
-                            <span>{% if post.translatedExcerpt[app.request.locale] is defined %}{{ post.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
+                            <span>{% if featuredPost.translatedExcerpt[app.request.locale] is defined %}{{ featuredPost.translatedExcerpt[app.request.locale]|raw|truncate(130, true) }}{% endif %}</span>
                         </div>
                     </div>
                     {% endif %}
@@ -48,15 +39,14 @@
 
 
         {% if posts|length >= 1 %}
+            {% set postsBeforeParallax = posts|slice(0,2) %}
             <div class="container blogList">
                 <div class="row">
-                    {% set postsPriorFeaturedOne = posts|slice(0,2) %}
-                    {% for post in postsPriorFeaturedOne %}
+                    {% for post in postsBeforeParallax %}
                         <div class="col-md-6 blogPostListWrap">
                                 <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                                    {% if post.files|length > 0 %}
-                                        {% set file = post.files|first %}
-                                        <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                                    {% if post.defaultImageUrl is not null %}
+                                        <img src="{{ resource_provider_domain }}{{ post.defaultImageUrl }}?h=510&w=1000&fit=crop" alt="" />
                                     {% endif %}
                                 </a>
 
@@ -76,13 +66,13 @@
         {% endif %}
 
         {% if featuredPostInParallax is not null %}
-            {% if featuredPostInParallax.files %}
-                {% set file = featuredPostInParallax.files|first %}
+            {% if featuredPostInParallax.defaultImageUrl %}
+                {% set file = featuredPostInParallax.defaultImageUrl %}
             {% endif %}
 
-            <div class="featuredParallaxPost" style="{% if file is not empty %}background-image: url('{{ resource_provider_domain }}{{ file.baseName }}?w=1900&fit=crop');{% endif %}">
+            <div class="featuredParallaxPost" style="{% if file is not empty %}background-image: url('{{ resource_provider_domain }}{{ file }}?w=1900&fit=crop');{% endif %}">
                 <h3 class="title">
-                    <a class="ajaxLink" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPostInParallax.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPostInParallax.slug}) }}">
+                    <a class="ajaxLink" data-section-id="{{ featuredPostInParallax.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPostInParallax.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPostInParallax.slug}) }}">
                         {% if featuredPostInParallax.translatedTitle[app.request.locale] is defined %}{{ featuredPostInParallax.translatedTitle[app.request.locale] }}{% endif %}
                     </a>
                 </h3>
@@ -95,9 +85,8 @@
                 {% for post in postsAfterFeaturedOne %}
                     <div class="col-md-6 blogPostListWrap">
                             <a class="ajaxLink blogImgWrap" data-section-id="{{ post.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: post.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: post.slug}) }}">
-                            {% if post.files|length > 0 %}
-                                {% set file = post.files|first %}
-                                    <img src="{{ resource_provider_domain }}{{ file.baseName }}?h=510&w=1000&fit=crop" alt="" />
+                            {% if post.defaultImageUrl is not null %}
+                                <img src="{{ resource_provider_domain }}{{ post.defaultImageUrl }}?h=510&w=1000&fit=crop" alt="" />
                             {% endif %}
                             </a>
 

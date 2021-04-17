@@ -14,14 +14,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Form\Admin\SiteType;
 
 class SiteController extends AbstractController
 {
     /**
      * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function list(SiteRepository $siteRepository)
     {
@@ -73,10 +71,10 @@ class SiteController extends AbstractController
                 $pageCopy->setUpdatedAt(new \DateTime());
                 $pageCopy->setCreatedAt(new \DateTime());
 
-                $documentManager->persist($pageCopy);
+//                $documentManager->persist($pageCopy);
             }
 
-            $documentManager->flush();
+//            $documentManager->flush();
 
             return $this->redirectToRoute('admin');
         }
@@ -137,14 +135,14 @@ class SiteController extends AbstractController
         );
     }
 
-    public function delete(Site $site, DocumentManager $documentManager): ?Response
+    public function delete(Site $site): ?Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('modify', $site);
 
         $site->setActive(false);
         $site->setDeleted(true);
-        $documentManager->flush();
+//        $documentManager->flush();
 
         return $this->redirectToRoute('admin');
     }

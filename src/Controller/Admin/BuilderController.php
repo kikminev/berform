@@ -6,17 +6,9 @@ use App\Entity\Site;
 use App\Repository\PageRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ODM\MongoDB\DocumentManager;
 
 class BuilderController extends AbstractController
 {
-    private $documentManager;
-
-    public function __construct(DocumentManager $documentManager)
-    {
-        $this->documentManager = $documentManager;
-    }
-
     public function buildSite(PageRepository $pageRepository, Site $site): ?Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');

@@ -4,36 +4,37 @@ namespace App\Controller;
 
 use App\Controller\Admin\UploadController;
 use App\Entity\Message;
+use App\Entity\Post;
 use App\Form\ContactType;
 use App\Repository\AlbumRepository;
 use App\Repository\DomainRepository;
-//use App\Repository\PageRepository;
 use App\Repository\FileRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use App\Repository\SiteRepository;
 use App\Service\Domain\DomainResolver;
 use App\Service\Site\LayoutResolver;
+use App\Service\Site\TemplatePiecesProvider;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\View\TwitterBootstrapView;
 
 class UserSiteController extends AbstractController
 {
     private $domainResolver;
     private $layoutResolver;
+    private TemplatePiecesProvider $templatePiecesProvider;
 
     public function __construct(
         DomainResolver $domainResolver,
-        LayoutResolver $layoutResolver
+        LayoutResolver $layoutResolver,
+        TemplatePiecesProvider $templatePiecesProvider
     ) {
         $this->domainResolver = $domainResolver;
         $this->layoutResolver = $layoutResolver;
+        $this->templatePiecesProvider = $templatePiecesProvider;
     }
 
     public function renderPage(
@@ -68,10 +69,11 @@ class UserSiteController extends AbstractController
         }
 
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
+        $templatePices = $this->templatePiecesProvider->getPieces($site);
 
         return $this->render(
             $this->layoutResolver->getPageTemplate($site, $slug),
-            [
+            array_merge([
                 'site' => $site,
                 'slug' => $slug,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
@@ -81,13 +83,7 @@ class UserSiteController extends AbstractController
                 'page' => $page,
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
-                'posts' => $postRepository->findActivePostsBySite($site),
-                'featuredPostInParallax' => $postRepository->findOneBy([
-                    'site' => $site,
-                    'isActive' => true,
-                    'featuredParallax' => true,
-                ]),
-            ]
+            ], $templatePices)
         );
     }
 

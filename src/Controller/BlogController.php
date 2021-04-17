@@ -88,7 +88,6 @@ class BlogController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        /** @var Post $post */
         $post = $postRepository->findActiveBySlug($slug, $site);
         $pages = $pageRepository->findAllActiveBySite($site);
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
@@ -107,7 +106,7 @@ class BlogController extends AbstractController
                 'pages' => $pages,
                 'morePosts' => $morePosts,
                 'templateCss' => $this->layoutResolver->getSiteTemplateCss($site),
-                'files' => $fileRepository->findAllActiveByPost($post),
+                'files' => $fileRepository->findAllActiveByPostAndSite($post, $site),
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
             ]

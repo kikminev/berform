@@ -17,7 +17,7 @@ class Post
 
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -90,7 +90,7 @@ class Post
     private $files;
 
     /**
-     * @ORM\OneToOne(targetEntity=File::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=File::class, cascade={"persist", "remove"})
      */
     private $defaultImage;
 
@@ -98,6 +98,11 @@ class Post
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $publishedAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $defaultImageUrl;
 
     public function __construct()
     {
@@ -304,6 +309,18 @@ class Post
     public function setPublishedAt(?\DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getDefaultImageUrl(): ?string
+    {
+        return $this->defaultImageUrl;
+    }
+
+    public function setDefaultImageUrl(string $defaultImageUrl): self
+    {
+        $this->defaultImageUrl = $defaultImageUrl;
 
         return $this;
     }
