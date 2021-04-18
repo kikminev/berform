@@ -6,10 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "alcaeus/mongo-php-adapter": "dev-master",
         "aws/aws-sdk-php": "^3.67",
         "cloudflare/sdk": "^1.1",
-        "doctrine/mongodb-odm-bundle": "^3.4",
         "gedmo/doctrine-extensions": "^2.4",
         "jms/i18n-routing-bundle": "^3.0",
         "kriswallsmith/buzz": "^1.0",
@@ -55,7 +53,6 @@
         },
         "sort-packages": true,
         "platform": {
-            "ext-mongo": "1.6.16"
         }
     },
     "autoload": {
@@ -95,7 +92,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.4.*"
+            "require": "5.2.*"
         }
     }
 }
