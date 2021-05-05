@@ -1,0 +1,19 @@
+.backgroundRight { background: none; }
+.cd-section.visible { background: none; }
+.sidebar .socialIcons a { color: #333; }
+
+#cd-loading-bar { background-color: #222; }
+
+/* fixed background */
+.fixedBackground {
+    display: block;
+    background: #fff;
+}
+
+.fixedBackground:before {
+    display: block;
+    opacity: 0.3;
+    background-image: url("https://sitemax.s3-eu-west-1.amazonaws.com/templates/bakery_5.jpg");
+}
+
+.contentContainer a { color: #212529; }

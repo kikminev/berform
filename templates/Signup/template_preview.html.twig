@@ -1,0 +1,26 @@
+{% extends 'LandingSite/layout.html.twig' %}
+{% block title %}{% trans %}main_site_login_login{% endtrans %}{% endblock %}
+
+{% block body %}
+    <a id="logo" href="/" class="signUpPageLogo">b e r f o r m</a>
+
+
+<div class="centeredForm templatePreviewPageWrap innerPage">
+    <h3>{% trans %}main_site_preview_template{% endtrans %}</h3>
+
+    <a class="templatePreviewWrap col-md-6" onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_signup_setup_account') }}'); return false;">
+        <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
+            <div class="templateNameWrap">
+                <div class="name">{{ template.name }}</div>
+            </div>
+        </div>
+    </a>
+
+    <div class="clear"></div>
+    <a class="action-button dark" onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_signup_setup_account') }}'); return false;">Proceed</a>
+</div>
+    <script>
+        $('.content-wrap').css('min-height', $(window).height());
+        $('.centeredForm').css('padding-top', ($(window).height() - 550) / 2);
+    </script>
+{% endblock %}

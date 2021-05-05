@@ -1,0 +1,34 @@
+{# todo: make a form class #}
+<div id="progressBarWrap"></div><div class="clear"></div>
+
+<form method="post">
+    <input style="display: none;" id="fileUpload" type="file" name="files[]" data-url="{{ path('admin_site_upload_handler', {'site' : site.id}) }}" multiple />
+    <a class="uploadButton imgWrap" onclick="$('#fileUpload').click()">+</a>
+</form>
+
+
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>#}
+
+{#<script src="{{ asset('js/file-uploader/js/jquery.ui.widget.js') }}"></script>#}
+{#<script src="{{ asset('js/file-uploader/js/jquery.iframe-transport.js') }}"></script>#}
+<script src="{{ asset('js/file-uploader/js/jquery.fileupload.js') }}"></script>
+<script>
+    imageUploadsCouter = 0;
+    $(function () {
+        $('#fileUpload').fileupload({
+            dataType: 'json',
+            done: function (e, data) {
+                const result = data.result;
+                $('#imagesWrap').append('<div class="imgWrap" id="upload_'+result.id+'"><img src="'+result.url+'" /></div>');
+                $('.attachedFiles').val($('.attachedFiles').val() + result.id + ';');
+
+                $("#uploadStep_"+imageUploadsCouter).remove();
+                imageUploadsCouter--;
+            },
+            submit: function (e, data) {
+                imageUploadsCouter++;
+                $('#progressBarWrap').append('<div class="progressStep" id="uploadStep_'+imageUploadsCouter+'"></div>');
+            }
+        });
+    });
+</script>

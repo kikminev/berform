@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    {% include('UserSite/Components/head.html.twig') %}
+    <body>
+        <style type="text/css">
+            {{ site.customCss }}
+            {% if page is defined %}{{ page.customCss|raw }}{% endif %}
+        </style>
+
+        {{ site.customHtml|raw }}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="navigation col-md-12">
+                    <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
+                    {% include('UserSite/Components/social_icons.html.twig') %}
+                    {% include('UserSite/Components/navigation_menu.html.twig') %}
+                </div>
+            </div>
+        </div>
+
+        <main class="cd-main">
+            <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">
+                <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
+                    {% block body %}{% endblock %}
+                </div>
+            </section>
+        </main>
+
+        {% include('UserSite/Components/loading_bar.html.twig') %}
+
+        <script type="text/javascript">
+            $.fancybox.defaults.hash = false;
+        </script>
+
+        <footer class="footer container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% include('UserSite/Components/social_icons.html.twig') %}
+                    <div class="siteName">
+                         &copy; {{ site.name }}
+                    </div>
+
+                    <div class="builtWithBerform">
+                        {% trans %}footer_built_with{% endtrans %} <a href="https://www.berform.com" target="_blank">Berform</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+</html>

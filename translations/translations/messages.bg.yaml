@@ -1,0 +1,169 @@
+language_label_en: English
+language_label_bg: Bulgarian
+landing_site_login: Вход
+landing_site_register: Регистрация
+landing_site_register_email_used: 'Вече има регистриран потребител с този e-mail.'
+landing_site_register_password_too_short: Паролата трябва по-дълга от 5 символа!
+landing_site_register_password_must_include_number: Паролата трябва да съдържа цифри!
+landing_site_welcome_text: Дом за вашите снимки
+landing_site_welcome_text_line_2: Създайте професионален сайт за фотографи
+
+# home
+main_site_start_now: Започнете сега
+
+#how it works
+main_site_how_it_works_header: Как да си направим сайт?
+main_site_how_it_works_step1_header: Изберете дизайн
+main_site_how_it_works_step1_content: Изберете професионален дизайн за вашия нов уебсайт.
+main_site_how_it_works_step2_header: Изберете домейн
+main_site_how_it_works_step2_content: Изберете си домейн, който ще използвате за вашия сайт.
+main_site_how_it_works_step3_header: Добавете съдържание
+main_site_how_it_works_step3_content: Добавете информация за вас и вашия бизнес.
+
+# home features
+main_site_features_header: Създайте професионален сайт за вашите фотографии
+main_site_features_content: С Berform вие може да създадете сайт, <br />за вашите професионални снимки, в рамките на минути.
+user_site_features_hosting_header: Хостинг
+user_site_features_hosting_content: С нашия пакет Вие получавате хостинг пространство без да плащате допълнително.
+user_site_features_features_easy_administration: Администрация
+user_site_features_features_easy_administration_content: За да стартирате вашия сайт няма нужда да имате програмистки умения. Получавате лесна администрация, с която сами управлявате съдържанието си.
+user_site_features_beautiful_templates_header: Красиви дизайни
+user_site_features_beautiful_templates_content: Просто изберете дизайн и добавете съдържание. Бъдете професионалисти с професионално направени дизайни, които ще представят вашия бизнес.
+user_site_features_free_ssl_header: Безплатен SSL
+user_site_features_free_ssl_content: Използването на SSL е важно за сигурността на вашия сайт, доверието на клиентите ви към вашата услуга и за по-доброто индексиране в интернет търсачките. С нашата услуга получавате SSL безплатно.
+user_site_features_multilanguage_support_header: Многоезичено съдържание
+user_site_features_multilanguage_support_content: Създаването на многоезичен сайт с нас е безплатно. Просто въведете съдържанието на желания от вас език.
+user_site_features_seo_tools_header: SEO оптимизация
+user_site_features_seo_tools_content: Ние предоставяме всички необходими инструменти за да оптимизирате вашия сайт за интернет търсачките.
+
+# pricing
+main_site_pricing_header: Цена
+main_site_monthly_price_explainer: Цена на месец:
+main_site_pricing_content: Започнете с нашия безплатен пакет и преминете към платената ни версия, само когато искате собствен домейн.
+main_site_sign_up_header: Създайте вашия сайт сега
+main_site_sign_up_header_content: Регистрирайте се и създайте вашия безплатен сайт. <br />Когато сте готови да имате собствен домейн, може да преминете към нашата платена версия.
+main_site_pricing_billed_annually: месечно
+main_site_pricing_bgn_currency: ЛВ
+main_site_title: "- най-лесният начин да създадете сайт"
+main_site_base_host_price_bgn: ЛВ
+main_site_base_host_price_eur: '&euro;'
+main_site_pricing_products: Продукти
+main_site_pricing_unlimited: Неограничено
+main_site_pricing_storage: Пространство
+main_site_pricing_bandwidth: Неограничен трафик
+main_site_pricing_ssl: Безплатен SSL
+main_site_pricing_domain: Използвайте собствен домейн
+main_site_pricing_email: Безплатна пощенска кутия
+main_site_pricing_templates: Безплатни дизайни
+main_site_pricing_templates_customization: Стилизация на дизайни
+main_site_pricing_multylanguage_support: Многоезично съдържание
+main_site_pricing_mobile_first: Мобилна версия
+main_show_more: Още
+main_site_seo_tools: SEO инструменти
+main_site_product_cdn: Бърз и надежден CDN
+
+# footer
+main_site_footer_company_description: Ние правим създаването на собствен сайт лесно и достъпно. <br />Използвайте нашите инструменти за да стартирате <br />професионално присъствие в интернет.
+main_site_footer_links_product_header: За нас
+main_site_top_menu_features: Функционалности
+main_site_top_menu_how_it_works: Процес
+main_site_top_menu_templates: Дизайни
+main_site_top_menu_pricing: Цени
+main_site_top_menu_login: Вход
+main_site_user_logged_in_text: Вход
+main_site_top_menu_sign_up: Регистрация
+
+# login
+main_site_login_login: Вход
+main_site_login_email: Email
+main_site_login_password: Парола
+main_site_login_register: Регистрация
+
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# page edit form
+form_page_name: Име
+form_page_slug: Системно име
+form_page_custom_css: Допълнителен CSS
+form_post_already_used: Адресът на публикацията е вече зает!
+form_post_published_at: Published at
+form_page_already_used: Адресът на страницата е вече зает!
+admin_form_page_title: Заглавие на страницата
+admin_form_page_content: Съдържание
+admin_form_page_description: Описание
+admin_form_page_keywords: Ключови думи
+admin_form_page_meta_description: Подробно описание
+admin_form_page_menu_link: Име на линка
+admin_site_activated_languages: Поддържани езици
+
+# top menu
+admin_links_dashboard: Начало
+admin_links_profile: Профил
+admin_links_logout: Изход
+admin_profile_change_password: Смяна на парола
+admin_profile: Профил
+admin_links_sites: Сайтове
+admin_links_domains: Домейни
+admin_links_billing: Подновявания
+admin_links_pages: Страници
+admin_links_albums: Албуми
+admin_links_shots: Снимки
+admin_links_posts: Публикации
+admin_no_posts: Нямате създадено съдържание
+admin_links_create: Създай нов
+admin_links_create_page: Създай нова
+admin_links_create_domain: Добави нов
+admin_links_site_settings: Настройки на сайта
+admin_links_site_preview: Отвори сайта
+admin_links_blog: Блог
+admin_links_blog_edit_post: Редактирай публикация
+admin_create_node_album: Създай нов албум
+admin_create_shot: Добави нова снимка
+
+
+# admin
+admin_language_label_en: Английски
+admin_language_label_bg: Български
+admin_button_save: Запази
+admin_content: Съдържание
+admin_images: Снимки
+admin_domains_header_label: Домейн
+
+
+# page edit
+admin_page_edit_domain: Домейн
+
+# products and subscriptions
+admin_all_subscriptions_title: Всички услуги
+admin_subscriptions_site_name: "Сайт:"
+admin_subscriptions_type: "Тип:"
+admin_subscriptions_type_hosting: "хостинг"
+admin_subscriptions_type_free_hosting: "хостинг"
+admin_subscriptions_expires_at: "Изтича на:"
+landing_site_billing_upgrade_plan: "поднови"
+landing_site_cart_header: "Продукти"
+landing_site_cart_product_yearly_subscription: 1 година
+landing_site_cart_total: Сума за плащане
+landing_site_cart_taxes: Такси
+landing_site_cart_total_amount: Крайна цена
+landing_site_billing_no_products: Няма добавени продукти
+
+# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
+# User Site * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site  * User Site
+user_site_blog_read_more: прочети повече
+user_site_supported_languages_bg: бг
+user_site_supported_languages_en: en
+
+user_site_contact_us_address: "Адрес:"
+user_site_contact_us_email: "Електронна поща:"
+
+# password
+password_validation_general_not_valid: Грешна парола
+password_validation_confirm: Моля потвърдете вашата парола
+password_validation_length_error: Паролата трябва да бъде поне 6 символа
+password_form_old_password: Сегашна парола
+password_form_new_password: Нова парола
+password_form_new_password_repeat: Потвърди новата парола
+
+admin_links_upload_image: Добави
+footer_built_with: Създадено с

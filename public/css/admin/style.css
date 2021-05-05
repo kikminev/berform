@@ -1,0 +1,187 @@
+html {
+    margin: 0px;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+h1.centeredTitle { text-align: center; margin: 50px 0px 50px; font-size: 2rem; }
+
+
+a { text-decoration: none; cursor: pointer; }
+a:hover { text-decoration: none; }
+
+.errorNotice { width: 100%; margin: 20px auto; color: red; }
+.clear {
+    clear: both;
+}
+.mt50 { margin-top: 50px; }
+.logo {
+    float: left;
+    font-family: 'Yeseva One', cursive;
+    color: #fff;
+}
+.mainContent { margin-bottom: 200px; position: relative; }
+.topMenu {
+    background: #333;
+    list-style-type: none;
+    width: 100%;
+    padding: 16px;
+}
+
+.topMenu a {
+    text-decoration: none;
+    color: #cccccc;
+}
+
+.topMenu a:hover {
+    color: #fff;
+}
+
+.topMenu ul {
+    float: right;
+    margin: 0px;
+}
+
+.topMenu li {
+    float: left;
+    margin-right: 20px;
+    display: block;
+}
+
+.contextBar { background: #5e5e5e; padding: 16px 0px; text-align: center; color: #fff; }
+.contextBar h1 { font-size: 18px; padding: 0px; margin: 0px; color: #fff; font-weight: normal; }
+.topActionsBar { margin-top: 20px; }
+
+.list {
+    margin-top: 120px;
+}
+
+.itemActionControls {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 25px;
+    border-radius: 100px;
+    padding: 10px;
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e2e2e2+0,d6d6d6+50,e5e5e5+51,fefefe+100 */
+    background: rgb(226,226,226); /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  rgba(226,226,226,1) 0%, rgba(214,214,214,1) 50%, rgba(229,229,229,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg,  rgba(226,226,226,1) 0%,rgba(214,214,214,1) 50%,rgba(229,229,229,1) 51%,rgba(254,254,254,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  rgba(226,226,226,1) 0%,rgba(214,214,214,1) 50%,rgba(229,229,229,1) 51%,rgba(254,254,254,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+}
+.itemActionControls a { margin: 0px auto; color: #212529; }
+.itemActionControls a:hover i { color: #007bff  }
+.itemActionControls a.topMargin { margin-top: 10px; display: block; }
+.itemWrap { padding-left: 0px; position: relative; }
+.itemWrap img { position: absolute; top: 30px; right: 40px; border-radius: 100px; width: 50px; height: 50px; }
+
+.list.boxList .item {
+    cursor: move;
+    padding: 10px 20px;
+    margin: 0px 0px 20px 0px;
+    background: #333;
+    border-radius: 20px;
+    height: 350px;
+    color: #fff;
+    display: flex;
+    align-items: flex-end;
+    text-decoration: none;
+}
+.itemWrap.isTemplate .item { background-color: #d51616; color: #fff; }
+.publishedAt { font-size: small; color: #ccc; }
+
+.itemWrap:hover .itemActionControls { display: block; }
+.domainItemWrap a.item, .siteItemWrap a.item { cursor: pointer !important; }
+.domainNameServers { margin-top: 30px; }
+.list .heading { float: left; width: 100%; }
+.topActionLinks a { margin: 0px 25px 20px 0px; display: block; float: left; }
+
+.topActionsBar a.btn { float: right; color: #fff; }
+.contentEditForm .nav-tabs, .contentEditForm label { margin-top: 20px; }
+.contentEditForm label, .contentEditForm input, .contentEditForm textarea { width: 100%; }
+.contentEditForm .checkbox { margin-top: 20px; }
+.contentEditForm .checkbox label, .contentEditForm .checkbox input { width: auto; }
+
+/* edit page */
+.addNewTile { font-size: 50px; }
+.addNewTile a { cursor: pointer !important; }
+.formButton { float: right; margin-top: 20px; color: #fff !important; }
+.tox-statusbar__branding { display: none }
+.breadcrumbs a { color: #d9ebff; }
+
+
+/* uploaded images */
+#imagesWrap { }
+.imgWrap { position: relative; overflow: hidden; float: left; margin: 20px 20px 0px 0px; width: 150px; height: 150px; border-radius: 10px; background: #fff0b7; }
+.imgWrap .galleryImg { cursor: move; }
+.fileActionButton { display: none; position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; background: white; border-radius: 30px; line-height: 30px; text-align: center; font-size: small; color: #666666 !important; }
+.imgWrap:hover .fileActionButton { display: block; }
+.reorderFile { right: 50px; }
+#imagesWrap { margin: 20px 0px; }
+.flash-notice { color: #FF7C5C; }
+.uploadButton { background: #333; color: #fff !important; display: flex; align-items: flex-end; padding: 0px 15px; font-size: 50px; }
+.htmlEditor .singleImageWrap { width: 100%; background: #333; overflow: hidden; }
+
+#progressBarWrap { width: 100%; padding: 10px 0px; float: left; padding-top: 20px; }
+.progressStep { width: 30px; height: 10px; display: block; background: gray; float: left; margin-right: 2px; }
+
+.imageLibrary {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    background: white;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.imageLibrary .innerWrap { width: 850px; margin: auto; position: relative; }
+.imageLibrary h2 { margin-top: 30px; }
+.imageLibrary .imgWrap { cursor: pointer; }
+.closeModal {
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    background: #fff;
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #ccc;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    -webkit-box-shadow: 2px 2px 2px 0px rgba(191,191,191,1);
+    -moz-box-shadow: 2px 2px 2px 0px rgba(191,191,191,1);
+    box-shadow: 2px 2px 2px 0px rgba(191,191,191,1);
+}
+
+.closeModal:hover {
+    color: #007bff !important;
+    -webkit-box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
+    -moz-box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
+    box-shadow: 2px 2px 2px 0px rgba(82, 82, 82, 1);
+}
+
+/* products and subscriptions */
+.subscriptionWrap { float: left; width: 100%; background: #333; margin-bottom: 10px; color: #fff; padding: 15px; border-radius: 10px; position: relative; }
+.renewButtonWrap { padding-right: 0px; float: right }
+.renewButton { background: #fff; padding: 4px 12px 4px 15px; border-radius: 20px; float: right; color: #333; }
+.renewButton:hover { background: #ccc; color: #000; }
+
+.cartWrap { margin-top: 100px; text-align: center; }
+.cartWrap h1 { margin-bottom: 40px; text-align: center; }
+.cartWrap .productWrap { text-align: center; padding: 30px; background: #f2f2f2; margin-bottom: 10px; border-radius: 10px; }
+.checkoutButtonWrap { margin-top: 100px; }
+.checkoutButtonWrap h2 { font-size: 22px; }
+
+
+.actionButton { display: block; margin: 60px auto 0px auto; width: 200px; height: 40px; line-height: 40px; -webkit-border-radius: 40px; -moz-border-radius: 40px; border-radius: 40px; text-align: center; text-transform: uppercase; -webkit-font-smoothing: initial; color: #fff !important; cursor: pointer; background: #0000cd;  }

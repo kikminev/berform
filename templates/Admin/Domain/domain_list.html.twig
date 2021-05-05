@@ -1,0 +1,31 @@
+{% extends 'Admin/layout.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="clear"></div>
+
+
+        <div class="list boxList row">
+            <div class="heading">
+                <h2>{% trans %}admin_links_domains{% endtrans %} <a href="{{ path('user_admin_domain_create') }}">+</a></h2>
+            </div>
+
+            {% for message in app.flashes('domain_list_notice') %}
+                <div class="errorNotice">
+                    {{ message }}
+                </div>
+                <div class="clear"></div>
+            {% endfor %}
+
+
+            {% for domain in domains %}
+                <div class="itemWrap domainItemWrap col-md-3">
+                    <a class="item " href="{{ path('user_admin_domain_edit', {id : domain.id}) }}">{{ domain.name }}</a>
+                </div>
+            {% endfor %}
+
+            <div class="itemWrap domainItemWrap col-md-3">
+                <a class="item" href="{{ path('user_admin_domain_create') }}">{% trans %}admin_links_create_domain{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

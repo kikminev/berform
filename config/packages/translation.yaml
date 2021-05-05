@@ -4,3 +4,7 @@ framework:
         default_path: '%kernel.project_dir%/translations'
         fallbacks:
             - en
+jms_i18n_routing:
+    default_locale: en
+    locales: [bg, en]
+    strategy: prefix

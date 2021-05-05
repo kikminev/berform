@@ -1,0 +1,19 @@
+.backgroundRight { background: none; }
+.cd-section.visible { background: none; }
+.sidebar .socialIcons a { color: #333; }
+
+#cd-loading-bar { background-color: #333; }
+
+/* fixed background */
+.fixedBackground {
+    display: block;
+    background: #fffaea;
+}
+
+.fixedBackground:before {
+    display: block;
+    opacity: 0.2;
+    background-image: url("https://sitemax.s3.eu-west-1.amazonaws.com/templates/hr_3.jpg");
+}
+
+.contentContainer a { color: #212529; }

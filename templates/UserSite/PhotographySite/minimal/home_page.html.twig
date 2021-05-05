@@ -1,0 +1,16 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row header">
+            <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+            <div>{% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row photosGrid">
+            {% include('UserSite/Components/Photography/images_grid.html.twig') %}
+        </div>
+    </div>
+{% endblock %}

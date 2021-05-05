@@ -1,0 +1,288 @@
+{% extends 'LandingSite/layout.html.twig' %}
+{% block body %}
+    <a href="/" id="logo">b e r f o r m</a>
+    <ul class="top-menu">
+        <li><a class="right" href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a></li>
+        <li><a class="left" href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a></li>
+    </ul>
+    <div class="full-height" id="welcome-screen">
+        <div class="full-width-bottom-text">
+            <h1>{% trans %}landing_site_welcome_text{% endtrans %}</h1>
+            <span>{% trans %}landing_site_welcome_text_line_2{% endtrans %}</span>
+        </div>
+    </div>
+
+    {# FEATURES #}
+    {# FEATURES #}
+    {# FEATURES #}
+    <div class="container full-height">
+        <div class="features-wrap home-centered-section" name="features" id="features">
+                <h2>{% trans %}main_site_features_header{% endtrans %}</h2>
+
+                <div class="sub-title centered-text">
+                    {% trans %}main_site_features_content{% endtrans %}
+                </div>
+
+                <div class="row features-cells">
+                    <div class="col-md-4 features-cells-content">
+                        <h3>{% trans %}user_site_features_hosting_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_hosting_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <h3>{% trans %}user_site_features_features_easy_administration{% endtrans %}</h3>
+                        {% trans %}user_site_features_features_easy_administration_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <h3>{% trans %}user_site_features_beautiful_templates_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_beautiful_templates_content{% endtrans %}
+                    </div>
+                </div>
+                <div class="row features-cells">
+                    <div class="col-md-4 features-cells-content">
+                        <h3>{% trans %}user_site_features_free_ssl_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_free_ssl_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <h3>{% trans %}user_site_features_seo_tools_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_seo_tools_content{% endtrans %}
+                    </div>
+
+                    <div class="col-md-4 features-cells-content">
+                        <h3>{% trans %}user_site_features_multilanguage_support_header{% endtrans %}</h3>
+                        {% trans %}user_site_features_multilanguage_support_content{% endtrans %}
+                    </div>
+                </div>
+        </div>
+    </div>
+    {# END FEATURES #}
+    {# END FEATURES #}
+    {# END FEATURES #}
+
+    {# HOW IT WORKS #}
+    {# HOW IT WORKS #}
+    {# HOW IT WORKS #}
+    <div class="home-centered-section gray-bg-wrap container-fluid" id="howItWorks">
+        <h2>{% trans %}main_site_how_it_works_header{% endtrans %}</h2>
+        <div class="row features-wrap container">
+            <div class="col-md-4">
+                <div class="step-number">1.</div>
+                <h3>{% trans %}main_site_how_it_works_step1_header{% endtrans %}</h3>
+                <p>
+                    {% trans %}main_site_how_it_works_step1_content{% endtrans %}
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="step-number">2.</div>
+                <h3>{% trans %}main_site_how_it_works_step2_header{% endtrans %}</h3>
+                <p>
+                    {% trans %}main_site_how_it_works_step2_content{% endtrans %}
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="step-number">3.</div>
+                <h3>{% trans %}main_site_how_it_works_step3_header{% endtrans %}</h3>
+                <p>
+                    {% trans %}main_site_how_it_works_step3_content{% endtrans %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {# END HOW IT WORKS #}
+    {# END HOW IT WORKS #}
+    {# END HOW IT WORKS #}
+
+
+
+
+
+
+
+
+
+    {# SIGN UP #}
+    {# SIGN UP #}
+    {# SIGN UP #}
+    <div class="home-centered-section container-fluid" name="signUp" id="signUp">
+        <a name="createNewSite"></a>
+        <h2>{% trans %}main_site_sign_up_header{% endtrans %}</h2>
+        <div class="subTitle centered-text">{% trans %}main_site_sign_up_header_content{% endtrans %}</div>
+    </div>
+    {# END SIGN UP #}
+    {# END SIGN UP #}
+    {# END SIGN UP #}
+
+
+    <div class="siteTemplates container" id="siteTemplates" name="siteTemplates">
+        <div class="row">
+        {% for template in templates %}
+            <div class="templatePreviewWrap col-md-6">
+                <a onclick="landingSite.openRegistration('{{ path('app_signup_choose_template', {id:template.id}) }}', '{{ path('app_signup_preview_site') }}'); return false;">
+                    <div class="templatePreview" style="background-image: url('{{ template.defaultImage }}')">
+                        <div class="templateNameWrap">
+                            <div class="name">{% if template.translatedTemplateName[app.request.locale] is defined %}{{ template.translatedTemplateName[app.request.locale] }}{% endif %}</div>
+                            <div class="description">
+                                {% if template.translatedDescription[app.request.locale] is defined %}{{ template.translatedDescription[app.request.locale] }}{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ template.previewUrl }}" target="_blank" class="openPreviewOfTemplateButton"><i class="fas fa-eye"></i> Preview</a>
+
+            </div>
+
+        {% endfor %}
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    {# PRICING #}
+    {# PRICING #}
+    {# PRICING #}
+
+    <div class="home-centered-section container-fluid" name="pricing" id="pricing">
+        <h2>{% trans %}main_site_pricing_header{% endtrans %}</h2>
+        <div class="subTitle centered-text">{% trans %}main_site_pricing_content{% endtrans %}</div>
+        <div class="mt20 col-md-8 priceTableWrap">
+            <table class="col-md-12">
+                <thead>
+                <tr>
+                    <th class="col-xs-12 col-md-8" style="border: 0px;">
+                        {% trans %}main_site_monthly_price_explainer{% endtrans %}
+                    </th>
+
+                    <th class="col-xs-12 col-md-4" style="padding-bottom: 25px;">
+                        <div class="priceWrap">
+                            <div class="priceTextWrap">
+                                <div class="mainNumber">7</div>
+                                <div class="smallNumber">.99</div>
+                            </div>
+
+                            <div class="clear"></div>
+                            <div class="priceDescription">{% trans %}main_site_pricing_billed_annually{% endtrans %}</div>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tr>
+                    <td class="col-md-8">
+                        {% trans %}main_site_pricing_storage{% endtrans %}
+                    </td>
+                    <td class="col-md-4 centered-text">10GB</td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_bandwidth{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_ssl{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_domain{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+                <tbody id="hidden-features" style="display: none">
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_email{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_templates{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_templates_customization{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_multylanguage_support{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_pricing_mobile_first{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_seo_tools{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-8">{% trans %}main_site_product_cdn{% endtrans %}</td>
+                    <td class="col-md-4 centered-text"><i class="fas fa-check"></i></td>
+                </tr>
+
+                <tr>
+                    <td style="border: 0" colspan="2">
+                        <div class="mt70 container">
+                            <a rel="signUp" class="action-button dark scrollToLink">{% trans %}main_site_start_now{% endtrans %}</a>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+            <div class="clear"></div>
+            <a class="action-button dark show-more-features" onclick="$('#hidden-features').show(); $('.show-more-features').hide();">{% trans %}main_show_more{% endtrans %}</a>
+        </div>
+    </div>
+
+
+
+    {# END PRICING #}
+    {# END PRICING #}
+    {# END PRICING #}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {#{% include('signup/register.html.twig') %}#}
+
+    {#<a href="{{ path('app_login') }}">{% trans %}landing_site_login{% endtrans %}</a>#}
+    {#<a href="{{ path('app_registration') }}">{% trans %}landing_site_register{% endtrans %}</a>#}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+<div id="imagesWrap" class="sortableNodes">
+{% if files is defined %}
+    {% for file in files %}
+        {% if file.isDeleted != true %}
+            <div class="imgWrap" id="{{ file.id }}">
+                <a data-fancybox="gallery" class="galleryImg" href="{{ resource_provider_domain }}{{ file.baseName }}"><img src="{{ resource_provider_domain }}{{ file.baseName }}?h=150&w=150&fit=crop&border-radius=10" alt="" /></a>
+                <a class="fileActionButton" onclick="a.deleteObject('{{ path('admin_site_upload_delete', {id : file.id}) }}', 'object_{{ file.id }}')">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+    <script type="text/javascript">
+        $(".sortableNodes").sortable(
+            {
+                update: function (event, ui) {
+                    a.reorderNodes("{{ path('admin_site_node_reorder', {type : 'file'}) }}")
+                }
+            }
+        );
+    </script>
+
+</div>

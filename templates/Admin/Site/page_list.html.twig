@@ -1,0 +1,56 @@
+{% extends 'Admin/layout.html.twig' %}
+{% block body %}
+    <div class="container-fluid contextBar breadcrumbs">
+        <h1>
+            <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+            {{ site.name }}
+        </h1>
+    </div>
+    <div class="container">
+
+        <div class="topActionsBar">
+            <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="list boxList row">
+            {% include('Admin/Components/top_actions_bar.html.twig') %}
+
+            <div class="row sortableNodes" style="width: 100%;">
+                <div class="itemWrap addNewTile col-md-3">
+                    <a class="item" href="{{ path('user_admin_page_create', {site:site.id}) }}">+</a>
+                </div>
+
+                {% for page in pages %}
+                    <div class="itemWrap col-md-3" id="{{ page.id }}">
+                        <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">
+                            {% if page.defaultImage is not null %}
+                                <div class="itemDefaultImage">
+                                    <img src="{{ resource_provider_domain }}{{ page.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                                </div>
+                            {% endif %}
+                            {{ page.name }}
+                        </a>
+
+                        <div class="itemActionControls">
+                            <a href="{{ path('user_admin_page_edit', {id : page.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
+                            <a onclick="a.deleteObject('{{ path('user_admin_page_delete', {id : page.id}) }}', '{{ page.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(".sortableNodes").sortable(
+            {
+                update: function (event, ui) {
+                    a.reorderNodes("{{ path('admin_site_node_reorder', {'type' : 'page'}) }}")
+                }
+            }
+        );
+    </script>
+{% endblock %}

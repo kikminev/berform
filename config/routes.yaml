@@ -1,3 +1,232 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+  path: /
+  host: dev.berform.com
+  controller: App\Controller\LandingSiteController::home
+
+test:
+  path: /test
+  controller: App\Controller\TestController::test
+
+# CRM
+crm_dashboard:
+  path: /nimda
+  controller: App\Controller\CRM\CustomerController::list
+crm_list_customers:
+  path: /nimda/customer/list
+  controller: App\Controller\CRM\CustomerController::list
+crm_delete_customer:
+  path: /nimda/customer/delete/{user}
+  controller: App\Controller\CRM\CustomerController::delete
+crm_list_sites:
+  path: /nimda/site/list
+  controller: App\Controller\CRM\SiteController::list
+crm_delete_site:
+  path: /nimda/site/delete/{site}
+  controller: App\Controller\CRM\SiteController::delete
+# END CRM
+
+admin:
+  path: /u
+  controller: App\Controller\Admin\DashboardController::dashboard
+
+user_admin_site_build:
+  path: /u/site/build/{id}
+  controller: App\Controller\Admin\BuilderController::buildSite
+
+# sign up
+app_login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+app_registration:
+  path: /register
+  controller: App\Controller\SecurityController::register
+
+app_signup_choose_template:
+  path: /sign-up/choose-template/{id}
+  controller: App\Controller\SecurityController::chooseTemplate
+
+app_signup_setup_account:
+  path: /sign-up/setup-account
+  controller: App\Controller\SecurityController::setupAccount
+app_signup_preview_site:
+  path: /sign-up/preview-site
+  controller: App\Controller\SecurityController::previewSiteBeforeCreation
+
+# sites
+user_admin_site_list:
+  path: /u/site/list
+  controller: App\Controller\Admin\SiteController::list
+user_admin_site_create:
+  path: /u/site/create
+  controller: App\Controller\Admin\SiteController::create
+user_admin_site_edit:
+  path: /u/site/edit/{id}
+  controller: App\Controller\Admin\SiteController::edit
+user_admin_site_delete:
+  path: /u/site/delete/{id}
+  controller: App\Controller\Admin\SiteController::delete
+user_admin_site_preview:
+  path: /u/site/preview/{id}
+  controller: App\Controller\Admin\SiteController::redirectToSite
+
+# domains
+user_admin_domain_create:
+  path: /u/domain/create
+  controller: App\Controller\Admin\DomainController::create
+user_admin_domain_edit:
+  path: /u/domain/edit/{id}
+  controller: App\Controller\Admin\DomainController::edit
+user_admin_domain_delete:
+  path: /u/domain/delete/{id}
+  controller: App\Controller\Admin\DomainController::delete
+
+user_admin_domain_list:
+  path: /u/domain/list
+  controller: App\Controller\Admin\DomainController::list
+
+# pages
+user_admin_page_create:
+  path: /u/page/create/{site}
+  controller: App\Controller\Admin\PageController::create
+user_admin_page_edit:
+  path: /u/page/edit/{id}
+  controller: App\Controller\Admin\PageController::edit
+user_admin_page_delete:
+  path: /u/page/delete/{id}
+  controller: App\Controller\Admin\PageController::delete
+
+user_admin_shot_list:
+  path: /u/shot/{site}
+  controller: App\Controller\Admin\ShotController::list
+user_admin_shot_create:
+  path: /u/shot/create/{site}
+  controller: App\Controller\Admin\ShotController::create
+user_admin_shot_edit:
+  path: /u/shot/edit/{id}
+  controller: App\Controller\Admin\ShotController::edit
+user_admin_shot_delete:
+  path: /u/shot/delete/{id}
+  controller: App\Controller\Admin\ShotController::delete
+
+user_admin_album_list:
+  path: /u/album/{site}
+  controller: App\Controller\Admin\AlbumController::list
+user_admin_album_create:
+  path: /u/album/create/{site}
+  controller: App\Controller\Admin\AlbumController::create
+user_admin_album_edit:
+  path: /u/album/edit/{id}
+  controller: App\Controller\Admin\AlbumController::edit
+user_admin_album_delete:
+  path: /u/album/delete/{id}
+  controller: App\Controller\Admin\AlbumController::delete
+
+# nodes
+user_admin_node_list:
+  path: /u/node/list/{type}/{site}
+  controller: App\Controller\Admin\NodeController::list
+user_admin_node_create:
+  path: /u/node/create/{type}/{site}
+  controller: App\Controller\Admin\NodeController::create
+user_admin_node_edit:
+  path: /u/node/edit/{type}/{id}
+  controller: App\Controller\Admin\NodeController::edit
+user_admin_node_delete:
+  path: /u/node/delete/{type}/{id}
+  controller: App\Controller\Admin\NodeController::delete
+
+# posts
+user_admin_post_create:
+  path: /u/post/create/{site}
+  controller: App\Controller\Admin\PostController::create
+user_admin_post_list:
+  path: /u/blog/post/list/{site}
+  controller: App\Controller\Admin\PostController::list
+user_admin_post_delete:
+  path: /u/post/delete/{id}
+  controller: App\Controller\Admin\PostController::delete
+user_admin_post_edit:
+  path: /u/post/{site}/{id}
+  controller: App\Controller\Admin\PostController::edit
+
+# uploads
+admin_site_upload_handler:
+  path: /u/site/{site}/upload
+  controller: App\Controller\Admin\UploadController::upload
+
+admin_site_upload_delete:
+  path: /u/site/upload/delete/{id}
+  controller: App\Controller\Admin\UploadController::deleteFile
+
+admin_site_node_reorder:
+  path: /u/site/{type}/reorder
+  controller: App\Controller\Admin\NodeController::reorder
+
+# profile
+#admin_profile_edit:
+#    path: /u/profile/edit
+#    controller: App\Controller\Admin\ProfileController::edit
+admin_profile_change_password:
+  path: /u/profile/change_password
+  controller: App\Controller\Admin\ProfileController::changePassword
+
+app_logout:
+  path: /logout
+# end profile
+
+
+
+## billing
+admin_billing:
+  path: /u/billing/payment/list
+  controller: App\Controller\Admin\Billing\BillingController::listPayments
+admin_billing_cart_add:
+  path: /u/billing/cart/add/{product}/{subscription}
+  controller: App\Controller\Admin\Billing\CartController::addSubscription
+
+admin_billing_cart_view:
+  path: /u/billing/cart/view
+  controller: App\Controller\Admin\Billing\CartController::view
+
+admin_billing_cart_success:
+  path: /u/billing/cart/thank_you
+  controller: App\Controller\Admin\Billing\CartController::success
+
+admin_billing_cart_cancelled:
+  path: /u/billing/cart/cancelled
+  controller: App\Controller\Admin\Billing\CartController::cancelled
+
+admin_billing_cart_checkout:
+  path: /u/billing/cart/checkout
+  controller: App\Controller\Admin\Billing\CartController::checkout
+
+billing_cart_webhook_endpoint:
+  path: /billing/webhook
+  controller: App\Controller\Admin\Billing\CartController::stripeWebhookEndpoint
+
+# user site
+user_site_contact:
+  path: /contact/send_message
+  controller: App\Controller\ContactController::sendMessage
+
+# user site
+user_site_blog:
+  path: /blog
+  controller: App\Controller\BlogController::list
+
+user_site_blog_view_post:
+  path: /blog/{slug}
+  controller: App\Controller\BlogController::view
+
+user_site_view_page_home:
+  path: /
+  controller: App\Controller\UserSiteController::renderPage
+
+user_site_view_page:
+  path: /{slug}
+  controller: App\Controller\UserSiteController::renderPage
+
+user_site_view_album:
+  path: /album/{slug}
+  controller: App\Controller\AlbumController::view

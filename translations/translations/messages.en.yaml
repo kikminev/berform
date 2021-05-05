@@ -1,0 +1,152 @@
+language_label_en: English
+language_label_bg: Bulgarian
+landing_site_login: Login
+landing_site_register: Registration
+landing_site_welcome_text: Home for professional photographers!
+landing_site_welcome_text_line_2: Create a professional photography website
+
+
+# home
+main_site_start_now: Start now
+
+# home features
+main_site_features_header: Building web presense is hard. We are committed to make it easier.
+main_site_features_content: By using our services you will not need to pay thousands for programmers or web designers. <br />You can create your online site in a matter of minutes.
+user_site_features_hosting_header: Hosting
+user_site_features_hosting_content: With our service you get a world-class cloud hosting. You will not need to pay extra for hosting services.
+user_site_features_features_easy_administration: Easy Administration
+user_site_features_features_easy_administration_content: To launch your website you will not need coding skills. You can manage your store from easy-to-use admin area and save thousands from custom  web development.
+user_site_features_beautiful_templates_header: Beautiful Templates
+user_site_features_beautiful_templates_content: You can choose from free ready-made designs and customize them in accordance with your needs.
+user_site_features_free_ssl_header: Free SSL
+user_site_features_free_ssl_content: In order for your website to be secure and to be ranked better in search engines you will need a SSL certificate. With our service you get this for free.
+user_site_features_multilanguage_support_header: Multi-language support
+user_site_features_multilanguage_support_content: Support for your website in different languages is out-of-the-box feature.
+user_site_features_seo_tools_header: SEO Tools
+user_site_features_seo_tools_content: We have provided tools that allow you to optimize your content for search engines.
+
+# how it works
+main_site_how_it_works_header: How to launch a website?
+main_site_how_it_works_step1_header: Pick your design
+main_site_how_it_works_step1_content: Choose professional design for your new website.
+main_site_how_it_works_step2_header: Choose your domain
+main_site_how_it_works_step2_content: Pick new domain name or connect your existing domain for your website.
+main_site_how_it_works_step3_header: Add content
+main_site_how_it_works_step3_content: Add info about you and your business.
+
+# pricing
+main_site_pricing_header: Pricing
+main_site_pricing_content: Start with our free 15 days trial and go premium later. One plan to rule them all.
+main_site_sign_up_header: Sign up to start your 15-day free trial
+main_site_sign_up_header_content: Sign up, prepare your website and go premium when you are ready to launch.
+main_site_pricing_billed_annually: billed annually
+main_site_pricing_bgn_currency: BGN
+main_site_title: - the easiest way to create a website
+main_site_base_host_price_bgn: BGN
+main_site_base_host_price_eur: '&euro;'
+main_site_pricing_products: Products
+main_site_pricing_unlimited: Unlimited
+main_site_pricing_storage: Storage
+main_site_pricing_bandwidth: Unlimited Bandwidth
+main_site_pricing_ssl: Free SSL
+main_site_pricing_domain: Use your own domain
+main_site_pricing_email: Free email account
+main_site_pricing_credit_card: Accept credit cards
+main_site_pricing_accept_epaybg: Accept Epay.bg
+main_site_pricing_accept_paypal: Accept PayPal
+main_site_pricing_templates: Free design templates
+main_site_pricing_templates_customization: Template customization
+main_site_pricing_multylanguage_support: Multi-language websites
+main_site_pricing_currencies: Show prices in different currencies
+main_site_pricing_mobile_first: Mobile first templates
+main_site_monthly_price_explainer: Monthly price when billed annually
+main_show_more: Show more
+main_site_seo_tools: SEO tools
+main_site_categories: Unlimited categories
+main_site_product_options: Unlimited product options
+main_site_product_discounts: Discount campaigns
+main_site_product_cdn: Fast and reliable CDN
+
+# footer
+main_site_footer_company_description: We make it easy to start a professional website for photography and storrytelling. With a few clicks of the mouse you can launc your brand today.
+main_site_footer_links_product_header: About Us
+main_site_top_menu_features: Features
+main_site_top_menu_how_it_works: How it works
+main_site_top_menu_templates: Themes
+main_site_top_menu_pricing: Pricing
+main_site_top_menu_login: Login
+main_site_user_logged_in_text: Login
+main_site_top_menu_sign_up: Sign up
+
+# preview template page
+main_site_preview_template: Create your site now
+
+# login
+# login
+main_site_login_login: Login
+main_site_login_email: E-mail
+main_site_login_password: Password
+main_site_login_register: Registration
+
+footer_built_with: Built with
+
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
+# page edit form
+form_page_name: Име
+form_page_slug: Системно име
+form_post_published_at: Published at
+form_page_custom_css: Custom CSS
+form_post_already_used: There is another post in this blog that uses the same slug!
+form_page_already_used: There is another page in this site that uses the same slug!
+form_site_already_used: The host name is already taken!
+admin_form_page_title: Заглавие на страницата
+admin_form_page_content: Съдържание
+admin_form_page_description: Описание
+admin_form_page_keywords: Ключови думи
+admin_form_page_meta_description: Подробно описание
+admin_form_page_menu_link: Име на линка
+admin_site_activated_languages: Поддържани езици
+
+# top menu
+admin_links_dashboard: Home
+admin_links_profile: Profile
+admin_links_logout: Logout
+admin_profile_change_password: Change password
+admin_profile: Profile
+admin_links_sites: Sites
+admin_links_domains: Domains
+admin_links_billing: Billing
+admin_links_pages: Pages
+admin_links_albums: Albums
+admin_links_shots: Pictures
+admin_links_posts: Publications
+admin_no_posts: You don't have any posts
+admin_links_create: Create new site
+admin_links_create_page: Create new
+admin_links_create_domain: Add a domain
+admin_links_site_settings: Site Settings
+admin_links_site_preview: Site preview
+admin_links_blog: Blog
+admin_links_blog_edit_post: Edit
+admin_create_node_album: Create new album
+admin_create_shot: Add new picture
+
+# domain edit
+admin_create_domain_error_already_exists: This domain name is already in use!
+admin_create_domain_error_unknown: Unknown error has occurred! The domain hasn't been added.
+admin_name_servers: 'In order to point your domain name to Berform and use it with the platform you should use set the following name servers:'
+admin_name_server_1: 'Name server 1:'
+admin_name_server_2: 'Name server 2:'
+
+# cart
+landing_site_cart_header: Products
+landing_site_billing_no_products: There are no products in the cart.
+landing_site_cart_total: Total to pay
+landing_site_cart_checkout: Checkout
+landing_site_cart_taxes: Taxes
+landing_site_cart_total_amount: Total
+landing_sitec_successful_payment_email_subject: Payment received
+admin_subscriptions_type_hosting: Hosting
+landing_site_billing_upgrade_plan: renew
+landing_site_cart_product_yearly_subscription: 1 year

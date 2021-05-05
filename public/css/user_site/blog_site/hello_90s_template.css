@@ -1,0 +1,75 @@
+.navbar { float: right; }
+#pagesMenu li { margin-left: 40px; }
+.navigation { padding: 20px 0px; background: #fff; z-index: 2; position: relative; }
+.navigation .socialIcons { padding: .5rem 1rem; float: right; display: none; }
+.contactUsWrap .socialIcons a, .navigation .socialIcons a { padding: 0 .1rem; margin-right: 20px; }
+
+a { color: #0000FF; }
+a:hover { color: #0000ff; }
+.siteName { font-size: 2.5em; color: #333; text-transform: capitalize; display: block; margin-top: 150px; }
+.siteNameDescription { margin-bottom: 50px; display: block; }
+/*.contentContainer { padding-bottom: 100px; }*/
+
+main {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    background: #fff;
+    margin-bottom: 700px;
+    padding-bottom: 50px;
+}
+
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 700px;
+    background: #111;
+    z-index: 1;
+}
+
+.blogPostListWrap { margin-bottom: 40px; display: block; width: 100%; }
+
+.footer .siteName { font-size: 100px; margin-top: 300px; text-align: center; width: 100%; color: #fff; }
+.footer .socialIcons { text-align: center; }
+.footer .socialIcons a { margin-right: 15px; color: #fff; }
+.footer .builtWithBerform { bottom: 0px; position: absolute; width: 100%; text-align: center; color: #fff; font-size: small; padding: 10px 0px; }
+.innerPage .siteName, .innerPage .siteNameDescription { display: none !important; }
+#blog-content .siteName, #blog-content .siteNameDescription { display: block !important; }
+#blog-content h1 { display: none; }
+/*.innerPage { padding-bottom: 150px; }*/
+.innerPage h1 { margin: 150px 0px 50px; }
+.publishedAt { float: left; width: 100%; color: #555; font-size: small; }
+
+.albumWrap { margin-bottom: 100px; }
+.albumWrap img { margin-bottom: 10px; }
+
+/* more posts */
+.morePosts { padding: 100px 0; display: block; background-color: #F5F5F5; width: 100%; margin-top: 150px; }
+.morePosts h3 { margin-bottom: 40px; min-height: 70px; }
+.morePosts .blogImgWrap { width: 100%; overflow: hidden; display: block; }
+.morePosts .noImage { width: 100%; height: 410px; background: #626262; overflow: hidden; display: none; }
+/* end more posts */
+
+/* contact page */
+.contactUsWrap { margin: 30px 0px; text-align: center; }
+#contactForm label { width: 100%; margin: 10px 0px 0px; }
+#contactForm input, #contactForm textarea { border: 1px solid #ccc; width: 100%; }
+#contactForm .contactFormRowCell { padding-left: 0px; }
+#contactForm #contact_submit { height: 35px; line-height: 35px; width: 100px; background: #000; border: 0px; color: #fff; border-radius: 40px; float: right; margin-top: 10px; text-transform: lowercase; }
+
+#contact-me-content h1 { text-align: center; }
+/* end contact page */
+
+/* albums */
+.albumWrap { margin: 80px 0px; }
+.albumWrap h3 { margin-top: 20px; }
+.albumWrap p { margin-top: 10px; }
+.albumWrap a { color: #383E41; }
+.albumWrap a:hover { color: inherit;  }
+.albumContentWrap { margin-bottom: 200px; }
+.albumContent { margin-bottom: 100px; }
+.photosGrid a { margin-bottom: 50px; }
+/* end albums */

@@ -1,0 +1,24 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+<div class="container albumContentWrap">
+    <div class="row albumContent">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            {% if album.translatedTitle[app.request.locale] is defined %}
+                <h1>{{  album.translatedTitle[app.request.locale] }}</h1>
+            {% endif %}
+
+            {% if album.translatedContent[app.request.locale] is defined %}
+            <div>
+                {{ album.translatedContent[app.request.locale]|raw }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row photosGrid">
+        {% include('UserSite/Components/Photography/images_grid.html.twig') %}
+    </div>
+</div>
+{% endblock %}

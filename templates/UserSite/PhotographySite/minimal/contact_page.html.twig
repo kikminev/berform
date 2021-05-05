@@ -1,0 +1,47 @@
+{% extends 'UserSite/' ~ layout ~ '.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+            <div>
+                <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
+                <div>
+                    {% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="contactUsWrap">
+                {% if site.translatedAddress[app.request.locale] is defined and site.translatedAddress[app.request.locale] is not empty %}
+                <p>
+                    {% trans %}user_site_contact_us_address{% endtrans %}
+                    <br />{{ site.translatedAddress[app.request.locale]|raw }}<br />
+                </p>
+                {% endif %}
+
+                {% if site.email is not empty %}
+                    <p>
+                        {% trans %}user_site_contact_us_email{% endtrans %} <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+                    </p>
+                {% endif %}
+
+                {% include('UserSite/Components/social_icons.html.twig') %}
+            </div>
+
+            {% include('UserSite/Components/contact_form.html.twig') %}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+{% endblock %}

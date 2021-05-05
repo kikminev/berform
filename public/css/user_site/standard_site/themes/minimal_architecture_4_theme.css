@@ -1,0 +1,15 @@
+.backgroundRight { background: none; }
+.cd-section.visible { background: none; }
+.sidebar .socialIcons a { color: #666; }
+
+/* fixed background */
+.fixedBackground {
+    display: block;
+    background: #fff;
+}
+
+.fixedBackground:before {
+    display: block;
+    opacity: 0.9;
+    background-image: url("https://images.unsplash.com/photo-1508141610389-6253d977b87e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjExMzk2fQ&auto=format&fit=crop&w=1503&q=80");
+}

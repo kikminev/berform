@@ -1,0 +1,19 @@
+<div class="socialIcons">
+    {% if site.twitter is not empty %}
+        <a href="https://twitter.com/{{ site.twitter }}" title="Twitter" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    {% endif %}
+
+    {% if site.linkedIn is not empty %}
+        <a href="https://www.linkedin.com/in/{{ site.linkedIn }}" title="LinkedIn" target="_blank">
+            <i class="fab fa-linkedin"></i>
+        </a>
+    {% endif %}
+
+    {% if site.instagram is not empty %}
+        <a href="http://instagram.com/{{ site.instagram }}" title="Instagram" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+    {% endif %}
+</div>

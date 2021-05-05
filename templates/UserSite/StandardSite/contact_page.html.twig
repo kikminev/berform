@@ -1,0 +1,20 @@
+<div class="contactUsWrap row">
+    <div id="contactInformation" class="col-md-6">
+        <p>
+            {% trans %}user_site_contact_us_address{% endtrans %}
+            <br />{% if site.translatedAddress[app.request.locale] is defined %}{{ site.translatedAddress[app.request.locale]|raw }}{% endif %}<br />
+        </p>
+
+        {% if site.email is not empty %}
+            <p>
+                {% trans %}user_site_contact_us_email{% endtrans %} <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+            </p>
+        {% endif %}
+
+        {% include('UserSite/Components/social_icons.html.twig') %}
+    </div>
+
+    <div class="col-md-6">
+        {% include('UserSite/Components/contact_form.html.twig') %}
+    </div>
+</div>

@@ -1,0 +1,55 @@
+{% extends 'Admin/layout.html.twig' %}
+{% block body %}
+    <div class="container-fluid contextBar breadcrumbs">
+        <h1>
+            <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+            <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a>
+            {% trans %}admin_links_albums{% endtrans %}
+        </h1>
+    </div>
+    <div class="container">
+
+        <div class="topActionsBar">
+            <a href="{{ path('user_admin_site_edit', {id : site.id}) }}" type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog"></i> {% trans %}admin_links_site_settings{% endtrans %}</a>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="list boxList row">
+
+            {% include('Admin/Components/top_actions_bar.html.twig') %}
+
+            <div class="row" style="width: 100%;">
+                <div class="itemWrap addNewTile col-md-3">
+                    <a class="item" href="{{ path('user_admin_shot_create', {site:site.id}) }}">+</a>
+                </div>
+
+                {% if nodes is not empty %}
+                    {% for shot in nodes %}
+                        <div class="itemWrap col-md-3" id="{{shot.id}}">
+                            <a class="item" href="{{ path('user_admin_shot_edit', {id:shot.id}) }}">
+
+                                {% if shot.defaultImage is not null %}
+                                    <div class="itemDefaultImage">
+                                        <img src="{{ resource_provider_domain }}{{ shot.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                                    </div>
+                                {% endif %}
+
+
+                                {% if shot.translatedTitle[app.request.locale] is defined %}{{ shot.translatedTitle[app.request.locale] }}{% endif %}
+                            </a>
+
+                            <div class="itemActionControls">
+                                <a href="{{ path('user_admin_shot_edit', {id : shot.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                <a  class="topMargin"><i class="fas fa-expand-arrows-alt"></i></a>
+                                <a onclick="a.deleteObject('{{ path('user_admin_shot_delete', {id : shot.id }) }}', '{{ shot.id }}')" class="topMargin"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <a href="{{ path('user_admin_shot_create', {'site' : site.id}) }}">{{ ('admin_create_shot') | trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'Admin/layout.html.twig' %}
+{% block body %}
+    <div class="breadcrumbs container-fluid contextBar">
+        {% if site is defined %}
+            <h1>
+                <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
+                <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }}</a>
+                >
+                {% trans %}admin_links_site_settings{% endtrans %}
+            </h1>
+        {% else %}
+            <h1><a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a> {% trans %}admin_links_create{% endtrans %}</h1>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <div class="contentEditForm row">
+            <div class="col-sm-1 col-md-2"></div>
+
+            <div class="col-sm-10 col-md-8 contentEditForm">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.host) }}
+                {{ form_row(form.workingFrom) }}
+                {{ form_row(form.workingTo) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.linkedIn) }}
+                {{ form_row(form.twitter) }}
+                {{ form_row(form.instagram) }}
+                {{ form_row(form.facebook) }}
+                {{ form_row(form.customCss) }}
+                {{ form_row(form.customHtml) }}
+                {{ form_row(form.defaultLanguage) }}
+                {{ form_row(form.domain) }}
+
+                {{ form_label(form.supportedLanguages) }}
+                {% for language in form.supportedLanguages %}
+                    <div class="pretty p-switch p-fill checkbox">
+                        {{ form_errors(language) }}
+                        {{ form_widget(language) }}
+                        <div class="state p-success">{{ form_label(language) }}</div>
+                    </div>
+                {% endfor %}
+
+                <div style="display: none">{{ form_row(form.save) }}</div>
+
+                {{ form_end(form) }}
+                <a onclick="$('.contentEditForm').find('form').submit()" class="btn btn-primary btn-sm formButton">{% trans %}admin_button_save{% endtrans %}</a>
+            </div>
+
+            <div class="col-sm-1 col-md-2"></div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% form_theme form _self %}

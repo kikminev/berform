@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    $.fancybox.defaults.hash = false;
+    socialIconsPosition = $('.backgroundRight').position().left + 20;
+
+    {% if slug is defined %}
+    $(document).ready(function() {
+        uSite.centerContentVertically('.{{ slug }}');
+        uSite.centerElementVertically('.socialIcons');
+        $('.socialIcons').css('left', socialIconsPosition);
+    });
+    {% endif %}
+
+    $(window).on('resize', function(){
+        uSite.centerContentVertically('.{{ slug }} .contentContainer');
+        uSite.centerElementVertically('.socialIcons');
+        $('.socialIcons').css('left', socialIconsPosition);
+    });
+
+    // todo: move this to a class
+    var fixedBackgroundHidden = false;
+    $(window).on('scroll', function(){
+        var scrollTopPosition = $(window).scrollTop();
+
+        if(scrollTopPosition > 50 && fixedBackgroundHidden === false) {
+            $('#fixedBackground').fadeOut('slow');
+            fixedBackgroundHidden = true;
+        } else if(scrollTopPosition < 50 && fixedBackgroundHidden === true) {
+            $('#fixedBackground').fadeIn();
+            fixedBackgroundHidden = false;
+        }
+    });
+</script>

@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+    <div class="registrationForm">
+        <h1 class="h3 mb-3 font-weight-normal">{% trans %}main_site_login_register{% endtrans %}</h1>
+        {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_row(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_row(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+        <button class="btn btn-lg btn-primary" type="submit">{% trans %}main_site_login_register{% endtrans %}</button>
+    </div>
+{{ form_end(form) }}

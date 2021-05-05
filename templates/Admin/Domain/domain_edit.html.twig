@@ -1,0 +1,43 @@
+{% extends 'Admin/layout.html.twig' %}
+{% block body %}
+    <div class="container-fluid contextBar"><h1>{% trans %}admin_links_domains{% endtrans %}</h1></div>
+
+
+<div class="container">
+    <div class="contentEditForm row">
+        <div class="col-sm-1 col-md-2"></div>
+
+        <div class="col-sm-10 col-md-8">
+
+            {% if domain is defined %}
+            <div class="domainNameServers">
+                {% trans %}admin_name_servers{% endtrans %}<br />
+                {% trans %}admin_name_server_1{% endtrans %} {{ domain.ns1 }}<br />
+                {% trans %}admin_name_server_2{% endtrans %} {{ domain.ns2 }}<br />
+            </div>
+            {% endif %}
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+
+            <div class="pretty p-switch p-fill checkbox">
+                {{ form_widget(form.isActive) }}
+                <div class="state p-success">
+                    {{ form_label(form.isActive) }}
+                </div>
+            </div>
+
+
+            <div style="display: none">{{ form_row(form.save) }}</div>
+
+            {{ form_end(form) }}
+
+            <a onclick="$('.contentEditForm').find('form').submit()" class="btn btn-primary btn-sm formButton">{% trans %}admin_button_save{% endtrans %}</a>
+        </div>
+
+        <div class="col-sm-1 col-md-2"></div>
+    </div>
+</div>
+{% endblock %}
