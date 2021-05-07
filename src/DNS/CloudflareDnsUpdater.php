@@ -4,6 +4,7 @@ namespace App\DNS;
 
 use App\Entity\Domain;
 use App\Entity\UserCustomer;
+use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -13,19 +14,20 @@ class CloudflareDnsUpdater implements DnsUpdater
     private string $clientAPIUrl;
     private string $cloudflareHostApiKey;
     private string $passwordSalt;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         string $hostAPIUrl,
         string $clientAPIUrl,
         string $cloudflareHostApiKey,
-        string $passwordSalt
-//        DocumentManager $documentManager
+        string $passwordSalt,
+        EntityManagerInterface $entityManager
     ) {
         $this->hostAPIUrl = $hostAPIUrl;
         $this->clientAPIUrl = $clientAPIUrl;
         $this->cloudflareHostApiKey = $cloudflareHostApiKey;
         $this->passwordSalt = $passwordSalt;
-//        $this->documentManager = $documentManager;
+        $this->entityManager = $entityManager;
     }
 
     public function createCloudflareAccount(UserCustomer $user): bool
@@ -57,7 +59,7 @@ class CloudflareDnsUpdater implements DnsUpdater
         $user->setCloudflareUserKey($result->response->user_key);
         $user->setCloudflareApiKey($result->response->user_api_key);
 
-//        $this->documentManager->flush();
+        $this->entityManager->flush();
 
         return true;
     }
@@ -111,8 +113,8 @@ class CloudflareDnsUpdater implements DnsUpdater
                     ]
                 );
 
-//                $this->documentManager->persist($domain);
-//                $this->documentManager->flush();
+                $this->entityManager->persist($domain);
+                $this->entityManager->flush();
 
                 return true;
             }
