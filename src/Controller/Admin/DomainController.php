@@ -8,6 +8,8 @@ use App\Entity\UserCustomer;
 use App\Form\Admin\DomainType;
 use App\Repository\DomainRepository;
 use App\Repository\SiteRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +54,7 @@ class DomainController extends AbstractController
         /** @var UserCustomer $user */
         $user = $this->getUser();
         $domain = new Domain();
+
         $form = $this->createForm(DomainType::class, $domain);
         $form->handleRequest($request);
 
@@ -64,6 +67,8 @@ class DomainController extends AbstractController
             }
 
             $domain->setUserCustomer($user);
+            $domain->setCreatedAt(new DateTime());
+            $domain->setUpdatedAt(new DateTime());
 
             if ($cloudflareDnsUpdater->createCloudflareAccount($user)) {
                 if(true !== $cloudflareDnsUpdater->addDomainDNS($domain, $user)) {
@@ -82,7 +87,7 @@ class DomainController extends AbstractController
         );
     }
 
-    public function edit(Request $request, Domain $domain): Response
+    public function edit(Request $request, Domain $domain, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('edit', $domain);
 
@@ -91,10 +96,9 @@ class DomainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $domain->setUser($this->getUser());
+            $domain->setUserCustomer($this->getUser());
 
-//            $documentManager->persist($domain);
-//            $documentManager->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('user_admin_domain_list');
         }

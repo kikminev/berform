@@ -53,8 +53,8 @@ class UserSiteController extends AbstractController
         // todo: fix this if and extract to a normal logic
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
-        if (null === $site && null !== $domain) {
-            $site = $siteRepository->findOneBy(['domain' => $domain]);
+        if (null === $site && null !== $domain && null !== $domain->getSite()) {
+            $site = $domain->getSite();
         }
 
         if (null === $site) {
@@ -86,22 +86,4 @@ class UserSiteController extends AbstractController
             ], $templatePices)
         );
     }
-
-
-    // paginator
-    //$queryBuilder = $this->documentManager->createQueryBuilder(Post::class);
-    //$adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
-    //$pagerfanta = new Pagerfanta($adapter);
-    //$pagerfanta->setMaxPerPage(5);
-    //
-    //$currentPageResults = $pagerfanta->getCurrentPageResults();
-    //
-    //
-    //$routeGenerator = function($page) {
-    //    return $this->generateUrl('user_site_view_page', ['slug' => 'home']) . '?page=' . $page;
-    //};
-    //
-    //$view = new TwitterBootstrapView();
-    //$options = array('proximity' => 3);
-    // end paginator
 }

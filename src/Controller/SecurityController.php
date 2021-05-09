@@ -17,7 +17,9 @@ use App\Security\Signup\PasswordValidator;
 use App\Security\Signup\UserValidator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Mailgun\Mailgun;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -63,6 +65,7 @@ class SecurityController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         UserValidator $userValidator,
         PasswordValidator $passwordValidator,
+        ParameterBagInterface $params,
         TranslatorInterface $translator,
         EntityManagerInterface $entityManager
     ) {
@@ -97,9 +100,19 @@ class SecurityController extends AbstractController
             $user->setIsSystem(false);
             $user->setCreatedAt(new DateTime());
             $user->setUpdatedAt(new DateTime());
+            $user->setPlainPassword(null);
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $mg = Mailgun::create($params->get('mailgun_api_key'), $params->get('mailgun_api_endpoint'));
+            $mg->messages()->send($params->get('mailgun_domain'),
+                [
+                    'from' => $params->get('platform_no_reply_email'),
+                    'to' => 'kikminev@gmail.com',
+                    'subject' => sprintf('We have a new user %s', $user->getEmail()),
+                    'text' => "New user.",
+                ]);
 
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->container->get('security.token_storage')->setToken($token);

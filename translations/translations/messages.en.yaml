@@ -138,6 +138,8 @@ admin_create_domain_error_unknown: Unknown error has occurred! The domain hasn't
 admin_name_servers: 'In order to point your domain name to Berform and use it with the platform you should use set the following name servers:'
 admin_name_server_1: 'Name server 1:'
 admin_name_server_2: 'Name server 2:'
+admin_domains_header_label: 'Add domain'
+admin_button_save: 'Save'
 
 # cart
 landing_site_cart_header: Products
@@ -150,3 +152,28 @@ landing_sitec_successful_payment_email_subject: Payment received
 admin_subscriptions_type_hosting: Hosting
 landing_site_billing_upgrade_plan: renew
 landing_site_cart_product_yearly_subscription: 1 year
+admin_subscriptions_site_name: 'Site:'
+admin_subscriptions_expires_at: 'Expires at:'
+admin_subscriptions_type: 'Subscription type:'
+admin_subscriptions_type_free_hosting: free trial
+admin_all_subscriptions_title: All subscriptions
+
+# user site
+user_site_blog_read_more: read more
+user_site_supported_languages_bg: bg
+user_site_supported_languages_en: en
+landing_site_register_email_used: There is an existing account with this email!
+
+user_site_contact_us_address: "Address:"
+user_site_contact_us_email: "E-mail:"
+user_site_contact_us_message_sent: "Your message has been send successfully!"
+
+# password
+password_validation_general_not_valid: Wrong password
+password_validation_confirm: Please confirm your password.
+password_validation_length_error: Your password should be longer than 6 characters.
+password_form_old_password: Current password
+password_form_new_password: New password
+password_form_new_password_repeat: Confirm new password
+
+admin_links_upload_image: Upload

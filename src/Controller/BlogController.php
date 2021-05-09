@@ -40,8 +40,8 @@ class BlogController extends AbstractController
         /** @var Site $site */
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
-        if (null === $site && null !== $domain) {
-            $site = $siteRepository->findOneBy(['domain' => $domain]);
+        if (null === $site && null !== $domain && null !== $domain->getSite()) {
+            $site = $domain->getSite();
         }
 
         if (null === $site) {
@@ -81,7 +81,7 @@ class BlogController extends AbstractController
         $site = $siteRepository->findOneBy(['host' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         $domain = $domainRepository->findOneBy(['name' => $this->domainResolver->extractDomainFromHost($request->getHost())]);
         if (null === $site && null !== $domain) {
-            $site = $siteRepository->findOneBy(['domain' => $domain]);
+            $site = $domain->getSite();
         }
 
         if (null === $site) {

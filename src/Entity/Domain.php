@@ -28,7 +28,7 @@ class Domain
 
     /**
      * @ORM\OneToOne(targetEntity=Site::class, inversedBy="domain", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $site;
 

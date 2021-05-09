@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Document\Domain;
-use App\Document\User;
+use App\Entity\Domain;
+use App\Entity\UserCustomer;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -42,7 +42,7 @@ class DomainVoter extends Voter
         }
 
         // the user must be logged in; if not, deny access
-        if (!$user instanceof User) {
+        if (!$user instanceof UserCustomer) {
             return false;
         }
 

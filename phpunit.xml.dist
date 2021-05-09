@@ -13,6 +13,11 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="8.5" />
+
+        <!-- ###+ mailgun/mailgun-php ### -->
+        <!-- Get your API key form https://app.mailgun.com/app/domains -->
+        <env name="MAILGUN_API_KEY" value="replace_me"/>
+        <!-- ###- mailgun/mailgun-php ### -->
     </php>
 
     <testsuites>

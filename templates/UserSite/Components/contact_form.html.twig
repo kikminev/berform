@@ -1,9 +1,9 @@
+<div class="contactFormStatus" style="text-align: center;">
+    {{ form_errors(form) }}
+</div>
+
 <div id="contactForm">
     {{ form_start(form, {'attr': {'id': 'inPageContactForm'}}) }}
-
-    <div class="contactFormStatus">
-        {{ form_errors(form) }}
-    </div>
 
     <div class="row">
         <div class="col-md-6 contactFormRowCell">{{ form_row(form.firstName) }}</div>
@@ -35,9 +35,11 @@
             url: form.attr('action'),
             data: form.serialize(),
             success: function (response) {
-                $('#contactFormStatus').html(response.message);
+                $('.contactFormStatus').html(response.message);
+                $('#contactForm').hide();
+
                 setTimeout(2000, function () {
-                    $('#contactFormStatus').html('');
+                    $('.contactFormStatus').html('');
                 })
             }
         });

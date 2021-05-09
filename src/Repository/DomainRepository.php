@@ -43,7 +43,7 @@ class DomainRepository extends ServiceEntityRepository
             ->andWhere('d.userCustomer = :user')
             ->setParameter('user', $user)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     /*
