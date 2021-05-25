@@ -5,8 +5,8 @@ namespace App\Security;
 
 
 use App\Entity\Node;
+use App\Entity\UserCustomer;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use App\Document\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -46,7 +46,7 @@ class NodeVoter extends Voter
             return false;
         }
 
-        if (!$user instanceof User) {
+        if (!$user instanceof UserCustomer) {
             return false;
         }
 
@@ -58,13 +58,12 @@ class NodeVoter extends Voter
         }
     }
 
-    private function canModify(Node $node, User $user): bool
+    private function canModify(Node $node, UserCustomer $user): bool
     {
-        if($node->isDeleted()) {
+        if($node->getIsDeleted()) {
             return false;
         }
 
-        return $user === $node->getUser();
+        return $user === $node->getUserCustomer();
     }
-
 }

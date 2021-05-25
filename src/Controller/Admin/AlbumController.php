@@ -12,6 +12,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,11 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AlbumController extends AbstractController
 {
     private $entityManager;
+    private $albumRepository;
 
-    // todo: import repositories with auto-wiring
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, AlbumRepository $albumRepository)
     {
         $this->entityManager = $entityManager;
+        $this->albumRepository = $albumRepository;
     }
 
 
@@ -258,5 +260,27 @@ class AlbumController extends AbstractController
                 'node' => $album,
             ]
         );
+    }
+
+    public function delete(string $id): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $node = $this->albumRepository->findOneBy([
+            'userCustomer' => $this->getUser(),
+            'id' => $id,
+        ]);
+
+        if (null === $node) {
+            /** @noinspection PhpUnhandledExceptionInspection */
+            throw new Exception('Error. The album was not found');
+        }
+
+        $this->denyAccessUnlessGranted('modify', $node);
+
+        $node->setIsDeleted(true);
+        $this->entityManager->flush();
+
+        return new JsonResponse('deleted');
     }
 }
