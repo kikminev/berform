@@ -32,6 +32,13 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    Aws\S3\S3Client:
+        arguments:
+            $args: {'profile':'default', 'version':'latest', 'region':'eu-west-1', 'debug':false}
+    App\Service\FileUploader\S3FileUploader:
+        arguments:
+            $bucketName: '%env(S3_BUCKET_NAME)%'
+
     App\DNS\CloudflareDnsUpdater:
         arguments:
             $hostAPIUrl: '%env(CLOUDFLARE_HOST_API)%'

@@ -6,12 +6,9 @@ use App\Entity\Post;
 use App\Entity\Site;
 use App\Form\Admin\PostType;
 use App\Repository\FileRepository;
-
-//use App\Repository\PageRepository;
 use App\Repository\PageRepository;
 use App\Repository\PostRepository;
 use DateTime;
-use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,15 +26,6 @@ class PostController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param Request $request
-     * @param Site $site
-     * @param Post $post
-     * @param FileRepository $fileRepository
-     * @param ParameterBagInterface $param
-     * @return Response
-     * @throws MongoDBException
-     */
     public function edit(
         Request $request,
         Site $site,
@@ -133,14 +121,6 @@ class PostController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param Site $site
-     * @param FileRepository $fileRepository
-     * @param ParameterBagInterface $param
-     * @return Response
-     * @throws MongoDBException
-     */
     public function create(
         Request $request,
         Site $site,
@@ -260,7 +240,7 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $post);
 
-        $post->setDeleted(true);
+        $post->setIsDeleted(true);
         $this->entityManager->flush();
 
         return new JsonResponse('deleted');

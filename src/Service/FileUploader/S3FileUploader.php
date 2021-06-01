@@ -4,6 +4,7 @@ namespace App\Service\FileUploader;
 
 use Aws\S3\S3Client;
 
+
 class S3FileUploader
 {
     private $s3Client;

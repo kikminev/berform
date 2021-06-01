@@ -43,6 +43,7 @@ class PostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.userCustomer = :user')
             ->andWhere('p.site = :site')
+            ->andWhere('p.isDeleted = false OR p.isDeleted IS NULL')
             ->setParameter('user', $user)
             ->setParameter('site', $site)
             ->getQuery()
