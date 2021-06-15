@@ -1,9 +1,9 @@
-- translate payments
+SATURDAY
 - fix both templates
-    - setup the dev env
-
+- setup the dev env
 - create inner pages
 - think about pricing
+
 - create payment webhook
 - create forgotten password
 - create a company
