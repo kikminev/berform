@@ -23,7 +23,6 @@
                             <div class="blogIconImgWrap">
                                 {% for file in files %}
                                     {% if loop.first != true %}
-                                        {{ resource_provider_domain }}{{ file.baseName }}>>>>
                                         <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}" style="{% if loop.index > 6 %}display:none{% endif %}"><img src="{{ resource_provider_domain }}{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
                                     {% endif %}
                                 {% endfor %}
