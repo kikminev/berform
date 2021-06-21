@@ -11,8 +11,8 @@
         <div class="container-fluid">
             <div class="row" style="margin-bottom: 200px;">
 
-                <div class="col-md-1"></div>
-                <div class="col-md-10 featuredPost">
+                <div class="col-md-1 col-xl-3"></div>
+                <div class="col-md-10 col-xl-6 featuredPost">
                     <a class="ajaxLink blogImgWrap" data-section-id="{{ featuredPost.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" style="background: url('{{ resource_provider_domain }}{{ featuredPost.defaultImageUrl }}') no-repeat; background-position: center;"></a>
 
                     {% if featuredPost is not empty %}
@@ -31,9 +31,10 @@
                     {% endif %}
                 </div>
 
-                <div class="col-md-1"></div>
+                <div class="col-md-1 col-xl-3"></div>
             </div>
         </div>
+
 
         <div class="clear"></div>
 

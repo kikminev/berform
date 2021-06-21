@@ -12,13 +12,14 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="navigation col-md-12">
+                <div class="navigation col-md-12 col-xl-8">
                     <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="logo ajaxLink logoTop d-none d-md-block">{{ site.name|capitalize }}</a>
                     {% include('UserSite/Components/social_icons.html.twig') %}
                     {% include('UserSite/Components/navigation_menu.html.twig') %}
                 </div>
             </div>
         </div>
+
 
         <main class="cd-main">
             <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">

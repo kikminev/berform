@@ -96,9 +96,10 @@ class PostController extends AbstractController
                     $post->addFile($attachedFile);
                 }
 
-                if (!empty($postFiles) && null === $post->getDefaultImage()) {
+                if (!empty($postFiles)) {
                     $defaultImage = array_keys($postFiles)[0];
                     $post->setDefaultImage($postFiles[$defaultImage]);
+                    $post->setDefaultImageUrl($postFiles[$defaultImage]->getBaseName());
                 }
             }
 
@@ -198,6 +199,7 @@ class PostController extends AbstractController
                 if (!empty($postFiles) && null === $post->getDefaultImage()) {
                     $defaultImage = array_keys($postFiles)[0];
                     $post->setDefaultImage($postFiles[$defaultImage]);
+                    $post->setDefaultImageUrl($postFiles[$defaultImage]->getBaseName());
                 }
             }
 
