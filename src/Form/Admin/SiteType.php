@@ -8,6 +8,7 @@ use App\Entity\UserCustomer;
 use App\Repository\DomainRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -92,6 +93,7 @@ class SiteType extends AbstractType
             ->add('instagram', null, ['required' => false])
             ->add('customCss', TextareaType::class, ['required' => false])
             ->add('customHtml', TextareaType::class, ['required' => false])
+            ->add('isActive', CheckboxType::class, ['required' => false])
             ->add('save', SubmitType::class);
     }
 

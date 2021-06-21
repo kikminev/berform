@@ -41,6 +41,10 @@ class Site
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isTemplate;
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isActive;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -195,6 +199,18 @@ class Site
     public function setIsTemplate(?bool $isTemplate): self
     {
         $this->isTemplate = $isTemplate;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

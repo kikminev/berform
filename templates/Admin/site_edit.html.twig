@@ -21,6 +21,14 @@
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
 
+
+                <div class="pretty p-switch p-fill checkbox">
+                    {{ form_errors(form.isActive) }}
+                    {{ form_widget(form.isActive) }}
+                    <div class="state p-success">{{ form_label(form.isActive) }}</div>
+                </div>
+
+
                 {{ form_row(form.name) }}
                 {{ form_row(form.host) }}
                 {{ form_row(form.workingFrom) }}

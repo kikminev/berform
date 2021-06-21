@@ -52,8 +52,10 @@ class SiteRepository extends ServiceEntityRepository
     public function getTemplates()
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.isTemplate = :value')
-            ->setParameter('value', true)
+            ->andWhere('s.isTemplate = :isTemplate')
+            ->andWhere('s.isActive = :isActive')
+            ->setParameter('isTemplate', true)
+            ->setParameter('isActive', true)
             ->getQuery()
             ->getResult();
     }
