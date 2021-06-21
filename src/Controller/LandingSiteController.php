@@ -20,4 +20,13 @@ class LandingSiteController extends AbstractController
             ]
         );
     }
+
+    public function page(String $slug)
+    {
+        return $this->render(
+            "LandingSite/{$slug}.html.twig",
+            [
+            ]
+        );
+    }
 }

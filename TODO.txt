@@ -1,7 +1,7 @@
-SATURDAY
+WED
+- create inner pages
 - fix both templates
 - setup the dev env
-- create inner pages
 - think about pricing
 
 - create payment webhook
