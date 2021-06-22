@@ -3,11 +3,6 @@ index:
   host: dev.berform.com
   controller: App\Controller\LandingSiteController::home
 
-landing_site_page:
-  path: /{slug}
-  host: dev.berform.com
-  controller: App\Controller\LandingSiteController::page
-
 test:
   path: /test
   controller: App\Controller\TestController::test
