@@ -41,7 +41,7 @@ main_site_sign_up_header: Sign up to start your 15-day free trial
 main_site_sign_up_header_content: Sign up, prepare your website and go premium when you are ready to launch.
 main_site_pricing_billed_annually: billed annually
 main_site_pricing_bgn_currency: BGN
-main_site_title: - the easiest way to create a website
+main_site_title: "- the easiest way to create a website"
 main_site_base_host_price_bgn: BGN
 main_site_base_host_price_eur: '&euro;'
 main_site_pricing_products: Products
@@ -93,20 +93,20 @@ footer_built_with: Built with
 # admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
 # admin admin  admin admin  admin admin  admin admin  admin admin  admin admin  admin admin
 # page edit form
-form_page_name: Име
-form_page_slug: Системно име
+form_page_name: Name
+form_page_slug: System name
 form_post_published_at: Published at
 form_page_custom_css: Custom CSS
 form_post_already_used: There is another post in this blog that uses the same slug!
 form_page_already_used: There is another page in this site that uses the same slug!
 form_site_already_used: The host name is already taken!
-admin_form_page_title: Заглавие на страницата
-admin_form_page_content: Съдържание
-admin_form_page_description: Описание
-admin_form_page_keywords: Ключови думи
-admin_form_page_meta_description: Подробно описание
-admin_form_page_menu_link: Име на линка
-admin_site_activated_languages: Поддържани езици
+admin_form_page_title: Page title
+admin_form_page_content: Content
+admin_form_page_description: Description
+admin_form_page_keywords: Keywords
+admin_form_page_meta_description: Meta description
+admin_form_page_menu_link: Link title
+admin_site_activated_languages: Supported languages
 
 # top menu
 admin_links_dashboard: Home
@@ -131,6 +131,11 @@ admin_links_blog: Blog
 admin_links_blog_edit_post: Edit
 admin_create_node_album: Create new album
 admin_create_shot: Add new picture
+admin_language_label_en: English
+admin_language_label_bg: Bulgarian
+admin_content: Content
+admin_images: Pictures
+
 
 # domain edit
 admin_create_domain_error_already_exists: This domain name is already in use!
