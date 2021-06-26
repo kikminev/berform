@@ -13,7 +13,7 @@
 
                 <div class="col-md-1 col-xl-2"></div>
                 <div class="col-md-10 col-xl-8 featuredPost">
-                    <a class="ajaxLink blogImgWrap" data-section-id="{{ featuredPost.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" style="background: url('{{ resource_provider_domain }}{{ featuredPost.defaultImageUrl }}') no-repeat; background-position: center;"></a>
+                    <a class="ajaxLink blogImgWrap" data-section-id="{{ featuredPost.slug }}" data-menu="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" href="{{ path('user_site_blog_view_post', {slug: featuredPost.slug}) }}" style="background: url('{{ resource_provider_domain }}{{ featuredPost.defaultImageUrl }}') no-repeat; background-position: center; background-size: cover;"></a>
 
                     {% if featuredPost is not empty %}
                     <div class="featuredPostExcerpt row">
