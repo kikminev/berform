@@ -10,6 +10,8 @@ body { margin-bottom: 500px; }
     z-index: 1;
     background: #fff;
     margin-bottom: 500px;
+    padding: 0px;
+    margin: 0px;
 }
 .top-menu { position: absolute; top: 0px; left: 0px; z-index: 3; width: 100%; list-style: none; }
 .top-menu a { float: right; background: #fff; border: 1px solid #fff; width: 120px; padding: 5px 10px; text-align: center; margin-top: 30px; font-size: 14px; color: #666;  }
@@ -89,6 +91,10 @@ h3, .step-number { font-family: 'Montserrat', sans-serif; }
 .home-centered-section { padding: 70px 0px; }
 h1, h2, h3 { text-align: center; font-family: 'Playfair Display',serif; }
 .innerPage h3 { font-size: 1.4em; }
+.innerPageHeader { display: flex; }
+.innerPageHeader a { color: black !important; border: 0px !important; }
+.innerPageWrap h1 { margin-bottom: 100px; }
+.innerPageWrap { margin-top: 200px; padding-bottom: 200px; }
 .features-cells h3 { margin-bottom: 30px; min-height: 75px; }
 .features-wrap { margin: 0px auto; margin-top: 25px }
 .features-wrap h3 { text-align: left; margin-bottom: 30px; }

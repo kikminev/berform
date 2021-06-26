@@ -53,6 +53,12 @@ app_signup_preview_site:
   path: /sign-up/preview-site
   controller: App\Controller\SecurityController::previewSiteBeforeCreation
 
+# it's important this to be bellow login and logout pages, as it will break them
+landing_site_page:
+  path: /{slug}
+  host: dev.berform.com
+  controller: App\Controller\LandingSiteController::page
+
 # sites
 user_admin_site_list:
   path: /u/site/list
@@ -123,15 +129,6 @@ user_admin_album_delete:
   controller: App\Controller\Admin\AlbumController::delete
 
 # nodes
-user_admin_node_list:
-  path: /u/node/list/{type}/{site}
-  controller: App\Controller\Admin\NodeController::list
-user_admin_node_create:
-  path: /u/node/create/{type}/{site}
-  controller: App\Controller\Admin\NodeController::create
-user_admin_node_edit:
-  path: /u/node/edit/{type}/{id}
-  controller: App\Controller\Admin\NodeController::edit
 user_admin_node_delete:
   path: /u/node/delete/{type}/{id}
   controller: App\Controller\Admin\NodeController::delete
@@ -163,10 +160,6 @@ admin_site_node_reorder:
   path: /u/site/{type}/reorder
   controller: App\Controller\Admin\NodeController::reorder
 
-# profile
-#admin_profile_edit:
-#    path: /u/profile/edit
-#    controller: App\Controller\Admin\ProfileController::edit
 admin_profile_change_password:
   path: /u/profile/change_password
   controller: App\Controller\Admin\ProfileController::changePassword

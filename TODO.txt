@@ -1,6 +1,8 @@
 WED
-- create inner pages
-- fix both templates
+- create LEGAL, Privacy and About US
+- fix the big picture with better pictures
+- add 4th template
+- create backup strategy for database
 - setup the dev env
 - think about pricing
 

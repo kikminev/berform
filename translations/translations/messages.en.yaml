@@ -69,7 +69,11 @@ main_site_product_cdn: Fast and reliable CDN
 
 # footer
 main_site_footer_company_description: We make it easy to start a professional website for photography and storrytelling. With a few clicks of the mouse you can launc your brand today.
-main_site_footer_links_product_header: About Us
+main_site_footer_links_product_header: Product
+main_site_footer_links_about_us_header: About Us
+main_site_footer_links_about_berform: Company
+main_site_footer_links_legal: Legal
+main_site_footer_links_privacy: Privacy
 main_site_top_menu_features: Features
 main_site_top_menu_how_it_works: How it works
 main_site_top_menu_templates: Themes
