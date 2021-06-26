@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UploadController extends AbstractController
 {
-    const MAX_ALLOWED_SIZE = 2000000;
+    private const MAX_ALLOWED_SIZE = 20000000;
 
     private $entityManager;
 
@@ -39,7 +39,7 @@ class UploadController extends AbstractController
 
         if (self::MAX_ALLOWED_SIZE < $file->getSize()) {
             // todo: throw error
-            throw new \Exception('error');
+            throw new \Exception('The file size is too big!');
         }
         //todo: create thumbnail
 
