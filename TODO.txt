@@ -1,6 +1,7 @@
-WED
+- FIX BOTH TEMPLATES AND MAKE THEM PERFECT
+
+
 - create LEGAL, Privacy and About US
-- fix the big picture with better pictures
 - add 4th template
 - create backup strategy for database
 - setup the dev env
