@@ -20,6 +20,7 @@ h1 { text-align: center; margin: 100px 0px 100px; width: 100% }
     padding-right: .5rem;
     padding-left: .5rem;
 }
+.navbar-brand { text-transform: uppercase; }
 
 .navbar-collapse.collapse.show .socialIcons { font-size: 20px; text-align: center; }
 .navbar-collapse.collapse.show .socialIcons a { padding: 0.4rem; }
