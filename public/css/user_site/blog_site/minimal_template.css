@@ -1,7 +1,5 @@
-.logo { float: left; padding: .5rem 1rem; text-transform: uppercase; color: #333; }
-.navbar { float: right; }
 .clear { clear: both; }
-a { color: #383E41; }
+a { color: #383E41; text-decoration: none; }
 .contentContainer { padding-bottom: 100px; }
 .contentContainer a { color: #4d7bae; }
 a:hover { text-decoration: none; }
@@ -14,6 +12,17 @@ h1 { text-align: center; margin: 100px 0px 100px; width: 100% }
 .navigation { padding: 20px 0px; background: #fff; z-index: 2; position: relative; }
 .navigation .socialIcons { padding: .5rem 1rem; float: right; display: none; }
 .contactUsWrap .socialIcons a, .navigation .socialIcons a { padding: 0 .1rem; margin-right: 20px; }
+.socialIcons a { padding: 0.4rem; }
+
+
+/* navbar */
+.navbar-nav .nav-link {
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+
+.navbar-collapse.collapse.show .socialIcons { font-size: 20px; text-align: center; }
+.navbar-collapse.collapse.show .socialIcons a { padding: 0.4rem; }
 
 .blogHeader { padding: 25px 0px; margin-bottom: 40px; text-align: center; width: 100%;}
 .blogHeader div { width: 100%; text-align: center;}

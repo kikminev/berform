@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UploadController extends AbstractController
 {
-    private const MAX_ALLOWED_SIZE = 20000000;
+    private const MAX_ALLOWED_SIZE = 2000000;
 
     private $entityManager;
 
