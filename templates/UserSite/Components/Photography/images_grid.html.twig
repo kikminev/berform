@@ -1,5 +1,5 @@
 {% if files|length > 0 %}
-    {% for file in files %}ddddd
+    {% for file in files %}
         <a class="col-md-4 col-sm-6 col-xs-12 " id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ file.fileUrl }}">
             <div style="width: 100%; padding-bottom: 100%; background: url('{{ resource_provider_domain }}{{ file.baseName }}?h=400&w=400&fit=crop'); background-position: center; background-repeat: no-repeat;"></div>
         </a>
