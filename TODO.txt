@@ -1,4 +1,5 @@
-- FIX BOTH TEMPLATES AND MAKE THEM PERFECT
+- FIX 1 TEMPLATES AND MAKE THEM PERFECT
+- add shots
 
 
 - create LEGAL, Privacy and About US
