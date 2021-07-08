@@ -6,6 +6,7 @@ use App\Entity\Album;
 use App\Entity\File;
 use App\Entity\Page;
 use App\Entity\Post;
+use App\Entity\Shot;
 use App\Entity\Site;
 use App\Entity\UserCustomer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -23,36 +24,6 @@ class FileRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, File::class);
     }
-
-    // /**
-    //  * @return File[] Returns an array of File objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?File
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
 
     public function findAllBySite(Site $site)
     {
@@ -129,6 +100,22 @@ class FileRepository extends ServiceEntityRepository
             ->andWhere($qb->expr()->not($qb->expr()->neq('f.isDeleted', ':isDeleted')))
             ->setParameter('isDeleted', false)
             ->setParameter('post', $post)
+            ->setParameter('site', $site)
+            ->orderBy('f.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllActiveByShotAndSite(Shot $shot, Site $site)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere('f.shot = :shot')
+            ->andWhere('f.site = :site')
+            ->andWhere($qb->expr()->not($qb->expr()->neq('f.isDeleted', ':isDeleted')))
+            ->setParameter('isDeleted', false)
+            ->setParameter('shot', $shot)
             ->setParameter('site', $site)
             ->orderBy('f.sequenceOrder', 'ASC')
             ->getQuery()

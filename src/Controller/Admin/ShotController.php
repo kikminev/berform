@@ -26,7 +26,6 @@ class ShotController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-
     public function list(
         Request $request,
         Site $site,
@@ -46,17 +45,9 @@ class ShotController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param string $id
-     * @param FileRepository $fileRepository
-     * @param ParameterBagInterface $param
-     * @return Response
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
     public function edit(
         Request $request,
-        string $id,
+        Shot $shot,
         FileRepository $fileRepository,
         ShotRepository $shotRepository,
         ParameterBagInterface $param
@@ -64,13 +55,11 @@ class ShotController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $shot = $shotRepository->findOneBy(['userCustomer' => $this->getUser(), 'id' => $id]);
         $site = $shot->getSite();
         $supportedLanguages = array_filter($param->get('supported_languages'), function ($language) use ($site) {
             return in_array($language, $site->getSupportedLanguages(), false);
         });
         $form = $this->createForm(ShotType::class, $shot, ['supported_languages' => $supportedLanguages]);
-
 
         if (null === $shot) {
             /** @noinspection PhpUnhandledExceptionInspection */
@@ -124,11 +113,8 @@ class ShotController extends AbstractController
         }
 
 
-        $files = $shotRepository->getShotFiles($shot);
-        echo count($files); exit;
-        // todo: this needs to be refactored - SHOW ORDERED FILES
-//        echo count($shot->getFiles()); exit;
-        $orderedFiles = UploadController::getOrderedFiles($shot->getFiles()->toArray());
+        $files = $fileRepository->findAllActiveByShotAndSite($shot, $shot->getSite());
+        $orderedFiles = UploadController::getOrderedFiles($files);
         $form->get('attachedFiles')->setData(UploadController::getOrderedFilesIdsConcatenated($orderedFiles));
 
         return $this->render(
@@ -158,7 +144,7 @@ class ShotController extends AbstractController
         $shot->setUpdatedAt(new DateTime());
         $shot->setCreatedAt(new DateTime());
         $form = $this->createForm(ShotType::class, $shot, ['supported_languages' => $supportedLanguages]);
-        $editTemplate = 'Admin/Node/single_image_edit.html.twig';
+        $editTemplate = 'Admin/Shot/shot_edit.html.twig';
 
         $form->handleRequest($request);
 
@@ -228,7 +214,7 @@ class ShotController extends AbstractController
             $this->entityManager->persist($shot);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('user_admin_node_list', [
+            return $this->redirectToRoute('user_admin_shot_list', [
                 'site' => $shot->getSite()->getId(),
                 'type' => 'album',
             ]);
@@ -245,14 +231,6 @@ class ShotController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param string $type
-     * @param PageRepository $pageRepository
-     * @param FileRepository $fileRepository
-     * @return JsonResponse
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
     public function reorder(
         Request $request,
         string $type,

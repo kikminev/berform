@@ -42,9 +42,9 @@ class ShotRepository extends ServiceEntityRepository
 
         return $qb
             ->innerJoin('s.files', 'files')
-//            ->andWhere('s.id = :shot')
-//            ->andWhere('s.isDeleted = false OR s.isDeleted IS NULL')
-//            ->setParameter('shot', $shot->getId())
+            ->andWhere('s.id = :shot')
+            ->andWhere('s.isDeleted = false OR s.isDeleted IS NULL')
+            ->setParameter('shot', $shot->getId())
             ->orderBy('s.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();
