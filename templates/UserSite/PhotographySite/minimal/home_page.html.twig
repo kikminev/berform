@@ -1,16 +1,21 @@
 {% extends 'UserSite/' ~ layout ~ '.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <div class="container homeIntroContent">
         <div class="row header">
-            <h1>{% if page.translatedTitle[app.request.locale] is defined %}{{ page.translatedTitle[app.request.locale] }}{% endif %}</h1>
-            <div>{% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}</div>
+            <div class="col-md-8 col-sm-12">{% if page.translatedContent[app.request.locale] is defined %}{{ page.translatedContent[app.request.locale]|raw }}{% endif %}</div>
         </div>
     </div>
-
-    <div class="container">
+<div class="clear"></div>
+    <div class="container photosGridWrapNoPadding">
         <div class="row photosGrid">
-            {% include('UserSite/Components/Photography/images_grid.html.twig') %}
+            {% for shot in shots %}
+                {% for file in shot.files %}
+                    <a class="col-md-4 col-sm-6 col-xs-12 " id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ file.fileUrl }}">
+                        <div style="width: 100%; padding-bottom: 100%; background: url('{{ resource_provider_domain }}{{ file.baseName }}?h=400&w=400&fit=crop'); background-position: center; background-repeat: no-repeat;"></div>
+                    </a>
+                {% endfor %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

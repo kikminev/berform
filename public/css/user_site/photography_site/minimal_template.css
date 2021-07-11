@@ -42,7 +42,8 @@ footer {
 }
 
 .navbar {
-    float: right;
+    padding-top: 4.1vmax;
+    padding-bottom: 4.1vmax;
 }
 
 /*.contentContainer { padding-bottom: 150px; }*/
@@ -63,22 +64,19 @@ a:hover {
     margin-left: 40px;
 }
 
-.navigation {
-    padding: 20px 0px;
-    background: #fff;
-    z-index: 2;
-    position: relative;
-}
-
-.navigation .socialIcons {
+.navbar .socialIcons {
     padding: .5rem 1rem;
     float: right;
 }
 
-.navigation .socialIcons a {
+.navbar .socialIcons a {
     padding: 0 .1rem;
-    margin-right: 20px;
+    margin-right: 10px;
+    font-size: 20px;
 }
+
+.navbar-collapse.collapse.show .socialIcons { text-align: center; font-size: 2.5rem; float: none; }
+
 
 h1 {
     text-align: center;
@@ -86,8 +84,11 @@ h1 {
 }
 
 #home-content h1 { margin: 0px 0px; }
+.homeIntroContent { font-size: 2rem; }
+.homeIntroContent .header { margin-bottom: 4.1vmax; }
 .albumContent { margin-bottom: 100px; }
 .photosGrid a { margin-bottom: 50px; }
+.photosGridWrapNoPadding { padding-left: 0px; padding-right: 0px; }
 
 /* albums */
 .albumWrap {

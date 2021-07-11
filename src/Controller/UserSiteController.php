@@ -69,7 +69,7 @@ class UserSiteController extends AbstractController
         }
 
         $form = $this->createForm(ContactType::class, new Message(), ['action' => $this->generateUrl('user_site_contact')]);
-        $templatePices = $this->templatePiecesProvider->getPieces($site);
+        $templatePieces = $this->templatePiecesProvider->getPieces($site, $slug);
 
         return $this->render(
             $this->layoutResolver->getPageTemplate($site, $slug),
@@ -83,7 +83,7 @@ class UserSiteController extends AbstractController
                 'page' => $page,
                 'form' => $form->createView(),
                 'layout' => $this->layoutResolver->getLayout($site),
-            ], $templatePices)
+            ], $templatePieces)
         );
     }
 }

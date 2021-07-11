@@ -36,6 +36,20 @@ class ShotRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getActiveBySite(Site $site)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        return $qb
+            ->andWhere('s.site = :site')
+            ->andWhere('s.isDeleted = false OR s.isDeleted IS NULL')
+            ->innerJoin('s.files', 'files')
+            ->setParameter('site', $site)
+            ->orderBy('s.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getShotFiles(Shot $shot)
     {
         $qb = $this->createQueryBuilder('s');

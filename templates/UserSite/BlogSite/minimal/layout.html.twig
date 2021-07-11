@@ -11,33 +11,6 @@
         {{ site.customHtml|raw }}
 
 
-
-        <nav class="navbar navbar-expand-md navbar-light" aria-label="Navigation">
-            <div class="container-fluid">
-                <a href="{{ path('user_site_view_page', {slug : 'home'}) }}" data-menu="{{ path('user_site_view_page', {slug: "home"}) }}" data-section-id="home" class="ajaxLink navbar-brand">{{ site.name|capitalize }}</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsWrap" aria-controls="navbarsWrap" aria-expanded="true" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="navbar-collapse collapse" id="navbarsWrap" style="">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        {% for page in pages %}
-                            {% if page.slug == 'home' %}
-                                {# temporary fix for jms_i18n_routing not working with subdomain#}
-                                <li class="nav-item"><a href="{{ path('user_site_view_page', {slug: 'home'}) }}" data-section-id="home" data-menu="{{ path('user_site_view_page', {slug: 'home'}) }}" class="ajaxLink nav-link">{% if page.translatedMenuLink[app.request.locale] is defined %}{{ page.translatedMenuLink[app.request.locale] }}{% endif %}</a></li>
-                            {% else %}
-                                <li class="nav-item"><a href="{{ path('user_site_view_page', {slug: page.slug}) }}" class="ajaxLink nav-link" data-menu="{{ path('user_site_view_page', {slug: page.slug}) }}" data-section-id="{{ page.slug }}">{% if page.translatedMenuLink[app.request.locale] is defined %}{{ page.translatedMenuLink[app.request.locale] }}{% endif %}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% include('UserSite/Components/social_icons.html.twig') %}
-                </div>
-            </div>
-        </nav>
-        <div class="clear"></div>
-
-
-
         <main class="cd-main">
             <section class="cd-section visibleSection {% if slug is defined %}{{ slug  }}{% endif %}">
                 <div class="cd-content contentContainer" id="{% if slug is defined %}{{ slug  }}{% else %}'home'{% endif %}-content">
