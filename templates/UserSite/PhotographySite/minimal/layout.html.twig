@@ -48,17 +48,15 @@
 
         <footer class="footer container">
             <div class="row">
-                <div class="col-md-12">
-                    {% include('UserSite/Components/social_icons.html.twig') %}
-                    <div class="siteName">
-                         &copy; {{ site.name }}
+                    <div class="col-md-6 col-sm-12">
+                        {% include('UserSite/Components/social_icons.html.twig') %}
+                        <div class="siteName">&copy; {{ site.name }}</div>
                     </div>
 
-                    <div class="builtWithBerform">
+                    <div class="col-md-6 col-sm-12 builtWithBerform">
                         {% trans %}footer_built_with{% endtrans %} <a href="https://www.berform.com" target="_blank">Berform</a>
                     </div>
                 </div>
-            </div>
         </footer>
 
     </body>
