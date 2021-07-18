@@ -101,7 +101,7 @@ class ShotController extends AbstractController
 
                 if(!empty($shotFiles) && null === $shot->getDefaultImage()) {
                     $defaultImage = array_keys($shotFiles)[0];
-                    $shot->setDefaultImage($shotFiles[$defaultImage]);
+                    $shot->setDefaultImage($shotFiles[$defaultImage]->getBaseName());
                 }
             }
             $this->entityManager->persist($shot);
@@ -207,7 +207,7 @@ class ShotController extends AbstractController
 
                 if(!empty($nodeFiles) && null === $shot->getDefaultImage()) {
                     $defaultImage = array_keys($nodeFiles)[0];
-                    $shot->setDefaultImage($nodeFiles[$defaultImage]);
+                    $shot->setDefaultImage($nodeFiles[$defaultImage]->getBaseName());
                 }
             }
 

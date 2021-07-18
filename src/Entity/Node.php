@@ -53,7 +53,7 @@ class Node
     private $sequenceOrder;
 
     /**
-     * @ORM\ManyToOne(targetEntity=File::class)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $defaultImage;
 
@@ -115,7 +115,7 @@ class Node
 
         return $this;
     }
-    
+
     public function getName(): ?string
     {
         return $this->name;
@@ -148,18 +148,6 @@ class Node
     public function setSequenceOrder(int $sequenceOrder): self
     {
         $this->sequenceOrder = $sequenceOrder;
-
-        return $this;
-    }
-
-    public function getDefaultImage(): ?File
-    {
-        return $this->defaultImage;
-    }
-
-    public function setDefaultImage(?File $defaultImage): self
-    {
-        $this->defaultImage = $defaultImage;
 
         return $this;
     }
@@ -234,5 +222,15 @@ class Node
         $this->translatedMetaDescription = $translatedMetaDescription;
 
         return $this;
+    }
+
+    public function getDefaultImage(): ?string
+    {
+        return $this->defaultImage;
+    }
+
+    public function setDefaultImage(?string $defaultImage): void
+    {
+        $this->defaultImage = $defaultImage;
     }
 }

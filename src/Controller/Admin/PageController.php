@@ -108,7 +108,7 @@ class PageController extends AbstractController
 
                 if (!empty($pageFiles) && null === $page->getDefaultImage()) {
                     $defaultImage = array_keys($pageFiles)[0];
-                    $page->setDefaultImage($pageFiles[$defaultImage]);
+                    $page->setDefaultImage($pageFiles[$defaultImage]->getBaseName());
                 }
             }
 
@@ -216,7 +216,7 @@ class PageController extends AbstractController
 
                 if (!empty($pageFiles) && null === $page->getDefaultImage()) {
                     $defaultImage = array_keys($pageFiles)[0];
-                    $page->setDefaultImage($pageFiles[$defaultImage]);
+                    $page->setDefaultImage($pageFiles[$defaultImage]->getBaseName());
                 }
             }
 

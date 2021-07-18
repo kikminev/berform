@@ -132,7 +132,7 @@ class AlbumController extends AbstractController
 
                 if(!empty($nodeFiles) && null === $album->getDefaultImage()) {
                     $defaultImage = array_keys($nodeFiles)[0];
-                    $album->setDefaultImage($nodeFiles[$defaultImage]);
+                    $album->setDefaultImage($nodeFiles[$defaultImage]->getBaseName());
                 }
             }
             $this->entityManager->persist($album);
@@ -238,7 +238,7 @@ class AlbumController extends AbstractController
 
                 if(!empty($nodeFiles) && null === $album->getDefaultImage()) {
                     $defaultImage = array_keys($nodeFiles)[0];
-                    $album->setDefaultImage($nodeFiles[$defaultImage]);
+                    $album->setDefaultImage($nodeFiles[$defaultImage]->getBaseName());
                 }
             }
 
