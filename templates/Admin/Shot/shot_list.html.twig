@@ -19,7 +19,7 @@
 
             {% include('Admin/Components/top_actions_bar.html.twig') %}
 
-            <div class="row" style="width: 100%;">
+            <div class="row sortableNodes" style="width: 100%;">
                 <div class="itemWrap addNewTile col-md-3">
                     <a class="item" href="{{ path('user_admin_shot_create', {site:site.id}) }}">+</a>
                 </div>
@@ -52,4 +52,14 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(".sortableNodes").sortable(
+            {
+                update: function (event, ui) {
+                    a.reorderNodes("{{ path('admin_site_node_reorder', {'type' : 'shot'}) }}")
+                }
+            }
+        );
+    </script>
 {% endblock %}

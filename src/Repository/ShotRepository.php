@@ -50,17 +50,17 @@ class ShotRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getShotFiles(Shot $shot)
+    public function findActiveByIdsAndUser(array $ids, UserCustomer $user)
     {
         $qb = $this->createQueryBuilder('s');
 
         return $qb
-            ->innerJoin('s.files', 'files')
-            ->andWhere('s.id = :shot')
-            ->andWhere('s.isDeleted = false OR s.isDeleted IS NULL')
-            ->setParameter('shot', $shot->getId())
+            ->andWhere('s.userCustomer = :user')
+            ->andWhere($qb->expr()->in('s.id', $ids))
+            ->setParameter('user', $user)
             ->orderBy('s.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();
     }
+
 }

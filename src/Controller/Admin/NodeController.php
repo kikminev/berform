@@ -7,6 +7,7 @@ use App\Entity\Node;
 
 use App\Repository\PageRepository;
 use App\Repository\FileRepository;
+use App\Repository\ShotRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -30,6 +31,7 @@ class NodeController extends AbstractController
         Request $request,
         string $type,
         PageRepository $pageRepository,
+        ShotRepository $shotRepository,
         FileRepository $fileRepository
     ): JsonResponse {
 
@@ -41,6 +43,9 @@ class NodeController extends AbstractController
         switch ($type) {
             case 'file':
                 $nodes = $fileRepository->findActiveByIds($ids, $this->getUser());
+                break;
+            case 'shot':
+                $nodes = $shotRepository->findActiveByIdsAndUser($ids, $this->getUser());
                 break;
             case 'page':
             default:
