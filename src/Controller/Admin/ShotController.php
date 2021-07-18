@@ -263,30 +263,34 @@ class ShotController extends AbstractController
         return new JsonResponse('ok');
     }
 
-    public function delete(string $type, string $id): JsonResponse
+    public function delete(Shot $shot, EntityManagerInterface $entityManager): JsonResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $entityManager->remove($shot);
+        $entityManager->flush();
 
-        switch ($type) {
-            case 'album':
-            default:
-                /** @var Album $node */
-                $node = $this->entityManager->getRepository(Album::class)->findOneBy([
-                    'user' => $this->getUser(),
-                    'id' => $id,
-                ]);
-                break;
-        }
-
-        if (null === $node) {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            throw new Exception('Error. The node was not found');
-        }
-
-        $this->denyAccessUnlessGranted('modify', $node);
-
-        $node->setDeleted(true);
-        $this->entityManager->flush();
+         exit;
+//        $this->denyAccessUnlessGranted('ROLE_USER');
+//
+//        switch ($type) {
+//            case 'album':
+//            default:
+//                /** @var Album $node */
+//                $node = $this->entityManager->getRepository(Album::class)->findOneBy([
+//                    'user' => $this->getUser(),
+//                    'id' => $id,
+//                ]);
+//                break;
+//        }
+//
+//        if (null === $node) {
+//            /** @noinspection PhpUnhandledExceptionInspection */
+//            throw new Exception('Error. The node was not found');
+//        }
+//
+//        $this->denyAccessUnlessGranted('modify', $node);
+//
+//        $node->setDeleted(true);
+//        $this->entityManager->flush();
 
         return new JsonResponse('deleted');
     }

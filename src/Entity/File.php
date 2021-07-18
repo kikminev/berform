@@ -62,19 +62,14 @@ class File
     private $site;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="files")
-     */
-    private $page;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="files")
-     */
-    private $album;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Shot::class, inversedBy="files")
      */
     private $shot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="files")
+     */
+    private $page;
 
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="files")
@@ -106,18 +101,6 @@ class File
     public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
-    public function getFileUrl(): ?string
-    {
-        return $this->fileUrl;
-    }
-
-    public function setFileUrl(?string $fileUrl): self
-    {
-        $this->fileUrl = $fileUrl;
 
         return $this;
     }
@@ -182,28 +165,14 @@ class File
         return $this;
     }
 
-    public function getPage(): ?Page
+    public function getFileUrl(): ?string
     {
-        return $this->page;
+        return $this->fileUrl;
     }
 
-    public function setPage(?Page $page): self
+    public function setFileUrl(?string $fileUrl): void
     {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    public function getAlbum(): ?Album
-    {
-        return $this->album;
-    }
-
-    public function setAlbum(?Album $album): self
-    {
-        $this->album = $album;
-
-        return $this;
+        $this->fileUrl = $fileUrl;
     }
 
     public function getShot(): ?Shot
@@ -214,6 +183,18 @@ class File
     public function setShot(?Shot $shot): self
     {
         $this->shot = $shot;
+
+        return $this;
+    }
+
+    public function getPage(): ?Page
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Page $page): self
+    {
+        $this->page = $page;
 
         return $this;
     }

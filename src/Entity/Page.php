@@ -70,11 +70,6 @@ class Page
     private $userCustomer;
 
     /**
-     * @ORM\OneToMany(targetEntity=File::class, mappedBy="page")
-     */
-    private $files;
-
-    /**
      * @ORM\Column(type="json", nullable=true)
      */
     private $translatedTitle = [];
@@ -98,6 +93,11 @@ class Page
      * @ORM\Column(type="json", nullable=true)
      */
     private $translatedMetaDescription = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=File::class, mappedBy="page")
+     */
+    private $files;
 
     public function __construct()
     {
@@ -205,42 +205,11 @@ class Page
         return $this;
     }
 
-    /**
-     * @return Collection|File[]
-     */
-    public function getFiles(): Collection
-    {
-        return $this->files;
-    }
-
-    public function addFile(File $file): self
-    {
-        if (!$this->files->contains($file)) {
-            $this->files[] = $file;
-            $file->setPage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFile(File $file): self
-    {
-        if ($this->files->contains($file)) {
-            $this->files->removeElement($file);
-            // set the owning side to null (unless already changed)
-            if ($file->getPage() === $this) {
-                $file->setPage(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getTranslatedTitle(): ?array
     {
         return $this->translatedTitle;
     }
-
+    
     public function setTranslatedTitle(?array $translatedTitle): self
     {
         $this->translatedTitle = $translatedTitle;
@@ -310,5 +279,35 @@ class Page
     public function setDefaultImage(File $defaultImage): void
     {
         $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return Collection|File[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        if ($this->files->removeElement($file)) {
+            // set the owning side to null (unless already changed)
+            if ($file->getPage() === $this) {
+                $file->setPage(null);
+            }
+        }
+
+        return $this;
     }
 }
