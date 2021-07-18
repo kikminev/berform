@@ -192,6 +192,9 @@ h1 {
 
 .blogPost #imagesWrap .imgWrap {
     margin-right: 5px;
+    float: left;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .blogPost .blogIconImgWrap {
