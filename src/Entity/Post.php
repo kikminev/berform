@@ -83,11 +83,6 @@ class Post
      * @ORM\Column(type="json", nullable=true)
      */
     private $translatedMetaDescription = [];
-    
-    /**
-     * @ORM\ManyToOne(targetEntity=File::class, cascade={"persist", "remove"})
-     */
-    private $defaultImage;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -98,6 +93,11 @@ class Post
      * @ORM\OneToMany(targetEntity=File::class, mappedBy="post")
      */
     private $files;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $defaultImage;
 
     public function __construct()
     {
@@ -240,20 +240,7 @@ class Post
 
         return $this;
     }
-
-
-    public function getDefaultImage(): ?File
-    {
-        return $this->defaultImage;
-    }
-
-    public function setDefaultImage(?File $defaultImage): self
-    {
-        $this->defaultImage = $defaultImage;
-
-        return $this;
-    }
-
+    
     public function getFeaturedParallax(): ?bool
     {
         return $this->featuredParallax;
@@ -304,6 +291,18 @@ class Post
                 $file->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDefaultImage(): ?string
+    {
+        return $this->defaultImage;
+    }
+
+    public function setDefaultImage(?string $defaultImage): self
+    {
+        $this->defaultImage = $defaultImage;
 
         return $this;
     }

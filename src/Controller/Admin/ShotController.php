@@ -274,7 +274,7 @@ class ShotController extends AbstractController
         foreach ($files as $file) {
             $file->setIsDeleted(true);
         }
-        
+
         $this->entityManager->flush();
 
         return new JsonResponse('deleted');

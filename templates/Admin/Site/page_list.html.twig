@@ -27,7 +27,7 @@
                         <a class="item " href="{{ path('user_admin_page_edit', {id : page.id}) }}">
                             {% if page.defaultImage is not null %}
                                 <div class="itemDefaultImage">
-                                    <img src="{{ resource_provider_domain }}{{ page.defaultImage.baseName }}?h=100&w=100&fit=crop" alt="" />
+                                    <img src="{{ resource_provider_domain }}{{ page.defaultImage }}?h=100&w=100&fit=crop" alt="" />
                                 </div>
                             {% endif %}
                             {{ page.name }}
