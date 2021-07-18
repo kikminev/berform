@@ -1,6 +1,4 @@
-- FIX 1 TEMPLATES AND MAKE THEM PERFECT
-- add shots
-
+- the can edit doesn't take into consideration of isDeleted in PAGE
 
 - create LEGAL, Privacy and About US
 - add 4th template

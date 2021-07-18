@@ -36,6 +36,22 @@ class ShotRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getActiveByIdAndSite(String $id, Site $site)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        return $qb
+            ->andWhere('s.userCustomer = :user')
+            ->andWhere('s.id = :id')
+            ->andWhere('s.site = :site')
+            ->andWhere('s.isDeleted = false OR s.isDeleted IS NULL')
+            ->setParameter('site', $site)
+            ->setParameter('id', $id)
+            ->orderBy('s.sequenceOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getActiveBySite(Site $site)
     {
         $qb = $this->createQueryBuilder('s');

@@ -15,7 +15,7 @@ class Album extends Node
     /**
      * @ORM\OneToMany(targetEntity=File::class, mappedBy="album")
      */
-    private $files;
+    protected $files;
 
     public function __construct()
     {

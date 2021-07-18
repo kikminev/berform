@@ -223,3 +223,7 @@ user_site_view_page:
 user_site_view_album:
   path: /album/{slug}
   controller: App\Controller\AlbumController::view
+
+user_site_view_shot:
+  path: /s/{id}
+  controller: App\Controller\ShotController::view

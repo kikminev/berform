@@ -18,16 +18,16 @@
                 {% set mainImage = post.files[0] %}
                 {% if files|length > 0 %}
                 <div id="imagesWrap">
-                    <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ mainImage.baseName }}"><img src="{{ resource_provider_domain }}{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
+                    <a class="blogImgWrap" id="upload_{{ mainImage.id }}" data-fancybox="gallery-blog-post" href="{{ resource_provider_domain }}{{ mainImage.baseName }}"><img src="{{ resource_provider_domain }}{{ mainImage.baseName }}?h=200&w=350&fit=crop" alt=""/></a>
 
                     <div class="blogIconImgWrap">
                         {% for file in files %}
                         {% if loop.first != true %}
-                        <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery" href="{{ resource_provider_domain }}{{ file.baseName }}" style="{% if loop.index > 6 %}display:none{% endif %}"><img src="{{ resource_provider_domain }}{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
+                        <a class="imgWrap" id="upload_{{ file.id }}" data-fancybox="gallery-blog-post" href="{{ resource_provider_domain }}{{ file.baseName }}" style="{% if loop.index > 6 %}display:none{% endif %}"><img src="{{ resource_provider_domain }}{{ file.baseName }}?h=70&w=110&fit=crop" alt=""/></a>
                         {% endif %}
                         {% endfor %}
-                        {% if files.count > 7 %}
-                        <div class="moreImagesPlaceholder">+ {{ files.count - 6 }}</div>
+                        {% if files is not empty and files|length > 7 %}
+                            <div class="moreImagesPlaceholder">+ {{ files|length - 6 }}</div>
                         {% endif %}
                     </div>
                 </div>

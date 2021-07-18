@@ -243,7 +243,7 @@ class PageController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $this->denyAccessUnlessGranted('edit', $page);
 
-        $page->setDeleted(true);
+        $page->setIsDeleted(true);
         $this->entityManager->flush();
 
         return new JsonResponse('deleted');

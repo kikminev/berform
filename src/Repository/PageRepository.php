@@ -54,6 +54,7 @@ class PageRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.userCustomer = :user')
+            ->andWhere('p.isDeleted = false OR p.isDeleted IS NULL')
             ->andWhere('p.site = :site')
             ->setParameter('user', $user)
             ->setParameter('site', $site)
@@ -64,30 +65,30 @@ class PageRepository extends ServiceEntityRepository
 
     public function findAllActiveBySite(Site $site)
     {
-        $qb = $this->createQueryBuilder('a');
+        $qb = $this->createQueryBuilder('p');
 
         return $qb
-            ->andWhere('a.site = :site')
-            ->andWhere('a.isDeleted = false OR a.isDeleted IS NULL')
-            ->andWhere('a.isActive = true')
+            ->andWhere('p.site = :site')
+            ->andWhere('p.isDeleted = false OR p.isDeleted IS NULL')
+            ->andWhere('p.isActive = true')
             ->setParameter('site', $site)
-            ->orderBy('a.sequenceOrder', 'ASC')
+            ->orderBy('p.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     public function findActiveBySlug(string $slug, Site $site)
     {
-        $qb = $this->createQueryBuilder('a');
+        $qb = $this->createQueryBuilder('p');
 
         return $qb
-            ->andWhere('a.site = :site')
-            ->andWhere('a.slug = :slug')
-            ->andWhere('a.isDeleted = false OR a.isDeleted IS NULL')
-            ->andWhere('a.isActive = true')
+            ->andWhere('p.site = :site')
+            ->andWhere('p.slug = :slug')
+            ->andWhere('p.isDeleted = false OR p.isDeleted IS NULL')
+            ->andWhere('p.isActive = true')
             ->setParameter('site', $site)
             ->setParameter('slug', $slug)
-            ->orderBy('a.sequenceOrder', 'ASC')
+            ->orderBy('p.sequenceOrder', 'ASC')
             ->getQuery()
             ->getResult();
     }

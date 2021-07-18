@@ -64,7 +64,9 @@ class SiteRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.userCustomer = :value')
+            ->andWhere('s.isActive = :isActive')
             ->setParameter('value', $user->getId())
+            ->setParameter('isActive', true)
             ->getQuery()
             ->getResult();
     }
