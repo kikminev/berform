@@ -1,7 +1,6 @@
 - the can edit doesn't take into consideration of isDeleted in PAGE
 
 - create LEGAL, Privacy and About US
-- add 4th template
 - create backup strategy for database
 - setup the dev env
 - think about pricing
@@ -10,3 +9,16 @@
 - create forgotten password
 - create a company
 - activate payments
+
+
+
+----- EPICS
+- shot view template
+- comments
+- pagination
+- site about picture
+- tags
+- map location
+- app for upload to shots
+- pagination in admin
+- search

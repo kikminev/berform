@@ -182,6 +182,7 @@ h1 {
 
 .blogPost {
     margin-bottom: 100px;
+    min-height: 500px;
 }
 
 .blogPost #imagesWrap {

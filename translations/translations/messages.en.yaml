@@ -123,7 +123,7 @@ admin_links_domains: Domains
 admin_links_billing: Billing
 admin_links_pages: Pages
 admin_links_albums: Albums
-admin_links_shots: Pictures
+admin_links_shots: Shots
 admin_links_posts: Publications
 admin_no_posts: You don't have any posts
 admin_links_create: Create new site
@@ -138,7 +138,7 @@ admin_create_shot: Add new picture
 admin_language_label_en: English
 admin_language_label_bg: Bulgarian
 admin_content: Content
-admin_images: Pictures
+admin_images: Shots
 
 
 # domain edit
