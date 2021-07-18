@@ -34,7 +34,9 @@ class ShotType extends NodeType
                 ]);
         }
 
-        $builder->add('attachedFiles', TextType::class, ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
+        $builder->add('attachedFiles',
+            HiddenType::class,
+            ['required' => false, 'mapped' => false, 'attr' => ['class' => 'attachedFiles']]);
         $builder->add('isActive', null, ['required' => false]);
         $builder->add('save', SubmitType::class);
     }

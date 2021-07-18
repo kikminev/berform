@@ -265,32 +265,17 @@ class ShotController extends AbstractController
 
     public function delete(Shot $shot, EntityManagerInterface $entityManager): JsonResponse
     {
-        $entityManager->remove($shot);
-        $entityManager->flush();
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-         exit;
-//        $this->denyAccessUnlessGranted('ROLE_USER');
-//
-//        switch ($type) {
-//            case 'album':
-//            default:
-//                /** @var Album $node */
-//                $node = $this->entityManager->getRepository(Album::class)->findOneBy([
-//                    'user' => $this->getUser(),
-//                    'id' => $id,
-//                ]);
-//                break;
-//        }
-//
-//        if (null === $node) {
-//            /** @noinspection PhpUnhandledExceptionInspection */
-//            throw new Exception('Error. The node was not found');
-//        }
-//
-//        $this->denyAccessUnlessGranted('modify', $node);
-//
-//        $node->setDeleted(true);
-//        $this->entityManager->flush();
+        $this->denyAccessUnlessGranted('modify', $shot);
+
+        $shot->setIsDeleted(true);
+        $files = $shot->getFiles();
+        foreach ($files as $file) {
+            $file->setIsDeleted(true);
+        }
+        
+        $this->entityManager->flush();
 
         return new JsonResponse('deleted');
     }

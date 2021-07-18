@@ -6,7 +6,7 @@
         <h1>
             <a href="{{ path('admin') }}">{% trans %}admin_links_sites{% endtrans %} ></a>
             <a href="{{ path('user_admin_site_build', {id : site.id}) }}">{{ site.name }} ></a>
-            <a href="{{ path('user_admin_shot_list', { type: 'album', site: site.id }) }}">{% trans %}admin_links_albums{% endtrans %}</a>
+            <a href="{{ path('user_admin_shot_list', { type: 'shot', site: site.id }) }}">{% trans %}admin_links_shots{% endtrans %}</a>
 
             {% if shot.translatedTitle[app.request.locale] is defined %}
                 >
