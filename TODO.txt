@@ -14,10 +14,10 @@
 
 ----- EPICS
 - shot view template
+- tags
 - comments
 - pagination
 - site about picture
-- tags
 - map location
 - app for upload to shots
 - pagination in admin
